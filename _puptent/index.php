@@ -10,7 +10,6 @@
     // 
     // API
     // ----------
-    // --------------------------------------------------------------------------------
     // Pup Tent doesn't include a built-in web-based interface. All functionality is
     // exposed via authenticated HTTP GET and POST calls to this page. GET responses
     // are all formatted as JSON. Where possible, POST data is consolidated into a
