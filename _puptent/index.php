@@ -1,8 +1,5 @@
 <?php
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    
     // 
     // Pup Tent
     // Copyright (c) 2011 Todd Heasley
@@ -13,7 +10,11 @@
     // 
     // API
     // ----------
-    // 
+    // --------------------------------------------------------------------------------
+    // Pup Tent doesn't include a built-in web-based interface. All functionality is
+    // exposed via authenticated HTTP GET and POST calls to this page. GET responses
+    // are all formatted as JSON. Where possible, POST data is consolidated into a
+    // single JSON-encoded parameter.
     // 
     
     // Set default response values.
@@ -31,7 +32,7 @@
             HTTP::authenticate();
             if (isset($_POST["json"])) {
                 
-                // Post to theme.
+                // Update theme.
                 $object = JSON::decode($_POST["json"]);
                 if (isset($object->url) && Theme::fromURL($object->url)) {
                     $statusCode = 200;
@@ -40,21 +41,21 @@
             break;
         case "media":
             HTTP::authenticate();
-            if (isset($_POST["json"])) {
+            if (isset($_POST["file"])) {
                 
-                // Post to media.
-                
+                // Save media item.
+                Media::addItem($_POST["file"]);
             } else if (isset($_POST["fileName"])) {
                 
-                // Delete media.
-                
+                // Delete media item.
+                Media::removeItem($_POST["fileName"]);
             }
             break;
         case "page":
             HTTP::authenticate();
             if (isset($_POST["json"])) {
                 
-                // Post to page.
+                // Save page.
                 $object = JSON::decode($_POST["json"]);
                 $page = new Page($object->fileName, $_POST["json"]);
                 if (! is_null($page->fileName)) {
@@ -80,7 +81,7 @@
             HTTP::authenticate();
             if (isset($_POST["json"])) {
                 
-                // Post to index.
+                // Save index.
                 $index = new Index($_POST["json"]);
                 $index->save();
                 $statusCode = 200;
@@ -93,26 +94,26 @@
                 }
             }
             break;
-        case "import":
-            HTTP::authenticate();
-            if (isset($_POST["json"])) {
-                
-                // Post to import.
-                
-            }
-            break;
         case "update":
             HTTP::authenticate();
-            if (isset($_POST["json"])) {
+            if (isset($_POST["request"])) {
                 
-                // Post to update.
+                // Update.
+                if (Update::apply()) {
+                    $statusCode = 200;
+                }
+            } else {
                 
+                // Get update availability.
+                if (Update::exists()) {
+                    $statusCode = 200;
+                }
             }
             break;
         case "http":
             if (isset($_POST["json"])) {
                 
-                // Post to HTTP.
+                // Save user/password.
                 $object = JSON::decode($_POST["json"]);
                 if (isset($object->user, $object->password) && HTTP::setPassword($object->user, $object->password)) {
                     $statusCode = 200;

@@ -21,6 +21,7 @@
         public static function get($url) {
             $cURLOptions = array(
                 CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_CONNECTTIMEOUT => 0,
                 CURLOPT_URL => $url
             );
@@ -40,6 +41,7 @@
             $cURLOptions = array(
                 CURLOPT_POST => true,
                 CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_CONNECTTIMEOUT => 0,
                 CURLOPT_URL => $url
             );
