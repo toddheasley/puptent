@@ -59,29 +59,29 @@
             break;
     }
     
-    function readRemoteFile($url) {
-        $file = copyRemoteFile($url);
+    function readRemoteFile($path) {
+        $file = copyRemoteFile($path);
         if (! is_null($file)) {
             return json_decode($file);
         }
     }
     
-    function saveRemoteFile($url) {
-        makeDirectories($url);
-        $file = copyRemoteFile($url);
-        if (! is_null($file) && file_put_contents($url, $file) > 0) {
+    function saveRemoteFile($path) {
+        makeDirectories($path);
+        $file = copyRemoteFile($path);
+        if (! is_null($file) && file_put_contents($path, $file) > 0) {
             return true;
         }
         return false;
     }
     
-    function copyRemoteFile($url) {
-        $url = BASE . $url;
+    function copyRemoteFile($path) {
+        $path = BASE . $path;
         $cURLOptions = array(
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_CONNECTTIMEOUT => 0,
-            CURLOPT_URL => $url
+            CURLOPT_URL => $path
         );
         $cURLHandle = curl_init();
         curl_setopt_array($cURLHandle, $cURLOptions);
@@ -93,8 +93,8 @@
         return $cURLResponse;
     }
     
-    function makeDirectories($url) {
-        $directories = explode("/", pathinfo($url, PATHINFO_DIRNAME));
+    function makeDirectories($path) {
+        $directories = explode("/", pathinfo($path, PATHINFO_DIRNAME));
         $path = "";
         foreach ($directories as $directory) {
             $path .= $directory . "/";
