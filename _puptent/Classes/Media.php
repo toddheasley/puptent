@@ -10,7 +10,10 @@
         // 
         // Media Manager
         // ----------
-        // 
+        // Before an audio, video or image file can be included in a page section, the
+        // media class gives the file a unique name* and moves it to the public media
+        // directory. When a page or page section containing media files is deleted, the
+        // associated media files are also deleted from the public media directory.
         // 
         
         // 
@@ -21,7 +24,7 @@
         protected static $path = "../media"; // Media directory path
         protected static $mode = 0755; // Media directory file permissions
         protected static $allowedFileTypes = array("png", "gif", "jpg", "m4a", "m4v", "mp3", "mov"); // Allowed media file extensions
-        protected static $maximumFileSize = 4; // Maximum media file size in megabytes
+        protected static $maximumFileSize = 20; // Maximum media file size in megabytes
         
         // 
         // ----------
@@ -62,7 +65,7 @@
         protected static function path($fileName = "") {
             if (! file_exists("Prefix.php")) {
                 
-                // Working directory is wrong.*
+                // Working directory is wrong.**
                 return;
             }
             if (! file_exists(self::$path) || ! is_dir(self::$path)) {
@@ -92,9 +95,11 @@
         // 
         // Notes
         // ----------
-        // * Because Pup Tent uses relative paths for simplicity and portability, there's a
-        // risk, as in the case of the destruct magic method, that a media directory would
-        // be created somewhere unexpected and/or PHP warnings would be raised.
+        // * Media file names are just Unix timestamps.
+        // 
+        // ** Because Pup Tent uses relative paths for simplicity and portability, there's
+        // a risk, as in the case of the destruct magic method, that a media directory
+        // would be created somewhere unexpected and/or PHP warnings would be raised.
         // 
     }
 
