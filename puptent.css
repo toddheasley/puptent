@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    background: rgb(225, 225, 225);
+}
+
+div#form {
+    display: none;
+}
+
+div#index {
+    display: none;
+}
+
+div#body {
+    display: none;
+}
+
+p#toggle {
+    display: none;
+}

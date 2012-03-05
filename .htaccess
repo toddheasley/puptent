@@ -1,0 +1,6 @@
+DirectoryIndex puptent.html
+ErrorDocument 404 http://puptent.me
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R,L]
+RewriteRule ^([a-zA-Z0-9_/\-]+)$ puptent.html [L]

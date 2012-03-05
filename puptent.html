@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<title>Pup Tent</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale = 1.0, user-scalable = no">
+<link rel="stylesheet" href="/puptent.css">
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="/puptent.js"></script>
+<script type="text/javascript">
+
+    var HTML = {
+        showForm: function() {
+            $("div#index, div#body, p#toggle").remove();
+            $("div#form form").submit(function() {           
+                var screenName = $("div#form input[name='screen_name']").val().replace("@", "");
+                var hashtag = $("div#form input[name='hashtag']").val().replace("#", "");
+                
+                if (screenName.length < 1) {
+                    $("div#form input[name='screen_name']").addClass("selected");
+                } else if (hashtag.length < 1) {
+                    $("div#form input[name='hashtag']").addClass("selected");
+                } else {
+                    window.location = "/" + screenName + "/" + hashtag;
+                }
+                
+                return false;
+            });
+            $("div#form input").focusout(function() {
+                var placeholder = $(this).attr("placeholder");
+                if ($(this).val().length > 0 && $(this).val().charAt(0) != placeholder) {
+                    $(this).val(placeholder + $(this).val());
+                } else if ($(this).val() == placeholder) {
+                    $(this).val("");
+                }
+                if ($(this).val().length > 1) {
+                    $(this).removeClass("selected");
+                }
+            });
+            $("input[name='screen_name']").val($.fn.puptent("screenName")).focusout();
+            $("input[name='hashtag']").val($.fn.puptent("hashtag")).focusout();
+            $("div#form").show();
+        },
+        showItems: function() {
+            var indexItemHTML = $("div#index ul").html();
+            var bodyElementHTML = $("div#body").html();
+            var bodyElementTextHTML = $("div#body span").html();
+            
+            $("div#form").remove();
+            $("title").text("@" + $.fn.puptent("screenName") + " #" + $.fn.puptent("hashtag"));
+            $("div#index ul").empty();
+            $("h1 a").attr("href", $.fn.puptent("profileURL"));
+            $("h1 a img").attr("src",  $.fn.puptent("profileImageURL"));
+            $("h1 a span").text($.fn.puptent("screenName"));
+            
+            for (item in  $.fn.puptent("items")) {
+                $("div#index ul").append(indexItemHTML);
+                $("div#index ul li:last a").attr("href", "#" + item).text("#" + item);
+            }
+            $("p#toggle a").click(function() {
+                $(this).hide();
+                $("body").addClass("open");
+                return false;
+            });
+            $("div#index ul li a").click(function() {
+                var name = $(this).attr("href").substr(1);
+                
+                $("body").removeClass("open");
+                $("p#toggle a").show();
+                
+                $("div#index ul li a").removeClass("selected");
+                $(this).addClass("selected");
+                $("div#body").empty();
+                
+                for (item in  $.fn.puptent("items")[name]) {
+                    var text = $.fn.puptent("items")[name][item].text.replace("#" + $.fn.puptent("hashtag"), "");
+                    
+                    for (url in $.fn.puptent("items")[name][item].urls) {
+                        url = $.fn.puptent("items")[name][item].urls[url];
+                        text = text.replace(url, bodyElementTextHTML.replace("\"\"", "\"" + url + "\"").replace("><", ">" + url + "<"));
+                    }
+                    
+                    $("div#body").append(bodyElementHTML);
+                    if ($.fn.puptent("items")[name][item].mediaURL.length > 0) {
+                        $("div#body p:last img").attr("src", $.fn.puptent("items")[name][item].mediaURL);
+                    } else {
+                        $("div#body p:last img").remove();
+                    }
+                    $("div#body p:last span").html(text);
+                }
+            });
+            
+            if (window.location.hash.length > 1) {
+                $("div#index ul li a[href='" + window.location.hash + "']").click();
+            } else {
+                window.location.hash = $("div#index ul li:first a").attr("href");
+                $("div#index ul li:first a").click(); 
+            }
+            
+            $("div#body, div#index, p#toggle").show();
+        },
+        show: function() {
+            if ($.fn.puptent("hasItems")) {
+                this.showItems();
+            } else {
+                this.showForm();
+            }
+        }
+    };
+    
+    
+    $(document).ready(function() {
+        $.fn.puptent("init", function() {
+            HTML.show();
+        });
+    });
+
+</script>
+<div id="form">
+    <form method="GET" action="/">
+        <p><input type="email" name="screen_name" value="" placeholder="@"></p>
+        <p><input type="url" name="hashtag" value="" placeholder="#"></p>
+        <p><input type="submit" value="&rarr;"></p>
+    </form>
+</div>
+<div id="index">
+    <h1><a href=""><img src=""> <span></span></a></h1>
+    <ul>
+        <li><a href=""></a></li>
+    </ul>
+</div>
+<div id="body">
+    <p><img src=""> <span><a href=""></a></span></p>
+</div>
+<p id="toggle"><a href="">&harr;</a></p>
