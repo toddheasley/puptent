@@ -86,7 +86,7 @@
                 }
             };
             
-            var timer = setTimeout(callback, 3000);
+            var timer = setTimeout(callback, 5000);
             var path = window.location.pathname.split("/");
             if (path[1].length > 0) {
                 properties.screenName = path[1];
