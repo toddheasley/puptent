@@ -1,3 +1,11 @@
+
+/* ----------------------------------------
+    
+    Pup Tent
+    (c) 2012 @toddheasley
+    
+---------------------------------------- */
+
 * {
     padding: 0;
     margin: 0;
@@ -5,21 +13,170 @@
 }
 
 body {
-    background: rgb(225, 225, 225);
+    font: 15px "Helvetica Neue", "Helvetica", sans-serif;
+    -webkit-text-size-adjust: none;
+    background: rgb(247, 247, 247);
+    color: rgb(45, 45, 45);
 }
 
-div#form {
+a {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 29px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 60px auto;
+    overflow: hidden;
+}
+
+h1 a {
+    text-decoration: none;
+}
+
+h1 a span {
+    text-decoration: underline;
+}
+
+h1 img {
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    margin-right: 8px;
+    position: relative;
+    bottom: 3px;
+}
+
+div {
     display: none;
 }
 
 div#index {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    z-index: 0;
     display: none;
+}
+
+div#index h1 {
+    width: 220px;
+}
+
+div#index ul {
+    background: rgb(245, 245, 245);
+    list-style-type: none;
+    width: 260px;
+    margin: 60px auto;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 5px;
+}
+
+div#index li {
+    border-bottom: 1px solid rgb(237, 237, 237);
+}
+
+div#index li:last-child {
+    border: 0;
+}
+
+div#index li a {
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    padding: 16px 28px;
+    overflow: hidden;
+}
+
+div#index li a span {
+    text-decoration: underline;
+}
+
+div#index li a big {
+    visibility: hidden;
+    float: right;
+}
+
+div#index li a.selected big {
+    visibility: visible;
 }
 
 div#body {
-    display: none;
+    background: rgb(251, 251, 251);
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
+    -moz-box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
+    box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    -webkit-transition: left 0.3s linear;
+}
+
+body.open div#body {
+    position: fixed;
+    height: 100%;
+    left: -320px;
+}
+
+div#body h1 {
+    text-align: center;
+}
+
+div#body p {
+    width: 600px;
+}
+
+div#body p {
+    font-size: 13px;
+    margin: 60px auto;
+    overflow: hidden;
+}
+
+div#body p img {
+    width: 598px;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 5px;
+}
+
+div#body p span {
+    display: block;
+    padding: 4px;
 }
 
 p#toggle {
-    display: none;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+}
+
+@media (max-width: 479px) {
+    div#body p {
+        width: 300px;
+    }
+    
+    div#body p img {
+        width: 298px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 619px) {
+    div#body p {
+        width: 460px;
+    }
+    
+    div#body p img {
+        width: 458px;
+    }
+}
+
+@media (min-width: 1025px) {
+    
 }
