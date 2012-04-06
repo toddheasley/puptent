@@ -7,76 +7,78 @@
 <script src="/puptent.js"></script>
 <script type="text/javascript">
     
-    /* ----------------------------------------
+    /* -------------------------------------
         
         Pup Tent
         (c) 2012 @toddheasley
         
-    ---------------------------------------- */
+    ------------------------------------- */
     
     var HTML = {
         fail: function() {
             $("body").empty();
         },
         show: function() {
-            var indexItemHTML = $("div#index ul").html();
-            var bodyElementHTML = $("div#body").html();
-            var bodyElementTextHTML = $("div#body span").html();
+            var menuListItem = $("#menu ul").html();
+            var bodyParagraphSpan = $("#body span").html();
+            var bodyParagraph = $("#body").html();
             $("title").text("@" + $.fn.puptent("screenName") + " #" + $.fn.puptent("hashtag"));
-            $("p#toggle a").text("#" + $.fn.puptent("hashtag"));
-            $("div#index ul").empty();
+            $("#menu ul").empty();
             $("h1 a").attr("href", $.fn.puptent("profileURL"));
             $("h1 a img").attr("src",  $.fn.puptent("profileImageURL"));
             $("h1 a span").text("@" + $.fn.puptent("screenName"));
+            $("h2").text("#" + $.fn.puptent("hashtag"));
             for (item in  $.fn.puptent("items")) {
-                $("div#index ul").append(indexItemHTML);
-                $("div#index ul li:last a").attr("href", "#" + item).children("span").text(" #" + item);
+                $("#menu ul").append(menuListItem);
+                $("#menu ul li:last a").attr("href", "#" + item).children("span").text(" #" + item);
             }
-            $("p#toggle a").click(function() {
-                $(document).scrollTop(0);
-                $(this).hide();
-                $("body").addClass("open");
-                return false;
+            $("#info").addClass("hide");
+            $("#menu h2").click(function() {
+                var info = $(this).parents("div#info");
+                if (info.hasClass("hide") || info.hasClass("show")) {
+                    info.toggleClass("hide").toggleClass("show");
+                }
             });
-            $("div#index ul li a").click(function() {
+            $("#menu ul li a").click(function() {
                 var name = $(this).attr("href").substr(1);
-                $("div#body").empty();
-                var handleTimeout = function() {
-                    $(document).scrollTop(0);
-                    $("p#toggle a").show();
-                    for (item in  $.fn.puptent("items")[name]) {
-                        var text = $.fn.puptent("items")[name][item].text.replace("#" + $.fn.puptent("hashtag"), "");
-                        for (url in $.fn.puptent("items")[name][item].urls) {
-                            url = $.fn.puptent("items")[name][item].urls[url];
-                            text = text.replace(url, bodyElementTextHTML.replace("\"\"", "\"" + url + "\"").replace("><", ">" + url + "<"));
-                        }
-                        $("div#body").append(bodyElementHTML);
-                        if ($.fn.puptent("items")[name][item].mediaURL.length > 0) {
-                            $("div#body p:last a").attr("href", $.fn.puptent("items")[name][item].mediaURL);
-                            $("div#body p:last img").attr("src", $.fn.puptent("items")[name][item].mediaURL);
-                        } else {
-                            $("div#body p:last a").remove();
-                        }
-                        $("div#body p:last span").html(text);
+                $("#body").empty();
+                $("#name").text("#" + name);
+                for (item in  $.fn.puptent("items")[name]) {
+                    var text = $.fn.puptent("items")[name][item].text.replace("#" + $.fn.puptent("hashtag"), "");
+                    for (url in $.fn.puptent("items")[name][item].urls) {
+                        url = $.fn.puptent("items")[name][item].urls[url];
+                        text = text.replace(url, bodyParagraphSpan.replace("\"\"", "\"" + url + "\"").replace("><", ">" + url + "<"));
                     }
-                };
-                $("div#index ul li a").removeClass("selected");
+                    $("#body").prepend(bodyParagraph);
+                    if ($.fn.puptent("items")[name][item].mediaURL.length > 0) {
+                        $("#body p:first a").attr("href", $.fn.puptent("items")[name][item].mediaURL);
+                        $("#body p:first img").attr("src", $.fn.puptent("items")[name][item].mediaURL);
+                    } else {
+                        $("#body p:first a").remove();
+                    }
+                    $("#body p:first span").html(text);
+                }
+                $("#menu ul li a").removeClass("selected");
                 $(this).addClass("selected");
-                $("body").removeClass("open");
-                setTimeout(handleTimeout, 600);
+                if ($("#info").hasClass("show")) {
+                    setTimeout("$(\"#menu h2\").click()", 300);
+                }
             });
+            $("body").addClass("more");
             if (window.location.hash.length > 1) {
-                $("div#index ul li a[href='" + window.location.hash + "']").click();
+                $("#menu ul li a[href='" + window.location.hash + "']").click();
             } else {
-                $("div#index ul li:first a").click();
-                if ($("div#index ul li").length == 1) {
-                    $("h1").detach().appendTo("div#body");
-                    $("div#index, p#toggle").remove();
+                $("#menu ul li:first a").click();
+                if ($("#menu ul li").length == 1) {
+                    $("#menu ul").remove();
+                    $("#info").removeClass("hide");
+                    $("#name").text("#" + $.fn.puptent("hashtag"));
+                    $("body").removeClass("more").addClass("less");
                 } else {
-                    window.location.hash = $("div#index ul li:first a").attr("href");
+                    window.location.hash = $("#menu ul li:first a").attr("href");
                 }
             }
-            $("div#body, div#index, p#toggle").show();
+            $("#info, #body").show();
         }
     };
     
@@ -91,13 +93,16 @@
     });
     
 </script>
-<div id="index">
-    <ul>
-        <li><a href=""><span></span> <big>&bull;</big></a></li>
-    </ul>
+<div id="info">
     <h1><a href=""><img src=""> <span></span></a></h1>
+    <div id="menu">
+        <h2></h2>
+        <ul>
+            <li><a href=""><span></span> <big>&bull;</big></a></li>
+        </ul>
+    </div>
 </div>
+<h2 id="name"></h2>
 <div id="body">
     <p><a href=""><img src=""></a> <span><a href=""></a></span></p>
 </div>
-<p id="toggle"><a href=""></a></p>

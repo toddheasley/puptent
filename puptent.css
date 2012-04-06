@@ -1,10 +1,10 @@
 
-/* ----------------------------------------
+/* -------------------------------------
     
     Pup Tent
     (c) 2012 @toddheasley
     
----------------------------------------- */
+------------------------------------- */
 
 * {
     padding: 0;
@@ -13,170 +13,281 @@
 }
 
 body {
-    font: 15px "Helvetica Neue", "Helvetica", sans-serif;
-    -webkit-text-size-adjust: none;
-    background: rgb(247, 247, 247);
-    color: rgb(45, 45, 45);
+    font: 13px "Helvetica Neue", "Helvetica", sans-serif;
+    -webkit-text-size-adjust: 100%;
+    background: rgb(251, 251, 251);
+    color: rgb(34, 34, 34);
+    width: 620px;
+    margin: 0 auto;
 }
 
 a {
     text-decoration: underline;
 }
 
-h1 {
-    font-size: 1em;
-    font-weight: normal;
-    line-height: 29px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin: 60px auto;
-    overflow: hidden;
-}
-
-h1 a {
-    text-decoration: none;
-}
-
-h1 a span {
-    text-decoration: underline;
-}
-
-h1 img {
-    width: 35px;
-    height: 35px;
-    vertical-align: middle;
-    margin-right: 8px;
-    position: relative;
-    bottom: 3px;
-}
-
-div {
+.less #name {
     display: none;
 }
 
-div#index {
+#info {
+    border: 1px solid rgb(229, 229, 229);
+    width: 600px;
+    margin: 20px auto;
+    border-radius: 3px;
+    position: relative;
+    display: none;
+}
+
+#info h1 {
+    font-size: 1em;
+    font-weight: normal;
+    white-space: nowrap;
+    padding: 10px 20px;
+}
+
+#info h1 img {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    float: left;
+    position: relative;
+    top: -4px;
+}
+
+#info h1 span {
+    display: block;
+    padding: 6px 10px 4px 10px;
+}
+
+#menu {
+    background: rgb(251, 251, 251);
+    border-left: 1px solid rgb(225, 225, 225);
+    border-radius: 0 3px 3px 0;
+    width: 180px;
     position: absolute;
     top: 0;
     right: 0;
-    width: 320px;
-    z-index: 0;
-    display: none;
 }
 
-div#index h1 {
-    width: 220px;
+.show #menu {
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
+    -moz-box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
+    box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
+    top: -1px;
+    right: -1px;
 }
 
-div#index ul {
-    background: rgb(245, 245, 245);
+.show #menu ul {
+    display: block;
+}
+
+#menu h2 {
+    text-align: center;
+    font-size: 1em;
+    font-weight: normal;
+    color: rgb(160, 160, 160);
+    padding: 16px 20px 14px 20px;
+    border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+.hide #menu h2, .show #menu h2 {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#menu ul {
     list-style-type: none;
-    width: 260px;
-    margin: 60px auto;
-    border: 1px solid rgb(237, 237, 237);
-    border-radius: 5px;
+    max-height: 460px;
+    overflow: auto;
+    display: none;
+    padding: 4px 8px;
 }
 
-div#index li {
-    border-bottom: 1px solid rgb(237, 237, 237);
-}
-
-div#index li:last-child {
-    border: 0;
-}
-
-div#index li a {
-    text-decoration: none;
+#menu li a {
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-decoration: none;
+    text-align: right;
     display: block;
-    padding: 16px 28px;
+    padding: 4px;
+    margin: 12px;
     overflow: hidden;
 }
 
-div#index li a span {
+#menu li a span {
     text-decoration: underline;
+    float: left;
 }
 
-div#index li a big {
+#menu li a big {
+    font-size: 1em;
     visibility: hidden;
-    float: right;
 }
 
-div#index li a.selected big {
+#menu li a.selected big {
     visibility: visible;
 }
 
-div#body {
-    background: rgb(251, 251, 251);
-    width: 100%;
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    -webkit-box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
-    -moz-box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
-    box-shadow: 1px 0 3px 0 rgb(225, 225, 225);
-    -webkit-transform: translate3d(0px, 0px, 0px);
-    -webkit-transition: left 0.3s linear;
+#name {
+    font-size: 1.4em;
+    font-weight: normal;
+    width: 584px;
+    margin: 20px auto;
 }
 
-body.open div#body {
-    position: fixed;
-    height: 100%;
-    left: -320px;
+#body {
+    display: none;
 }
 
-div#body h1 {
-    text-align: center;
-}
-
-div#body p {
+#body p {
     width: 600px;
+    margin: 20px auto;
 }
 
-div#body p {
-    font-size: 13px;
-    margin: 60px auto;
-    overflow: hidden;
+#body p img {
+    width: 600px;
+    border-radius: 3px;
 }
 
-div#body p img {
-    width: 598px;
-    border: 1px solid rgb(237, 237, 237);
-    border-radius: 5px;
-}
-
-div#body p span {
+#body p span {
     display: block;
     padding: 4px;
 }
 
-p#toggle {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-}
-
 @media (max-width: 479px) {
-    div#body p {
-        width: 300px;
+    body {
+        width: auto;
     }
     
-    div#body p img {
-        width: 298px;
+    #info {
+        width: 100%;
+        margin: 0;
+        border-width: 0;
+        border-radius: 0;
+    }
+    
+    #info.show {
+        -webkit-box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
+        -moz-box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
+        box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
+    }
+    
+    #info h1 {
+        border-bottom: 1px solid rgb(225, 225, 225);
+    }
+    
+    #menu {
+        background: none;
+        border: 0;
+        width: auto;
+        position: static;
+    }
+    
+    .show #menu {
+        -webkit-box-shadow: 0 0 0 0;
+        -moz-box-shadow: 0 0 0 0;
+        box-shadow: 0 0 0 0;
+        top: 0;
+        right: 0;
+        z-index: 0;
+    }
+    
+    #menu h2 {
+        border-left: 1px solid rgb(225, 225, 225);
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    
+    .show #menu h2 {
+        background: rgb(251, 251, 251);
+        padding-bottom: 15px;
+        border-bottom: 0;
+    }
+    
+    #menu ul {
+        max-height: 240px;
+    }
+    
+    #name {
+        width: 288px;
+    }
+    
+    #body p, #body p img {
+        width: 300px;
     }
 }
-
+    
 @media (min-width: 480px) and (max-width: 619px) {
-    div#body p {
+    body {
+        width: 480px;
+    }
+    
+    #info, #body p, #body p img {
         width: 460px;
     }
     
-    div#body p img {
-        width: 458px;
+    #menu ul {
+        max-height: 240px;
+    }
+    
+    #name {
+        width: 444px;
     }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
+    .more {
+        padding-right: 260px;
+        position: relative;
+    }
     
+    .more #info {
+        width: 240px;
+        position: absolute;
+        top: 20px;
+        right: 10px;
+    }
+    
+    .less #info {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        position: relative;
+    }
+    
+    .less #info h1 {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 20px;
+    }
+    
+    .less #name {
+        display: block;
+    }
+    
+    #menu, .show #menu {
+        width: auto;
+        border: 0;
+        -webkit-box-shadow: 0 0 0 0;
+        -moz-box-shadow: 0 0 0 0;
+        box-shadow: 0 0 0 0;
+        position: static;
+    }
+    
+    #menu h2 {
+        display: none;
+    }
+    
+    #menu ul {
+        border-top: 1px solid rgb(235, 235, 235);
+        max-height: auto;
+    }
+    
+    .hide #menu ul {
+        display: block;
+    }
 }
