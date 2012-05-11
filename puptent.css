@@ -6,288 +6,288 @@
     
 ------------------------------------- */
 
-* {
-    padding: 0;
-    margin: 0;
-    border: 0;
+div#show, div#fail {
+    display: none;
 }
 
 body {
-    font: 13px "Helvetica Neue", "Helvetica", sans-serif;
-    -webkit-text-size-adjust: 100%;
-    background: rgb(251, 251, 251);
-    color: rgb(34, 34, 34);
-    width: 620px;
-    margin: 0 auto;
+    -webkit-text-size-adjust: none;
+    background: url("background.gif");
+    margin: 20px auto;
+}
+
+body.less, body.more {
+    width: 600px;
+}
+
+body, input {
+    font: 13px sans-serif;
+}
+
+form {
+    text-align: center;
+    background: rgb(237, 237, 237);
+    width: 292px;
+    margin: 20px auto;
+    border: 4px outset rgb(226, 226, 226);
+}
+
+input {
+    font-size: 1.4em;
+    display: block;
+    width: 260px;
+    margin: 20px auto;
+}
+
+p#meta {
+    margin: 20px auto;
+}
+
+h1, h2 {
+    font-size: 1em;
+    padding: 0;
+    margin: 20px auto;
+}
+
+h1 img {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    position: relative;
+    bottom: 8px;
+    float: left;
+}
+
+ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 a {
     text-decoration: underline;
 }
 
-.less #name {
+body.less h1 {
+    margin: 0;
+    float: right;
+}
+
+body.less div#info h2 {
     display: none;
 }
 
-#info {
-    border: 1px solid rgb(229, 229, 229);
-    width: 600px;
-    margin: 20px auto;
-    border-radius: 3px;
+body.more h1 {
+    background: rgb(237, 237, 237);
+    width: 312px;
+    padding: 10px;
+    margin: 20px 0;
+    border: 2px outset rgb(226, 226, 226);
+}
+
+body.more h2#name {
+    font-size: 1.4em;
+}
+
+body.more div#info {
     position: relative;
-    display: none;
 }
 
-#info h1 {
-    font-size: 1em;
-    font-weight: normal;
-    white-space: nowrap;
-    padding: 10px 20px;
-}
-
-#info h1 img {
-    width: 32px;
-    height: 32px;
-    margin-right: 8px;
-    float: left;
-    position: relative;
-    top: -4px;
-}
-
-#info h1 span {
-    display: block;
-    padding: 6px 10px 4px 10px;
-}
-
-#menu {
-    background: rgb(251, 251, 251);
-    border-left: 1px solid rgb(225, 225, 225);
-    border-radius: 0 3px 3px 0;
-    width: 180px;
+body.more div#menu {
+    background: rgb(237, 237, 237);
+    width: 260px;
+    border: 2px outset rgb(226, 226, 226);
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.show #menu {
-    border-radius: 3px;
-    -webkit-box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
-    -moz-box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
-    box-shadow: 0 0 3px 1px rgba(34, 34, 34, 0.2);
-    top: -1px;
-    right: -1px;
+body.more div#menu h2 {
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 0;
 }
 
-.show #menu ul {
+body.more div#menu ul {
+    border-top: 1px solid rgb(211, 211, 211);
+    display: none;
+}
+
+body.more div#menu.active ul {
     display: block;
 }
 
-#menu h2 {
-    text-align: center;
-    font-size: 1em;
-    font-weight: normal;
-    color: rgb(160, 160, 160);
-    padding: 16px 20px 14px 20px;
-    border-bottom: 1px solid rgb(235, 235, 235);
+body.more div#menu li {
+    border-top: 1px solid rgb(245, 245, 245);
+    border-bottom: 1px solid rgb(211, 211, 211);
 }
 
-.hide #menu h2, .show #menu h2 {
-    text-decoration: underline;
-    cursor: pointer;
+body.more div#menu li:last-child {
+    border-bottom: 0;
 }
 
-#menu ul {
-    list-style-type: none;
-    max-height: 460px;
-    overflow: auto;
-    display: none;
-    padding: 4px 8px;
+body.more div#menu li.selected {
+    border-top: 1px rgb(226, 226, 226) inset;
+    border-bottom: 1px rgb(226, 226, 226) inset;
 }
 
-#menu li a {
+body.more div#menu li a {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none;
-    text-align: right;
     display: block;
-    padding: 4px;
-    margin: 12px;
-    overflow: hidden;
+    padding: 10px 20px;
+	overflow: hidden;
 }
 
-#menu li a span {
+body.more div#menu li.selected a {
+    background: rgb(226, 226, 226);
+}
+
+body.more div#menu li a span {
     text-decoration: underline;
+}
+
+body.more div#menu li big {
+    opacity: 0.2;
+    margin-right: 20px;
     float: left;
 }
 
-#menu li a big {
-    font-size: 1em;
-    visibility: hidden;
+body.more div#menu li.selected a big {
+    opacity: 1.0;
 }
 
-#menu li a.selected big {
-    visibility: visible;
+div#body {
+    width: 100%;
 }
 
-#name {
-    font-size: 1.4em;
-    font-weight: normal;
-    width: 584px;
+div#body p {
+    padding: 0;
     margin: 20px auto;
 }
 
-#body {
-    display: none;
+div#body p img {
+    width: 596px;
+    border: 2px solid;
 }
 
-#body p {
-    width: 600px;
-    margin: 20px auto;
-}
-
-#body p img {
-    width: 600px;
-    border-radius: 3px;
-}
-
-#body p span {
+div#body p span {
     display: block;
-    padding: 4px;
+    margin: 2px;
+}
+
+p#home {
+    text-align: center;
+    margin: 40px 0 20px 0;
+}
+
+p#home img {
+    background: rgb(237, 237, 237);
+    width: 115px;
+    height: 21px;
+    border: 3px outset rgb(237, 237, 237);
 }
 
 @media (max-width: 479px) {
-    body {
-        width: auto;
+    body.less {
+        width: 300px;
     }
     
-    #info {
-        width: 100%;
+    body.more {
+        width: auto;
         margin: 0;
-        border-width: 0;
-        border-radius: 0;
     }
     
-    #info.show {
-        -webkit-box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
-        -moz-box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
-        box-shadow: inset 1px 0 3px 1px rgba(34, 34, 34, 0.2);
-    }
-    
-    #info h1 {
-        border-bottom: 1px solid rgb(225, 225, 225);
-    }
-    
-    #menu {
+    body.more h1 {
         background: none;
-        border: 0;
         width: auto;
+        padding: 10px;
+        margin: 0;
+        border: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    body.more div#info {
+        background: rgb(237, 237, 237);
+        border-bottom: 2px inset rgb(211, 211, 211);
+    }
+    
+    body.more div#menu {
+        background: none;
+        width: 100%;
+        border: 0;
         position: static;
     }
     
-    .show #menu {
-        -webkit-box-shadow: 0 0 0 0;
-        -moz-box-shadow: 0 0 0 0;
-        box-shadow: 0 0 0 0;
-        top: 0;
-        right: 0;
-        z-index: 0;
+    body.more div#menu h2 {
+        text-align: right;
     }
     
-    #menu h2 {
-        border-left: 1px solid rgb(225, 225, 225);
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    
-    .show #menu h2 {
-        background: rgb(251, 251, 251);
-        padding-bottom: 15px;
-        border-bottom: 0;
-    }
-    
-    #menu ul {
-        max-height: 240px;
-    }
-    
-    #name {
-        width: 288px;
-    }
-    
-    #body p, #body p img {
+    body.more div#body, body.more h2#name {
         width: 300px;
+        margin: 20px auto;
+    }
+    
+    div#body p img {
+        width: 296px;
     }
 }
     
-@media (min-width: 480px) and (max-width: 619px) {
-    body {
-        width: 480px;
+@media (min-width: 480px) and (max-width: 639px) {
+    body.less, body.more {
+        width: 460px; 
     }
     
-    #info, #body p, #body p img {
-        width: 460px;
+    body.more h1 {
+        width: 232px;
     }
     
-    #menu ul {
-        max-height: 240px;
+    body.more div#menu {
+        width: 200px;
     }
     
-    #name {
-        width: 444px;
+    div#body p img {
+        width: 456px;
     }
 }
 
 @media (min-width: 1024px) {
-    .more {
-        padding-right: 260px;
-        position: relative;
+    body.more {
+        width: 900px;
     }
     
-    .more #info {
-        width: 240px;
-        position: absolute;
-        top: 20px;
-        right: 10px;
+    body.more #info {
+        width: 268px;
+        float: right;
+        margin: 40px 0;
     }
     
-    .less #info {
-        padding: 0;
-        margin: 0;
-        border: 0;
-        position: relative;
-    }
-    
-    .less #info h1 {
-        padding: 0;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 20px;
-    }
-    
-    .less #name {
-        display: block;
-    }
-    
-    #menu, .show #menu {
+    body.more h1 {
+        background: none;
         width: auto;
+        padding: 0 10px;
         border: 0;
-        -webkit-box-shadow: 0 0 0 0;
-        -moz-box-shadow: 0 0 0 0;
-        box-shadow: 0 0 0 0;
-        position: static;
     }
     
-    #menu h2 {
+    body.more div#menu {
+        position: static;
+        border-width: 4px;
+    }
+    
+    body.more div#menu h2 {
         display: none;
     }
     
-    #menu ul {
-        border-top: 1px solid rgb(235, 235, 235);
-        max-height: auto;
+    body.more div#menu ul {
+        display: block;
+        border: 0;
     }
     
-    .hide #menu ul {
-        display: block;
+    body.more div#menu li:last-child.selected {
+        border-bottom: 0;
     }
 }
