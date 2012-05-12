@@ -16,10 +16,6 @@ body {
     margin: 20px auto;
 }
 
-body.less, body.more {
-    width: 600px;
-}
-
 body, input {
     font: 13px sans-serif;
 }
@@ -36,10 +32,6 @@ input {
     font-size: 1.4em;
     display: block;
     width: 260px;
-    margin: 20px auto;
-}
-
-p#meta {
     margin: 20px auto;
 }
 
@@ -66,6 +58,10 @@ ul, li {
 
 a {
     text-decoration: underline;
+}
+
+body.less, body.more {
+    width: 600px;
 }
 
 body.less h1 {
@@ -176,6 +172,19 @@ div#body p img {
 div#body p span {
     display: block;
     margin: 2px;
+}
+
+p#meta {
+    margin: 20px auto;
+}
+
+p#mail {
+   text-align: center; 
+}
+
+p#mail img {
+    width: 30px;
+    height: 30px;
 }
 
 p#home {
