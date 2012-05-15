@@ -50,13 +50,18 @@
             });
             $("#menu ul li a").click(function() {
                 var name = $(this).attr("href").substr(1);
+                var text;
+                var displayURL;
                 $("#body").empty();
                 $("#name").text("#" + name);
                 for (var item in  $.fn.puptent("items")[name]) {
-                    var text = $.fn.puptent("items")[name][item].text.replace("#" + $.fn.puptent("hashtag"), "");
+                    text = $.fn.puptent("items")[name][item].text.replace("#" + $.fn.puptent("hashtag"), "");
                     for (var url in $.fn.puptent("items")[name][item].urls) {
-                        url = $.fn.puptent("items")[name][item].urls[url];
-                        text = text.replace(url, bodyParagraphSpan.replace("\"\"", "\"" + url + "\"").replace("><", ">" + url + "<"));
+                        displayURL = $.fn.puptent("items")[name][item].urls[url].split("//")[1];
+                        text = text.replace(displayURL, bodyParagraphSpan.replace("\"\"", "\"" + $.fn.puptent("items")[name][item].urls[url] + "\"").replace("><", ">" + displayURL + "<"));
+                    }
+                    for (var userMention in $.fn.puptent("items")[name][item].userMentions) {
+                        text = text.replace("@" + $.fn.puptent("items")[name][item].userMentions[userMention], bodyParagraphSpan.replace("\"\"", "\"" + $.fn.puptent("profileURL", $.fn.puptent("items")[name][item].userMentions[userMention]) + "\"").replace("><", ">@" + $.fn.puptent("items")[name][item].userMentions[userMention] + "<"));
                     }
                     $("#body").prepend(bodyParagraph);
                     if ($.fn.puptent("items")[name][item].mediaURL.length > 0) {

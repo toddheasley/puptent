@@ -23,8 +23,11 @@
         items: {}
     };
     var methods = {
-        profileURL: function() {
-            return properties.profileURL + properties.screenName;
+        profileURL: function(screenName) {
+            if (screenName == null) {
+                screenName = properties.screenName;
+            }
+            return properties.profileURL + screenName;
         },
         hasItems: function() {
             for (var item in properties.items) {
@@ -69,15 +72,18 @@
                 };
                 var items = filterItems(data);
                 if (items.length > 0) {
+                    var name;
+                    var element;
                     for (var item in items) {
                         if (properties.profileImageURL.length < 1) {
                             properties.profileImageURL = items[item].user.profile_image_url.replace("_normal", "_bigger");
                         }
-                        var name = "untitled";
-                        var element = {
+                        name = "untitled";
+                        element = {
                             mediaURL: "",
                             text: items[item].text.replace("#" + properties.hashtag, ""),
-                            urls: []
+                            urls: [],
+                            userMentions: []
                         }
                         for (var hashtag in items[item].entities.hashtags) {
                             if (items[item].entities.hashtags[hashtag].text != properties.hashtag) {
@@ -90,7 +96,11 @@
                             element.text = element.text.replace(items[item].entities.media[0].url, "");
                         }
                         for (var url in items[item].entities.urls) {
-                            element.urls.push(items[item].entities.urls[url].url);
+                            element.urls.push(items[item].entities.urls[url].expanded_url);
+                            element.text = element.text.replace(items[item].entities.urls[url].url, items[item].entities.urls[url].display_url);
+                        }
+                        for (var user_mention in items[item].entities.user_mentions) {
+                            element.userMentions.push(items[item].entities.user_mentions[user_mention].screen_name);
                         }
                         element.text = $.trim(element.text);
                         if (properties.items[name] == null) {

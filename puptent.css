@@ -7,7 +7,6 @@
 ------------------------------------- */
 
 body {
-    -webkit-text-size-adjust: none;
     background: url("background.gif");
     margin: 20px auto;
 }
@@ -60,6 +59,7 @@ p {
 
 a {
     text-decoration: underline;
+    color: rgb(0, 120, 200);
 }
 
 body.less, body.more {
@@ -193,6 +193,10 @@ p#home img {
 }
 
 @media (max-width: 479px) {
+    body {
+        -webkit-text-size-adjust: none;
+    }
+    
     body.less {
         width: 300px;
     }
