@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class Media {
@@ -36,7 +37,7 @@
                 return;
             }
             
-            // Rename uploaded file (with Unix timestamp) and move to media folder.
+            // Rename uploaded file (with Unix timestamp) and move to media folder
             $fileName = time() . self::fileExtension($file["name"]);
             move_uploaded_file($tmp_name, self::$path . "/" . $fileName);
             return $fileName;
@@ -65,17 +66,17 @@
         protected static function path($fileName = "") {
             if (! file_exists("Prefix.php")) {
                 
-                // Working directory is wrong.**
+                // Working directory is wrong**
                 return;
             }
             if (! file_exists(self::$path) || ! is_dir(self::$path)) {
                 
-                // Media directory doesn't exist; make a new one.
+                // Media directory doesn't exist; make a new one
                 mkdir(self::$path);
                 chmod(self::$path, 0777);
             }
             
-            // Return relative path to media file.
+            // Return relative path to media file
             return self::$path . "/" . $fileName;
         }
         
@@ -86,7 +87,7 @@
         protected static function isLegal($file) {
             if ($file["size"] < 1024 || $file["size"] > (self::maximumFileSize * 1048576) || ! in_array(self::fileExtension($file["name"]))) { 
                 
-                // File size is too large or file is wrong type.
+                // File size is too large or file is wrong type
                 return false;
             }
             return true;

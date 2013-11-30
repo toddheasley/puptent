@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class JSON {
@@ -65,17 +66,17 @@
         public static function path($fileName) {
             if (! file_exists("Prefix.php")) {
                 
-                // Working directory is wrong.*
+                // Working directory is wrong*
                 return;
             }
             if (! file_exists(self::$path) || ! is_dir(self::$path)) {
                 
-                // JSON directory doesn't exist; make a new one.
+                // JSON directory doesn't exist; make a new one
                 mkdir(self::$path);
                 chmod(self::$path, 0777);
             }
             
-            // Return relative path to static JSON file.
+            // Return relative path to static JSON file
             return self::$path . "/" . $fileName . ".json";
         }
         

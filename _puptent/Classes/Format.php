@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class Format {
@@ -20,7 +21,7 @@
         
         public static function plainText($string) {
             
-            // Strip HTML and collapse white space.
+            // Strip HTML and collapse white space
             $string = trim(strip_tags($string));
             $string = preg_replace('/\s\s+/', " ", $string);
             return trim($string);
@@ -28,16 +29,16 @@
         
         public static function inlineHTML($string) {
             
-            // Convert line breaks to HTML <br> tags.
+            // Convert line breaks to HTML <br> tags
             $string = nl2br($string, false);
             
             // Strip everything except legal HTML tags.*
             $string = strip_tags($string, "<a><i><b><br>");
             
-            // Collapse white space.
+            // Collapse white space
             $string = preg_replace('/\s\s+/', " ", $string);
             
-            // Clean up formatting on remaining HTML tags.
+            // Clean up formatting on remaining HTML tags
             $string = preg_replace("/<(\/?)([a-z][a-z0-9]*)(?:[^>]*(\shref=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i", "<$1$2$3>", $string);
             $string = str_replace("<br> ", "<br>", $string);
             return $string;
@@ -46,7 +47,7 @@
         public static function fileName($string) {
             $string = self::plainText($string);
             
-            // Transform to lowercase and hyphenate white space.
+            // Transform to lowercase and hyphenate white space
             $string = strtolower($string);
             $string = str_replace(" ", "-", $string);
             return $string;
@@ -64,7 +65,7 @@
             $string = trim($string);
             if (! strpos($string, "@") || strpos($string, "@") == 0 || strpos($string, "@") > (strlen($string) - 4)) {
                 
-                // String does not appear to be a valid email address.
+                // String does not appear to be a valid email address
                 $string = "";
             }
             if ($encode) {
@@ -94,7 +95,7 @@
         
         public static function twitterName($string) {
             
-            // Prepend Twitter name with "@."
+            // Prepend Twitter name with "@"
             $string = str_replace("@", "", trim($string));
             if (strlen($string) > 0) {
                 $string = "@" . $string;
@@ -104,7 +105,7 @@
         
         public static function twitterURL($string) {
             
-            // Format Twitter account name as a complete URL.
+            // Format Twitter account name as a complete URL
             $string = self::twitterName($string);
             $string = str_replace("@", "http://www.twitter.com/", $string);
             return $string;

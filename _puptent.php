@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     // 
@@ -14,46 +15,46 @@
     // 
     
     
-    // Define base URL.
+    // Define base URL
     define("BASE", "https://github.com/toddheasley/puptent/raw/master/");
     
-    // Set default HTTP respons code.
+    // Set default HTTP respons code
     $statusCode = 200;
     
-    // Read manifest and copy files.
+    // Read manifest and copy files
     $manifest = readRemoteFile("Manifest.json");
     if (! isset($manifest->files) || count($manifest->files) < 1) {
         
-        // Unable to read manifest.
+        // Unable to read manifest
         $statusCode = 400;
     } else {
         
-        // Loop through files and save.
+        // Loop through files and save
         foreach ($manifest->files as $file) {
             if (saveRemoteFile($file)) {
                 continue;
             }
             
-            // Unable to copy file.
+            // Unable to copy file
             $statusCode = 400;
             break;
         }
     }
     
-    // Send HTTP response.
+    // Send HTTP response
     switch ($statusCode) {
         case 200:
                     
-            // Send success response.
+            // Send success response
             header("HTTP/1.1 200 OK");
             header("Status: 200 OK");
             
-            // Delete install script.
+            // Delete install script
             unlink(pathinfo($_SERVER["PHP_SELF"], PATHINFO_BASENAME));
             break;
         default:
                     
-            // Send error response. 
+            // Send error response
             header("HTTP/1.1 400 Bad Request");
             header("Status: 400 Bad Request");
             break;
@@ -100,11 +101,11 @@
             $path .= $directory . "/";
             if (file_exists($path) && is_dir($path)) {
                 
-                // Directory already exists.
+                // Directory already exists
                 continue;
             }
             
-            // Make directory and set permissions.
+            // Make directory and set permissions
             mkdir($path);
             chmod($path, 0777);
         }

@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     define("TITLE", "Pup Tent");

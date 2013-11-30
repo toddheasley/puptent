@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class HTTP {
@@ -30,17 +31,17 @@
         public static function authenticate() {
             if (! self::passwordIsSet()) {
                 
-                // Reject all attempts to authenticate until password is set.*
+                // Reject all attempts to authenticate until password is set*
                 self::response(403);
                 exit;
             }
             if (isset($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]) && self::passwordMatches($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"])) {
                 
-                // Request is correctly authenticated.
+                // Request is correctly authenticated
                 return;
             }
             
-            // Prompt client to authenticate.
+            // Prompt client to authenticate
             self::response(401);
             exit;
         }
@@ -48,35 +49,35 @@
         public static function response($statusCode = 400, $containsJSON = false) {
             if ($containsJSON) {
                 
-                // Ensure that request is not cached when returning JSON content.**
+                // Ensure that request is not cached when returning JSON content**
                 header("Cache-Control: no-cache, must-revalidate");
                 header("Content-type: application/json; charset=utf-8");
             }
             
-            // Send appropriate HTTP status.***
+            // Send appropriate HTTP status***
             switch ($statusCode) {
                 case 200:
                     
-                    // Send success response.
+                    // Send success response
                     header("HTTP/1.1 200 OK");
                     header("Status: 200 OK");
                     break;
                 case 400:
                     
-                    // Send error response. 
+                    // Send error response
                     header("HTTP/1.1 400 Bad Request");
                     header("Status: 400 Bad Request");
                     break;
                 case 401:
                     
-                    // Send unauthorized response.
+                    // Send unauthorized response
                     header("WWW-Authenticate: Basic");
                     header("HTTP/1.1 401 Unauthorized");
                     header("Status: 401 Unauthorized");
                     break;
                 case 403:
                     
-                    // Send forbidden response.
+                    // Send forbidden response
                     header("HTTP/1.1 403 Forbidden");
                     header("Status: 403 Forbidden");
                     break;
@@ -88,7 +89,7 @@
                 HTTP::authenticate();
             }
             
-            // Hash new password and to file.
+            // Hash new password and to file
             file_put_contents(self::$passwordFile, trim($user) . ":" . crypt(trim($password)));
             return true;
         }
@@ -108,7 +109,7 @@
         private static function passwordMatches($user, $password) {
             if (self::passwordIsSet()) {
                 
-                // Retrieve hashed password from file.
+                // Retrieve hashed password from file
                 list($userString, $passwordHash) = explode(":", file_get_contents(self::$passwordFile));
                 if ($user == $userString && crypt(trim($password), $passwordHash) == $passwordHash) {
                     return true;

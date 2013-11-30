@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class CURL {
@@ -30,7 +31,7 @@
             $cURLResponse = curl_exec($cURLHandle);
             if (curl_getinfo($cURLHandle, CURLINFO_HTTP_CODE) != "200") {
                 
-                // Request failed; set response to null.
+                // Request failed; set response to null
                 $cURLResponse = NULL;
             }
             curl_close($cURLHandle);
@@ -51,7 +52,7 @@
             $cURLResponse = curl_exec($cURLHandle);
             if (curl_getinfo($cURLHandle, CURLINFO_HTTP_CODE) != "200") {
                 
-                // Request failed; set response to null.
+                // Request failed; set response to null
                 $cURLResponse = NULL;
             }
             curl_close($cURLHandle);

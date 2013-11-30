@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class Update {
@@ -25,13 +26,13 @@
                 return false;
             }
             
-            // Loop through files and save.
+            // Loop through files and save
             foreach ($manifest->files as $file) {
                 if (self::save($file)) {
                     continue;
                 }
                 
-                // Unable to copy/save file; abort update.
+                // Unable to copy/save file; abort update
                 return false;
             }
             return true;
@@ -40,7 +41,7 @@
         public static function exists() {
             if (! is_null($manifest = self::manifest()) && VERSION != $manifest->version) {
                 
-                // Update is available.
+                // Update is available
                 return true;
             }
             return false;
@@ -53,7 +54,7 @@
         
         protected static function manifest() {
             
-            // Fetch remote manifest and decode.
+            // Fetch remote manifest and decode
             $manifest = JSON::decode(CURL::get(BASE . "Manifest.json"));
             if (isset($manifect->title, $manifest->version, $manifest->files) && count($manifest->files) > 0) {
                 return $manifest;
@@ -77,11 +78,11 @@
                 $path .= $directory . "/";
                 if (file_exists($path) && is_dir($path)) {
                     
-                    // Directory already exists.
+                    // Directory already exists
                     continue;
                 }
                 
-                // Make directory and set permissions.
+                // Make directory and set permissions
                 mkdir($path);
                 chmod($path, 0777);
             }

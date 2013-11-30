@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class Index {
@@ -33,14 +34,14 @@
         
         function __construct($json = NULL) {
             
-            // Initialize class properties to default non-null values;
+            // Initialize class properties to default non-null values
             $this->title = "";
             $this->description = "";
             $this->items = array();
             $this->mailAddress = "";
             $this->twitterName = "";
             
-            // Construct instance from JSON argument or existing JSON file.
+            // Construct instance from JSON argument or existing JSON file
             $this->fromJSON($json);
         }
         
@@ -74,10 +75,10 @@
         
         public function save() {
             
-            // Save index as JSON.
+            // Save index as JSON
             $this->toJSON();
             
-            // Save index as HTML.
+            // Save index as HTML
             IndexHTML::save($this);
         }
         
@@ -113,7 +114,7 @@
         
         protected function toJSON() {
             
-            // Transform index object into a generic object and save to static JSON file.
+            // Transform index object into a generic object and save to static JSON file
             $object->title = $this->title;
             $object->description = $this->description;
             $object->items = array();
@@ -170,14 +171,14 @@
         
         function __construct($object = NULL) {
             
-            // Initialize class properties to default non-null values;
+            // Initialize class properties to default non-null values
             $this->title = "";
             $this->fileName = "";
             $this->public = false;
             
             if (! is_null($object)) {
                 
-                // Reconstruct instance from generic object.
+                // Reconstruct instance from generic object
                 $this->fromObject($object);
             }
         }
@@ -209,7 +210,7 @@
         
         public function toObject() {
             
-            // Transform page section into a generic object.
+            // Transform page section into a generic object
             $object->title = $this->title;
             $object->fileName = $this->fileName;
             $object->public = $this->public;
@@ -218,7 +219,7 @@
         
         public static function path($fileName) {
             
-            // Return relative path to static HTML file.
+            // Return relative path to static HTML file
             return $fileName . ".html";
         }
         
@@ -229,7 +230,7 @@
         
         protected function fromObject($object) {
             
-            // Reconstruct instance from object argument.
+            // Reconstruct instance from object argument
             $this->fileName = $object->fileName;
             $this->title = $object->title;
             if ($object->public) {
@@ -261,7 +262,7 @@
         
         public static function save($index) {
             
-            // Encode HTML and save to static HTML file.
+            // Encode HTML and save to static HTML file
             file_put_contents(self::path(), self::encode($index));
         }
         
@@ -276,13 +277,13 @@
         
         protected static function encode($index) {
             
-            // Set HTML meta generator string.
+            // Set HTML meta generator string
             $generator = TITLE . " " . VERSION;
             
             // Parse HTML template into components.*
             $components = explode("<!-- /// -->", file_get_contents(self::$templatePath));
             
-            // Concatenate HTML string and swap in page content.
+            // Concatenate HTML string and swap in page content
             $html = "";
             $html .= ltrim($components[0]);
             if (strlen($index->description) > 0) {
@@ -297,7 +298,7 @@
                 foreach ($index->items as $item) {
                     if (! $item->public) {
                         
-                        // Skip non-public items.
+                        // Skip non-public items
                         continue;
                     }
                     $htmlItem = ltrim($components[5], "\r\n\t");

@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     class Theme {
@@ -25,16 +26,16 @@
                 $url = pathinfo($url, PATHINFO_DIRNAME) . "/";
             }
             
-            // Retrieve theme files from remote URL.
+            // Retrieve theme files from remote URL
             $themeCSS = CURL::get($url . "theme.css");
             $themeJS = CURL::get($url . "theme.js");
             if (is_null($themeCSS) || is_null($themeJS)) {
                 
-                // One or more theme components was not found; cancel theme update.
+                // One or more theme components was not found; cancel theme update
                 return false;
             }
             
-            // Write theme files to public site.
+            // Write theme files to public site
             file_put_contents(self::path("theme.css"), $themeCSS);
             file_put_contents(self::path("theme.js"), $themeJS);
             return true;
@@ -47,7 +48,7 @@
         
         protected static function path($fileName) {
             
-            // Return relative path to theme file in public site directory.
+            // Return relative path to theme file in public site directory
             return "../" . $fileName;
         }
         

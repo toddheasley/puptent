@@ -2,7 +2,8 @@
 
     // 
     // Pup Tent
-    // Copyright (c) 2011 Todd Heasley
+    //
+    // (c) 2011 Todd Heasley
     // 
     
     require_once("Prefix.php");
@@ -16,11 +17,11 @@
     // single JSON-encoded parameter.
     // 
     
-    // Set default response values.
+    // Set default response values
     $statusCode = 400;
     $json = "";
     
-    // Set request type.
+    // Set request type
     $request = "";
     if (isset($_REQUEST["request"])) {
         $request = $_REQUEST["request"];
@@ -302,7 +303,7 @@
             break;
     }
     
-    // Send response.
+    // Send response
     $containsJSON = false;
     if (strlen($json) > 0) {
         $containsJSON = true;
