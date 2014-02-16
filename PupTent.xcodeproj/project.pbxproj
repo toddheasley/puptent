@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C42EC1418AFE09100FF533A /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C42EC1318AFE09100FF533A /* HTML.m */; };
 		5C7930D01899C28B0066DDCF /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7930CF1899C28B0066DDCF /* Page.m */; };
 		5C7930D31899C4FE0066DDCF /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7930D21899C4FE0066DDCF /* Site.m */; };
 		5CEA8A721898546600CFE27F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CEA8A3918984FFE00CFE27F /* Cocoa.framework */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C42EC1218AFE09100FF533A /* HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTML.h; sourceTree = "<group>"; };
+		5C42EC1318AFE09100FF533A /* HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTML.m; sourceTree = "<group>"; };
 		5C7930CE1899C28B0066DDCF /* Page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Page.h; sourceTree = "<group>"; };
 		5C7930CF1899C28B0066DDCF /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
 		5C7930D11899C4FE0066DDCF /* Site.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Site.h; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 				5C7930CF1899C28B0066DDCF /* Page.m */,
 				5C7930D11899C4FE0066DDCF /* Site.h */,
 				5C7930D21899C4FE0066DDCF /* Site.m */,
+				5C42EC1218AFE09100FF533A /* HTML.h */,
+				5C42EC1318AFE09100FF533A /* HTML.m */,
 				5CF5722B18A41F6C000AEE63 /* HTML */,
 			);
 			path = PupTent;
@@ -203,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C42EC1418AFE09100FF533A /* HTML.m in Sources */,
 				5C7930D01899C28B0066DDCF /* Page.m in Sources */,
 				5CEA8A811898546700CFE27F /* AppDelegate.m in Sources */,
 				5C7930D31899C4FE0066DDCF /* Site.m in Sources */,
