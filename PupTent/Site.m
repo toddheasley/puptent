@@ -6,78 +6,52 @@
 //
 
 #import "Site.h"
-#import "HTML.h"
 
-static NSString *kIndexFileName = @"index.json";
 static NSString *kNameKey = @"name";
+static NSString *kURIKey = @"URI";
 static NSString *kTwitterNameKey = @"twitterName";
 static NSString *kGithubNameKey = @"githubName";
 static NSString *kPagesKey = @"pages";
 
-@interface Site ()
-
-@property (nonatomic, strong) NSString *path;
-
-@end
-
 @implementation Site
 
-+ (Site *)siteAtPath:(NSString *)path {
-    return [[Site alloc] initWithPath:path];
-}
-
-- (id)initWithPath:(NSString *)path {
-    NSArray *pathComponents = [path componentsSeparatedByString:kIndexFileName];
-    path = [pathComponents objectAtIndex:0];
-    
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@%@", path, kIndexFileName] options:0 error:&error];
-    if (error != nil && error.code != NSFileReadNoSuchFileError) {
-        
-        // Existing site can't be read
-        return nil;
-    }
-    
-    self = [super init];
-    if (self) {
-        NSMutableArray *pages = [NSMutableArray new];
-        
-        // Attempt to read existing site at path
-        if (data != nil) {
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if (dictionary != nil) {
-                for (NSDictionary *page in (NSArray *)[dictionary objectForKey:kPagesKey]) {
-                    [pages addObject:[Page pageWithDictionary:page]];
-                }
-                self.name = [dictionary objectForKey:kNameKey];
-                self.twitterName = [dictionary objectForKey:kTwitterNameKey];
-                self.githubName = [dictionary objectForKey:kGithubNameKey];
-            }
++ (Site *)siteWithDictionary:(NSDictionary *)dictionary {
+    Site *site = [[Site alloc] init];
+    site.URI = @"index.html";
+    site.pages = [NSMutableArray arrayWithCapacity:0];
+    if (dictionary != nil) {
+        for (NSDictionary *page in (NSArray *)[dictionary objectForKey:kPagesKey]) {
+            [site.pages addObject:[Page pageWithDictionary:page]];
         }
-        self.pages = [NSArray arrayWithArray:pages];
-        self.path = path;
+        site.name = [dictionary objectForKey:kNameKey];
+        site.twitterName = [dictionary objectForKey:kTwitterNameKey];
+        site.githubName = [dictionary objectForKey:kGithubNameKey];
     }
-    return self;
+    return site;
 }
 
 - (NSDictionary *)dictionary {
     NSMutableArray *pages = [NSMutableArray new];
     for (Page *page in self.pages) {
-        [pages addObject:[page dictionary]];
+        [pages addObject:page.dictionary];
     }
     
     return @{
         kNameKey: self.name,
+        kURIKey: self.URI,
         kTwitterNameKey: self.twitterName,
         kGithubNameKey: self.githubName,
         kPagesKey: [NSArray arrayWithArray:pages]
     };
 }
 
-- (void)save {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:[self dictionary] options:0 error:nil];
-    [data writeToFile:[NSString stringWithFormat:@"%@%@", self.path, kIndexFileName] atomically:YES];
-    [HTML generateHTMLForSite:self];
+- (NSArray *)manifest {
+    NSMutableArray *manifest = [NSMutableArray arrayWithCapacity:0];
+    [manifest addObject:self.URI];
+    for (Page *page in self.pages) {
+        [manifest addObjectsFromArray:page.manifest];
+    }
+    return manifest;
 }
 
 @end

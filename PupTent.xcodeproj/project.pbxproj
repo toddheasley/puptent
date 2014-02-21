@@ -10,14 +10,14 @@
 		5C42EC1418AFE09100FF533A /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C42EC1318AFE09100FF533A /* HTML.m */; };
 		5C7930D01899C28B0066DDCF /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7930CF1899C28B0066DDCF /* Page.m */; };
 		5C7930D31899C4FE0066DDCF /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7930D21899C4FE0066DDCF /* Site.m */; };
+		5CE1488618B6C2C8004EAE7E /* SiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE1488518B6C2C8004EAE7E /* SiteManager.m */; };
+		5CE1488818B6CA47004EAE7E /* HTML.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5CE1488718B6CA47004EAE7E /* HTML.bundle */; };
 		5CEA8A721898546600CFE27F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CEA8A3918984FFE00CFE27F /* Cocoa.framework */; };
 		5CEA8A781898546700CFE27F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA8A761898546700CFE27F /* InfoPlist.strings */; };
 		5CEA8A7A1898546700CFE27F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA8A791898546700CFE27F /* main.m */; };
 		5CEA8A811898546700CFE27F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA8A801898546700CFE27F /* AppDelegate.m */; };
 		5CEA8A841898546700CFE27F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA8A821898546700CFE27F /* MainMenu.xib */; };
 		5CEA8A861898546700CFE27F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA8A851898546700CFE27F /* Images.xcassets */; };
-		5CF5722E18A41F6C000AEE63 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 5CF5722C18A41F6C000AEE63 /* index.html */; };
-		5CF5722F18A41F6C000AEE63 /* page.html in Resources */ = {isa = PBXBuildFile; fileRef = 5CF5722D18A41F6C000AEE63 /* page.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +27,9 @@
 		5C7930CF1899C28B0066DDCF /* Page.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Page.m; sourceTree = "<group>"; };
 		5C7930D11899C4FE0066DDCF /* Site.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Site.h; sourceTree = "<group>"; };
 		5C7930D21899C4FE0066DDCF /* Site.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Site.m; sourceTree = "<group>"; };
+		5CE1488418B6C2C8004EAE7E /* SiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteManager.h; sourceTree = "<group>"; };
+		5CE1488518B6C2C8004EAE7E /* SiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteManager.m; sourceTree = "<group>"; };
+		5CE1488718B6CA47004EAE7E /* HTML.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HTML.bundle; sourceTree = "<group>"; };
 		5CEA8A3918984FFE00CFE27F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5CEA8A3C18984FFE00CFE27F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		5CEA8A3D18984FFE00CFE27F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -41,8 +44,6 @@
 		5CEA8A801898546700CFE27F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5CEA8A831898546700CFE27F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5CEA8A851898546700CFE27F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5CF5722C18A41F6C000AEE63 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		5CF5722D18A41F6C000AEE63 /* page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = page.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,13 +99,15 @@
 		5CEA8A3F18984FFE00CFE27F /* PupTent */ = {
 			isa = PBXGroup;
 			children = (
-				5C7930CE1899C28B0066DDCF /* Page.h */,
-				5C7930CF1899C28B0066DDCF /* Page.m */,
+				5CE1488418B6C2C8004EAE7E /* SiteManager.h */,
+				5CE1488518B6C2C8004EAE7E /* SiteManager.m */,
 				5C7930D11899C4FE0066DDCF /* Site.h */,
 				5C7930D21899C4FE0066DDCF /* Site.m */,
+				5C7930CE1899C28B0066DDCF /* Page.h */,
+				5C7930CF1899C28B0066DDCF /* Page.m */,
 				5C42EC1218AFE09100FF533A /* HTML.h */,
 				5C42EC1318AFE09100FF533A /* HTML.m */,
-				5CF5722B18A41F6C000AEE63 /* HTML */,
+				5CE1488718B6CA47004EAE7E /* HTML.bundle */,
 			);
 			path = PupTent;
 			sourceTree = "<group>";
@@ -130,15 +133,6 @@
 				5CEA8A7B1898546700CFE27F /* PupTent-OSX-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5CF5722B18A41F6C000AEE63 /* HTML */ = {
-			isa = PBXGroup;
-			children = (
-				5CF5722C18A41F6C000AEE63 /* index.html */,
-				5CF5722D18A41F6C000AEE63 /* page.html */,
-			);
-			path = HTML;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,9 +187,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE1488818B6CA47004EAE7E /* HTML.bundle in Resources */,
 				5CEA8A781898546700CFE27F /* InfoPlist.strings in Resources */,
-				5CF5722F18A41F6C000AEE63 /* page.html in Resources */,
-				5CF5722E18A41F6C000AEE63 /* index.html in Resources */,
 				5CEA8A861898546700CFE27F /* Images.xcassets in Resources */,
 				5CEA8A841898546700CFE27F /* MainMenu.xib in Resources */,
 			);
@@ -208,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE1488618B6C2C8004EAE7E /* SiteManager.m in Sources */,
 				5C42EC1418AFE09100FF533A /* HTML.m in Sources */,
 				5C7930D01899C28B0066DDCF /* Page.m in Sources */,
 				5CEA8A811898546700CFE27F /* AppDelegate.m in Sources */,

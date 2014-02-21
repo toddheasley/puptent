@@ -19,15 +19,14 @@
 @interface Site : NSObject
 
 @property (nonatomic, weak) id<SiteDelegate> delegate;
-@property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *URI;
 @property (nonatomic, strong) NSString *twitterName;
 @property (nonatomic, strong) NSString *githubName;
-@property (nonatomic, strong) NSArray *pages;
+@property (nonatomic, strong) NSMutableArray *pages;
+@property (nonatomic, strong, readonly) NSDictionary *dictionary;
+@property (nonatomic, strong, readonly) NSArray *manifest;
 
-+ (Site *)siteAtPath:(NSString *)path;
-- (id)initWithPath:(NSString *)path;
-- (NSDictionary *)dictionary;
-- (void)save;
++ (Site *)siteWithDictionary:(NSDictionary *)dictionary;
 
 @end

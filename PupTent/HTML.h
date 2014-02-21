@@ -10,7 +10,6 @@
 
 @interface HTML : NSObject
 
-+ (void)generateHTMLForSite:(Site *)site;
-+ (void)removeHTMLForPage:(Page *)page;
+
 
 @end

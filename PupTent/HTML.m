@@ -11,12 +11,6 @@ static NSString *kHTMLPath = @"HTML";
 
 @implementation HTML
 
-+ (void)generateHTMLForSite:(Site *)site {
-    
-}
 
-+ (void)removeHTMLForPage:(Page *)page {
-    
-}
 
 @end

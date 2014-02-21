@@ -6,12 +6,15 @@
 //
 
 #import "AppDelegate.h"
-#import "Site.h"
+#import "SiteManager.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    SiteManager *siteManager = [SiteManager siteAtPath:@"/Users/toddheasley/Desktop/Test/"];
     
+    NSLog(@"%@", siteManager.path);
+    NSLog(@"%@", [siteManager.site dictionary]);
 }
 
 @end

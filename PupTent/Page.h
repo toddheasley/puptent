@@ -19,10 +19,11 @@ typedef enum {
 @property (nonatomic, assign) BOOL index;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *URI;
-@property (nonatomic, strong) NSArray *sections;
+@property (nonatomic, strong) NSMutableArray *sections;
+@property (nonatomic, strong, readonly) NSDictionary *dictionary;
+@property (nonatomic, strong, readonly) NSArray *manifest;
 
 + (Page *)pageWithDictionary:(NSDictionary *)dictionary;
-- (NSDictionary *)dictionary;
 
 @end
 
@@ -30,8 +31,9 @@ typedef enum {
 
 @property (nonatomic, assign) PageSectionType type;
 @property (nonatomic, strong) NSAttributedString *text;
+@property (nonatomic, strong, readonly) NSDictionary *dictionary;
+@property (nonatomic, strong, readonly) NSArray *manifest;
 
 + (PageSection *)sectionWithDictionary:(NSDictionary *)dictionary;
-- (NSDictionary *)dictionary;
 
 @end
