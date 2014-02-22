@@ -10,6 +10,7 @@
 
 @interface HTML : NSObject
 
-
++ (NSDictionary *)dataForSite:(Site *)site;
++ (NSString *)pathForMediaWithType:(NSString *)type;
 
 @end

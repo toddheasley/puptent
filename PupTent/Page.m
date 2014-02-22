@@ -11,6 +11,9 @@ static NSString *kIndexKey = @"index";
 static NSString *kNameKey = @"name";
 static NSString *kURIKey = @"URI";
 static NSString *kSectionsKey = @"sections";
+static NSString *kTypeKey = @"type";
+static NSString *kTextKey = @"text";
+static NSString *kMediaKey = @"media";
 
 @implementation Page
 
@@ -35,7 +38,7 @@ static NSString *kSectionsKey = @"sections";
     }
     
     return @{
-        @"index": self.index ? @YES : @NO,
+        kIndexKey: self.index ? @YES : @NO,
         kNameKey: self.name,
         kURIKey: self.URI,
         kSectionsKey: [NSArray arrayWithArray:sections]
@@ -57,17 +60,22 @@ static NSString *kSectionsKey = @"sections";
 
 + (PageSection *)sectionWithDictionary:(NSDictionary *)dictionary {
     PageSection *section = [[PageSection alloc] init];
-    
+    section.type = [[dictionary objectForKey:kTypeKey] intValue];
+    section.text = [dictionary objectForKey:kTextKey];
+    section.media = [NSMutableArray arrayWithArray:[dictionary objectForKey:kMediaKey]];
     return section;
 }
 
 - (NSDictionary *)dictionary {
-    return [NSDictionary new];
+    return @{
+        kTypeKey: [NSNumber numberWithInt:self.type],
+        kTextKey: self.text,
+        kMediaKey: [NSArray arrayWithArray:self.media]
+    };
 }
 
 - (NSArray *)manifest {
-    NSMutableArray *manifest = [NSMutableArray arrayWithCapacity:0];
-    return [NSArray arrayWithArray:manifest];
+    return [NSArray arrayWithArray:self.media];
 }
 
 @end

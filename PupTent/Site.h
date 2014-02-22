@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString *twitterName;
 @property (nonatomic, strong) NSString *githubName;
 @property (nonatomic, strong) NSMutableArray *pages;
+@property (nonatomic, strong, readonly) NSArray *indexedPages;
 @property (nonatomic, strong, readonly) NSDictionary *dictionary;
 @property (nonatomic, strong, readonly) NSArray *manifest;
 

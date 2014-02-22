@@ -46,12 +46,22 @@ static NSString *kIndexURI = @"index.json";
 - (void)saveSite {
     NSMutableArray *manifest = [NSMutableArray arrayWithArray:self.site.manifest];
     
-    // Save JSON index
+    // Generate JSON index
     NSData *data = [NSJSONSerialization dataWithJSONObject:[self.site dictionary] options:0 error:nil];
     [data writeToFile:[NSString stringWithFormat:@"%@%@", self.path, kIndexURI] atomically:YES];
     [manifest addObject:kIndexURI];
     
+    
+    // Generate HTML
+    NSDictionary *dataDictionary = [HTML dataForSite:self.site];
+    for (NSString *URI in dataDictionary) {
+        [(NSData *)[dataDictionary objectForKey:URI] writeToFile:[NSString stringWithFormat:@"%@%@", self.path, URI] atomically:YES];
+    }
+    
+    NSLog(@"%@", [HTML pathForMediaWithType:@"png"]);
+    
     // Clean up
+    /*
     NSError *error;
     NSString *URI;
     BOOL success;
@@ -64,6 +74,7 @@ static NSString *kIndexURI = @"index.json";
             NSLog(@"%@", error);
         }
     }
+    */
 }
 
 @end

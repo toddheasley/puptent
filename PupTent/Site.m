@@ -30,6 +30,16 @@ static NSString *kPagesKey = @"pages";
     return site;
 }
 
+- (NSArray *)indexedPages {
+    NSMutableArray *pages = [NSMutableArray arrayWithCapacity:0];
+    for (Page *page in self.pages) {
+        if (page.index) {
+            [pages addObject:page];
+        }
+    }
+    return [NSArray arrayWithArray:pages];
+}
+
 - (NSDictionary *)dictionary {
     NSMutableArray *pages = [NSMutableArray new];
     for (Page *page in self.pages) {

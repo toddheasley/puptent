@@ -14,6 +14,7 @@
 @property (nonatomic, strong) Site *site;
 
 + (SiteManager *)siteAtPath:(NSString *)path;
+
 - (void)saveSite;
 
 @end

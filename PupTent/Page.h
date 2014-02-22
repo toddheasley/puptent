@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    PageSectionTypeText,
+    PageSectionTypeBasic,
     PageSectionTypeImage,
     PageSectionTypeAudio,
     PageSectionTypeVideo
@@ -30,7 +30,8 @@ typedef enum {
 @interface PageSection : NSObject
 
 @property (nonatomic, assign) PageSectionType type;
-@property (nonatomic, strong) NSAttributedString *text;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSMutableArray *media;
 @property (nonatomic, strong, readonly) NSDictionary *dictionary;
 @property (nonatomic, strong, readonly) NSArray *manifest;
 
