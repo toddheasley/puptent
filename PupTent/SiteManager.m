@@ -43,6 +43,24 @@ static NSString *kIndexURI = @"index.json";
     return siteManager;
 }
 
+- (NSString *)pathForMediaType:(NSString *)type withData:(NSData *)data {
+    NSString *path = [NSString stringWithFormat:@"%@%@", self.path, [HTML mediaPath]];
+    if (! [[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        
+        // Create media directory
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    // Generate path and save media
+    path = [HTML pathForMediaType:type];
+    if ([data writeToFile:[NSString stringWithFormat:@"%@%@", self.path, path] atomically:YES]) {
+        
+        // Return new path
+        return path;
+    }
+    return nil;
+}
+
 - (void)saveSite {
     NSMutableArray *manifest = [NSMutableArray arrayWithArray:self.site.manifest];
     
@@ -57,24 +75,21 @@ static NSString *kIndexURI = @"index.json";
     for (NSString *URI in dataDictionary) {
         [(NSData *)[dataDictionary objectForKey:URI] writeToFile:[NSString stringWithFormat:@"%@%@", self.path, URI] atomically:YES];
     }
+    [manifest addObjectsFromArray:[HTML resources]];
+    [manifest addObject:[HTML mediaPath]];
     
-    NSLog(@"%@", [HTML pathForMediaWithType:@"png"]);
-    
-    // Clean up
-    /*
+    // Clean up unlinked files
     NSError *error;
-    NSString *URI;
     BOOL success;
-    while (URI = [[[NSFileManager defaultManager] enumeratorAtPath:self.path] nextObject]) {
+    for (NSString *URI in [[NSFileManager defaultManager] enumeratorAtPath:self.path]) {
         if ([manifest containsObject:URI]) {
             continue;
         }
         success = [[NSFileManager defaultManager] removeItemAtPath:[self.path stringByAppendingPathComponent:URI] error:&error];
         if (! success && error) {
-            NSLog(@"%@", error);
+            
         }
     }
-    */
 }
 
 @end

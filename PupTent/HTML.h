@@ -11,6 +11,8 @@
 @interface HTML : NSObject
 
 + (NSDictionary *)dataForSite:(Site *)site;
-+ (NSString *)pathForMediaWithType:(NSString *)type;
++ (NSString *)pathForMediaType:(NSString *)type;
++ (NSArray *)resources;
++ (NSString *)mediaPath;
 
 @end

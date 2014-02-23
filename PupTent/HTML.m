@@ -13,7 +13,6 @@ static NSString *kHTMLGenerator = @"Pup Tent 1.0";
 
 @interface HTML ()
 
-+ (NSArray *)resources;
 + (NSString *)pathForResource:(NSString *)resource;
 + (NSData *)dataForResource:(NSString *)resource;
 + (NSData *)dataForIndex:(Site *)site;
@@ -35,14 +34,18 @@ static NSString *kHTMLGenerator = @"Pup Tent 1.0";
     return data;
 }
 
-+ (NSString *)pathForMediaWithType:(NSString *)type {
-    NSString *characters = @"abcdefghijklmnopqrstuvwxyz";
++ (NSString *)pathForMediaType:(NSString *)type {
+    NSString *characters = @"0123456789";
     NSMutableString *path = [NSMutableString stringWithString:@""];
+    [path appendString:[NSString stringWithFormat:@"%d-", abs([[NSDate date] timeIntervalSince1970])]];
     for (uint i = 0; i < 4; i++) {
         [path appendFormat: @"%c", [characters characterAtIndex:(arc4random() % characters.length)]];
     }
-    [path appendString:[NSString stringWithFormat:@"%lu", (long)[[NSDate date] timeIntervalSince1970]]];
     return [NSString stringWithFormat:@"%@/%@.%@", kHTMLMediaPath, path, type];
+}
+
++ (NSString *)mediaPath {
+    return kHTMLMediaPath;
 }
 
 + (NSArray *)resources {
@@ -99,10 +102,48 @@ static NSString *kHTMLGenerator = @"Pup Tent 1.0";
     NSMutableString *sectionString;
     for (PageSection *section in page.sections) {
         sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:1]];
+        switch (section.type) {
+            case PageSectionTypeImage:
+                if (section.media.count > 1) {
+                    
+                    // Use multiple-image template
+                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:2]];
+                    for (NSString *media in section.media) {
+                        [sectionString appendString:[templateComponents objectAtIndex:3]];
+                        [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:media options:0 range:NSMakeRange(0, sectionString.length)];
+                    }
+                    [sectionString appendString:[templateComponents objectAtIndex:4]];
+                    for (uint i = 0; i < section.media.count; i++) {
+                        [sectionString appendString:[templateComponents objectAtIndex:5]];
+                        [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[NSString stringWithFormat:@"%i", (i + 1)] options:0 range:NSMakeRange(0, sectionString.length)];
+                    }
+                    [sectionString appendString:[templateComponents objectAtIndex:6]];
+                } else if (section.media.count > 0) {
+                    
+                    // Use single-image template
+                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:7]];
+                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
+                }
+                break;
+            case PageSectionTypeAudio:
+                if (section.media.count > 0) {
+                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:8]];
+                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
+                }
+                break;
+            case PageSectionTypeVideo:
+                if (section.media.count > 0) {
+                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:9]];
+                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
+                }
+                break;
+            default:
+                break;
+        }
         [sectionString replaceOccurrencesOfString:@"<!-- SECTION_TEXT -->" withString:section.text options:0 range:NSMakeRange(0, sectionString.length)];
         [HTMLString appendString:sectionString];
     }
-    [HTMLString appendString:[templateComponents objectAtIndex:2]];
+    [HTMLString appendString:[templateComponents objectAtIndex:10]];
     [HTMLString replaceOccurrencesOfString:@"\n\n" withString:@"\n" options:0 range:NSMakeRange(0, HTMLString.length)];
     
     return [HTMLString dataUsingEncoding:NSUTF8StringEncoding];

@@ -14,7 +14,7 @@
 @property (nonatomic, strong) Site *site;
 
 + (SiteManager *)siteAtPath:(NSString *)path;
-
+- (NSString *)pathForMediaType:(NSString *)type withData:(NSData *)data;
 - (void)saveSite;
 
 @end
