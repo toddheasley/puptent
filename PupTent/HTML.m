@@ -6,6 +6,8 @@
 //
 
 #import "HTML.h"
+#import "NSMutableString+PupTent.h"
+#import "THTML.h"
 
 static NSString *kHTMLMediaPath = @"media";
 static NSString *kHTMLResources = @"apple-touch-icon.png,favicon.ico,screen.css,jquery.js,swipe.js";
@@ -62,91 +64,96 @@ static NSString *kHTMLGenerator = @"Pup Tent 1.0";
 }
 
 + (NSData *)dataForIndex:(Site *)site {
-    NSString *template = [NSString stringWithContentsOfFile:[HTML pathForResource:@"index.html"] encoding:NSUTF8StringEncoding error:nil];
-    NSArray *templateComponents = [template componentsSeparatedByString:@"<!-- ---- -->"];
+    NSMutableString *template = [NSMutableString stringWithContentsOfFile:[HTML pathForResource:@"index.html"] encoding:NSUTF8StringEncoding error:nil];
+    [template replaceOccurrencesOfTag:@"<!-- GENERATOR -->" withString:kHTMLGenerator];
+    [template replaceOccurrencesOfTag:@"<!-- SITE_NAME -->" withString:site.name];
     
-    // Construct HTML string from template components
-    NSMutableString *HTMLString = [NSMutableString stringWithString:[templateComponents objectAtIndex:0]];
-    [HTMLString replaceOccurrencesOfString:@"<!-- GENERATOR -->" withString:kHTMLGenerator options:0 range:NSMakeRange(0, HTMLString.length)];
-    [HTMLString replaceOccurrencesOfString:@"<!-- SITE_NAME -->" withString:site.name options:0 range:NSMakeRange(0, HTMLString.length)];
-    if (site.twitterName != nil) {
-        [HTMLString appendString:[templateComponents objectAtIndex:1]];
-        [HTMLString replaceOccurrencesOfString:@"<!-- TWITTER_NAME -->" withString:site.twitterName options:0 range:NSMakeRange(0, HTMLString.length)];
+    NSMutableString *twitterTemplate = [NSMutableString stringWithString:@""];
+    if (site.twitterName.length > 0) {
+        twitterTemplate = [template substringFromTag:@"<!-- TWITTER[ -->" toTag:@"<!-- ]TWITTER -->"];
+        [twitterTemplate replaceOccurrencesOfTag:@"<!-- TWITTER_NAME -->" withString:site.twitterName];
     }
-    NSMutableString *pageString;
-    if (site.indexedPages.count > 0) {
-        [HTMLString appendString:[templateComponents objectAtIndex:2]];
-        for (Page *page in site.indexedPages) {
-            pageString = [NSMutableString stringWithString:[templateComponents objectAtIndex:3]];
-            [pageString replaceOccurrencesOfString:@"<!-- PAGE_URI -->" withString:page.URI options:0 range:NSMakeRange(0, pageString.length)];
-            [pageString replaceOccurrencesOfString:@"<!-- PAGE_NAME -->" withString:page.name options:0 range:NSMakeRange(0, pageString.length)];
-            [HTMLString appendString:pageString];
-        }
-        [HTMLString appendString:[templateComponents objectAtIndex:4]];
-    }
-    [HTMLString appendString:[templateComponents objectAtIndex:5]];
-    [HTMLString replaceOccurrencesOfString:@"\n\n" withString:@"\n" options:0 range:NSMakeRange(0, HTMLString.length)];
+    [template replaceSubstringFromTag:@"<!-- TWITTER[ -->" toTag:@"<!-- ]TWITTER -->" withString:twitterTemplate];
     
-    return [HTMLString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableString *pages = [NSMutableString stringWithString:@""];
+    NSMutableString *pageTemplate;
+    for (Page *page in site.indexedPages) {
+        pageTemplate = [template substringFromTag:@"<!-- PAGE[ -->" toTag:@"<!-- ]PAGE -->"];
+        [pageTemplate replaceOccurrencesOfTag:@"<!-- PAGE_URI -->" withString:page.URI];
+        [pageTemplate replaceOccurrencesOfTag:@"<!-- PAGE_NAME -->" withString:page.name];
+        [pages appendString:pageTemplate];
+    }
+    [template replaceSubstringFromTag:@"<!-- PAGE[" toTag:@"<!-- ]PAGE -->" withString:pages];
+    
+    [template collapseEmptyLines];
+    return [template dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 + (NSData *)dataForPage:(Page *)page inSite:(Site *)site {
-    NSString *template = [NSString stringWithContentsOfFile:[HTML pathForResource:@"page.html"] encoding:NSUTF8StringEncoding error:nil];
-    NSArray *templateComponents = [template componentsSeparatedByString:@"<!-- ---- -->"];
+    NSMutableString *template = [NSMutableString stringWithContentsOfFile:[HTML pathForResource:@"page.html"] encoding:NSUTF8StringEncoding error:nil];
+    [template replaceOccurrencesOfTag:@"<!-- GENERATOR -->" withString:kHTMLGenerator];
+    [template replaceOccurrencesOfTag:@"<!-- SITE_NAME -->" withString:site.name];
+    [template replaceOccurrencesOfTag:@"<!-- PAGE_NAME -->" withString:page.name];
     
-    // Construct HTML string from template components
-    NSMutableString *HTMLString = [NSMutableString stringWithString:[templateComponents objectAtIndex:0]];
-    [HTMLString replaceOccurrencesOfString:@"<!-- GENERATOR -->" withString:kHTMLGenerator options:0 range:NSMakeRange(0, HTMLString.length)];
-    [HTMLString replaceOccurrencesOfString:@"<!-- SITE_NAME -->" withString:site.name options:0 range:NSMakeRange(0, HTMLString.length)];
-    [HTMLString replaceOccurrencesOfString:@"<!-- PAGE_NAME -->" withString:page.name options:0 range:NSMakeRange(0, HTMLString.length)];
-    NSMutableString *sectionString;
+    NSMutableString *sections = [NSMutableString stringWithString:@""];
+    NSMutableString *sectionTemplate;
+    NSMutableString *sectionImage, *sectionMedia, *sectionAudio, *sectionVideo, *sectionText;
     for (PageSection *section in page.sections) {
-        sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:1]];
-        switch (section.type) {
+        sectionTemplate = [template substringFromTag:@"<!-- SECTION[ -->" toTag:@"<!-- ]SECTION -->"];
+        
+        PageSectionType type = section.type;
+        if (section.media.count < 1) {
+            type = PageSectionTypeBasic;
+        }
+        sectionImage = [NSMutableString stringWithString:@""];
+        sectionAudio = [NSMutableString stringWithString:@""];
+        sectionVideo = [NSMutableString stringWithString:@""];
+        switch (type) {
             case PageSectionTypeImage:
-                if (section.media.count > 1) {
-                    
-                    // Use multiple-image template
-                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:2]];
-                    for (NSString *media in section.media) {
-                        [sectionString appendString:[templateComponents objectAtIndex:3]];
-                        [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:media options:0 range:NSMakeRange(0, sectionString.length)];
-                    }
-                    [sectionString appendString:[templateComponents objectAtIndex:4]];
-                    for (uint i = 0; i < section.media.count; i++) {
-                        [sectionString appendString:[templateComponents objectAtIndex:5]];
-                        [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[NSString stringWithFormat:@"%i", (i + 1)] options:0 range:NSMakeRange(0, sectionString.length)];
-                    }
-                    [sectionString appendString:[templateComponents objectAtIndex:6]];
-                } else if (section.media.count > 0) {
-                    
-                    // Use single-image template
-                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:7]];
-                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
+                sectionImage = [sectionTemplate substringFromTag:@"<!-- SECTION_IMAGE[ -->" toTag:@"<!-- ]SECTION_IMAGE -->"];
+                sectionMedia = [NSMutableString stringWithString:@""];
+                for (NSString *media in section.media) {
+                    [sectionMedia appendString:[sectionImage substringFromTag:@"<!-- SECTION_MEDIA[ -->" toTag:@"<!-- ]SECTION_MEDIA -->"]];
+                    [sectionMedia replaceOccurrencesOfTag:@"<!-- SECTION_MEDIA -->" withString:media];
                 }
+                [sectionImage replaceSubstringFromTag:@"<!-- SECTION_MEDIA[" toTag:@"<!-- ]SECTION_MEDIA -->" withString:sectionMedia];
+                sectionMedia = [NSMutableString stringWithString:@""];
+                if (section.media.count > 1) {
+                    for (uint i = 1; i <= section.media.count; i++) {
+                        [sectionMedia appendString:[sectionImage substringFromTag:@"<!-- SECTION_INDEX[ -->" toTag:@"<!-- ]SECTION_INDEX -->"]];
+                        [sectionMedia replaceOccurrencesOfTag:@"<!-- SECTION_INDEX -->" withString:[NSString stringWithFormat:@"%u", i]];
+                    }
+                }
+                [sectionImage replaceSubstringFromTag:@"<!-- SECTION_INDEX[" toTag:@"<!-- ]SECTION_INDEX -->" withString:sectionMedia];
                 break;
             case PageSectionTypeAudio:
-                if (section.media.count > 0) {
-                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:8]];
-                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
-                }
+                sectionAudio = [sectionTemplate substringFromTag:@"<!-- SECTION_AUDIO[ -->" toTag:@"<!-- ]SECTION_AUDIO -->"];
+                [sectionAudio replaceOccurrencesOfTag:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0]];
                 break;
             case PageSectionTypeVideo:
-                if (section.media.count > 0) {
-                    sectionString = [NSMutableString stringWithString:[templateComponents objectAtIndex:9]];
-                    [sectionString replaceOccurrencesOfString:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0] options:0 range:NSMakeRange(0, sectionString.length)];
-                }
+                sectionVideo = [sectionTemplate substringFromTag:@"<!-- SECTION_VIDEO[ -->" toTag:@"<!-- ]SECTION_VIDEO -->"];
+                [sectionVideo replaceOccurrencesOfTag:@"<!-- SECTION_MEDIA -->" withString:[section.media objectAtIndex:0]];
                 break;
             default:
                 break;
         }
-        [sectionString replaceOccurrencesOfString:@"<!-- SECTION_TEXT -->" withString:section.text options:0 range:NSMakeRange(0, sectionString.length)];
-        [HTMLString appendString:sectionString];
+        [sectionTemplate replaceSubstringFromTag:@"<!-- SECTION_IMAGE[ -->" toTag:@"<!-- ]SECTION_IMAGE -->" withString:sectionImage];
+        [sectionTemplate replaceSubstringFromTag:@"<!-- SECTION_AUDIO[ -->" toTag:@"<!-- ]SECTION_AUDIO -->" withString:sectionAudio];
+        [sectionTemplate replaceSubstringFromTag:@"<!-- SECTION_VIDEO[ -->" toTag:@"<!-- ]SECTION_VIDEO -->" withString:sectionAudio];
+        
+        sectionText = [NSMutableString stringWithString:@""];
+        if (section.text.length > 0) {
+            sectionText = [sectionTemplate substringFromTag:@"<!-- SECTION_TEXT[ -->" toTag:@"<!-- ]SECTION_TEXT -->"];
+            [sectionText replaceOccurrencesOfTag:@"<!-- SECTION_TEXT -->" withString:[NSString HTMLStringFromString:section.text detectLinks:YES]];
+        }
+        [sectionTemplate replaceSubstringFromTag:@"<!-- SECTION_TEXT[ -->" toTag:@"<!-- ]SECTION_TEXT -->" withString:sectionText];
+        
+        [sections appendString:sectionTemplate];
     }
-    [HTMLString appendString:[templateComponents objectAtIndex:10]];
-    [HTMLString replaceOccurrencesOfString:@"\n\n" withString:@"\n" options:0 range:NSMakeRange(0, HTMLString.length)];
+    [template replaceSubstringFromTag:@"<!-- SECTION[ -->" toTag:@"<!-- ]SECTION -->" withString:sections];
     
-    return [HTMLString dataUsingEncoding:NSUTF8StringEncoding];
+    [template collapseEmptyLines];
+    return [template dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

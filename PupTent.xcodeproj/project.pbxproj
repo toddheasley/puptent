@@ -18,6 +18,8 @@
 		5CEA8A811898546700CFE27F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA8A801898546700CFE27F /* AppDelegate.m */; };
 		5CEA8A841898546700CFE27F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA8A821898546700CFE27F /* MainMenu.xib */; };
 		5CEA8A861898546700CFE27F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA8A851898546700CFE27F /* Images.xcassets */; };
+		5CF3FF5318BA43D000D71470 /* NSMutableString+PupTent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF3FF5218BA43D000D71470 /* NSMutableString+PupTent.m */; };
+		5CF3FF6118BA726600D71470 /* NSString+THTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF3FF5F18BA726600D71470 /* NSString+THTML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,11 @@
 		5CEA8A801898546700CFE27F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5CEA8A831898546700CFE27F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5CEA8A851898546700CFE27F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5CF3FF5118BA43D000D71470 /* NSMutableString+PupTent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+PupTent.h"; sourceTree = "<group>"; };
+		5CF3FF5218BA43D000D71470 /* NSMutableString+PupTent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+PupTent.m"; sourceTree = "<group>"; };
+		5CF3FF5E18BA726600D71470 /* NSString+THTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+THTML.h"; path = "THTML/NSString+THTML.h"; sourceTree = "<group>"; };
+		5CF3FF5F18BA726600D71470 /* NSString+THTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+THTML.m"; path = "THTML/NSString+THTML.m"; sourceTree = "<group>"; };
+		5CF3FF6018BA726600D71470 /* THTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THTML.h; path = THTML/THTML.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +68,7 @@
 		5CEA8A2D18984FFE00CFE27F = {
 			isa = PBXGroup;
 			children = (
+				5CF3FF5D18BA725800D71470 /* THTML */,
 				5CEA8A3F18984FFE00CFE27F /* PupTent */,
 				5CEA8A731898546600CFE27F /* PupTent-OSX */,
 				5CEA8A3818984FFE00CFE27F /* Frameworks */,
@@ -108,6 +116,8 @@
 				5C42EC1218AFE09100FF533A /* HTML.h */,
 				5C42EC1318AFE09100FF533A /* HTML.m */,
 				5CE1488718B6CA47004EAE7E /* HTML.bundle */,
+				5CF3FF5118BA43D000D71470 /* NSMutableString+PupTent.h */,
+				5CF3FF5218BA43D000D71470 /* NSMutableString+PupTent.m */,
 			);
 			path = PupTent;
 			sourceTree = "<group>";
@@ -133,6 +143,16 @@
 				5CEA8A7B1898546700CFE27F /* PupTent-OSX-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5CF3FF5D18BA725800D71470 /* THTML */ = {
+			isa = PBXGroup;
+			children = (
+				5CF3FF6018BA726600D71470 /* THTML.h */,
+				5CF3FF5E18BA726600D71470 /* NSString+THTML.h */,
+				5CF3FF5F18BA726600D71470 /* NSString+THTML.m */,
+			);
+			name = THTML;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,9 +224,11 @@
 				5CE1488618B6C2C8004EAE7E /* SiteManager.m in Sources */,
 				5C42EC1418AFE09100FF533A /* HTML.m in Sources */,
 				5C7930D01899C28B0066DDCF /* Page.m in Sources */,
+				5CF3FF5318BA43D000D71470 /* NSMutableString+PupTent.m in Sources */,
 				5CEA8A811898546700CFE27F /* AppDelegate.m in Sources */,
 				5C7930D31899C4FE0066DDCF /* Site.m in Sources */,
 				5CEA8A7A1898546700CFE27F /* main.m in Sources */,
+				5CF3FF6118BA726600D71470 /* NSString+THTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

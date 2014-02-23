@@ -11,43 +11,33 @@
 <script src="jquery.js"></script>
 <article>
     <h1><!-- PAGE_NAME --></h1>
-<!-- ---- -->
+<!-- SECTION[ -->
     <section>
-        <p><!-- SECTION_TEXT --></p>
-    </section>
-<!-- ---- -->
-    <section class="swipe">
-        <div>
-<!-- ---- -->
+<!-- SECTION_IMAGE[ -->
+        <div class="swipe">
             <div>
-                <p><img src="<!-- SECTION_MEDIA -->"></p>
+<!-- SECTION_MEDIA[ -->
+                <div><img src="<!-- SECTION_MEDIA -->"></div>
+<!-- ]SECTION_MEDIA -->
             </div>
-<!-- ---- -->
+            <p><!-- SECTION_INDEX[ --><a href="<!-- SECTION_INDEX -->">&bull;</a><!-- ]SECTION_INDEX --></p>
         </div>
-        <p><!-- ---- --><a href="#<!-- SECTION_MEDIA -->">&bull;</a><!-- ---- --></p>
-    </div>
-        <p><!-- SECTION_TEXT --></p>
-    </section>
-<!-- ---- -->
-    <section>
-        <p><img src="<!-- SECTION_MEDIA -->"></p>
-        <p><!-- SECTION_TEXT --></p>
-    </section>
-<!-- ---- -->
-    <section>
+<!-- ]SECTION_IMAGE -->
+<!-- SECTION_AUDIO[ -->
         <audio preload="metadata" controls>
             <source src="<!-- SECTION_MEDIA -->">
         </audio>
-        <p><!-- SECTION_TEXT --></p>
-    </section>
-<!-- ---- -->
-    <section>
+<!-- ]SECTION_AUDIO -->
+<!-- SECTION_VIDEO[ -->
         <video preload="metadata" controls>
             <source src="<!-- SECTION_MEDIA -->">
         </video>
+<!-- ]SECTION_VIDEO -->
+<!-- SECTION_TEXT[ -->
         <p><!-- SECTION_TEXT --></p>
+<!-- ]SECTION_TEXT -->
     </section>
-<!-- ---- -->
+<!-- ]SECTION -->
 </article>
 <menu>
     <p><a href="index.html">Index</a></p>
