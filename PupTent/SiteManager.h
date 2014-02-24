@@ -13,6 +13,7 @@
 @property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong) Site *site;
 
++ (NSString *)type;
 + (SiteManager *)siteAtPath:(NSString *)path;
 - (NSString *)pathForMediaType:(NSString *)type withData:(NSData *)data;
 - (void)saveSite;

@@ -8,23 +8,45 @@
 #import "AppDelegate.h"
 #import "SiteManager.h"
 
+@interface AppDelegate ()
+
+- (IBAction)presentOpenPanel:(id)sender;
+
+@end
+
 @implementation AppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    SiteManager *siteManager = [SiteManager siteAtPath:@"/Users/toddheasley/Desktop/Test/"];
-    
-    NSLog(@"%@", siteManager.path);
-    NSLog(@"%@", siteManager.site.dictionary);
-    NSLog(@"%@", siteManager.site.manifest);
-    
-    [siteManager saveSite];
+- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
+    return YES;
 }
 
-/*
- NSData *mediaData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@bigcartel-app.jpg", self.path]];
- NSString *mediaPath = [self pathForMediaType:@"jpg" withData:mediaData];
- PageSection *section = [((Page *)[self.site.pages objectAtIndex:0]).sections objectAtIndex:0];
- [section.media replaceObjectAtIndex:0 withObject:mediaPath];
- */
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    [self presentOpenPanel:self];
+}
+
+- (IBAction)presentOpenPanel:(id)sender {
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    openPanel.delegate = self;
+    openPanel.canChooseDirectories = YES;
+    openPanel.canChooseFiles = YES;
+    openPanel.allowedFileTypes = @[@"pup"];
+    openPanel.allowsMultipleSelection = NO;
+    openPanel.canCreateDirectories = YES;
+    if ([openPanel runModal] == NSOKButton) {
+        SiteManager *siteManager = [SiteManager siteAtPath:openPanel.URL.path];
+        [siteManager saveSite];
+        [self.window makeKeyAndOrderFront:self.window];
+    }
+}
+
+#pragma mark NSOpenSavePanelDelegate
+
+- (BOOL)panel:(id)sender shouldEnableURL:(NSURL *)url {
+    return YES;
+}
 
 @end

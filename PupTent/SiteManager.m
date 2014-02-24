@@ -8,7 +8,7 @@
 #import "SiteManager.h"
 #import "HTML.h"
 
-static NSString *kIndexURI = @"index.json";
+static NSString *kIndexURI = @"index.pup";
 
 @interface SiteManager ()
 
@@ -17,6 +17,10 @@ static NSString *kIndexURI = @"index.json";
 @end
 
 @implementation SiteManager
+
++ (NSString *)type {
+    return [kIndexURI pathExtension];
+}
 
 + (SiteManager *)siteAtPath:(NSString *)path {
     path = [[path componentsSeparatedByString:kIndexURI] objectAtIndex:0];
