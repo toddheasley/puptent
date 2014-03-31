@@ -70,7 +70,6 @@
 		5C51E7CE18E8E9AF0009FC63 /* PupTent */ = {
 			isa = PBXGroup;
 			children = (
-				5C51E7CF18E8E9AF0009FC63 /* main.m */,
 				5C51E7D118E8E9AF0009FC63 /* Supporting Files */,
 			);
 			path = PupTent;
@@ -79,6 +78,7 @@
 		5C51E7D118E8E9AF0009FC63 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5C51E7CF18E8E9AF0009FC63 /* main.m */,
 				5C51E7D218E8E9AF0009FC63 /* PupTent-Prefix.pch */,
 			);
 			name = "Supporting Files";
