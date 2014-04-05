@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C1B10FA18EF296A00EB725F /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B10F918EF296A00EB725F /* HTML.m */; };
 		5C1B110018EF581A00EB725F /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B10FF18EF581A00EB725F /* Site.m */; };
+		5C4AF09F18F0B84300DB1B49 /* NSString+THTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AF09E18F0B84300DB1B49 /* NSString+THTML.m */; };
 		5C51E7CD18E8E9AF0009FC63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C51E7CC18E8E9AF0009FC63 /* Foundation.framework */; };
 		5C51E7D018E8E9AF0009FC63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C51E7CF18E8E9AF0009FC63 /* main.m */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,8 @@
 		5C1B10F918EF296A00EB725F /* HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTML.m; sourceTree = "<group>"; };
 		5C1B10FE18EF581A00EB725F /* Site.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Site.h; sourceTree = "<group>"; };
 		5C1B10FF18EF581A00EB725F /* Site.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Site.m; sourceTree = "<group>"; };
+		5C4AF09D18F0B84300DB1B49 /* NSString+THTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+THTML.h"; sourceTree = "<group>"; };
+		5C4AF09E18F0B84300DB1B49 /* NSString+THTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+THTML.m"; sourceTree = "<group>"; };
 		5C51E7C918E8E9AF0009FC63 /* puptent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = puptent; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C51E7CC18E8E9AF0009FC63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5C51E7CF18E8E9AF0009FC63 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				5C51E7D218E8E9AF0009FC63 /* Prefix.pch */,
+				5C4AF09D18F0B84300DB1B49 /* NSString+THTML.h */,
+				5C4AF09E18F0B84300DB1B49 /* NSString+THTML.m */,
 				5C51E7CF18E8E9AF0009FC63 /* main.m */,
 				5C1B10FE18EF581A00EB725F /* Site.h */,
 				5C1B10FF18EF581A00EB725F /* Site.m */,
@@ -140,6 +145,7 @@
 				5C1B10FA18EF296A00EB725F /* HTML.m in Sources */,
 				5C1B110018EF581A00EB725F /* Site.m in Sources */,
 				5C51E7D018E8E9AF0009FC63 /* main.m in Sources */,
+				5C4AF09F18F0B84300DB1B49 /* NSString+THTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,7 @@
 //
 
 #import "HTML.h"
+#import "NSString+THTML.h"
 
 @interface HTML ()
 
@@ -98,7 +99,7 @@
     for (PageSection *section in page.sections) {
         switch (section.type) {
             case PageSectionTypeBasic:
-                [string appendFormat:@"    <p>%@</p>\n", section.text];
+                [string appendFormat:@"    <p>%@</p>\n", [NSString HTMLStringFromString:section.text detectLinks:YES]];
                 break;
             case PageSectionTypeImage:
                 [string appendFormat:@"    <p><img src=\"%@\"></p>\n", section.URI];
