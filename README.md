@@ -8,7 +8,7 @@ To get started with Pup Tent, clone the project, open in Xcode and archive the `
 
 An `ls` will reveal that a site skeleton has been created with the following:
 
-* `index.json` - Edit this to configure the site and manage pages
+* `index.json` - Configure the site and manage pages
 * `default.css` - Style the site with CSS
 * `apple-touch-icon.png` - Add a custom bookmark icon 
 * `media` - Suggested (optional) directory for storing media associated with pages
