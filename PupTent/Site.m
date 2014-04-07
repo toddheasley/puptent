@@ -18,7 +18,6 @@ static NSString *kIndexKey = @"index";
 static NSString *kFeatureKey = @"feature";
 static NSString *kNameKey = @"name";
 static NSString *kTwitterNameKey = @"twitterName";
-static NSString *kGithubNameKey = @"githubName";
 static NSString *kURIKey = @"URI";
 static NSString *kPagesKey = @"pages";
 static NSString *kSectionsKey = @"sections";
@@ -110,7 +109,6 @@ static NSString *kTextKey = @"text";
     site.name = [dictionary objectForKey:kNameKey];
     site.URI = [dictionary objectForKey:kURIKey];
     site.twitterName = [dictionary objectForKey:kTwitterNameKey];
-    site.githubName = [dictionary objectForKey:kGithubNameKey];
     site.pages = [NSMutableArray arrayWithCapacity:0];
     for (NSDictionary *page in (NSArray *)[dictionary objectForKey:kPagesKey]) {
         [site.pages addObject:[Page pageWithDictionary:page]];
@@ -147,7 +145,6 @@ static NSString *kTextKey = @"text";
         kNameKey: self.name,
         kURIKey: self.URI,
         kTwitterNameKey: self.twitterName,
-        kGithubNameKey: self.githubName,
         kPagesKey: [NSArray arrayWithArray:pages]
     };
 }
@@ -167,7 +164,6 @@ static NSString *kTextKey = @"text";
         self.name = @"";
         self.URI = @"";
         self.twitterName = @"";
-        self.githubName = @"";
         self.pages = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
@@ -185,12 +181,8 @@ static NSString *kTextKey = @"text";
     for (NSDictionary *section in (NSArray *)[dictionary objectForKey:kSectionsKey]) {
         [page.sections addObject:[PageSection sectionWithDictionary:section]];
     }
-    if ([[dictionary objectForKey:kIndexKey] boolValue]) {
-        page.index = YES;
-    }
-    if ([[dictionary objectForKey:kFeatureKey] boolValue]) {
-        page.feature = YES;
-    }
+    page.index = [[dictionary objectForKey:kIndexKey] boolValue];
+    page.feature = [[dictionary objectForKey:kFeatureKey] boolValue];
     return page;
 }
 

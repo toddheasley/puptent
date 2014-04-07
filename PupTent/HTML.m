@@ -12,8 +12,9 @@
 
 + (NSString *)headForSite:(Site *)site currentPage:(Page *)currentPage;
 + (NSString *)menuForSite:(Site *)site currentPage:(Page *)currentPage;
-+ (NSString *)bodyForPages:(NSArray *)pages;
-+ (NSString *)bodyForPage:(Page *)page;
++ (NSString *)footerForSite:(Site *)site;
++ (NSString *)mainForPages:(NSArray *)pages;
++ (NSString *)mainForPage:(Page *)page;
 
 @end
 
@@ -21,9 +22,9 @@
 
 + (NSDictionary *)HTMLForSite:(Site *)site {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dictionary setObject:[NSString stringWithFormat:@"%@%@%@", [HTML headForSite:site currentPage:nil], [HTML bodyForPages:site.featuredPages], [HTML menuForSite:site currentPage:nil]] forKey:site.URI];
+    [dictionary setObject:[NSString stringWithFormat:@"%@%@%@%@", [HTML headForSite:site currentPage:nil], [HTML mainForPages:site.featuredPages], [HTML menuForSite:site currentPage:nil], [HTML footerForSite:site]] forKey:site.URI];
     for (Page *page in site.pages) {
-        [dictionary setObject:[NSString stringWithFormat:@"%@%@%@", [HTML headForSite:site currentPage:page], [HTML bodyForPage:page], [HTML menuForSite:site currentPage:page]] forKey:page.URI];
+        [dictionary setObject:[NSString stringWithFormat:@"%@%@%@%@", [HTML headForSite:site currentPage:page], [HTML mainForPage:page], [HTML menuForSite:site currentPage:page], [HTML footerForSite:site]] forKey:page.URI];
     }
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
@@ -68,10 +69,20 @@
     return [NSString stringWithString:string];
 }
 
-+ (NSString *)bodyForPages:(NSArray *)pages {
++ (NSString *)footerForSite:(Site *)site {
+    NSMutableString *string = [NSMutableString string];
+    if (site.twitterName.length > 0) {
+        [string appendString:@"\n<footer>\n"];
+        [string appendFormat:@"    <p><a href=\"https://twitter.com/%@\">@%@</a></p>\n", site.twitterName, site.twitterName];
+        [string appendString:@"</footer>"];
+    }
+    return [NSString stringWithString:string];
+}
+
++ (NSString *)mainForPages:(NSArray *)pages {
     NSMutableString *string = [NSMutableString string];
     if (pages.count > 0) {
-        [string appendString:@"<article>\n"];
+        [string appendString:@"<main>\n"];
         for (Page *page in pages) {
             NSString *imageURI = @"";
             for (PageSection *section in page.sections) {
@@ -87,14 +98,14 @@
             }
             [string appendFormat:@"    <p><a href=\"%@\">%@</a></p>\n", page.URI, page.name];
         }
-        [string appendString:@"</article>\n"];
+        [string appendString:@"</main>\n"];
     }
     return [NSString stringWithString:string];
 }
 
-+ (NSString *)bodyForPage:(Page *)page {
++ (NSString *)mainForPage:(Page *)page {
     NSMutableString *string = [NSMutableString string];
-    [string appendString:@"<article>\n"];
+    [string appendString:@"<main>\n"];
     [string appendFormat:@"    <h1>%@</h1>\n", page.name];
     for (PageSection *section in page.sections) {
         switch (section.type) {
@@ -102,7 +113,7 @@
                 [string appendFormat:@"    <p>%@</p>\n", [NSString HTMLStringFromString:section.text detectLinks:YES]];
                 break;
             case PageSectionTypeImage:
-                [string appendFormat:@"    <p><img src=\"%@\"></p>\n", section.URI];
+                [string appendFormat:@"    <p><a href=\"%@\"><img src=\"%@\"></a></p>\n", section.URI, section.URI];
                 break;
             case PageSectionTypeAudio:
                 [string appendFormat:@"    <audio src=\"%@\" preload=\"metadata\" controls>\n", section.URI];
@@ -112,7 +123,7 @@
                 break;
         }
     }
-    [string appendString:@"</article>\n"];
+    [string appendString:@"</main>\n"];
     return [NSString stringWithString:string];
 }
 
