@@ -13,6 +13,7 @@ static NSString *kStylesheetURI = @"default.css";
 static NSString *kMediaPath = @"media"; // Suggested media directory
 static NSString *kTouchIcon = @"apple-touch-icon.png";
 static NSString *kTouchIconData = @"iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==";
+static NSString *kGitURIs = @".gitignore, README, README.md, CNAME";
 
 static NSString *kIndexKey = @"index";
 static NSString *kFeatureKey = @"feature";
@@ -77,6 +78,7 @@ static NSString *kTextKey = @"text";
         kMediaPath,
         kTouchIcon
     ];
+    manifest = [manifest arrayByAddingObjectsFromArray:[kGitURIs componentsSeparatedByString:@", "]];
     manifest = [manifest arrayByAddingObjectsFromArray:self.manifest];
     for (NSString *URI in [[NSFileManager defaultManager] enumeratorAtPath:self.path]) {
         if ([manifest containsObject:URI]) {
