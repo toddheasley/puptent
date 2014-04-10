@@ -76,7 +76,7 @@
         [string appendString:@"    <ul>\n"];
         for (Page *page in site.indexedPages) {
             if (currentPage != nil && [currentPage.URI isEqualToString:page.URI]) {
-                [string appendFormat:@"        <li><span>%@</span> &#x2934;</li>\n", page.name];
+                [string appendFormat:@"        <li><span>%@</span> &nearr;</li>\n", page.name];
                 continue;
             }
             [string appendFormat:@"        <li><a href=\"%@\">%@</a></li>\n", page.URI, page.name];
