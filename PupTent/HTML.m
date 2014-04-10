@@ -105,7 +105,7 @@
                 [string appendFormat:@"        <li><a href=\"%@\"><img src=\"%@\"></a></li>\n", page.URI, imageURI];
                 continue;
             }
-            [string appendFormat:@"        <li><a href=\"%@\">%@</a></li>\n", page.URI, page.name];
+            [string appendFormat:@"        <li><span><a href=\"%@\">%@</a></span></li>\n", page.URI, page.name];
         }
         [string appendString:@"    </ul>\n"];
         [string appendString:@"</main>\n"];
@@ -123,7 +123,7 @@
                 [string appendFormat:@"    <p>%@</p>\n", [NSString HTMLStringFromString:section.text detectLinks:YES]];
                 break;
             case PageSectionTypeImage:
-                [string appendFormat:@"    <p><a href=\"%@\"><img src=\"%@\"></a></p>\n", section.URI, section.URI];
+                [string appendFormat:@"    <figure><a href=\"%@\"><img src=\"%@\"></a></figure>\n", section.URI, section.URI];
                 break;
             case PageSectionTypeAudio:
                 [string appendFormat:@"    <audio src=\"%@\" preload=\"metadata\" controls>\n", section.URI];
