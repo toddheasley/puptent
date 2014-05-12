@@ -44,6 +44,19 @@
     [string appendFormat:@"<meta name=\"apple-mobile-web-app-title\" content=\"%@\">\n", site.name];
     [string appendFormat:@"<link rel=\"apple-touch-icon\" href=\"%@\">\n", site.touchIcon];
     [string appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">\n", site.stylesheetURI];
+    if (site.twitterName.length > 0 && currentPage != nil && currentPage.name.length > 0) {
+        for (PageSection *section in currentPage.sections) {
+            if (section.type != PageSectionTypeImage) {
+                continue;
+            }
+            
+            [string appendFormat:@"<meta name=\"twitter:creator\" content=\"%@\">\n", site.twitterName];
+            [string appendFormat:@"<meta name=\"twitter:card\" content=\"photo\">\n"];
+            [string appendFormat:@"<meta name=\"twitter:title\" content=\"\">\n"];
+            [string appendFormat:@"<meta name=\"twitter:image\" content=\"%@/%@\">\n", site.domain, section.URI];
+            break;
+        }
+    }
     return [NSString stringWithString:string];
 }
 

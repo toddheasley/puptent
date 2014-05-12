@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, PageSectionType) {
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *URI;
 @property (nonatomic, strong) NSString *twitterName;
+@property (nonatomic, strong) NSURL *domain;
 @property (nonatomic, strong) NSMutableArray *pages;
 @property (nonatomic, strong, readonly) NSArray *indexedPages;
 @property (nonatomic, strong, readonly) NSArray *featuredPages;

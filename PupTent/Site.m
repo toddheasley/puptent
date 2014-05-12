@@ -18,6 +18,7 @@ static NSString *kGitURIs = @"README, README.md, CNAME";
 static NSString *kIndexKey = @"index";
 static NSString *kFeatureKey = @"feature";
 static NSString *kNameKey = @"name";
+static NSString *kDomainKey = @"domain";
 static NSString *kTwitterNameKey = @"twitterName";
 static NSString *kURIKey = @"URI";
 static NSString *kPagesKey = @"pages";
@@ -90,6 +91,10 @@ static NSString *kTextKey = @"text";
     }
 }
 
+- (void)setDomain:(NSURL *)domain {
+    _domain = [NSURL URLWithString:[domain.absoluteString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/ "]]];
+}
+
 - (NSString *)manifestURI {
     return kManifestURI;
 }
@@ -109,6 +114,7 @@ static NSString *kTextKey = @"text";
 + (Site *)siteWithDictionary:(NSDictionary *)dictionary {
     Site *site = [[Site alloc] init];
     site.name = [dictionary objectForKey:kNameKey];
+    site.domain = [NSURL URLWithString:[dictionary objectForKey:kDomainKey]];
     site.URI = [dictionary objectForKey:kURIKey];
     site.twitterName = [dictionary objectForKey:kTwitterNameKey];
     site.pages = [NSMutableArray arrayWithCapacity:0];
@@ -145,6 +151,7 @@ static NSString *kTextKey = @"text";
     }
     return @{
         kNameKey: self.name,
+        kDomainKey: self.domain.absoluteString,
         kURIKey: self.URI,
         kTwitterNameKey: self.twitterName,
         kPagesKey: [NSArray arrayWithArray:pages]
@@ -164,6 +171,7 @@ static NSString *kTextKey = @"text";
     self = [super init];
     if (self) {
         self.name = @"";
+        self.domain = [NSURL URLWithString:@""];
         self.URI = @"";
         self.twitterName = @"";
         self.pages = [NSMutableArray arrayWithCapacity:0];
