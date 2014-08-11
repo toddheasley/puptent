@@ -8,20 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		5C68659D1997B4F100F81421 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68659C1997B4F100F81421 /* main.m */; };
+		5C85556A1997C21000C0D18B /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555651997BF1D00C0D18B /* Manager.m */; };
+		5C85556B1997C21100C0D18B /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555651997BF1D00C0D18B /* Manager.m */; };
+		5C85556C1997C62600C0D18B /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
+		5C85556D1997C63B00C0D18B /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555671997BFAB00C0D18B /* HTML.m */; };
+		5C85556E1997C63C00C0D18B /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555671997BFAB00C0D18B /* HTML.m */; };
+		5C8555741997C65200C0D18B /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
+		5C8555751997C65300C0D18B /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
+		5C8555771997C65600C0D18B /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
+		5C8555841997E53300C0D18B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C8555831997E53300C0D18B /* Images.xcassets */; };
 		5C9E9BDD1997AC92005332DA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C9E9BDA1997AC87005332DA /* MainMenu.xib */; };
 		5CDD11A81997A6F70090D2F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDD11A71997A6F70090D2F2 /* AppDelegate.m */; };
 		5CF2BAAA1997A56100DF1A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2BAA91997A56100DF1A3E /* main.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5CF2BA981997A33600DF1A3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5CF2BA7C1997A33500DF1A3E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5CF2BA831997A33500DF1A3E;
-			remoteInfo = PupTent;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5C6865931997B16E00F81421 /* CopyFiles */ = {
@@ -39,12 +38,20 @@
 		5C6865951997B16E00F81421 /* puptent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = puptent; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C68659C1997B4F100F81421 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CLI/main.m; sourceTree = SOURCE_ROOT; };
 		5C68659E1997B55B00F81421 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5C85555D1997BD3500C0D18B /* Archiving.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Archiving.h; path = Foundation/Archiving.h; sourceTree = "<group>"; };
+		5C85555E1997BDAA00C0D18B /* Site.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Site.h; path = Foundation/Site.h; sourceTree = "<group>"; };
+		5C85555F1997BDAA00C0D18B /* Site.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Site.m; path = Foundation/Site.m; sourceTree = "<group>"; };
+		5C8555621997BE6500C0D18B /* Page.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Page.h; path = Foundation/Page.h; sourceTree = "<group>"; };
+		5C8555631997BE6500C0D18B /* Page.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Page.m; path = Foundation/Page.m; sourceTree = "<group>"; };
+		5C8555641997BF1D00C0D18B /* Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Manager.h; path = Foundation/Manager.h; sourceTree = "<group>"; };
+		5C8555651997BF1D00C0D18B /* Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Manager.m; path = Foundation/Manager.m; sourceTree = "<group>"; };
+		5C8555661997BFAB00C0D18B /* HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HTML.h; path = Foundation/HTML.h; sourceTree = "<group>"; };
+		5C8555671997BFAB00C0D18B /* HTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HTML.m; path = Foundation/HTML.m; sourceTree = "<group>"; };
+		5C8555831997E53300C0D18B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GUI/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		5C9E9BDB1997AC87005332DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = GUI/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		5CDD11A61997A6F70090D2F2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GUI/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		5CDD11A71997A6F70090D2F2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = GUI/AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		5CDD11A91997A7880090D2F2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		5CF2BA841997A33600DF1A3E /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CF2BA971997A33600DF1A3E /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF2BAA91997A56100DF1A3E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GUI/main.m; sourceTree = SOURCE_ROOT; };
 		5CF2BAAB1997A56A00DF1A3E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GUI/Info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -58,13 +65,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5CF2BA811997A33500DF1A3E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CF2BA941997A33600DF1A3E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -89,7 +89,6 @@
 				5CF2BAA71997A35F00DF1A3E /* Foundation */,
 				5CF2BA861997A33600DF1A3E /* GUI */,
 				5C6865961997B16E00F81421 /* CLI */,
-				5CF2BA9A1997A33600DF1A3E /* Tests */,
 				5CF2BA851997A33600DF1A3E /* Products */,
 				5C68659E1997B55B00F81421 /* README.md */,
 			);
@@ -99,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				5CF2BA841997A33600DF1A3E /* Pup Tent.app */,
-				5CF2BA971997A33600DF1A3E /* Tests.xctest */,
 				5C6865951997B16E00F81421 /* puptent */,
 			);
 			name = Products;
@@ -111,6 +109,7 @@
 				5CDD11A61997A6F70090D2F2 /* AppDelegate.h */,
 				5CDD11A71997A6F70090D2F2 /* AppDelegate.m */,
 				5C9E9BDA1997AC87005332DA /* MainMenu.xib */,
+				5C8555831997E53300C0D18B /* Images.xcassets */,
 				5CF2BA871997A33600DF1A3E /* Supporting Files */,
 			);
 			name = GUI;
@@ -126,26 +125,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5CF2BA9A1997A33600DF1A3E /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				5CF2BA9B1997A33600DF1A3E /* Supporting Files */,
-			);
-			name = Tests;
-			path = PupTentTests;
-			sourceTree = "<group>";
-		};
-		5CF2BA9B1997A33600DF1A3E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5CDD11A91997A7880090D2F2 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		5CF2BAA71997A35F00DF1A3E /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				5C8555641997BF1D00C0D18B /* Manager.h */,
+				5C8555651997BF1D00C0D18B /* Manager.m */,
+				5C8555661997BFAB00C0D18B /* HTML.h */,
+				5C8555671997BFAB00C0D18B /* HTML.m */,
+				5C85555D1997BD3500C0D18B /* Archiving.h */,
+				5C85555E1997BDAA00C0D18B /* Site.h */,
+				5C85555F1997BDAA00C0D18B /* Site.m */,
+				5C8555621997BE6500C0D18B /* Page.h */,
+				5C8555631997BE6500C0D18B /* Page.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -187,24 +178,6 @@
 			productReference = 5CF2BA841997A33600DF1A3E /* Pup Tent.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5CF2BA961997A33600DF1A3E /* Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5CF2BAA41997A33600DF1A3E /* Build configuration list for PBXNativeTarget "Tests" */;
-			buildPhases = (
-				5CF2BA931997A33600DF1A3E /* Sources */,
-				5CF2BA941997A33600DF1A3E /* Frameworks */,
-				5CF2BA951997A33600DF1A3E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5CF2BA991997A33600DF1A3E /* PBXTargetDependency */,
-			);
-			name = Tests;
-			productName = PupTentTests;
-			productReference = 5CF2BA971997A33600DF1A3E /* Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -219,10 +192,6 @@
 					};
 					5CF2BA831997A33500DF1A3E = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					5CF2BA961997A33600DF1A3E = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = 5CF2BA831997A33500DF1A3E;
 					};
 				};
 			};
@@ -241,7 +210,6 @@
 			targets = (
 				5CF2BA831997A33500DF1A3E /* GUI */,
 				5C6865941997B16E00F81421 /* CLI */,
-				5CF2BA961997A33600DF1A3E /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,13 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C9E9BDD1997AC92005332DA /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CF2BA951997A33600DF1A3E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				5C8555841997E53300C0D18B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +231,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C8555771997C65600C0D18B /* Page.m in Sources */,
+				5C8555751997C65300C0D18B /* Site.m in Sources */,
 				5C68659D1997B4F100F81421 /* main.m in Sources */,
+				5C85556E1997C63C00C0D18B /* HTML.m in Sources */,
+				5C85556B1997C21100C0D18B /* Manager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,27 +243,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C85556D1997C63B00C0D18B /* HTML.m in Sources */,
 				5CDD11A81997A6F70090D2F2 /* AppDelegate.m in Sources */,
+				5C85556A1997C21000C0D18B /* Manager.m in Sources */,
+				5C8555741997C65200C0D18B /* Site.m in Sources */,
+				5C85556C1997C62600C0D18B /* Page.m in Sources */,
 				5CF2BAAA1997A56100DF1A3E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5CF2BA931997A33600DF1A3E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5CF2BA991997A33600DF1A3E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5CF2BA831997A33500DF1A3E /* GUI */;
-			targetProxy = 5CF2BA981997A33600DF1A3E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5C9E9BDA1997AC87005332DA /* MainMenu.xib */ = {
@@ -427,42 +382,6 @@
 			};
 			name = Release;
 		};
-		5CF2BAA51997A33600DF1A3E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PupTent.app/Contents/MacOS/PupTent";
-			};
-			name = Debug;
-		};
-		5CF2BAA61997A33600DF1A3E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PupTent.app/Contents/MacOS/PupTent";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -489,15 +408,6 @@
 			buildConfigurations = (
 				5CF2BAA21997A33600DF1A3E /* Debug */,
 				5CF2BAA31997A33600DF1A3E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5CF2BAA41997A33600DF1A3E /* Build configuration list for PBXNativeTarget "Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5CF2BAA51997A33600DF1A3E /* Debug */,
-				5CF2BAA61997A33600DF1A3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
