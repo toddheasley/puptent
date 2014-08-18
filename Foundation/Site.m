@@ -15,6 +15,26 @@ static NSString *kPagesKey = @"pages";
 
 @implementation Site
 
+- (NSArray *)indexedPages {
+    NSMutableArray *pages = [NSMutableArray array];
+    for (Page *page in self.pages) {
+        if (page.index) {
+            [pages addObject:page];
+        }
+    }
+    return [NSArray arrayWithArray:pages];
+}
+
+- (NSArray *)featuredPages {
+    NSMutableArray *pages = [NSMutableArray array];
+    for (Page *page in self.pages) {
+        if (page.feature) {
+            [pages addObject:page];
+        }
+    }
+    return [NSArray arrayWithArray:pages];
+}
+
 - (id)init {
     self = [super init];
     if (self) {

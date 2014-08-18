@@ -17,6 +17,8 @@
 		5C8555751997C65300C0D18B /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
 		5C8555771997C65600C0D18B /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
 		5C8555841997E53300C0D18B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C8555831997E53300C0D18B /* Images.xcassets */; };
+		5C96868919A25ECD00C9F9CF /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C96868819A25ECD00C9F9CF /* NSString+HTML.m */; };
+		5C96868A19A25ECD00C9F9CF /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C96868819A25ECD00C9F9CF /* NSString+HTML.m */; };
 		5C9E9BDD1997AC92005332DA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C9E9BDA1997AC87005332DA /* MainMenu.xib */; };
 		5CDD11A81997A6F70090D2F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDD11A71997A6F70090D2F2 /* AppDelegate.m */; };
 		5CF2BAAA1997A56100DF1A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2BAA91997A56100DF1A3E /* main.m */; };
@@ -48,6 +50,8 @@
 		5C8555661997BFAB00C0D18B /* HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HTML.h; path = Foundation/HTML.h; sourceTree = "<group>"; };
 		5C8555671997BFAB00C0D18B /* HTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HTML.m; path = Foundation/HTML.m; sourceTree = "<group>"; };
 		5C8555831997E53300C0D18B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GUI/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		5C96868719A25ECD00C9F9CF /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Foundation/NSString+HTML.h"; sourceTree = "<group>"; };
+		5C96868819A25ECD00C9F9CF /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Foundation/NSString+HTML.m"; sourceTree = "<group>"; };
 		5C9E9BDB1997AC87005332DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = GUI/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		5CDD11A61997A6F70090D2F2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GUI/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		5CDD11A71997A6F70090D2F2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = GUI/AppDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -137,6 +141,8 @@
 				5C85555F1997BDAA00C0D18B /* Site.m */,
 				5C8555621997BE6500C0D18B /* Page.h */,
 				5C8555631997BE6500C0D18B /* Page.m */,
+				5C96868719A25ECD00C9F9CF /* NSString+HTML.h */,
+				5C96868819A25ECD00C9F9CF /* NSString+HTML.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -235,6 +241,7 @@
 				5C8555751997C65300C0D18B /* Site.m in Sources */,
 				5C68659D1997B4F100F81421 /* main.m in Sources */,
 				5C85556E1997C63C00C0D18B /* HTML.m in Sources */,
+				5C96868A19A25ECD00C9F9CF /* NSString+HTML.m in Sources */,
 				5C85556B1997C21100C0D18B /* Manager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +256,7 @@
 				5C8555741997C65200C0D18B /* Site.m in Sources */,
 				5C85556C1997C62600C0D18B /* Page.m in Sources */,
 				5CF2BAAA1997A56100DF1A3E /* main.m in Sources */,
+				5C96868919A25ECD00C9F9CF /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

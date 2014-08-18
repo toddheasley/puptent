@@ -10,12 +10,12 @@
 
 static NSString *kManifestURI = @"index.json";
 static NSString *kBookmarkIconURI = @"apple-touch-icon.png";
-static NSString *kBookmarkIconData = @"iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==";
+static NSString *kBookmarkIconData = @"iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg=="; // Base64-encoded blank PNG
 static NSString *kStylesheetURI = @"default.css";
 static NSString *kMediaPath = @"media"; // Suggested media directory
 static NSString *kGitURIs = @"README, README.md, CNAME";
 
-@interface Manager ()
+@interface Manager () <HTMLDelegate>
 
 @property (strong, readwrite) NSString *path;
 
@@ -75,11 +75,13 @@ static NSString *kGitURIs = @"README, README.md, CNAME";
 }
 
 - (NSError *)build {
-    NSDictionary *dictionary = [HTML HTMLForSite:self.site];
-    for (NSString *URI in dictionary) {
-        [[((NSString *)[dictionary objectForKey:URI]) dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[NSString stringWithFormat:@"%@%@", self.path, URI] atomically:YES];
-    }
-    return nil;
+    HTML *html = [[HTML alloc] init];
+    html.delegate = self;
+    html.bookmarkIconURI = kBookmarkIconURI;
+    html.stylesheetURI = kStylesheetURI;
+    html.site = self.site;
+    
+    return [html generateHTML];
 }
 
 - (NSError *)clean {
@@ -121,6 +123,15 @@ static NSString *kGitURIs = @"README, README.md, CNAME";
 
 - (NSString *)mediaPath {
     return kMediaPath;
+}
+
+#pragma mark -
+#pragma mark HTMLDelegate
+
+- (NSError *)HTML:(NSString *)HTML forURI:(NSString *)URI {
+    NSError *error;
+    [[HTML dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[NSString stringWithFormat:@"%@%@", self.path, URI] options:0 error:&error];
+    return error;
 }
 
 @end
