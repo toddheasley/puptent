@@ -147,10 +147,10 @@
                 [string appendFormat:@"    <figure><a href=\"%@\"><img src=\"%@\"></a></figure>\n", section.URI, section.URI];
                 break;
             case PageSectionTypeAudio:
-                [string appendFormat:@"    <audio src=\"%@\" preload=\"metadata\" controls>\n", section.URI];
+                [string appendFormat:@"    <figure><audio src=\"%@\" preload=\"metadata\" controls></audio></figure>\n", section.URI];
                 break;
             case PageSectionTypeVideo:
-                [string appendFormat:@"    <video src=\"%@\" preload=\"metadata\" controls>\n", section.URI];
+                [string appendFormat:@"    <figure><video src=\"%@\" preload=\"metadata\" controls></video></figure>\n", section.URI];
                 break;
         }
     }
