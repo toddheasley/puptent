@@ -37,7 +37,7 @@ if (option == options[0]) {
 }
 
 var error: NSError?
-let manager = Manager.managerForSiteAtPath(path, error: &error)
+let manager = Manager(forSiteAtPath: path, error: &error)
 if ((error) != nil) {
     if (error!.code == 260) {
         println("\(name) \(option) failed: site not found at path \(path)")

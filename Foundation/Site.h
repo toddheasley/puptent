@@ -17,6 +17,5 @@
 @property (strong) NSString *domain;
 @property (strong) NSArray *pages;
 @property (strong, readonly) NSArray *indexedPages;
-@property (strong, readonly) NSArray *featuredPages;
 
 @end

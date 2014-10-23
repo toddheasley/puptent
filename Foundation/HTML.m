@@ -15,7 +15,6 @@
 - (NSString *)footerHTML;
 - (NSString *)menuHTMLForPage:(NSInteger)pageIndex;
 - (NSString *)pageHTML:(NSInteger)pageIndex;
-- (NSString *)mainHTML;
 
 @end
 
@@ -44,7 +43,6 @@
     [string setString:@""];
     [string appendString:[self headHTMLForPage:-1]];
     [string appendString:[self headerHTMLForPage:-1]];
-    [string appendString:[self mainHTML]];
     [string appendString:[self menuHTMLForPage:-1]];
     [string appendString:[self footerHTML]];
     
@@ -118,6 +116,7 @@
 - (NSString *)menuHTMLForPage:(NSInteger)pageIndex {
     NSMutableString *string = [NSMutableString string];
     [string appendString:@"<menu>\n"];
+    [string appendString:@"    <hr>\n"];
     if (self.site.indexedPages.count > 0) {
         [string appendString:@"    <ul>\n"];
         for (Page *page in self.site.indexedPages) {
@@ -154,33 +153,6 @@
                 [string appendFormat:@"    <video src=\"%@\" preload=\"metadata\" controls>\n", section.URI];
                 break;
         }
-    }
-    [string appendString:@"</main>\n"];
-    return [NSString stringWithString:string];
-}
-
-- (NSString *)mainHTML {
-    NSMutableString *string = [NSMutableString string];
-    [string appendString:@"<main>\n"];
-    if (self.site.featuredPages.count > 0) {
-        [string appendString:@"    <ul>\n"];
-        for (Page *page in self.site.featuredPages) {
-            
-            // Pull image or title for each featured page
-            NSString *URI;
-            for (PageSection *section in page.sections) {
-                if (section.type == PageSectionTypeImage) {
-                    URI = section.URI;
-                    break;
-                }
-            }
-            if (URI.length > 0) {
-                [string appendFormat:@"        <li><a href=\"%@\"><img src=\"%@\"></a></li>\n", page.URI, URI];
-                continue;
-            }
-            [string appendFormat:@"        <li><span><a href=\"%@\">%@</a></span></li>\n", page.URI, page.name];
-        }
-        [string appendString:@"    </ul>\n"];
     }
     [string appendString:@"</main>\n"];
     return [NSString stringWithString:string];

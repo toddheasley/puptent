@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5C966C7319AA5E530008A4CF"
-               BuildableName = "CLI (Swift)"
+               BuildableName = "puptent"
                BlueprintName = "CLI (Swift)"
                ReferencedContainer = "container:PupTent.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5C966C7319AA5E530008A4CF"
-            BuildableName = "CLI (Swift)"
+            BuildableName = "puptent"
             BlueprintName = "CLI (Swift)"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5C966C7319AA5E530008A4CF"
-            BuildableName = "CLI (Swift)"
+            BuildableName = "puptent"
             BlueprintName = "CLI (Swift)"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5C966C7319AA5E530008A4CF"
-            BuildableName = "CLI (Swift)"
+            BuildableName = "puptent"
             BlueprintName = "CLI (Swift)"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>

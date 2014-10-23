@@ -8,7 +8,6 @@
 #import "Page.h"
 
 static NSString *kIndexKey = @"index";
-static NSString *kFeatureKey = @"feature";
 static NSString *kNameKey = @"name";
 static NSString *kURIKey = @"URI";
 static NSString *kSectionsKey = @"sections";
@@ -21,7 +20,6 @@ static NSString *kTextKey = @"text";
     self = [super init];
     if (self) {
         self.index = YES;
-        self.feature = NO;
         self.name = @"";
         self.URI = @"";
         self.sections = @[
@@ -40,7 +38,6 @@ static NSString *kTextKey = @"text";
         }
         
         self.index = [[dictionary objectForKey:kIndexKey] boolValue];
-        self.feature = [[dictionary objectForKey:kFeatureKey] boolValue];
         self.name = [dictionary objectForKey:kNameKey];
         self.URI = [dictionary objectForKey:kURIKey];
         self.sections = [NSArray arrayWithArray:sections];
@@ -56,7 +53,6 @@ static NSString *kTextKey = @"text";
     
     return @{
         kIndexKey: @(self.index),
-        kFeatureKey: @(self.feature),
         kNameKey: self.name,
         kURIKey: self.URI,
         kSectionsKey: [NSArray arrayWithArray:sections]

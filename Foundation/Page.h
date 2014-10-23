@@ -18,7 +18,6 @@ typedef NS_ENUM(NSInteger, PageSectionType) {
 @interface Page : NSObject <Archiving>
 
 @property (assign) BOOL index;
-@property (assign) BOOL feature;
 @property (strong) NSString *name;
 @property (strong) NSString *URI;
 @property (strong) NSArray *sections;
