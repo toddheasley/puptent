@@ -7,39 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C68659D1997B4F100F81421 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C68659C1997B4F100F81421 /* main.m */; };
-		5C85556A1997C21000C0D18B /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555651997BF1D00C0D18B /* Manager.m */; };
-		5C85556B1997C21100C0D18B /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555651997BF1D00C0D18B /* Manager.m */; };
-		5C85556C1997C62600C0D18B /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
-		5C85556D1997C63B00C0D18B /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555671997BFAB00C0D18B /* HTML.m */; };
-		5C85556E1997C63C00C0D18B /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555671997BFAB00C0D18B /* HTML.m */; };
-		5C8555741997C65200C0D18B /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
-		5C8555751997C65300C0D18B /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
-		5C8555771997C65600C0D18B /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
+		5C46B71A1A38AA5900BA9F55 /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7186911A350A5C0090098A /* Archiving.swift */; };
+		5C46B71B1A38AA5D00BA9F55 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46B7171A380D1C00BA9F55 /* Manager.swift */; };
+		5C46B71C1A38AA6000BA9F55 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46B7141A37F05300BA9F55 /* Site.swift */; };
+		5C46B71D1A38AA6300BA9F55 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71868E1A34FD8A0090098A /* Page.swift */; };
 		5C8555841997E53300C0D18B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C8555831997E53300C0D18B /* Images.xcassets */; };
-		5C966C7B19AA5FEF0008A4CF /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555651997BF1D00C0D18B /* Manager.m */; };
-		5C966C7C19AA5FF30008A4CF /* HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555671997BFAB00C0D18B /* HTML.m */; };
-		5C966C7D19AA5FF80008A4CF /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C85555F1997BDAA00C0D18B /* Site.m */; };
-		5C966C7E19AA5FFC0008A4CF /* Page.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8555631997BE6500C0D18B /* Page.m */; };
-		5C966C7F19AA60000008A4CF /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C96868819A25ECD00C9F9CF /* NSString+HTML.m */; };
 		5C966C8619AA71410008A4CF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C966C8519AA71410008A4CF /* main.swift */; };
-		5C96868919A25ECD00C9F9CF /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C96868819A25ECD00C9F9CF /* NSString+HTML.m */; };
-		5C96868A19A25ECD00C9F9CF /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C96868819A25ECD00C9F9CF /* NSString+HTML.m */; };
 		5C9E9BDD1997AC92005332DA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C9E9BDA1997AC87005332DA /* MainMenu.xib */; };
 		5CDD11A81997A6F70090D2F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CDD11A71997A6F70090D2F2 /* AppDelegate.m */; };
 		5CF2BAAA1997A56100DF1A3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2BAA91997A56100DF1A3E /* main.m */; };
+		5CF5F77B1A4501EA009D4A68 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF5F77A1A4501EA009D4A68 /* HTML.swift */; };
+		5CF5F77C1A4501EA009D4A68 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF5F77A1A4501EA009D4A68 /* HTML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5C6865931997B16E00F81421 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		5C966C7219AA5E530008A4CF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,40 +33,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C6865951997B16E00F81421 /* puptent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = puptent; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C68659C1997B4F100F81421 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CLI/main.m; sourceTree = SOURCE_ROOT; };
+		5C46B7141A37F05300BA9F55 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
+		5C46B7171A380D1C00BA9F55 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		5C68659E1997B55B00F81421 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5C85555D1997BD3500C0D18B /* Archiving.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Archiving.h; path = Foundation/Archiving.h; sourceTree = "<group>"; };
-		5C85555E1997BDAA00C0D18B /* Site.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Site.h; path = Foundation/Site.h; sourceTree = "<group>"; };
-		5C85555F1997BDAA00C0D18B /* Site.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Site.m; path = Foundation/Site.m; sourceTree = "<group>"; };
-		5C8555621997BE6500C0D18B /* Page.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Page.h; path = Foundation/Page.h; sourceTree = "<group>"; };
-		5C8555631997BE6500C0D18B /* Page.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Page.m; path = Foundation/Page.m; sourceTree = "<group>"; };
-		5C8555641997BF1D00C0D18B /* Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Manager.h; path = Foundation/Manager.h; sourceTree = "<group>"; };
-		5C8555651997BF1D00C0D18B /* Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Manager.m; path = Foundation/Manager.m; sourceTree = "<group>"; };
-		5C8555661997BFAB00C0D18B /* HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HTML.h; path = Foundation/HTML.h; sourceTree = "<group>"; };
-		5C8555671997BFAB00C0D18B /* HTML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HTML.m; path = Foundation/HTML.m; sourceTree = "<group>"; };
+		5C71868E1A34FD8A0090098A /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		5C7186911A350A5C0090098A /* Archiving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archiving.swift; sourceTree = "<group>"; };
 		5C8555831997E53300C0D18B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GUI/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		5C966C7419AA5E530008A4CF /* puptent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = puptent; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C966C8519AA71410008A4CF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = CLI/main.swift; sourceTree = SOURCE_ROOT; };
-		5C966C8819AA72EA0008A4CF /* Foundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Foundation.h; path = Foundation/Foundation.h; sourceTree = "<group>"; };
-		5C96868719A25ECD00C9F9CF /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Foundation/NSString+HTML.h"; sourceTree = "<group>"; };
-		5C96868819A25ECD00C9F9CF /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Foundation/NSString+HTML.m"; sourceTree = "<group>"; };
 		5C9E9BDB1997AC87005332DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = GUI/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		5CDD11A61997A6F70090D2F2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GUI/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		5CDD11A71997A6F70090D2F2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = GUI/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		5CF2BA841997A33600DF1A3E /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF2BAA91997A56100DF1A3E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GUI/main.m; sourceTree = SOURCE_ROOT; };
 		5CF2BAAB1997A56A00DF1A3E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GUI/Info.plist; sourceTree = SOURCE_ROOT; };
+		5CF5F77A1A4501EA009D4A68 /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5C6865921997B16E00F81421 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C966C7119AA5E530008A4CF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -107,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				5C966C8519AA71410008A4CF /* main.swift */,
-				5C68659C1997B4F100F81421 /* main.m */,
 			);
 			name = CLI;
 			path = puptent;
@@ -128,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				5CF2BA841997A33600DF1A3E /* Pup Tent.app */,
-				5C6865951997B16E00F81421 /* puptent */,
 				5C966C7419AA5E530008A4CF /* puptent */,
 			);
 			name = Products;
@@ -159,18 +122,11 @@
 		5CF2BAA71997A35F00DF1A3E /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				5C966C8819AA72EA0008A4CF /* Foundation.h */,
-				5C8555641997BF1D00C0D18B /* Manager.h */,
-				5C8555651997BF1D00C0D18B /* Manager.m */,
-				5C8555661997BFAB00C0D18B /* HTML.h */,
-				5C8555671997BFAB00C0D18B /* HTML.m */,
-				5C85555D1997BD3500C0D18B /* Archiving.h */,
-				5C85555E1997BDAA00C0D18B /* Site.h */,
-				5C85555F1997BDAA00C0D18B /* Site.m */,
-				5C8555621997BE6500C0D18B /* Page.h */,
-				5C8555631997BE6500C0D18B /* Page.m */,
-				5C96868719A25ECD00C9F9CF /* NSString+HTML.h */,
-				5C96868819A25ECD00C9F9CF /* NSString+HTML.m */,
+				5C7186911A350A5C0090098A /* Archiving.swift */,
+				5CF5F77A1A4501EA009D4A68 /* HTML.swift */,
+				5C46B7171A380D1C00BA9F55 /* Manager.swift */,
+				5C46B7141A37F05300BA9F55 /* Site.swift */,
+				5C71868E1A34FD8A0090098A /* Page.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -178,26 +134,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5C6865941997B16E00F81421 /* CLI */ = {
+		5C966C7319AA5E530008A4CF /* CLI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5C6865991997B16E00F81421 /* Build configuration list for PBXNativeTarget "CLI" */;
-			buildPhases = (
-				5C6865911997B16E00F81421 /* Sources */,
-				5C6865921997B16E00F81421 /* Frameworks */,
-				5C6865931997B16E00F81421 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CLI;
-			productName = puptent;
-			productReference = 5C6865951997B16E00F81421 /* puptent */;
-			productType = "com.apple.product-type.tool";
-		};
-		5C966C7319AA5E530008A4CF /* CLI (Swift) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI (Swift)" */;
+			buildConfigurationList = 5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI" */;
 			buildPhases = (
 				5C966C7019AA5E530008A4CF /* Sources */,
 				5C966C7119AA5E530008A4CF /* Frameworks */,
@@ -207,7 +146,7 @@
 			);
 			dependencies = (
 			);
-			name = "CLI (Swift)";
+			name = CLI;
 			productName = puptent;
 			productReference = 5C966C7419AA5E530008A4CF /* puptent */;
 			productType = "com.apple.product-type.tool";
@@ -238,9 +177,6 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "@toddheasley";
 				TargetAttributes = {
-					5C6865941997B16E00F81421 = {
-						CreatedOnToolsVersion = 6.0;
-					};
 					5C966C7319AA5E530008A4CF = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -263,8 +199,7 @@
 			projectRoot = "";
 			targets = (
 				5CF2BA831997A33500DF1A3E /* GUI */,
-				5C6865941997B16E00F81421 /* CLI */,
-				5C966C7319AA5E530008A4CF /* CLI (Swift) */,
+				5C966C7319AA5E530008A4CF /* CLI */,
 			);
 		};
 /* End PBXProject section */
@@ -282,29 +217,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5C6865911997B16E00F81421 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5C68659D1997B4F100F81421 /* main.m in Sources */,
-				5C85556B1997C21100C0D18B /* Manager.m in Sources */,
-				5C85556E1997C63C00C0D18B /* HTML.m in Sources */,
-				5C8555751997C65300C0D18B /* Site.m in Sources */,
-				5C8555771997C65600C0D18B /* Page.m in Sources */,
-				5C96868A19A25ECD00C9F9CF /* NSString+HTML.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C966C7019AA5E530008A4CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CF5F77C1A4501EA009D4A68 /* HTML.swift in Sources */,
+				5C46B71A1A38AA5900BA9F55 /* Archiving.swift in Sources */,
 				5C966C8619AA71410008A4CF /* main.swift in Sources */,
-				5C966C7B19AA5FEF0008A4CF /* Manager.m in Sources */,
-				5C966C7C19AA5FF30008A4CF /* HTML.m in Sources */,
-				5C966C7D19AA5FF80008A4CF /* Site.m in Sources */,
-				5C966C7E19AA5FFC0008A4CF /* Page.m in Sources */,
-				5C966C7F19AA60000008A4CF /* NSString+HTML.m in Sources */,
+				5C46B71B1A38AA5D00BA9F55 /* Manager.swift in Sources */,
+				5C46B71D1A38AA6300BA9F55 /* Page.swift in Sources */,
+				5C46B71C1A38AA6000BA9F55 /* Site.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,13 +234,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CF5F77B1A4501EA009D4A68 /* HTML.swift in Sources */,
 				5CF2BAAA1997A56100DF1A3E /* main.m in Sources */,
 				5CDD11A81997A6F70090D2F2 /* AppDelegate.m in Sources */,
-				5C85556A1997C21000C0D18B /* Manager.m in Sources */,
-				5C85556D1997C63B00C0D18B /* HTML.m in Sources */,
-				5C8555741997C65200C0D18B /* Site.m in Sources */,
-				5C85556C1997C62600C0D18B /* Page.m in Sources */,
-				5C96868919A25ECD00C9F9CF /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,21 +254,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5C68659A1997B16E00F81421 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				PRODUCT_NAME = puptent;
-			};
-			name = Debug;
-		};
-		5C68659B1997B16E00F81421 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = puptent;
-			};
-			name = Release;
-		};
 		5C966C7819AA5E530008A4CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -453,10 +356,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = GUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "Pup Tent";
+				SWIFT_OBJC_BRIDGING_HEADER = "GUI-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -464,32 +370,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = GUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "Pup Tent";
+				SWIFT_OBJC_BRIDGING_HEADER = "GUI-Bridging-Header.h";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5C6865991997B16E00F81421 /* Build configuration list for PBXNativeTarget "CLI" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C68659A1997B16E00F81421 /* Debug */,
-				5C68659B1997B16E00F81421 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI (Swift)" */ = {
+		5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C966C7819AA5E530008A4CF /* Debug */,
 				5C966C7919AA5E530008A4CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CF2BA7F1997A33500DF1A3E /* Build configuration list for PBXProject "PupTent" */ = {
 			isa = XCConfigurationList;
