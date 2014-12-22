@@ -51,6 +51,10 @@ public class Manager: HTMLDelegate {
     }
     
     public class func pitch(path: String) -> NSError? {
+        if (Manager.exists(path)) {
+            return nil
+        }
+        
         var error: NSError?
         var site: Site = Site()
         site.URI = "index.html"
@@ -94,7 +98,7 @@ public class Manager: HTMLDelegate {
         
         let enumerator: NSDirectoryEnumerator = NSFileManager.defaultManager().enumeratorAtPath(self._path)!
         while let URI = enumerator.nextObject() as? String {
-            if (!contains(manifest, URI) || URI.hasPrefix(".")) {
+            if (!contains(manifest, URI) && !URI.hasPrefix(".")) {
                 
                 // Not found in manifest; move file to trash
                 NSFileManager.defaultManager().trashItemAtURL(NSURL(fileURLWithPath: self._path + URI)!, resultingItemURL: nil, error: &error)
