@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5CF2BA831997A33500DF1A3E"
-               BuildableName = "Pup Tent.app"
+               BlueprintIdentifier = "5CDBA5DD1A47A13E00B789A3"
+               BuildableName = "GUI.app"
                BlueprintName = "GUI"
+               ReferencedContainer = "container:PupTent.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5CDBA5EE1A47A13F00B789A3"
+               BuildableName = "GUITests.xctest"
+               BlueprintName = "GUITests"
                ReferencedContainer = "container:PupTent.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,12 +42,22 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5CDBA5EE1A47A13F00B789A3"
+               BuildableName = "GUITests.xctest"
+               BlueprintName = "GUITests"
+               ReferencedContainer = "container:PupTent.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CF2BA831997A33500DF1A3E"
-            BuildableName = "Pup Tent.app"
+            BlueprintIdentifier = "5CDBA5DD1A47A13E00B789A3"
+            BuildableName = "GUI.app"
             BlueprintName = "GUI"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>
@@ -51,8 +75,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CF2BA831997A33500DF1A3E"
-            BuildableName = "Pup Tent.app"
+            BlueprintIdentifier = "5CDBA5DD1A47A13E00B789A3"
+            BuildableName = "GUI.app"
             BlueprintName = "GUI"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>
@@ -69,8 +93,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CF2BA831997A33500DF1A3E"
-            BuildableName = "Pup Tent.app"
+            BlueprintIdentifier = "5CDBA5DD1A47A13E00B789A3"
+            BuildableName = "GUI.app"
             BlueprintName = "GUI"
             ReferencedContainer = "container:PupTent.xcodeproj">
          </BuildableReference>
