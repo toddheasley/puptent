@@ -56,7 +56,7 @@ public class HTML {
                         "<meta name=\"twitter:creator\" content=\"\(site.twitterName)\">\n",
                         "<meta name=\"twitter:card\" content=\"photo\">\n",
                         "<meta name=\"twitter:title\" content=\"\">\n",
-                        "<meta name=\"twitter:image\" content=\"\(site.domain)/\(section.URI)\">\n"
+                        "<meta name=\"twitter:image:src\" content=\"/\(section.URI)\">\n"
                         ])
                     break
                 }

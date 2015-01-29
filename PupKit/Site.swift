@@ -11,7 +11,6 @@ public class Site: Archiving {
     public var name: String
     public var URI: String
     public var twitterName: String
-    public var domain: String
     public var pages: Array<Page>
     public var indexedPages: Array<Page> {
         get {
@@ -30,7 +29,6 @@ public class Site: Archiving {
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
             ArchivingKeys.twitterName: "",
-            ArchivingKeys.domain: "",
             ArchivingKeys.pages: [
                 Page().dictionary
             ]
@@ -61,7 +59,6 @@ public class Site: Archiving {
                 ArchivingKeys.name: self.name,
                 ArchivingKeys.URI: self.URI,
                 ArchivingKeys.twitterName: self.twitterName,
-                ArchivingKeys.domain: self.domain,
                 ArchivingKeys.pages: pages
             ]
         }
@@ -71,7 +68,6 @@ public class Site: Archiving {
         self.name = dictionary[ArchivingKeys.name] as String
         self.URI = dictionary[ArchivingKeys.URI] as String
         self.twitterName = dictionary[ArchivingKeys.twitterName] as String
-        self.domain = dictionary[ArchivingKeys.domain] as String
         self.pages = []
         for page in dictionary[ArchivingKeys.pages] as Array<NSDictionary> {
             self.pages.append(Page(dictionary: page as NSDictionary))
