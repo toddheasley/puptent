@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  PupTent
 //
-//  (c) 2014 @toddheasley
+//  (c) 2015 @toddheasley
 //
 
 import Cocoa

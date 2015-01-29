@@ -1,8 +1,8 @@
 //
 //  Manager.swift
-//  PupTent
+//  PupKit
 //
-//  (c) 2014 @toddheasley
+//  (c) 2015 @toddheasley
 //
 
 import Foundation

@@ -7,186 +7,103 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C966C8619AA71410008A4CF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C966C8519AA71410008A4CF /* main.swift */; };
-		5CDBA5D11A47A09C00B789A3 /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CB1A47A09C00B789A3 /* Archiving.swift */; };
-		5CDBA5D31A47A09C00B789A3 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CC1A47A09C00B789A3 /* HTML.swift */; };
-		5CDBA5D51A47A09C00B789A3 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CD1A47A09C00B789A3 /* Manager.swift */; };
-		5CDBA5D71A47A09C00B789A3 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CE1A47A09C00B789A3 /* Page.swift */; };
-		5CDBA5D91A47A09C00B789A3 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CF1A47A09C00B789A3 /* Site.swift */; };
-		5CDBA5E31A47A13F00B789A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5E21A47A13F00B789A3 /* AppDelegate.swift */; };
-		5CDBA5E51A47A13F00B789A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5E41A47A13F00B789A3 /* ViewController.swift */; };
-		5CDBA5E71A47A13F00B789A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CDBA5E61A47A13F00B789A3 /* Images.xcassets */; };
-		5CDBA5EA1A47A13F00B789A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CDBA5E81A47A13F00B789A3 /* Main.storyboard */; };
-		5CDBA5FD1A47A1B100B789A3 /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CB1A47A09C00B789A3 /* Archiving.swift */; };
-		5CDBA5FE1A47A1B300B789A3 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CC1A47A09C00B789A3 /* HTML.swift */; };
-		5CDBA5FF1A47A1B600B789A3 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CD1A47A09C00B789A3 /* Manager.swift */; };
-		5CDBA6001A47A1B900B789A3 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CE1A47A09C00B789A3 /* Page.swift */; };
-		5CDBA6011A47A1BB00B789A3 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBA5CF1A47A09C00B789A3 /* Site.swift */; };
+		5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
+		5C4AE5381A7A7D0400BF15F3 /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */; };
+		5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */; };
+		5CA7FB321A7A7BCF00D95984 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB311A7A7BCF00D95984 /* ViewController.swift */; };
+		5CA7FB341A7A7BCF00D95984 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CA7FB331A7A7BCF00D95984 /* Images.xcassets */; };
+		5CA7FB371A7A7BCF00D95984 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CA7FB351A7A7BCF00D95984 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5C966C7219AA5E530008A4CF /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		5C68659E1997B55B00F81421 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5C966C7419AA5E530008A4CF /* puptent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = puptent; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C966C8519AA71410008A4CF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = CLI/main.swift; sourceTree = SOURCE_ROOT; };
-		5CDBA5CB1A47A09C00B789A3 /* Archiving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Archiving.swift; path = Foundation/Archiving.swift; sourceTree = "<group>"; };
-		5CDBA5CC1A47A09C00B789A3 /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTML.swift; path = Foundation/HTML.swift; sourceTree = "<group>"; };
-		5CDBA5CD1A47A09C00B789A3 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Manager.swift; path = Foundation/Manager.swift; sourceTree = "<group>"; };
-		5CDBA5CE1A47A09C00B789A3 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Page.swift; path = Foundation/Page.swift; sourceTree = "<group>"; };
-		5CDBA5CF1A47A09C00B789A3 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Site.swift; path = Foundation/Site.swift; sourceTree = "<group>"; };
-		5CDBA5DE1A47A13E00B789A3 /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CDBA5E11A47A13F00B789A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5CDBA5E21A47A13F00B789A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CDBA5E41A47A13F00B789A3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5CDBA5E61A47A13F00B789A3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5CDBA5E91A47A13F00B789A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5C3ACE591A7A7E4500A7884D /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PupKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/PupTent-cxskoiqkbzoodfbisaosgmkipygo/Build/Products/Debug/PupKit.framework"; sourceTree = "<group>"; };
+		5CA7FB2E1A7A7BCF00D95984 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5CA7FB311A7A7BCF00D95984 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5CA7FB331A7A7BCF00D95984 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5CA7FB361A7A7BCF00D95984 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5C966C7119AA5E530008A4CF /* Frameworks */ = {
+		5CA7FB271A7A7BCF00D95984 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CDBA5DB1A47A13E00B789A3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				5C4AE5381A7A7D0400BF15F3 /* PupKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5C6865961997B16E00F81421 /* CLI */ = {
+		5CA7FB211A7A7BCF00D95984 = {
 			isa = PBXGroup;
 			children = (
-				5C966C8519AA71410008A4CF /* main.swift */,
+				5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */,
+				5CA7FB2C1A7A7BCF00D95984 /* PupTent */,
+				5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */,
 			);
-			name = CLI;
-			path = puptent;
 			sourceTree = "<group>";
 		};
-		5CDBA5DF1A47A13E00B789A3 /* GUI */ = {
+		5CA7FB2C1A7A7BCF00D95984 /* PupTent */ = {
 			isa = PBXGroup;
 			children = (
-				5CDBA5E21A47A13F00B789A3 /* AppDelegate.swift */,
-				5CDBA5E41A47A13F00B789A3 /* ViewController.swift */,
-				5CDBA5E61A47A13F00B789A3 /* Images.xcassets */,
-				5CDBA5E81A47A13F00B789A3 /* Main.storyboard */,
-				5CDBA5E01A47A13E00B789A3 /* Supporting Files */,
+				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
+				5CA7FB311A7A7BCF00D95984 /* ViewController.swift */,
+				5C3ACE591A7A7E4500A7884D /* Window.swift */,
+				5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */,
+				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
+				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
 			);
-			path = GUI;
+			path = PupTent;
 			sourceTree = "<group>";
 		};
-		5CDBA5E01A47A13E00B789A3 /* Supporting Files */ = {
+		5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5CDBA5E11A47A13F00B789A3 /* Info.plist */,
+				5CA7FB2E1A7A7BCF00D95984 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5CF2BA7B1997A33500DF1A3E = {
-			isa = PBXGroup;
-			children = (
-				5CF2BAA71997A35F00DF1A3E /* Foundation */,
-				5CDBA5DF1A47A13E00B789A3 /* GUI */,
-				5C6865961997B16E00F81421 /* CLI */,
-				5CF2BA851997A33600DF1A3E /* Products */,
-				5C68659E1997B55B00F81421 /* README.md */,
-			);
-			sourceTree = "<group>";
-		};
-		5CF2BA851997A33600DF1A3E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5C966C7419AA5E530008A4CF /* puptent */,
-				5CDBA5DE1A47A13E00B789A3 /* Pup Tent.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5CF2BAA71997A35F00DF1A3E /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				5CDBA5CB1A47A09C00B789A3 /* Archiving.swift */,
-				5CDBA5CC1A47A09C00B789A3 /* HTML.swift */,
-				5CDBA5CD1A47A09C00B789A3 /* Manager.swift */,
-				5CDBA5CF1A47A09C00B789A3 /* Site.swift */,
-				5CDBA5CE1A47A09C00B789A3 /* Page.swift */,
-			);
-			name = Foundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5C966C7319AA5E530008A4CF /* CLI */ = {
+		5CA7FB291A7A7BCF00D95984 /* PupTent */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI" */;
+			buildConfigurationList = 5CA7FB461A7A7BCF00D95984 /* Build configuration list for PBXNativeTarget "PupTent" */;
 			buildPhases = (
-				5C966C7019AA5E530008A4CF /* Sources */,
-				5C966C7119AA5E530008A4CF /* Frameworks */,
-				5C966C7219AA5E530008A4CF /* CopyFiles */,
+				5CA7FB261A7A7BCF00D95984 /* Sources */,
+				5CA7FB271A7A7BCF00D95984 /* Frameworks */,
+				5CA7FB281A7A7BCF00D95984 /* Resources */,
+				5CF6CB481A7A82DC00CCC2B5 /* Set Build Number */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = CLI;
-			productName = puptent;
-			productReference = 5C966C7419AA5E530008A4CF /* puptent */;
-			productType = "com.apple.product-type.tool";
-		};
-		5CDBA5DD1A47A13E00B789A3 /* GUI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5CDBA5F71A47A13F00B789A3 /* Build configuration list for PBXNativeTarget "GUI" */;
-			buildPhases = (
-				5CDBA5DA1A47A13E00B789A3 /* Sources */,
-				5CDBA5DB1A47A13E00B789A3 /* Frameworks */,
-				5CDBA5DC1A47A13E00B789A3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = GUI;
-			productName = GUI;
-			productReference = 5CDBA5DE1A47A13E00B789A3 /* Pup Tent.app */;
+			name = PupTent;
+			productName = PupTent;
+			productReference = 5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		5CF2BA7C1997A33500DF1A3E /* Project object */ = {
+		5CA7FB221A7A7BCF00D95984 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "@toddheasley";
 				TargetAttributes = {
-					5C966C7319AA5E530008A4CF = {
-						CreatedOnToolsVersion = 6.0;
-					};
-					5CDBA5DD1A47A13E00B789A3 = {
+					5CA7FB291A7A7BCF00D95984 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
 			};
-			buildConfigurationList = 5CF2BA7F1997A33500DF1A3E /* Build configuration list for PBXProject "PupTent" */;
+			buildConfigurationList = 5CA7FB251A7A7BCF00D95984 /* Build configuration list for PBXProject "PupTent" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -194,64 +111,63 @@
 				en,
 				Base,
 			);
-			mainGroup = 5CF2BA7B1997A33500DF1A3E;
-			productRefGroup = 5CF2BA851997A33600DF1A3E /* Products */;
+			mainGroup = 5CA7FB211A7A7BCF00D95984;
+			productRefGroup = 5CA7FB211A7A7BCF00D95984;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5CDBA5DD1A47A13E00B789A3 /* GUI */,
-				5C966C7319AA5E530008A4CF /* CLI */,
+				5CA7FB291A7A7BCF00D95984 /* PupTent */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5CDBA5DC1A47A13E00B789A3 /* Resources */ = {
+		5CA7FB281A7A7BCF00D95984 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CDBA5E71A47A13F00B789A3 /* Images.xcassets in Resources */,
-				5CDBA5EA1A47A13F00B789A3 /* Main.storyboard in Resources */,
+				5CA7FB341A7A7BCF00D95984 /* Images.xcassets in Resources */,
+				5CA7FB371A7A7BCF00D95984 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXSourcesBuildPhase section */
-		5C966C7019AA5E530008A4CF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		5CF6CB481A7A82DC00CCC2B5 /* Set Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CDBA5D31A47A09C00B789A3 /* HTML.swift in Sources */,
-				5C966C8619AA71410008A4CF /* main.swift in Sources */,
-				5CDBA5D11A47A09C00B789A3 /* Archiving.swift in Sources */,
-				5CDBA5D51A47A09C00B789A3 /* Manager.swift in Sources */,
-				5CDBA5D91A47A09C00B789A3 /* Site.swift in Sources */,
-				5CDBA5D71A47A09C00B789A3 /* Page.swift in Sources */,
+			);
+			inputPaths = (
+			);
+			name = "Set Build Number";
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "git=`sh /etc/profile; which git`\nbundleVersion=`\"$git\" rev-list --all |wc -l`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
-		5CDBA5DA1A47A13E00B789A3 /* Sources */ = {
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5CA7FB261A7A7BCF00D95984 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CDBA6011A47A1BB00B789A3 /* Site.swift in Sources */,
-				5CDBA5E51A47A13F00B789A3 /* ViewController.swift in Sources */,
-				5CDBA5E31A47A13F00B789A3 /* AppDelegate.swift in Sources */,
-				5CDBA6001A47A1B900B789A3 /* Page.swift in Sources */,
-				5CDBA5FE1A47A1B300B789A3 /* HTML.swift in Sources */,
-				5CDBA5FD1A47A1B100B789A3 /* Archiving.swift in Sources */,
-				5CDBA5FF1A47A1B600B789A3 /* Manager.swift in Sources */,
+				5CA7FB321A7A7BCF00D95984 /* ViewController.swift in Sources */,
+				5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */,
+				5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5CDBA5E81A47A13F00B789A3 /* Main.storyboard */ = {
+		5CA7FB351A7A7BCF00D95984 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5CDBA5E91A47A13F00B789A3 /* Base */,
+				5CA7FB361A7A7BCF00D95984 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -259,54 +175,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5C966C7819AA5E530008A4CF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = puptent;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		5C966C7919AA5E530008A4CF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = puptent;
-			};
-			name = Release;
-		};
-		5CDBA5F81A47A13F00B789A3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = GUI/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "Pup Tent";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		5CDBA5F91A47A13F00B789A3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = GUI/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = "Pup Tent";
-			};
-			name = Release;
-		};
-		5CF2BA9F1997A33600DF1A3E /* Debug */ = {
+		5CA7FB441A7A7BCF00D95984 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -344,10 +213,11 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		5CF2BAA01997A33600DF1A3E /* Release */ = {
+		5CA7FB451A7A7BCF00D95984 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -382,36 +252,58 @@
 			};
 			name = Release;
 		};
+		5CA7FB471A7A7BCF00D95984 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PupTent-cxskoiqkbzoodfbisaosgmkipygo/Build/Products/Debug",
+				);
+				INFOPLIST_FILE = PupTent/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "Pup Tent";
+			};
+			name = Debug;
+		};
+		5CA7FB481A7A7BCF00D95984 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PupTent-cxskoiqkbzoodfbisaosgmkipygo/Build/Products/Debug",
+				);
+				INFOPLIST_FILE = PupTent/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "Pup Tent";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5C966C7A19AA5E530008A4CF /* Build configuration list for PBXNativeTarget "CLI" */ = {
+		5CA7FB251A7A7BCF00D95984 /* Build configuration list for PBXProject "PupTent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5C966C7819AA5E530008A4CF /* Debug */,
-				5C966C7919AA5E530008A4CF /* Release */,
+				5CA7FB441A7A7BCF00D95984 /* Debug */,
+				5CA7FB451A7A7BCF00D95984 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CDBA5F71A47A13F00B789A3 /* Build configuration list for PBXNativeTarget "GUI" */ = {
+		5CA7FB461A7A7BCF00D95984 /* Build configuration list for PBXNativeTarget "PupTent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5CDBA5F81A47A13F00B789A3 /* Debug */,
-				5CDBA5F91A47A13F00B789A3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		5CF2BA7F1997A33500DF1A3E /* Build configuration list for PBXProject "PupTent" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5CF2BA9F1997A33600DF1A3E /* Debug */,
-				5CF2BAA01997A33600DF1A3E /* Release */,
+				5CA7FB471A7A7BCF00D95984 /* Debug */,
+				5CA7FB481A7A7BCF00D95984 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 5CF2BA7C1997A33500DF1A3E /* Project object */;
+	rootObject = 5CA7FB221A7A7BCF00D95984 /* Project object */;
 }
