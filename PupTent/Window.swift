@@ -10,6 +10,7 @@ import Cocoa
 class Window: NSWindow {
     override init(contentRect: NSRect, styleMask aStyle: Int, backing bufferingType: NSBackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: aStyle, backing: bufferingType, defer: flag)
+        self.titlebarAppearsTransparent = true
     }
 
     required init?(coder: NSCoder) {
