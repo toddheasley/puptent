@@ -37,11 +37,9 @@ public class Manager: HTMLDelegate {
     
     public init?(path: String, error: NSErrorPointer) {
         self._path = path.componentsSeparatedByString(Manager.manifestURI)[0]
-        if let data: NSData = NSData(contentsOfURL: NSURL(fileURLWithPath: path + Manager.manifestURI)!, options: nil, error: &error.memory) {
-            if let dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error.memory) as? NSDictionary {
-                self.site = Site(dictionary: dictionary)
-                return
-            }
+        if let data: NSData = NSData(contentsOfURL: NSURL(fileURLWithPath: path + Manager.manifestURI)!, options: nil, error: &error.memory), dictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error.memory) as? NSDictionary {
+            self.site = Site(dictionary: dictionary)
+            return
         }
         return nil
     }
@@ -115,7 +113,7 @@ public class Manager: HTMLDelegate {
     private let gitURIs: Array<String> = ["README", "README.md", "CNAME"]
     private var _path: String
     
-    // HTMLDelegate
+    // MARK: HTMLDelegate
     public func handleHTML(HTML: String, URI: String) -> NSError? {
         var error: NSError?
         HTML.dataUsingEncoding(NSUTF8StringEncoding)!.writeToFile(self.path + URI, options: NSDataWritingOptions.AtomicWrite, error: &error)

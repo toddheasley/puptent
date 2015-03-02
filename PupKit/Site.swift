@@ -35,7 +35,7 @@ public class Site: Archiving {
         ])
     }
     
-    // Archiving
+    // MARK: Archiving
     public var manifest: Array<String> {
         get {
             var manifest = [String]()
@@ -65,11 +65,11 @@ public class Site: Archiving {
     }
     
     public required init(dictionary: NSDictionary) {
-        self.name = dictionary[ArchivingKeys.name] as String
-        self.URI = dictionary[ArchivingKeys.URI] as String
-        self.twitterName = dictionary[ArchivingKeys.twitterName] as String
+        self.name = dictionary[ArchivingKeys.name] as! String
+        self.URI = dictionary[ArchivingKeys.URI] as! String
+        self.twitterName = dictionary[ArchivingKeys.twitterName] as! String
         self.pages = []
-        for page in dictionary[ArchivingKeys.pages] as Array<NSDictionary> {
+        for page in dictionary[ArchivingKeys.pages] as! Array<NSDictionary> {
             self.pages.append(Page(dictionary: page as NSDictionary))
         }
     }

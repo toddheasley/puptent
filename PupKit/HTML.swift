@@ -146,7 +146,7 @@ extension String {
         var HTML: NSString = self
         if (detectLinks) {
             for pattern: (String, String) in patterns {
-                HTML = NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(HTML, options: nil, range: NSMakeRange(0, HTML.length), withTemplate: pattern.1)
+                HTML = NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(HTML as String, options: nil, range: NSMakeRange(0, HTML.length), withTemplate: pattern.1)
             }
         }
         

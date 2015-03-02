@@ -24,7 +24,7 @@ public class Page: Archiving {
         ])
     }
     
-    // Archiving
+    // MARK: Archiving
     public var manifest: Array<String> {
         get {
             var manifest = [String]()
@@ -54,11 +54,11 @@ public class Page: Archiving {
     }
     
     public required init(dictionary: NSDictionary) {
-        self.index = dictionary[ArchivingKeys.index] as Bool
-        self.name = dictionary[ArchivingKeys.name] as String
-        self.URI = dictionary[ArchivingKeys.URI] as String
+        self.index = dictionary[ArchivingKeys.index] as! Bool
+        self.name = dictionary[ArchivingKeys.name] as! String
+        self.URI = dictionary[ArchivingKeys.URI] as! String
         self.sections = []
-        for section in dictionary[ArchivingKeys.sections] as Array<NSDictionary> {
+        for section in dictionary[ArchivingKeys.sections] as! Array<NSDictionary> {
             self.sections.append(PageSection(dictionary: section as NSDictionary))
         }
     }
@@ -103,7 +103,7 @@ public class PageSection: Archiving {
     }
     
     required public init(dictionary: NSDictionary) {
-        switch dictionary[ArchivingKeys.type] as String {
+        switch dictionary[ArchivingKeys.type] as! String {
         case ArchivingKeys.types[1]:
             self.type = PageSectionType.Image
         case ArchivingKeys.types[2]:
@@ -113,7 +113,7 @@ public class PageSection: Archiving {
         default:
             self.type = PageSectionType.Basic
         }
-        self.text = dictionary[ArchivingKeys.text] as String
-        self.URI = dictionary[ArchivingKeys.URI] as String
+        self.text = dictionary[ArchivingKeys.text] as! String
+        self.URI = dictionary[ArchivingKeys.URI] as! String
     }
 }

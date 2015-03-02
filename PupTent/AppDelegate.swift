@@ -10,55 +10,34 @@ import PupKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var manager: Manager?
-    
-    @IBOutlet weak var lastSiteMenuItem: NSMenuItem?
+    @IBOutlet weak var mainViewController: MainViewController?
+    @IBOutlet weak var forgetMenuItem: NSMenuItem?
     @IBOutlet weak var newPageMenuItem: NSMenuItem?
     @IBOutlet weak var deletePageMenuItem: NSMenuItem?
+    @IBOutlet weak var previewItem: NSMenuItem?
+    
+    @IBAction func preview(sender: AnyObject?) {
+        self.mainViewController?.preview(self)
+    }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Empty Folder..."
-        openPanel.prompt = "Use This Folder"
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            let path = openPanel.URL!.path! + "/"
-            if let error = Manager.pitch(path) as NSError! {
-                self.showAlert("\(error.localizedDescription)")
-                return
-            }
-            self.openSite(path)
-        })
+        self.mainViewController?.makeNewSite(sender)
     }
     
     @IBAction func openExistingSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Existing Site..."
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            self.openSite(openPanel.URL!.path! + "/")
-        })
+        self.mainViewController?.openExistingSite(sender)
     }
     
-    @IBAction func openLastSite(sender: AnyObject?) {
-        self.openSite(Manager.savedPath)
+    @IBAction func forget(sender: AnyObject?) {
+        self.mainViewController?.forget(sender)
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        
+        self.mainViewController?.makeNewPage(sender)
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
-        
+        self.mainViewController?.deletePage(sender)
     }
     
     @IBAction func close(sender: AnyObject?) {
@@ -66,68 +45,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-        switch (menuItem) {
-        case self.lastSiteMenuItem!:
-            return !Manager.savedPath.isEmpty
-        case self.newPageMenuItem!:
-            return false
-        case self.deletePageMenuItem!:
-            return false
-        default:
-            return true
+        if let mainViewController = self.mainViewController {
+            switch (menuItem) {
+            case self.forgetMenuItem!:
+                return mainViewController.canForget
+            case self.newPageMenuItem!:
+                fallthrough
+            case self.previewItem!:
+                return mainViewController.manager != nil
+            case self.deletePageMenuItem!:
+                return mainViewController.canDeletePage
+            default:
+                return true
+            }
         }
+        return false
     }
     
-    private func openSite(path: String) {
-        var error: NSError?
-        self.manager = Manager(path: path, error: &error, savePath: true)
-        if (error == nil) {
-            
-            return
-        }
-        self.showAlert("\(error!.localizedDescription)")
-    }
-    
-    private func showAlert(text: String) {
-        var alert: NSAlert = NSAlert()
-        alert.addButtonWithTitle("OK")
-        alert.messageText = text
-        alert.beginSheetModalForWindow(NSApplication.sharedApplication().keyWindow!, completionHandler: { (response) -> Void in
-            
-        })
-    }
-    
-    // NSApplicationDelegate
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
-    }
-    
+    // MARK: NSApplicationDelegate
     func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
         return true;
-    }
-}
-
-extension Manager {
-    class var savedPath: String {
-        get {
-            if let path = NSUserDefaults.standardUserDefaults().objectForKey("path") as? String {
-                if (Manager.exists(path)) {
-                    return path
-                }
-            }
-            Manager.savedPath = ""
-            return ""
-        }
-        set (path) {
-            NSUserDefaults.standardUserDefaults().setObject(path as NSString, forKey: "path")
-            NSUserDefaults.standardUserDefaults().synchronize()
-        }
-    }
-    
-    convenience init?(path: String, error: NSErrorPointer, savePath: Bool) {
-        self.init(path: path, error: error)
-        if (savePath) {
-            Manager.savedPath = path
-        }
     }
 }
