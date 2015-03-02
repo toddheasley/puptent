@@ -1,8 +1,8 @@
 //
 //  Site.swift
-//  PupTent
+//  PupKit
 //
-//  (c) 2014 @toddheasley
+//  (c) 2015 @toddheasley
 //
 
 import Foundation
@@ -11,7 +11,6 @@ public class Site: Archiving {
     public var name: String
     public var URI: String
     public var twitterName: String
-    public var domain: String
     public var pages: Array<Page>
     public var indexedPages: Array<Page> {
         get {
@@ -30,14 +29,13 @@ public class Site: Archiving {
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
             ArchivingKeys.twitterName: "",
-            ArchivingKeys.domain: "",
             ArchivingKeys.pages: [
                 Page().dictionary
             ]
         ])
     }
     
-    // Archiving
+    // MARK: Archiving
     public var manifest: Array<String> {
         get {
             var manifest = [String]()
@@ -61,19 +59,17 @@ public class Site: Archiving {
                 ArchivingKeys.name: self.name,
                 ArchivingKeys.URI: self.URI,
                 ArchivingKeys.twitterName: self.twitterName,
-                ArchivingKeys.domain: self.domain,
                 ArchivingKeys.pages: pages
             ]
         }
     }
     
     public required init(dictionary: NSDictionary) {
-        self.name = dictionary[ArchivingKeys.name] as String
-        self.URI = dictionary[ArchivingKeys.URI] as String
-        self.twitterName = dictionary[ArchivingKeys.twitterName] as String
-        self.domain = dictionary[ArchivingKeys.domain] as String
+        self.name = dictionary[ArchivingKeys.name] as! String
+        self.URI = dictionary[ArchivingKeys.URI] as! String
+        self.twitterName = dictionary[ArchivingKeys.twitterName] as! String
         self.pages = []
-        for page in dictionary[ArchivingKeys.pages] as Array<NSDictionary> {
+        for page in dictionary[ArchivingKeys.pages] as! Array<NSDictionary> {
             self.pages.append(Page(dictionary: page as NSDictionary))
         }
     }

@@ -1,8 +1,8 @@
 //
 //  HTML.swift
-//  PupTent
+//  PupKit
 //
-//  (c) 2014 @toddheasley
+//  (c) 2015 @toddheasley
 //
 
 import Foundation
@@ -56,7 +56,7 @@ public class HTML {
                         "<meta name=\"twitter:creator\" content=\"\(site.twitterName)\">\n",
                         "<meta name=\"twitter:card\" content=\"photo\">\n",
                         "<meta name=\"twitter:title\" content=\"\">\n",
-                        "<meta name=\"twitter:image\" content=\"\(site.domain)/\(section.URI)\">\n"
+                        "<meta name=\"twitter:image:src\" content=\"/\(section.URI)\">\n"
                         ])
                     break
                 }
@@ -137,7 +137,7 @@ extension String {
     func toHTML(detectLinks: Bool) -> String {
         let patterns = [
             ("(https?:\\/\\/)([\\w\\-\\.!~?&+\\*'\"(),\\/]+)", "<a href=\"$1$2\">$2</a>"), // Hyperlink absolute URLs
-            ("(\\\n|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
+            ("(^|\\\n|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
             ("(^|\\s)([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4})", "$1<a href=\"mailto:$2\">$2</a>"), // Hyperlink email addresses
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags
@@ -146,7 +146,7 @@ extension String {
         var HTML: NSString = self
         if (detectLinks) {
             for pattern: (String, String) in patterns {
-                HTML = NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(HTML, options: nil, range: NSMakeRange(0, HTML.length), withTemplate: pattern.1)
+                HTML = NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(HTML as String, options: nil, range: NSMakeRange(0, HTML.length), withTemplate: pattern.1)
             }
         }
         

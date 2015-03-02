@@ -1,8 +1,12 @@
 __Pup Tent__
 
-Pup Tent is a command line utility for the Mac that generates minimal, static HTML sites. It's ideal for publishing to [Github Pages](https://pages.github.com) or [Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) and provides an ultra-lightweight alternative to static site generators like [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
+Pup Tent is a Mac app that generates bite-size, static HTML sites. It's ideal for publishing to [Github Pages](https://pages.github.com) or [Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) and provides an ultra-lightweight alternative to static site generators like [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
 
-To get started with Pup Tent, clone the project, open in Xcode and archive the `puptent` target. Make a new directory and move the archived executable into it. In the Mac Terminal, `cd` into the directory and run:
+An example of Pup Tent in action can be found at [toddheasley.github.io](http://toddheasley.github.io).
+
+---
+
+Pup Tent is powered by `PupKit` framework, which includes a command line inteface. To use Pup Tent from the command line, archive the `puptent` target and move the archived executable into an empty directory. In the Mac Terminal, `cd` into the directory and run:
 
 `./puptent pitch`
 
@@ -20,5 +24,3 @@ To generate the actual HTML pages, run:
 To clean up any files and pages no longer referenced in the `index.json` site manifest, run:
 
 `./puptent clean`
-
-An example of Pup Tent in action can be found at [toddheasley.github.io](http://toddheasley.github.io).
