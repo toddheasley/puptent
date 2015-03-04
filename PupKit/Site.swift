@@ -29,9 +29,7 @@ public class Site: Archiving {
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
             ArchivingKeys.twitterName: "",
-            ArchivingKeys.pages: [
-                Page().dictionary
-            ]
+            ArchivingKeys.pages: []
         ])
     }
     

@@ -75,7 +75,15 @@ public class Manager: HTMLDelegate {
     }
     
     public func build() -> NSError? {
-        return HTML.generate(self.site, bookmarkIconURI: Manager.bookmarkIconURI, stylesheetURI: Manager.stylesheetURI, delegate: self)
+        var error: NSError?
+        if let data: NSData = NSJSONSerialization.dataWithJSONObject(self.site.dictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error) {
+            
+            // Write JSON manifest file
+            data.writeToFile(self.path + Manager.manifestURI, atomically: true)
+            
+            return HTML.generate(self.site, bookmarkIconURI: Manager.bookmarkIconURI, stylesheetURI: Manager.stylesheetURI, delegate: self)
+        }
+        return error
     }
     
     public func clean() -> NSError? {

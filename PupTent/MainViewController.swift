@@ -12,10 +12,14 @@ class MainViewController: NSViewController {
     @IBOutlet weak var previewButton: NSButton?
     @IBOutlet weak var makeNewSiteButton: NSButton?
     @IBOutlet weak var openSiteButton: NSButton?
+    @IBOutlet weak var emptyView: NSView?
     
     @IBAction func preview(sender: AnyObject?) {
-        if let manager = self.manager {
+        if let manager = self.siteViewController?.manager {
             var URI = manager.site.URI
+            if let page = self.siteViewController?.selectedPage.page {
+                URI = page.URI
+            }
             NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
         }
     }
@@ -24,7 +28,7 @@ class MainViewController: NSViewController {
         self.toggleEmpty(true, animated: true)
         
         NSUserDefaults.standardUserDefaults().path = ""
-        self.manager = nil
+        self.siteViewController?.manager = nil
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
@@ -43,6 +47,7 @@ class MainViewController: NSViewController {
                 self.showAlert("\(error.localizedDescription)")
                 return
             }
+            
             self.openSite(path, animated: true)
         })
     }
@@ -61,14 +66,16 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        
+        self.siteViewController?.selectNewPage()
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
-        
+        if (self.canDeletePage) {
+            self.siteViewController?.deleteSelectedPage()
+        }
     }
     
-    var manager: Manager?
+    var siteViewController: SiteViewController?
     var canForget: Bool {
         get {
             return !NSUserDefaults.standardUserDefaults().path.isEmpty
@@ -76,7 +83,7 @@ class MainViewController: NSViewController {
     }
     var canDeletePage: Bool {
         get {
-            return false
+            return self.siteViewController?.selectedPage.index >= 0
         }
     }
     
@@ -85,6 +92,9 @@ class MainViewController: NSViewController {
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
+        
+        self.siteViewController = SiteViewController(nibName: "Site", bundle: nil)
+        self.view.addSubview(self.siteViewController!.view)
         
         self.toggleEmpty(true, animated: false)
         if (self.canForget) {
@@ -105,42 +115,37 @@ class MainViewController: NSViewController {
             // Insert preview button into window title bar
             view.addSubview(self.previewButton!)
             
+            self.previewButton!.translatesAutoresizingMaskIntoConstraints = true
             var frame = self.previewButton!.frame
             frame.origin.x = view.bounds.size.width - frame.size.width - 3.0
-            frame.origin.y = 12.0
+            frame.origin.y = 8.0
             self.previewButton!.frame = frame
-            
-            self.previewButton!.translatesAutoresizingMaskIntoConstraints = true
         }
     }
     
     private func openSite(path: String, animated: Bool) {
         var error: NSError?
-        self.manager = Manager(path: path, error: &error)
+        let manager = Manager(path: path, error: &error)
         if (error != nil) {
             self.showAlert("\(error!.localizedDescription)")
             return
         }
         
         // Remember path
-        NSUserDefaults.standardUserDefaults().path = self.manager!.path
+        NSUserDefaults.standardUserDefaults().path = manager!.path
         
-        // TODO: Implement site view controller; fill in values
-        
-        
+        // Configure site view controller
+        self.siteViewController!.manager = manager!
         self.toggleEmpty(false, animated: true)
     }
     
     private func toggleEmpty(empty: Bool, animated: Bool) {
         self.previewButton!.hidden = empty
-        
-        self.makeNewSiteButton!.hidden = !empty
-        self.openSiteButton!.hidden = !empty
+        self.siteViewController!.view.hidden = empty
+        self.emptyView!.hidden = !empty
     }
     
     private func showAlert(text: String) {
-        
-        // TODO: Implement custom alert view
         println("Alert: \(text)")
     }
 }

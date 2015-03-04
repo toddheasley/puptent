@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import PupKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -52,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             case self.newPageMenuItem!:
                 fallthrough
             case self.previewItem!:
-                return mainViewController.manager != nil
+                return mainViewController.siteViewController?.manager != nil
             case self.deletePageMenuItem!:
                 return mainViewController.canDeletePage
             default:

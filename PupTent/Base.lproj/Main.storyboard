@@ -67,12 +67,6 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                                        <menuItem title="Preview" enabled="NO" keyEquivalent="P" id="DVo-aG-piG">
-                                            <connections>
-                                                <action selector="preview:" target="Voe-Tx-rLC" id="xoe-u9-Ypl"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="vtG-Ui-yFh"/>
                                         <menuItem title="New Page" enabled="NO" keyEquivalent="n" id="Gxs-NH-PM1">
                                             <connections>
                                                 <action selector="makeNewPage:" target="Voe-Tx-rLC" id="hgc-kH-T9m"/>
@@ -87,6 +81,12 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="O1h-z7-Itm"/>
+                                        <menuItem title="Preview" enabled="NO" keyEquivalent="P" id="DVo-aG-piG">
+                                            <connections>
+                                                <action selector="preview:" target="Voe-Tx-rLC" id="xoe-u9-Ypl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="vtG-Ui-yFh"/>
                                         <menuItem title="Close" keyEquivalent="w" id="kMc-bj-6Yg">
                                             <connections>
                                                 <action selector="close:" target="Voe-Tx-rLC" id="lhP-pn-D6V"/>
@@ -317,12 +317,6 @@ CA
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="VwT-WD-YPe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Bring to Front" id="LE2-aR-0XJ">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="DRN-fu-gQh"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -385,50 +379,62 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="450" height="640"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M8R-UI-kak">
-                                <rect key="frame" x="371" y="615" width="81" height="27"/>
-                                <buttonCell key="cell" type="bevel" title="Preview" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="N2n-dM-0Qh">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="preview:" target="oYN-gl-7fc" id="uM3-gy-cAw"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                <rect key="frame" x="125" y="319" width="200" height="32"/>
-                                <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                <rect key="frame" x="125" y="286" width="200" height="32"/>
-                                <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="openExistingSite:" target="oYN-gl-7fc" id="94R-cT-Ehw"/>
-                                </connections>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c31-ss-QZM">
-                                <rect key="frame" x="18" y="474" width="414" height="29"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="Dch-kh-Zcr">
-                                    <font key="font" metaFont="system" size="24"/>
-                                    <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="1RH-tP-BIV">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="640"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c31-ss-QZM">
+                                        <rect key="frame" x="18" y="374" width="414" height="29"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="Dch-kh-Zcr">
+                                            <font key="font" metaFont="system" size="24"/>
+                                            <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
+                                        <rect key="frame" x="125" y="304" width="200" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openExistingSite:" target="oYN-gl-7fc" id="94R-cT-Ehw"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
+                                        <rect key="frame" x="125" y="269" width="200" height="32"/>
+                                        <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atz-qG-LAi">
+                                        <rect key="frame" x="361" y="605" width="89" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Preview" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iib-OL-doq">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="preview:" target="oYN-gl-7fc" id="YpE-8Q-sMV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </customView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="1RH-tP-BIV" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="6dA-Zu-K35"/>
+                            <constraint firstAttribute="bottom" secondItem="1RH-tP-BIV" secondAttribute="bottom" id="ARi-Pj-Gf7"/>
+                            <constraint firstAttribute="trailing" secondItem="1RH-tP-BIV" secondAttribute="trailing" id="goE-bF-L5w"/>
+                            <constraint firstItem="1RH-tP-BIV" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="muR-f1-ydX"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="emptyView" destination="1RH-tP-BIV" id="NHj-Mz-D7h"/>
                         <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
                         <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>
-                        <outlet property="previewButton" destination="M8R-UI-kak" id="Cpk-Kl-RMu"/>
+                        <outlet property="previewButton" destination="atz-qG-LAi" id="aKe-qi-oWN"/>
                     </connections>
                 </viewController>
                 <customObject id="5uz-4r-usm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
