@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol HTMLDelegate {
-    func handleHTML(HTML: String, URI: String) -> NSError?
-}
-
 public class HTML {
     public class func generate(site: Site, bookmarkIconURI: String, stylesheetURI: String, delegate: HTMLDelegate) -> NSError? {
         for page in site.pages {
@@ -37,8 +33,7 @@ public class HTML {
         if (page != nil) {
             title = "\(page!.name) - \(title)"
         }
-        
-        var HTML = [
+        return "".join([
             "<!DOCTYPE html>\n",
             "<title>\(title)</title>\n",
             "<meta name=\"generator\" content=\"\(NSBundle.mainBundle().executablePath!.lastPathComponent)\">\n",
@@ -46,23 +41,7 @@ public class HTML {
             "<meta name=\"apple-mobile-web-app-title\" content=\"\(site.name)\">\n",
             "<link rel=\"apple-touch-icon\" href=\"\(bookmarkIconURI)\">\n",
             "<link rel=\"stylesheet\" href=\"\(stylesheetURI)\">\n"
-        ]
-        if (page != nil && !site.twitterName.isEmpty) {
-            
-            // Twitter card support
-            for section in page!.sections {
-                if (section.type == PageSectionType.Image) {
-                    HTML.extend([
-                        "<meta name=\"twitter:creator\" content=\"\(site.twitterName)\">\n",
-                        "<meta name=\"twitter:card\" content=\"photo\">\n",
-                        "<meta name=\"twitter:title\" content=\"\">\n",
-                        "<meta name=\"twitter:image:src\" content=\"/\(section.URI)\">\n"
-                        ])
-                    break
-                }
-            }
-        }
-        return "".join(HTML)
+        ])
     }
     
     private class func header(site: Site, page: Page?) -> String {
@@ -133,6 +112,10 @@ public class HTML {
     }
 }
 
+public protocol HTMLDelegate {
+    func handleHTML(HTML: String, URI: String) -> NSError?
+}
+
 extension String {
     func toHTML(detectLinks: Bool) -> String {
         let patterns = [
@@ -142,7 +125,6 @@ extension String {
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags
         ]
-        
         var HTML: NSString = self
         if (detectLinks) {
             for pattern: (String, String) in patterns {
