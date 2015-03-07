@@ -7,21 +7,17 @@
 
 import Cocoa
 
-protocol ImageViewDelegate {
-    func imageViewDidChange(imageView: ImageView)
-}
-
 class ImageView: NSImageView, NSDraggingDestination {
     var delegate: ImageViewDelegate?
-    
+    var URL: NSURL?
     override var image: NSImage? {
         didSet {
             if (self.image == nil) {
-                
+                self.URL = nil
             }
             
             // Notify delegate
-            self.delegate?.imageViewDidChange(self)
+            self.delegate?.handleImageViewChange(self)
         }
     }
     
@@ -69,15 +65,18 @@ class ImageView: NSImageView, NSDraggingDestination {
     
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         if (sender.draggingSource() as? ImageView != self && NSImage.canInitWithPasteboard(sender.draggingPasteboard())) {
-            self.image = NSImage(pasteboard: sender.draggingPasteboard())
-            
-            if let name = NSURL(fromPasteboard: sender.draggingPasteboard())?.lastPathComponent?.stringByDeletingPathExtension {
-                println("\(name)")
+            if let URL = NSURL(fromPasteboard: sender.draggingPasteboard()) {
+                self.URL = URL
+                self.image = NSImage(pasteboard: sender.draggingPasteboard())
+                
+                // Notify delegate
+                self.delegate?.handleImageViewChange(self)
             }
-            
-            // Notify delegate
-            self.delegate?.imageViewDidChange(self)
         }
         return true
     }
+}
+
+protocol ImageViewDelegate {
+    func handleImageViewChange(imageView: ImageView)
 }

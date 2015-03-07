@@ -8,11 +8,12 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, ImageViewDelegate, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate {
+class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, PageViewControllerDelegate, ImageViewDelegate {
     @IBOutlet weak var imageView: ImageView?
     @IBOutlet weak var nameTextField: NSTextField?
     @IBOutlet weak var twitterNameTextField: NSTextField?
     @IBOutlet weak var tableView: NSTableView?
+    @IBOutlet weak var pageView: NSView?
     
     let draggedType = "Page"
     var manager: Manager! {
@@ -25,7 +26,7 @@ class SiteViewController: NSViewController, ImageViewDelegate, NSTextFieldDelega
             self.tableView?.reloadData()
         }
     }
-    
+    var pageViewController: PageViewController?
     var selectedPage: (page: Page?, index: Int) {
         get {
             if let site = self.manager?.site {
@@ -57,20 +58,10 @@ class SiteViewController: NSViewController, ImageViewDelegate, NSTextFieldDelega
         
         self.tableView!.registerForDraggedTypes([draggedType])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
-    }
-    
-    // MARK: ImageViewDelegate
-    func imageViewDidChange(imageView: ImageView) {
-        if let manager = self.manager, URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI) {
-            
-            // Move existing bookmark icon to trash
-            NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
-            
-            if let image = imageView.image {
-                
-                // Write new bookmark icon to file
-            }
-        }
+        
+        self.pageViewController = PageViewController(nibName: "Page", bundle: nil)
+        self.pageViewController!.delegate = self
+        self.pageView!.addSubview(self.pageViewController!.view)
     }
     
     // MARK: NSTextFieldDelegate
@@ -119,23 +110,23 @@ class SiteViewController: NSViewController, ImageViewDelegate, NSTextFieldDelega
     }
     
     func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
-        if (row < tableView.numberOfRows - 1 || (dropOperation == NSTableViewDropOperation.Above && row < tableView.numberOfRows)) {
+        if (dropOperation == NSTableViewDropOperation.Above && row < tableView.numberOfRows) {
             
-            // Allow cells to be dropped above "new page" cell
+            // Allow cells to be dropped in rows above "new page" cell
             return NSDragOperation.Move
         }
         
-        // Prevent cells from being dropped below "new page" cell
+        // Prevent cells from being dropped on other cells and below "new page" cell
         return NSDragOperation.None
     }
     
     func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         if (row < tableView.numberOfRows) {
-            var index = row
-            if (dropOperation == NSTableViewDropOperation.Above && index > 1) {
-                index--
-            }
             if let manager = self.manager, data: NSData? = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as? NSIndexSet {
+                var index = row
+                if (indexSet.firstIndex < index) {
+                    index--
+                }
                 
                 // Move page to new index in data source
                 let page: Page = manager.site.pages[indexSet.firstIndex]
@@ -179,7 +170,34 @@ class SiteViewController: NSViewController, ImageViewDelegate, NSTextFieldDelega
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
+        //self.pageViewController!.page =
+        self.pageView!.hidden = false
+    }
+    
+    // MARK: PageViewControllerDelegate
+    func handlePageViewControllerChange(pageViewController: PageViewController) {
         
+    }
+    
+    func dismissPageViewController(pageViewController: PageViewController) {
+        self.pageView!.hidden = true
+        self.pageViewController!.page = nil
+    }
+    
+    // MARK: ImageViewDelegate
+    func handleImageViewChange(imageView: ImageView) {
+        if let manager = self.manager, bookmarkIconURL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI) {
+            
+            // Move existing bookmark icon to trash
+            NSFileManager.defaultManager().trashItemAtURL(bookmarkIconURL, resultingItemURL: nil, error: nil)
+            
+            if let image = imageView.image, URL = imageView.URL {
+                
+                // Write new bookmark icon to file
+                var error: NSError?
+                NSFileManager.defaultManager().copyItemAtURL(URL, toURL: bookmarkIconURL, error: &error)
+            }
+        }
     }
 }
 
