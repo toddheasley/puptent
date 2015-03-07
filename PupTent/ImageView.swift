@@ -26,20 +26,6 @@ class ImageView: NSImageView, NSDraggingDestination {
         self.registerForDraggedTypes(NSImage.imagePasteboardTypes())
     }
     
-    override func drawRect(rect: NSRect) {
-        super.drawRect(rect)
-        
-        if (self.active) {
-            
-        }
-    }
-    
-    private var active: Bool = false {
-        didSet {
-            self.setNeedsDisplay()
-        }
-    }
-    
     // MARK: NSDraggingSource
     func draggingSession(session: NSDraggingSession, sourceOperationMaskForDraggingContext context: NSDraggingContext) -> NSDragOperation {
         return NSDragOperation.Copy
@@ -48,18 +34,12 @@ class ImageView: NSImageView, NSDraggingDestination {
     // MARK: NSDraggingDestination
     override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
         if (NSImage.canInitWithPasteboard(sender.draggingPasteboard())) {
-            self.active = true
             return NSDragOperation.Copy
         }
         return NSDragOperation.None
     }
     
-    override func draggingExited(sender: NSDraggingInfo?) {
-        self.active = false
-    }
-    
     override func prepareForDragOperation(sender: NSDraggingInfo) -> Bool {
-        self.active = false
         return NSImage.canInitWithPasteboard(sender.draggingPasteboard())
     }
     

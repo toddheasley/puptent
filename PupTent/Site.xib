@@ -9,7 +9,9 @@
                 <outlet property="imageView" destination="i9m-M7-uRE" id="2i0-BT-FvK"/>
                 <outlet property="nameTextField" destination="feh-bk-oSE" id="IWR-cZ-J35"/>
                 <outlet property="pageView" destination="ov9-sb-G7l" id="gAw-jC-yAl"/>
+                <outlet property="pageViewPositionConstraint" destination="Nx3-Bs-FmO" id="3TH-Ba-oW9"/>
                 <outlet property="tableView" destination="Jy8-fW-Cu5" id="bnF-5W-WH9"/>
+                <outlet property="tableViewPositionConstraint" destination="WMO-wf-VSU" id="0V4-yE-baz"/>
                 <outlet property="twitterNameTextField" destination="sbd-kF-KG1" id="9Ir-kC-fwc"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -114,8 +116,11 @@
                         <outlet property="delegate" destination="-2" id="SPK-xh-poD"/>
                     </connections>
                 </textField>
-                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ov9-sb-G7l">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ov9-sb-G7l">
                     <rect key="frame" x="0.0" y="0.0" width="450" height="520"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="450" id="Byo-lC-fcO"/>
+                    </constraints>
                 </customView>
             </subviews>
             <constraints>
@@ -123,10 +128,9 @@
                 <constraint firstAttribute="bottom" secondItem="ov9-sb-G7l" secondAttribute="bottom" id="8c5-3B-lhf"/>
                 <constraint firstItem="ov9-sb-G7l" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Nx3-Bs-FmO"/>
                 <constraint firstAttribute="trailing" secondItem="uYO-m4-dW2" secondAttribute="trailing" id="O0Q-gY-eIJ"/>
-                <constraint firstAttribute="trailing" secondItem="ov9-sb-G7l" secondAttribute="trailing" id="Vaj-Dx-zy0"/>
+                <constraint firstItem="uYO-m4-dW2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="WMO-wf-VSU"/>
                 <constraint firstAttribute="bottom" secondItem="uYO-m4-dW2" secondAttribute="bottom" id="ddd-K7-we0"/>
                 <constraint firstItem="ov9-sb-G7l" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="120" id="jWR-qH-Vzo"/>
-                <constraint firstItem="uYO-m4-dW2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="rxF-c8-ScL"/>
             </constraints>
         </customView>
     </objects>

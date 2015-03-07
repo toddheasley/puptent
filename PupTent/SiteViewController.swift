@@ -13,7 +13,9 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     @IBOutlet weak var nameTextField: NSTextField?
     @IBOutlet weak var twitterNameTextField: NSTextField?
     @IBOutlet weak var tableView: NSTableView?
+    @IBOutlet weak var tableViewPositionConstraint: NSLayoutConstraint?
     @IBOutlet weak var pageView: NSView?
+    @IBOutlet weak var pageViewPositionConstraint: NSLayoutConstraint?
     
     let draggedType = "Page"
     var manager: Manager! {
@@ -51,9 +53,31 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         }
     }
     
+    private func togglePageView(hidden: Bool, animated: Bool) {
+        var duration: NSTimeInterval = 0.0
+        if (animated) {
+            duration = 0.15
+        }
+        var tableViewPosition: CGFloat = 0.0 - (self.view.bounds.size.width / 3.0)
+        var pageViewPosition: CGFloat = 0.0
+        if (hidden) {
+            tableViewPosition = 0.0
+            pageViewPosition = self.view.bounds.size.width - 1.0
+        }
+        self.pageView!.hidden = false
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.currentContext().completionHandler = {
+            self.pageView!.hidden = hidden
+            self.tableView!.deselectAll(self)
+        }
+        NSAnimationContext.currentContext().duration = duration
+        self.tableViewPositionConstraint!.animator().constant = tableViewPosition
+        self.pageViewPositionConstraint!.animator().constant = pageViewPosition
+        NSAnimationContext.endGrouping()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.imageView!.delegate = self
         
         self.tableView!.registerForDraggedTypes([draggedType])
@@ -62,6 +86,8 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         self.pageViewController = PageViewController(nibName: "Page", bundle: nil)
         self.pageViewController!.delegate = self
         self.pageView!.addSubview(self.pageViewController!.view)
+        
+        self.togglePageView(true, animated: false)
     }
     
     // MARK: NSTextFieldDelegate
@@ -151,7 +177,6 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             cell.textField!.stringValue = "New Page"
             cell.textField!.textColor = NSColor.grayColor()
             cell.imageView!.image = NSImage(named: "NSStatusNone")
-            
             if (row < site.pages.count) {
                 
                 // Configure cell for existing page
@@ -170,8 +195,15 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
-        //self.pageViewController!.page =
-        self.pageView!.hidden = false
+        if let tableView = notification.object as? NSTableView, site = self.manager?.site {
+            self.pageViewController!.page = Page()
+            if (tableView.selectedRow > -1 && tableView.selectedRow < site.pages.count) {
+                self.pageViewController!.page = site.pages[tableView.selectedRow]
+            }
+            
+            // TODO: Add slight delay
+            self.togglePageView(false, animated: true)
+        }
     }
     
     // MARK: PageViewControllerDelegate
@@ -180,8 +212,9 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     }
     
     func dismissPageViewController(pageViewController: PageViewController) {
-        self.pageView!.hidden = true
-        self.pageViewController!.page = nil
+        
+        // TODO: Add slight delay
+        self.togglePageView(true, animated: true)
     }
     
     // MARK: ImageViewDelegate

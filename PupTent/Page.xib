@@ -79,6 +79,15 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-LY-6XB">
+                    <rect key="frame" x="-2" y="0.0" width="5" height="520"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="25G-BF-JIx"/>
+                    </constraints>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9gO-wE-jxK">
                     <rect key="frame" x="0.0" y="486" width="76" height="32"/>
                     <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hr0-d0-Zz4">
@@ -91,9 +100,12 @@
                 </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="fd8-LY-6XB" secondAttribute="bottom" id="7Ma-Is-hlF"/>
                 <constraint firstAttribute="trailing" secondItem="YLt-21-cud" secondAttribute="trailing" id="Ebu-sC-pYM"/>
                 <constraint firstAttribute="bottom" secondItem="YLt-21-cud" secondAttribute="bottom" id="e8c-cQ-vQo"/>
                 <constraint firstItem="YLt-21-cud" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="fP8-Ue-Yrs"/>
+                <constraint firstItem="fd8-LY-6XB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gxD-X4-NhI"/>
+                <constraint firstItem="fd8-LY-6XB" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="uyA-fS-3uS"/>
                 <constraint firstItem="YLt-21-cud" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="y9p-rD-wtp"/>
             </constraints>
             <point key="canvasLocation" x="567" y="461"/>

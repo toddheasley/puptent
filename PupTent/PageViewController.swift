@@ -12,18 +12,18 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBOutlet weak var tableView: NSTableView?
     @IBOutlet weak var dismissButton: NSButton?
     
-    let draggedType = "Page"
-    var delegate: PageViewControllerDelegate?
-    var page: Page? {
-        didSet {
-            println("\(self.page)")
-        }
-    }
-    
     @IBAction func dismiss(sender: AnyObject?) {
         
         // Notify delegate
         self.delegate?.dismissPageViewController(self)
+    }
+    
+    let draggedType = "Page"
+    var delegate: PageViewControllerDelegate?
+    var page: Page? {
+        didSet {
+            println("\(self.page?.name)")
+        }
     }
     
     override func awakeFromNib() {
@@ -59,7 +59,6 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     func tableViewSelectionDidChange(notification: NSNotification) {
         
     }
-
 }
 
 protocol PageViewControllerDelegate {

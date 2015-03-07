@@ -26,7 +26,6 @@ class MainViewController: NSViewController {
     
     @IBAction func forget(sender: AnyObject?) {
         self.toggleEmpty(true, animated: true)
-        
         NSUserDefaults.standardUserDefaults().path = ""
         self.siteViewController?.manager = nil
     }
@@ -47,7 +46,6 @@ class MainViewController: NSViewController {
                 self.showAlert("\(error.localizedDescription)")
                 return
             }
-            
             self.openSite(path, animated: true)
         })
     }
