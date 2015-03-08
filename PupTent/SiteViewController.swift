@@ -23,7 +23,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             if let manager = self.manager {
                 self.imageView?.image = NSImage(contentsOfFile: manager.path + Manager.bookmarkIconURI)
                 self.nameTextField?.stringValue = manager.site.name
-                self.twitterNameTextField?.stringValue = manager.site.twitterName.twitterNameFormat(true)
+                self.twitterNameTextField?.stringValue = manager.site.twitterName.toTwitterFormat()
             }
             self.tableView?.reloadData()
         }
@@ -46,34 +46,51 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     func deleteSelectedPage() {
         if let manager = self.manager {
-            manager.site.pages.removeAtIndex(self.selectedPage.index)
-            self.tableView?.reloadData()
-            manager.build()
-            manager.clean()
+            if (self.selectedPage.index > -1) {
+                manager.site.pages.removeAtIndex(self.selectedPage.index)
+                self.tableView?.reloadData()
+                manager.build()
+                manager.clean()
+            }
+            
+            self.togglePageViewHidden(true, animated: true)
         }
     }
     
-    private func togglePageView(hidden: Bool, animated: Bool) {
-        var duration: NSTimeInterval = 0.0
-        if (animated) {
-            duration = 0.15
-        }
-        var tableViewPosition: CGFloat = 0.0 - (self.view.bounds.size.width / 3.0)
-        var pageViewPosition: CGFloat = 0.0
-        if (hidden) {
-            tableViewPosition = 0.0
-            pageViewPosition = self.view.bounds.size.width - 1.0
-        }
+    func dismissSelectedPage() {
+        self.togglePageViewHidden(true, animated: true)
+    }
+    
+    private func togglePageViewHidden(hidden: Bool, animated: Bool) {
+        self.tableView!.hidden = false
         self.pageView!.hidden = false
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.currentContext().completionHandler = {
-            self.pageView!.hidden = hidden
-            self.tableView!.deselectAll(self)
+        
+        var delay: Double = 0.0
+        var duration: Double = 0.0
+        if (animated) {
+            delay = 0.2
+            duration = 0.1
         }
-        NSAnimationContext.currentContext().duration = duration
-        self.tableViewPositionConstraint!.animator().constant = tableViewPosition
-        self.pageViewPositionConstraint!.animator().constant = pageViewPosition
-        NSAnimationContext.endGrouping()
+        if (hidden) {
+            delay.delay {
+                duration.animate({
+                    self.tableViewPositionConstraint!.animator().constant = 0.0
+                    self.pageViewPositionConstraint!.animator().constant = self.view.bounds.size.width - 1.0
+                }, {
+                    self.pageView!.hidden = true
+                    self.tableView!.deselectAll(self)
+                })
+            }
+            return
+        }
+        delay.delay {
+            duration.animate({
+                self.tableViewPositionConstraint!.animator().constant = 0.0 - (self.view.bounds.size.width / 3.0)
+                self.pageViewPositionConstraint!.animator().constant = 0.0
+            }, {
+                self.tableView!.hidden = true
+            })
+        }
     }
     
     override func awakeFromNib() {
@@ -86,8 +103,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         self.pageViewController = PageViewController(nibName: "Page", bundle: nil)
         self.pageViewController!.delegate = self
         self.pageView!.addSubview(self.pageViewController!.view)
-        
-        self.togglePageView(true, animated: false)
+        self.togglePageViewHidden(true, animated: false)
     }
     
     // MARK: NSTextFieldDelegate
@@ -99,8 +115,8 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             if (textField == self.nameTextField!) {
                 manager.site.name = textField.stringValue
             } else {
-                manager.site.twitterName = textField.stringValue.twitterNameFormat(false)
-                textField.stringValue = textField.stringValue.twitterNameFormat(true)
+                manager.site.twitterName = textField.stringValue.fromTwitterFormat()
+                textField.stringValue = textField.stringValue.toTwitterFormat()
             }
             manager.build()
             manager.clean()
@@ -196,13 +212,14 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     func tableViewSelectionDidChange(notification: NSNotification) {
         if let tableView = notification.object as? NSTableView, site = self.manager?.site {
-            self.pageViewController!.page = Page()
-            if (tableView.selectedRow > -1 && tableView.selectedRow < site.pages.count) {
-                self.pageViewController!.page = site.pages[tableView.selectedRow]
+            if (tableView.selectedRow < 0) {
+                return
             }
-            
-            // TODO: Add slight delay
-            self.togglePageView(false, animated: true)
+            self.pageViewController!.page = Page()
+            if let page = self.selectedPage.page {
+                self.pageViewController!.page = page
+            }
+            self.togglePageViewHidden(false, animated: true)
         }
     }
     
@@ -211,10 +228,12 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         
     }
     
-    func dismissPageViewController(pageViewController: PageViewController) {
-        
-        // TODO: Add slight delay
-        self.togglePageView(true, animated: true)
+    func handlePageViewControllerDelete(pageViewController: PageViewController) {
+        self.deleteSelectedPage()
+    }
+    
+    func dismissPageViewController(pageViewController: PageViewController, animated: Bool) {
+        self.togglePageViewHidden(true, animated: animated)
     }
     
     // MARK: ImageViewDelegate
@@ -223,7 +242,6 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             
             // Move existing bookmark icon to trash
             NSFileManager.defaultManager().trashItemAtURL(bookmarkIconURL, resultingItemURL: nil, error: nil)
-            
             if let image = imageView.image, URL = imageView.URL {
                 
                 // Write new bookmark icon to file
@@ -234,12 +252,29 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     }
 }
 
+extension Double {
+    func delay(delay:() -> Void) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(self * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), delay)
+    }
+    
+    func animate(animate:() -> Void, _ completionHandler:() -> Void) {
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = self
+            animate()
+        }, completionHandler: completionHandler)
+    }
+}
+
 extension String {
-    func twitterNameFormat(on: Bool) -> String {
-        var string = self.stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
-        if (on && count(string) > 0) {
-            string = "@\(string)"
+    func toTwitterFormat() -> String {
+        var string = self.fromTwitterFormat()
+        if (count(string) > 0) {
+            return "@\(string)"
         }
         return string
+    }
+    
+    func fromTwitterFormat() -> String {
+        return self.stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
     }
 }

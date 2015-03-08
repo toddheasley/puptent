@@ -14,10 +14,10 @@ class ImageView: NSImageView, NSDraggingDestination {
         didSet {
             if (self.image == nil) {
                 self.URL = nil
+                
+                // Notify delegate
+                self.delegate?.handleImageViewChange(self)
             }
-            
-            // Notify delegate
-            self.delegate?.handleImageViewChange(self)
         }
     }
     

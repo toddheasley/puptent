@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var forgetMenuItem: NSMenuItem?
     @IBOutlet weak var newPageMenuItem: NSMenuItem?
     @IBOutlet weak var deletePageMenuItem: NSMenuItem?
+    @IBOutlet weak var dismissPageMenuItem: NSMenuItem?
     @IBOutlet weak var previewItem: NSMenuItem?
     
     @IBAction func preview(sender: AnyObject?) {
@@ -39,6 +40,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.mainViewController?.deletePage(sender)
     }
     
+    @IBAction func dismissPage(sender: AnyObject?) {
+        self.mainViewController?.dismissPage(sender)
+    }
+    
     @IBAction func close(sender: AnyObject?) {
         NSApplication.sharedApplication().keyWindow!.performClose(self)
     }
@@ -54,6 +59,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return mainViewController.siteViewController?.manager != nil
             case self.deletePageMenuItem!:
                 return mainViewController.canDeletePage
+            case self.dismissPageMenuItem!:
+                return mainViewController.canDismissPage
             default:
                 return true
             }

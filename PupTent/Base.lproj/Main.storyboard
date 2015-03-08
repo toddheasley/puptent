@@ -80,16 +80,15 @@ CA
                                                 <action selector="deletePage:" target="Voe-Tx-rLC" id="QDk-wf-Ppv"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Close Page" enabled="NO" keyEquivalent="[" id="x8g-LU-b27">
+                                            <connections>
+                                                <action selector="dismissPage:" target="Ady-hI-5gd" id="WNO-YZ-JTT"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="O1h-z7-Itm"/>
                                         <menuItem title="Preview" enabled="NO" keyEquivalent="P" id="DVo-aG-piG">
                                             <connections>
                                                 <action selector="preview:" target="Voe-Tx-rLC" id="xoe-u9-Ypl"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="vtG-Ui-yFh"/>
-                                        <menuItem title="Close" keyEquivalent="w" id="kMc-bj-6Yg">
-                                            <connections>
-                                                <action selector="close:" target="Voe-Tx-rLC" id="lhP-pn-D6V"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -317,6 +316,11 @@ CA
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="VwT-WD-YPe"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Close" keyEquivalent="w" id="OAl-gE-UL5">
+                                            <connections>
+                                                <action selector="close:" target="Voe-Tx-rLC" id="QBu-ky-HuV"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -342,6 +346,7 @@ CA
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Pup_Tent" customModuleProvider="target">
                     <connections>
                         <outlet property="deletePageMenuItem" destination="xw6-Jz-Q7h" id="oZN-WW-6yD"/>
+                        <outlet property="dismissPageMenuItem" destination="x8g-LU-b27" id="jF3-rK-MyR"/>
                         <outlet property="forgetMenuItem" destination="IAo-SY-fd9" id="6L5-4b-Hzc"/>
                         <outlet property="newPageMenuItem" destination="Gxs-NH-PM1" id="oeV-Xg-Ty7"/>
                         <outlet property="previewItem" destination="DVo-aG-piG" id="E71-50-Ch4"/>

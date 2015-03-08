@@ -11,26 +11,40 @@ import PupKit
 class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     @IBOutlet weak var tableView: NSTableView?
     @IBOutlet weak var dismissButton: NSButton?
+    @IBOutlet weak var deleteButton: NSButton?
+    @IBOutlet weak var label: NSTextField?
     
     @IBAction func dismiss(sender: AnyObject?) {
         
         // Notify delegate
-        self.delegate?.dismissPageViewController(self)
+        self.delegate?.dismissPageViewController(self, animated: true)
+    }
+    @IBAction func delete(sender: AnyObject?) {
+        
+        // Notify delegate
+        self.delegate?.handlePageViewControllerDelete(self)
     }
     
     let draggedType = "Page"
     var delegate: PageViewControllerDelegate?
     var page: Page? {
         didSet {
-            println("\(self.page?.name)")
+            self.label!.stringValue = ""
+            self.deleteButton!.hidden = true
+            if let page = self.page {
+                self.label!.stringValue = page.name
+                if (!page.URI.isEmpty) {
+                    self.deleteButton!.hidden = false
+                }
+            }
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.tableView!.registerForDraggedTypes([draggedType])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        self.deleteButton!.hidden = true
     }
     
     // MARK: NSTableViewDataSource
@@ -62,6 +76,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
 }
 
 protocol PageViewControllerDelegate {
+    func dismissPageViewController(pageViewController: PageViewController, animated: Bool)
     func handlePageViewControllerChange(pageViewController: PageViewController)
-    func dismissPageViewController(pageViewController: PageViewController)
+    func handlePageViewControllerDelete(pageViewController: PageViewController)
 }

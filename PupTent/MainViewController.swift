@@ -73,6 +73,10 @@ class MainViewController: NSViewController {
         }
     }
     
+    @IBAction func dismissPage(sender: AnyObject?) {
+        self.siteViewController?.dismissSelectedPage()
+    }
+    
     var siteViewController: SiteViewController?
     var canForget: Bool {
         get {
@@ -82,6 +86,11 @@ class MainViewController: NSViewController {
     var canDeletePage: Bool {
         get {
             return self.siteViewController?.selectedPage.index >= 0
+        }
+    }
+    var canDismissPage: Bool {
+        get {
+            return self.siteViewController?.tableView?.selectedRow > -1
         }
     }
     

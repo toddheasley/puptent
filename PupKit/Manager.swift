@@ -56,7 +56,7 @@ public class Manager: HTMLDelegate {
         var error: NSError?
         var site: Site = Site()
         site.URI = "index.html"
-        if let data: NSData = NSJSONSerialization.dataWithJSONObject(site.dictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error) {
+        if let data: NSData = NSJSONSerialization.dataWithJSONObject(site.dictionary, options: NSJSONWritingOptions.allZeros, error: &error) {
             
             // Write JSON manifest file
             data.writeToFile(path + Manager.manifestURI, atomically: true)
@@ -76,7 +76,7 @@ public class Manager: HTMLDelegate {
     
     public func build() -> NSError? {
         var error: NSError?
-        if let data: NSData = NSJSONSerialization.dataWithJSONObject(self.site.dictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error) {
+        if let data: NSData = NSJSONSerialization.dataWithJSONObject(self.site.dictionary, options: NSJSONWritingOptions.allZeros, error: &error) {
             
             // Write JSON manifest file
             data.writeToFile(self.path + Manager.manifestURI, atomically: true)
