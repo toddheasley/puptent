@@ -28,6 +28,11 @@ public class Manager: HTMLDelegate {
             return "index.json"
         }
     }
+    public class var URIExtension: String {
+        get {
+            return ".html"
+        }
+    }
     public var site: Site!
     public var path: String {
         get {
@@ -55,7 +60,7 @@ public class Manager: HTMLDelegate {
         
         var error: NSError?
         var site: Site = Site()
-        site.URI = "index.html"
+        site.URI = "index" + Manager.URIExtension
         if let data: NSData = NSJSONSerialization.dataWithJSONObject(site.dictionary, options: NSJSONWritingOptions.allZeros, error: &error) {
             
             // Write JSON manifest file

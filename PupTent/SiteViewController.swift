@@ -8,8 +8,8 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, PageViewControllerDelegate, ImageViewDelegate {
-    @IBOutlet weak var imageView: ImageView?
+class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, PageViewControllerDelegate {
+    @IBOutlet weak var iconView: IconView?
     @IBOutlet weak var nameTextField: NSTextField?
     @IBOutlet weak var twitterNameTextField: NSTextField?
     @IBOutlet weak var tableView: NSTableView?
@@ -21,9 +21,10 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     var manager: Manager! {
         didSet {
             if let manager = self.manager {
-                self.imageView?.image = NSImage(contentsOfFile: manager.path + Manager.bookmarkIconURI)
+                self.iconView?.path = manager.path + Manager.bookmarkIconURI
                 self.nameTextField?.stringValue = manager.site.name
                 self.twitterNameTextField?.stringValue = manager.site.twitterName.toTwitterFormat()
+                self.pageViewController!.mediaPath = manager.path + Manager.mediaPath
             }
             self.tableView?.reloadData()
         }
@@ -52,7 +53,6 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
                 manager.build()
                 manager.clean()
             }
-            
             self.togglePageViewHidden(true, animated: true)
         }
     }
@@ -93,9 +93,8 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.imageView!.delegate = self
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         self.tableView!.registerForDraggedTypes([draggedType])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
@@ -109,14 +108,12 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     // MARK: NSTextFieldDelegate
     func control(control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         if let textField = control as? NSTextField, manager = self.manager {
-            
-            // Trim whitespace
-            textField.stringValue = textField.stringValue.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             if (textField == self.nameTextField!) {
-                manager.site.name = textField.stringValue
+                manager.site.name = textField.stringValue.strip()
+                textField.stringValue = manager.site.name
             } else {
                 manager.site.twitterName = textField.stringValue.fromTwitterFormat()
-                textField.stringValue = textField.stringValue.toTwitterFormat()
+                textField.stringValue = manager.site.twitterName.toTwitterFormat()
             }
             manager.build()
             manager.clean()
@@ -225,7 +222,16 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     // MARK: PageViewControllerDelegate
     func handlePageViewControllerChange(pageViewController: PageViewController) {
-        
+        if let manager = self.manager, page = pageViewController.page {
+            if (self.tableView!.selectedRow >= manager.site.pages.count && !page.URI.isEmpty) {
+                
+                // Add new page to site
+                manager.site.pages.append(page)
+            }
+            self.tableView!.reloadData()
+            manager.build()
+            manager.clean()
+        }
     }
     
     func handlePageViewControllerDelete(pageViewController: PageViewController) {
@@ -234,21 +240,6 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     func dismissPageViewController(pageViewController: PageViewController, animated: Bool) {
         self.togglePageViewHidden(true, animated: animated)
-    }
-    
-    // MARK: ImageViewDelegate
-    func handleImageViewChange(imageView: ImageView) {
-        if let manager = self.manager, bookmarkIconURL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI) {
-            
-            // Move existing bookmark icon to trash
-            NSFileManager.defaultManager().trashItemAtURL(bookmarkIconURL, resultingItemURL: nil, error: nil)
-            if let image = imageView.image, URL = imageView.URL {
-                
-                // Write new bookmark icon to file
-                var error: NSError?
-                NSFileManager.defaultManager().copyItemAtURL(URL, toURL: bookmarkIconURL, error: &error)
-            }
-        }
     }
 }
 
@@ -266,6 +257,20 @@ extension Double {
 }
 
 extension String {
+    func toURIFormat() -> String {
+        var string = self.lowercaseString.trim()
+        
+        // Separate words with hyphens
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-", options:nil, range: nil)
+        
+        // Strip all non-alphanumeric characters
+        string = NSRegularExpression(pattern: "[^0-9a-z-_]", options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(string, options: nil, range: NSMakeRange(0, count(string)), withTemplate: "")
+        if (!string.isEmpty) {
+            string += Manager.URIExtension
+        }
+        return string
+    }
+    
     func toTwitterFormat() -> String {
         var string = self.fromTwitterFormat()
         if (count(string) > 0) {
@@ -275,6 +280,14 @@ extension String {
     }
     
     func fromTwitterFormat() -> String {
-        return self.stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
+        return self.strip().stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
+    }
+    
+    func strip() -> String {
+        return self.trim()
+    }
+    
+    func trim() -> String {
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     }
 }

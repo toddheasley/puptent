@@ -18,9 +18,7 @@ public class Page: Archiving {
             ArchivingKeys.index: true,
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
-            ArchivingKeys.sections: [
-                PageSection().dictionary
-            ]
+            ArchivingKeys.sections: []
         ])
     }
     

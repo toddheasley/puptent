@@ -43,7 +43,9 @@ class MainViewController: NSViewController {
             }
             let path = openPanel.URL!.path! + "/"
             if let error = Manager.pitch(path) as NSError! {
-                self.showAlert("\(error.localizedDescription)")
+                
+                // TODO: Present custom alert view (on window)
+                println("\(error.localizedDescription)")
                 return
             }
             self.openSite(path, animated: true)
@@ -99,10 +101,10 @@ class MainViewController: NSViewController {
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
-        
         self.siteViewController = SiteViewController(nibName: "Site", bundle: nil)
         self.view.addSubview(self.siteViewController!.view)
         
+        // Default to empty state
         self.toggleEmpty(true, animated: false)
         if (self.canForget) {
             
@@ -116,7 +118,6 @@ class MainViewController: NSViewController {
         
         // Remove preview button from view
         self.previewButton?.removeFromSuperview()
-        
         if let window = self.view.window as? Window, view = window.titleBarView as NSView! {
             
             // Insert preview button into window title bar
@@ -134,7 +135,9 @@ class MainViewController: NSViewController {
         var error: NSError?
         let manager = Manager(path: path, error: &error)
         if (error != nil) {
-            self.showAlert("\(error!.localizedDescription)")
+            
+            // TODO: Present custom alert view (on window)
+            println("\(error!.localizedDescription)")
             return
         }
         
@@ -150,10 +153,6 @@ class MainViewController: NSViewController {
         self.previewButton!.hidden = empty
         self.siteViewController!.view.hidden = empty
         self.emptyView!.hidden = !empty
-    }
-    
-    private func showAlert(text: String) {
-        println("Alert: \(text)")
     }
 }
 
