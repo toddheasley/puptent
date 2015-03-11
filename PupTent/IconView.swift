@@ -18,6 +18,7 @@ class IconView: NSImageView, NSDraggingDestination {
     override var image: NSImage? {
         didSet {
             if (self.image == nil) {
+                // self.image = NSImage(named: "NSBookmarksTemplate")
                 if let path = self.path, URL = NSURL(fileURLWithPath: path) {
                     NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
                 }
@@ -28,6 +29,17 @@ class IconView: NSImageView, NSDraggingDestination {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.registerForDraggedTypes([NSPasteboardTypePNG])
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.wantsLayer = true
+        
+        self.layer?.masksToBounds = true
+        self.layer?.borderColor = NSColor.lightGrayColor().colorWithAlphaComponent(0.5).CGColor
+        self.layer?.borderWidth = 1.0
+        self.layer?.cornerRadius = 5.0
     }
     
     // MARK: NSDraggingDestination

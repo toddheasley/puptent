@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="35" horizontalPageScroll="10" verticalLineScroll="35" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYO-m4-dW2" userLabel="Pages Table View">
-                    <rect key="frame" x="0.0" y="0.0" width="450" height="521"/>
+                    <rect key="frame" x="0.0" y="0.0" width="450" height="561"/>
                     <clipView key="contentView" drawsBackground="NO" id="Ha1-OC-E3c">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,12 +55,12 @@
                                                         <rect key="frame" x="33" y="7" width="397" height="19"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Page Name" id="Qsr-Bf-j2r">
                                                             <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nbr-iV-kHM">
-                                                        <rect key="frame" x="6" y="7" width="19" height="19"/>
+                                                        <rect key="frame" x="8" y="7" width="19" height="19"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusNone" id="83t-9E-jqE"/>
                                                     </imageView>
                                                 </subviews>
@@ -89,14 +89,21 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i9m-M7-uRE" customClass="IconView" customModule="Pup_Tent" customModuleProvider="target">
-                    <rect key="frame" x="15" y="540" width="100" height="100"/>
-                    <imageCell key="cell" selectable="YES" editable="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="0FK-2e-U3U"/>
+                <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i9m-M7-uRE" customClass="IconView" customModule="Pup_Tent" customModuleProvider="target">
+                    <rect key="frame" x="14" y="575" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="E7y-AF-ooU"/>
+                        <constraint firstAttribute="height" constant="65" id="nDW-aA-MmL"/>
+                    </constraints>
+                    <imageCell key="cell" selectable="YES" editable="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" id="0FK-2e-U3U"/>
                 </imageView>
-                <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feh-bk-oSE" userLabel="Name Text Field">
-                    <rect key="frame" x="125" y="585" width="315" height="41"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="feh-bk-oSE" userLabel="Name Text Field">
+                    <rect key="frame" x="93" y="608" width="322" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="rah-cp-YH6"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="Site Name" usesSingleLineMode="YES" id="rPz-9n-ZAK">
-                        <font key="font" metaFont="system" size="32"/>
+                        <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -104,10 +111,19 @@
                         <outlet property="delegate" destination="-2" id="1hc-K6-Tuu"/>
                     </connections>
                 </textField>
-                <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sbd-kF-KG1" userLabel="Twitter Text Field">
-                    <rect key="frame" x="125" y="555" width="315" height="22"/>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ov9-sb-G7l" userLabel="Page View">
+                    <rect key="frame" x="0.0" y="0.0" width="450" height="560"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="450" id="Byo-lC-fcO"/>
+                    </constraints>
+                </customView>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sbd-kF-KG1" userLabel="Twitter Text Field">
+                    <rect key="frame" x="93" y="587" width="322" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="IGt-a9-888"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Twitter Name" id="ESj-JO-v7J">
-                        <font key="font" metaFont="system" size="14"/>
+                        <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -115,21 +131,23 @@
                         <outlet property="delegate" destination="-2" id="SPK-xh-poD"/>
                     </connections>
                 </textField>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ov9-sb-G7l" userLabel="Page View">
-                    <rect key="frame" x="0.0" y="0.0" width="450" height="520"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="450" id="Byo-lC-fcO"/>
-                    </constraints>
-                </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="uYO-m4-dW2" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="119" id="1t3-0G-nEO"/>
+                <constraint firstItem="sbd-kF-KG1" firstAttribute="trailing" secondItem="feh-bk-oSE" secondAttribute="trailing" id="1HJ-jc-qnu"/>
+                <constraint firstItem="uYO-m4-dW2" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="79" id="1t3-0G-nEO"/>
+                <constraint firstItem="sbd-kF-KG1" firstAttribute="top" secondItem="feh-bk-oSE" secondAttribute="bottom" constant="2" id="4dh-b2-BBv"/>
                 <constraint firstAttribute="bottom" secondItem="ov9-sb-G7l" secondAttribute="bottom" id="8c5-3B-lhf"/>
+                <constraint firstAttribute="trailing" secondItem="feh-bk-oSE" secondAttribute="trailing" constant="37" id="Crk-bG-gaj"/>
+                <constraint firstItem="i9m-M7-uRE" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="M15-Qf-TXg"/>
                 <constraint firstItem="ov9-sb-G7l" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Nx3-Bs-FmO"/>
                 <constraint firstAttribute="trailing" secondItem="uYO-m4-dW2" secondAttribute="trailing" id="O0Q-gY-eIJ"/>
                 <constraint firstItem="uYO-m4-dW2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="WMO-wf-VSU"/>
                 <constraint firstAttribute="bottom" secondItem="uYO-m4-dW2" secondAttribute="bottom" id="ddd-K7-we0"/>
-                <constraint firstItem="ov9-sb-G7l" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="120" id="jWR-qH-Vzo"/>
+                <constraint firstItem="sbd-kF-KG1" firstAttribute="leading" secondItem="feh-bk-oSE" secondAttribute="leading" id="ecL-6V-2h5"/>
+                <constraint firstItem="feh-bk-oSE" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="11" id="eik-hD-xS6"/>
+                <constraint firstItem="ov9-sb-G7l" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="80" id="jWR-qH-Vzo"/>
+                <constraint firstItem="feh-bk-oSE" firstAttribute="leading" secondItem="i9m-M7-uRE" secondAttribute="trailing" constant="16" id="kf4-AG-dwh"/>
+                <constraint firstItem="i9m-M7-uRE" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="14" id="wtX-GN-EyM"/>
             </constraints>
         </customView>
     </objects>

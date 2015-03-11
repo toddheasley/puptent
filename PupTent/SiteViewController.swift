@@ -69,7 +69,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         var duration: Double = 0.0
         if (animated) {
             delay = 0.2
-            duration = 0.1
+            duration = 5.1
         }
         if (hidden) {
             delay.delay {
@@ -95,6 +95,9 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.nameTextField!.textColor = NSColor.textColor().colorWithAlphaComponent(0.9)
+        self.twitterNameTextField!.textColor = self.nameTextField!.textColor
         
         self.tableView!.registerForDraggedTypes([draggedType])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)

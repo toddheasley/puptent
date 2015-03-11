@@ -416,7 +416,7 @@ CA
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atz-qG-LAi">
-                                        <rect key="frame" x="361" y="605" width="89" height="32"/>
+                                        <rect key="frame" x="360" y="607" width="89" height="31"/>
                                         <buttonCell key="cell" type="push" title="Preview" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iib-OL-doq">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
