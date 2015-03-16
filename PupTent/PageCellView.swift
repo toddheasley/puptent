@@ -6,12 +6,9 @@
 //
 
 import Cocoa
-import AVFoundation
-import AVKit
 import PupKit
 
-class PageCellView: NSTableCellView, NSTextFieldDelegate {
-    var delegate: PageCellViewDelegate?
+class PageDetailsCellView: PageCellView, NSTextFieldDelegate {
     var index: Bool = false {
         didSet {
             if (self.index) {
@@ -54,8 +51,7 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
     }
 }
 
-class PageSectionCellView: NSTableCellView, NSTextFieldDelegate {
-    var delegate: PageCellViewDelegate?
+class PageSectionCellView: PageCellView, NSTextFieldDelegate {
     var content: AnyObject? {
         set {
             var frame = self.frame
@@ -71,10 +67,6 @@ class PageSectionCellView: NSTableCellView, NSTextFieldDelegate {
                 self.imageView!.unregisterDraggedTypes()
                 self.imageView!.image = image
                 self.imageView!.hidden = false
-            } else if let mediaPlayer = newValue as? AVPlayer {
-                
-                // TODO: Display media file in AVPlayerView
-                
             } else {
                 if let text = newValue as? String {
                     self.textField!.stringValue = text
@@ -140,6 +132,10 @@ class PageSectionCellView: NSTableCellView, NSTextFieldDelegate {
         // Notify delegate
         self.delegate?.handlePageCellViewDelete(self)
     }
+}
+
+class PageCellView: NSTableCellView {
+    var delegate: PageCellViewDelegate?
 }
 
 protocol PageCellViewDelegate {

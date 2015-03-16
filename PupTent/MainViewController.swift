@@ -55,7 +55,7 @@ class MainViewController: NSViewController {
             
             self.previewButton!.translatesAutoresizingMaskIntoConstraints = true
             var frame = self.previewButton!.frame
-            frame.origin.x = view.bounds.size.width - frame.size.width - 3.0
+            frame.origin.x = view.bounds.size.width - frame.size.width - 4.0
             frame.origin.y = 8.0
             self.previewButton!.frame = frame
         }

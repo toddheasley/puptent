@@ -80,9 +80,6 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 // Copy non-local image files
                 return NSDragOperation.Copy
             }
-            
-            // TODO: Validate non-local audio/video copy
-            
         }
         
         // Prevent cells from being dropped on other cells and below "new section" cell
@@ -143,9 +140,6 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                         }
                     }
                 }
-                
-                // TODO: Accept non-local audio/video copy
-                
             }
         }
         return false
@@ -213,10 +207,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                             cell.content = NSImage(named: "MissingImage")
                         }
                     case .Audio, .Video:
-                        
-                        // TODO: AVPlayer cell content
-                        
-                        break
+                        cell.content = section.URI
                     case .Basic:
                         cell.content = section.text
                     }
@@ -280,7 +271,8 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     func handlePageCellViewDelete(pageCellView: NSTableCellView) {
         if let page = self.page {
             let row = self.tableView!.rowForView(pageCellView) - 1
-            if (row < page.sections.count) {
+            
+            if (row > -1 && row < page.sections.count) {
                 page.sections.removeAtIndex(row)
                 
                 // Notify delegate
@@ -292,7 +284,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: IBOutlet, IBAction
     @IBOutlet weak var tableView: NSTableView?
-    @IBOutlet weak var pageCellView: PageCellView?
+    @IBOutlet weak var pageCellView: PageDetailsCellView?
     @IBOutlet weak var dismissButton: NSButton?
     @IBOutlet weak var deleteButton: NSButton?
     @IBOutlet weak var label: NSTextField?
