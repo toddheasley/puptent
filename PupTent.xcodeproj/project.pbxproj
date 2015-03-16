@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C0BC85F1AA55B350044A71C /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0BC85D1AA55B350044A71C /* SiteViewController.swift */; };
 		5C0BC8601AA55B350044A71C /* Site.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C0BC85E1AA55B350044A71C /* Site.xib */; };
+		5C12994A1AB5E07D00FB1881 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1299491AB5E07D00FB1881 /* NSImage.swift */; };
 		5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
 		5C4AE5381A7A7D0400BF15F3 /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */; };
 		5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */; };
@@ -18,12 +19,12 @@
 		5CB1B1ED1AAC92D100B33E7F /* PageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */; };
 		5CB377131AA7BE6200234303 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB377111AA7BE6200234303 /* PageViewController.swift */; };
 		5CB377141AA7BE6200234303 /* Page.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB377121AA7BE6200234303 /* Page.xib */; };
-		5CCAA4861AA628660012DAFE /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCAA4851AA628660012DAFE /* IconView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5C0BC85D1AA55B350044A71C /* SiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewController.swift; sourceTree = "<group>"; };
 		5C0BC85E1AA55B350044A71C /* Site.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Site.xib; sourceTree = "<group>"; };
+		5C1299491AB5E07D00FB1881 /* NSImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		5C3ACE591A7A7E4500A7884D /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PupKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/PupTent-cxskoiqkbzoodfbisaosgmkipygo/Build/Products/Debug/PupKit.framework"; sourceTree = "<group>"; };
@@ -35,7 +36,6 @@
 		5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCellView.swift; sourceTree = "<group>"; };
 		5CB377111AA7BE6200234303 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		5CB377121AA7BE6200234303 /* Page.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Page.xib; sourceTree = "<group>"; };
-		5CCAA4851AA628660012DAFE /* IconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,10 +65,10 @@
 				5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */,
 				5C0BC85D1AA55B350044A71C /* SiteViewController.swift */,
 				5CB377111AA7BE6200234303 /* PageViewController.swift */,
-				5CCAA4851AA628660012DAFE /* IconView.swift */,
 				5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */,
 				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
 				5C3ACE591A7A7E4500A7884D /* Window.swift */,
+				5C1299491AB5E07D00FB1881 /* NSImage.swift */,
 				5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */,
 				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
 				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
@@ -175,10 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CCAA4861AA628660012DAFE /* IconView.swift in Sources */,
 				5CA7FB321A7A7BCF00D95984 /* MainViewController.swift in Sources */,
 				5CB1B1ED1AAC92D100B33E7F /* PageCellView.swift in Sources */,
 				5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */,
+				5C12994A1AB5E07D00FB1881 /* NSImage.swift in Sources */,
 				5CB377131AA7BE6200234303 /* PageViewController.swift in Sources */,
 				5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */,
 				5C0BC85F1AA55B350044A71C /* SiteViewController.swift in Sources */,

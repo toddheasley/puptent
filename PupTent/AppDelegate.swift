@@ -9,6 +9,32 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+        if let mainViewController = self.mainViewController {
+            switch menuItem {
+            case self.forgetMenuItem!:
+                return mainViewController.canForget
+            case self.newPageMenuItem!:
+                fallthrough
+            case self.previewItem!:
+                return mainViewController.siteViewController?.manager != nil
+            case self.deletePageMenuItem!:
+                return mainViewController.canDeletePage
+            case self.dismissPageMenuItem!:
+                return mainViewController.canDismissPage
+            default:
+                return true
+            }
+        }
+        return false
+    }
+    
+    // MARK: NSApplicationDelegate
+    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+        return true;
+    }
+    
+    // MARK: IBOutlet, IBAction
     @IBOutlet weak var mainViewController: MainViewController?
     @IBOutlet weak var forgetMenuItem: NSMenuItem?
     @IBOutlet weak var newPageMenuItem: NSMenuItem?
@@ -46,30 +72,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func close(sender: AnyObject?) {
         NSApplication.sharedApplication().keyWindow!.performClose(self)
-    }
-    
-    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-        if let mainViewController = self.mainViewController {
-            switch (menuItem) {
-            case self.forgetMenuItem!:
-                return mainViewController.canForget
-            case self.newPageMenuItem!:
-                fallthrough
-            case self.previewItem!:
-                return mainViewController.siteViewController?.manager != nil
-            case self.deletePageMenuItem!:
-                return mainViewController.canDeletePage
-            case self.dismissPageMenuItem!:
-                return mainViewController.canDismissPage
-            default:
-                return true
-            }
-        }
-        return false
-    }
-    
-    // MARK: NSApplicationDelegate
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
-        return true;
     }
 }

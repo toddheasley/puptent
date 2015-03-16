@@ -103,13 +103,13 @@ public class PageSection: Archiving {
     required public init(dictionary: NSDictionary) {
         switch dictionary[ArchivingKeys.type] as! String {
         case ArchivingKeys.types[1]:
-            self.type = PageSectionType.Image
+            self.type = .Image
         case ArchivingKeys.types[2]:
-            self.type = PageSectionType.Audio
+            self.type = .Audio
         case ArchivingKeys.types[3]:
-            self.type = PageSectionType.Video
+            self.type = .Video
         default:
-            self.type = PageSectionType.Basic
+            self.type = .Basic
         }
         self.text = dictionary[ArchivingKeys.text] as! String
         self.URI = dictionary[ArchivingKeys.URI] as! String

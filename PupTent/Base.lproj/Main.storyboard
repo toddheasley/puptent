@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7519.1" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14D98g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7519.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7525"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -328,11 +328,7 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="Help" keyEquivalent="?" id="FKE-Sm-Kum">
-                                            <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem title="Help" keyEquivalent="?" id="FKE-Sm-Kum"/>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -362,7 +358,7 @@ CA
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES"/>
-                        <rect key="contentRect" x="80" y="40" width="450" height="640"/>
+                        <rect key="contentRect" x="80" y="40" width="450" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="8A860415-D64D-4D0F-B87F-576D14EB80D0" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="tfn-Dl-6vb">
                             <allowedToolbarItems/>
@@ -374,21 +370,21 @@ CA
                     </connections>
                 </windowController>
             </objects>
-            <point key="canvasLocation" x="141" y="510"/>
+            <point key="canvasLocation" x="141" y="421"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="U6t-f9-9Bs">
             <objects>
                 <viewController id="oYN-gl-7fc" customClass="MainViewController" customModule="Pup_Tent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FSw-Yy-tpY">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="640"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="1RH-tP-BIV">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="640"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="1RH-tP-BIV" userLabel="Empty View">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c31-ss-QZM">
-                                        <rect key="frame" x="18" y="374" width="414" height="29"/>
+                                        <rect key="frame" x="18" y="324" width="414" height="29"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="Dch-kh-Zcr">
                                             <font key="font" metaFont="system" size="24"/>
                                             <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -396,7 +392,7 @@ CA
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                        <rect key="frame" x="125" y="304" width="200" height="32"/>
+                                        <rect key="frame" x="125" y="254" width="200" height="32"/>
                                         <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -406,7 +402,7 @@ CA
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                        <rect key="frame" x="125" y="269" width="200" height="32"/>
+                                        <rect key="frame" x="125" y="219" width="200" height="32"/>
                                         <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -416,7 +412,7 @@ CA
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atz-qG-LAi">
-                                        <rect key="frame" x="360" y="607" width="89" height="31"/>
+                                        <rect key="frame" x="360" y="557" width="90" height="32"/>
                                         <buttonCell key="cell" type="push" title="Preview" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iib-OL-doq">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>

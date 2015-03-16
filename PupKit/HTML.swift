@@ -75,13 +75,13 @@ public class HTML {
         ]
         for section in page.sections {
             switch (section.type) {
-            case PageSectionType.Image:
+            case .Image:
                 HTML.append("    <figure><a href=\"\(section.URI)\"><img src=\"\(section.URI)\"></a></figure>\n")
-            case PageSectionType.Audio:
+            case .Audio:
                 HTML.append("    <figure><audio src=\"\(section.URI)\" preload=\"metadata\" controls></audio></figure>\n")
-            case PageSectionType.Video:
+            case .Video:
                 HTML.append("    <figure><video src=\"\(section.URI)\" preload=\"metadata\" controls></video></figure>\n")
-            case PageSectionType.Basic:
+            case .Basic:
                 HTML.append("    <p>\(section.text.toHTML(true))</p>\n")
             }
         }

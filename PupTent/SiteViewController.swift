@@ -9,22 +9,16 @@ import Cocoa
 import PupKit
 
 class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, PageViewControllerDelegate {
-    @IBOutlet weak var iconView: IconView?
-    @IBOutlet weak var nameTextField: NSTextField?
-    @IBOutlet weak var twitterNameTextField: NSTextField?
-    @IBOutlet weak var tableView: NSTableView?
-    @IBOutlet weak var tableViewPositionConstraint: NSLayoutConstraint?
-    @IBOutlet weak var pageView: NSView?
-    @IBOutlet weak var pageViewPositionConstraint: NSLayoutConstraint?
-    
     let draggedType = "Page"
     var manager: Manager! {
         didSet {
             if let manager = self.manager {
-                self.iconView?.path = manager.path + Manager.bookmarkIconURI
+                if let URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI), let image = NSImage(contentsOfURL: URL) {
+                    self.iconView?.image = image
+                }
                 self.nameTextField?.stringValue = manager.site.name
                 self.twitterNameTextField?.stringValue = manager.site.twitterName.toTwitterFormat()
-                self.pageViewController!.mediaPath = manager.path + Manager.mediaPath
+                self.pageViewController!.path = manager.path
             }
             self.tableView?.reloadData()
         }
@@ -65,11 +59,12 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         self.tableView!.hidden = false
         self.pageView!.hidden = false
         
+        // Configure animated transition
         var delay: Double = 0.0
         var duration: Double = 0.0
         if (animated) {
             delay = 0.2
-            duration = 5.1
+            duration = 0.1
         }
         if (hidden) {
             delay.delay {
@@ -95,6 +90,12 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.iconView?.wantsLayer = true
+        self.iconView?.layer?.masksToBounds = true
+        self.iconView?.layer?.borderColor = NSColor.lightGrayColor().colorWithAlphaComponent(0.5).CGColor
+        self.iconView?.layer?.borderWidth = 1.0
+        self.iconView?.layer?.cornerRadius = 5.0
         
         self.nameTextField!.textColor = NSColor.textColor().colorWithAlphaComponent(0.9)
         self.twitterNameTextField!.textColor = self.nameTextField!.textColor
@@ -243,6 +244,30 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     
     func dismissPageViewController(pageViewController: PageViewController, animated: Bool) {
         self.togglePageViewHidden(true, animated: animated)
+    }
+    
+    // MARK: IBOutlet, IBAction
+    @IBOutlet weak var iconView: NSImageView?
+    @IBOutlet weak var nameTextField: NSTextField?
+    @IBOutlet weak var twitterNameTextField: NSTextField?
+    @IBOutlet weak var tableView: NSTableView?
+    @IBOutlet weak var tableViewPositionConstraint: NSLayoutConstraint?
+    @IBOutlet weak var pageView: NSView?
+    @IBOutlet weak var pageViewPositionConstraint: NSLayoutConstraint?
+    
+    @IBAction func changeIcon(sender: AnyObject?) {
+        if let URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI), imageView = sender as? NSImageView {
+            
+            // Move existing media file to trash
+            NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
+            if let image = imageView.image, data = image.TIFFRepresentation {
+                
+                // TODO: NSImage PNG conversion/compression
+                
+                // Write new bookmark icon with image data
+                data.writeToURL(URL, atomically: true)
+            }
+        }
     }
 }
 

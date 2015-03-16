@@ -9,76 +9,6 @@ import Cocoa
 import PupKit
 
 class MainViewController: NSViewController {
-    @IBOutlet weak var previewButton: NSButton?
-    @IBOutlet weak var makeNewSiteButton: NSButton?
-    @IBOutlet weak var openSiteButton: NSButton?
-    @IBOutlet weak var emptyView: NSView?
-    
-    @IBAction func preview(sender: AnyObject?) {
-        if let manager = self.siteViewController?.manager {
-            var URI = manager.site.URI
-            if let page = self.siteViewController?.selectedPage.page {
-                URI = page.URI
-            }
-            NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
-        }
-    }
-    
-    @IBAction func forget(sender: AnyObject?) {
-        self.toggleEmpty(true, animated: true)
-        NSUserDefaults.standardUserDefaults().path = ""
-        self.siteViewController?.manager = nil
-    }
-    
-    @IBAction func makeNewSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Empty Folder..."
-        openPanel.prompt = "Use This Folder"
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            let path = openPanel.URL!.path! + "/"
-            if let error = Manager.pitch(path) as NSError! {
-                
-                // TODO: Present custom alert view (on window)
-                println("\(error.localizedDescription)")
-                return
-            }
-            self.openSite(path, animated: true)
-        })
-    }
-    
-    @IBAction func openExistingSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Existing Site..."
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            self.openSite(openPanel.URL!.path! + "/", animated: true)
-        })
-    }
-    
-    @IBAction func makeNewPage(sender: AnyObject?) {
-        self.siteViewController?.selectNewPage()
-    }
-    
-    @IBAction func deletePage(sender: AnyObject?) {
-        if (self.canDeletePage) {
-            self.siteViewController?.deleteSelectedPage()
-        }
-    }
-    
-    @IBAction func dismissPage(sender: AnyObject?) {
-        self.siteViewController?.dismissSelectedPage()
-    }
-    
     var siteViewController: SiteViewController?
     var canForget: Bool {
         get {
@@ -153,6 +83,77 @@ class MainViewController: NSViewController {
         self.previewButton!.hidden = empty
         self.siteViewController!.view.hidden = empty
         self.emptyView!.hidden = !empty
+    }
+    
+    // MARK: IBOutlet, IBAction
+    @IBOutlet weak var previewButton: NSButton?
+    @IBOutlet weak var makeNewSiteButton: NSButton?
+    @IBOutlet weak var openSiteButton: NSButton?
+    @IBOutlet weak var emptyView: NSView?
+    
+    @IBAction func preview(sender: AnyObject?) {
+        if let manager = self.siteViewController?.manager {
+            var URI = manager.site.URI
+            if let page = self.siteViewController?.selectedPage.page {
+                URI = page.URI
+            }
+            NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
+        }
+    }
+    
+    @IBAction func forget(sender: AnyObject?) {
+        self.toggleEmpty(true, animated: true)
+        NSUserDefaults.standardUserDefaults().path = ""
+        self.siteViewController?.manager = nil
+    }
+    
+    @IBAction func makeNewSite(sender: AnyObject?) {
+        var openPanel: NSOpenPanel = NSOpenPanel()
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.title = "Choose an Empty Folder..."
+        openPanel.prompt = "Use This Folder"
+        openPanel.beginWithCompletionHandler( { (result) -> Void in
+            if result != NSFileHandlingPanelOKButton {
+                return
+            }
+            let path = openPanel.URL!.path! + "/"
+            if let error = Manager.pitch(path) as NSError! {
+                
+                // TODO: Present custom alert view (on window)
+                println("\(error.localizedDescription)")
+                return
+            }
+            self.openSite(path, animated: true)
+        })
+    }
+    
+    @IBAction func openExistingSite(sender: AnyObject?) {
+        var openPanel: NSOpenPanel = NSOpenPanel()
+        openPanel.canChooseDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.title = "Choose an Existing Site..."
+        openPanel.beginWithCompletionHandler( { (result) -> Void in
+            if result != NSFileHandlingPanelOKButton {
+                return
+            }
+            self.openSite(openPanel.URL!.path! + "/", animated: true)
+        })
+    }
+    
+    @IBAction func makeNewPage(sender: AnyObject?) {
+        self.siteViewController?.selectNewPage()
+    }
+    
+    @IBAction func deletePage(sender: AnyObject?) {
+        if (self.canDeletePage) {
+            self.siteViewController?.deleteSelectedPage()
+        }
+    }
+    
+    @IBAction func dismissPage(sender: AnyObject?) {
+        self.siteViewController?.dismissSelectedPage()
     }
 }
 
