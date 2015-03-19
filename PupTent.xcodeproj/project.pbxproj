@@ -69,11 +69,11 @@
 				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
 				5C3ACE591A7A7E4500A7884D /* Window.swift */,
 				5C1299491AB5E07D00FB1881 /* NSImage.swift */,
-				5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */,
 				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
 				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
 				5C0BC85E1AA55B350044A71C /* Site.xib */,
 				5CB377121AA7BE6200234303 /* Page.xib */,
+				5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */,
 			);
 			path = PupTent;
 			sourceTree = "<group>";

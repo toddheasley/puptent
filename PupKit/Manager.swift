@@ -8,31 +8,11 @@
 import Foundation
 
 public class Manager: HTMLDelegate {
-    public class var bookmarkIconURI: String {
-        get {
-            return "apple-touch-icon.png"
-        }
-    }
-    public class var stylesheetURI: String {
-        get {
-            return "default.css"
-        }
-    }
-    public class var mediaPath: String {
-        get {
-            return "media" // Suggested media directory
-        }
-    }
-    public class var manifestURI: String {
-        get {
-            return "index.json"
-        }
-    }
-    public class var URIExtension: String {
-        get {
-            return ".html"
-        }
-    }
+    public static let bookmarkIconURI: String = "apple-touch-icon.png"
+    public static let stylesheetURI: String = "default.css"
+    public static let mediaPath: String = "media" // Suggested media directory
+    public static let manifestURI: String = "index.json"
+    public static let URIExtension: String = ".html"
     public var site: Site!
     public var path: String {
         get {
