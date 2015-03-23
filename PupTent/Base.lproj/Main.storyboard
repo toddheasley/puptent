@@ -355,6 +355,10 @@ CA
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="80" y="40" width="450" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="75E0C72C-70C7-4D0E-A3F1-AE5002E01ECE" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="4lR-92-6LS">
+                            <allowedToolbarItems/>
+                            <defaultToolbarItems/>
+                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="oYN-gl-7fc" kind="relationship" relationship="window.shadowedContentViewController" id="2lQ-m8-HP6"/>
@@ -375,7 +379,7 @@ CA
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                        <rect key="frame" x="125" y="254" width="200" height="32"/>
+                                        <rect key="frame" x="125" y="308" width="200" height="32"/>
                                         <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -385,7 +389,7 @@ CA
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                        <rect key="frame" x="125" y="219" width="200" height="32"/>
+                                        <rect key="frame" x="125" y="248" width="200" height="32"/>
                                         <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -394,6 +398,14 @@ CA
                                             <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
                                         </connections>
                                     </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK6-4y-0Ym">
+                                        <rect key="frame" x="129" y="359" width="192" height="63"/>
+                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Bk1-8L-YoT">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                             </customView>
                         </subviews>
@@ -401,10 +413,11 @@ CA
                             <constraint firstItem="1RH-tP-BIV" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="6dA-Zu-K35"/>
                             <constraint firstAttribute="bottom" secondItem="1RH-tP-BIV" secondAttribute="bottom" id="ARi-Pj-Gf7"/>
                             <constraint firstAttribute="trailing" secondItem="1RH-tP-BIV" secondAttribute="trailing" id="goE-bF-L5w"/>
-                            <constraint firstItem="1RH-tP-BIV" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="muR-f1-ydX"/>
+                            <constraint firstItem="1RH-tP-BIV" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="pSz-G3-3rA"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="alertLabel" destination="kK6-4y-0Ym" id="hRs-tT-Vdk"/>
                         <outlet property="emptyView" destination="1RH-tP-BIV" id="NHj-Mz-D7h"/>
                         <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
                         <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>

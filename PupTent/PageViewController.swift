@@ -29,6 +29,9 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.wantsLayer = true
+        self.view.layer!.backgroundColor = NSColor(calibratedWhite: 0.9, alpha: 1.0).CGColor
+        
         self.tableView!.registerForDraggedTypes([draggedType, kUTTypeFileURL])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
         self.tableView!.selectionHighlightStyle = NSTableViewSelectionHighlightStyle.None
@@ -294,16 +297,21 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         self.delegate?.dismissPageViewController(self, animated: true)
     }
     @IBAction func delete(sender: AnyObject?) {
-        var alert = NSAlert()
-        alert.messageText = "Delete this page?"
-        alert.addButtonWithTitle("Delete")
-        alert.addButtonWithTitle("Cancel")
-        if (alert.runModal() !=  NSAlertFirstButtonReturn) {
-            return
+        if let page = self.page {
+            var alert = NSAlert()
+            alert.messageText = page.name
+            alert.informativeText = "Delete this page?"
+            alert.addButtonWithTitle("Delete")
+            alert.addButtonWithTitle("Cancel")
+            alert.beginSheetModalForWindow(self.view.window!, completionHandler: { response in
+                if (response != NSAlertFirstButtonReturn) {
+                    return
+                }
+                
+                // Notify delegate
+                self.delegate?.handlePageViewControllerDelete(self)
+            })
         }
-        
-        // Notify delegate
-        self.delegate?.handlePageViewControllerDelete(self)
     }
 }
 

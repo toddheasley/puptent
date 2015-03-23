@@ -72,3 +72,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.sharedApplication().keyWindow!.performClose(self)
     }
 }
+
+extension Double {
+    func delay(delay:() -> Void) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(self * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), delay)
+    }
+    
+    func animate(animate:() -> Void, _ completionHandler:() -> Void) {
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = self
+            animate()
+            }, completionHandler: completionHandler)
+    }
+}

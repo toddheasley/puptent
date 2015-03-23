@@ -106,6 +106,32 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         self.togglePageViewHidden(true, animated: false)
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.previewButton?.hidden = false
+    }
+    
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        self.previewButton?.hidden = true
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        if let window = self.view.window as? Window, titleBarView = window.titleBarView as NSView!, previewButton = self.previewButton {
+            
+            // Insert preview button into window title bar
+            previewButton.removeFromSuperview()
+            previewButton.translatesAutoresizingMaskIntoConstraints = true
+            
+            var frame = previewButton.frame
+            frame.origin.y = (titleBarView.bounds.size.height - frame.size.height) / 2.0
+            previewButton.frame = frame
+            
+            titleBarView.addSubview(previewButton)
+        }
+    }
+    
     // MARK: NSTextFieldDelegate
     func control(control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         if let textField = control as? NSTextField, manager = self.manager {
@@ -244,6 +270,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     }
     
     // MARK: IBOutlet, IBAction
+    @IBOutlet weak var previewButton: NSButton?
     @IBOutlet weak var iconView: NSImageView?
     @IBOutlet weak var nameTextField: NSTextField?
     @IBOutlet weak var twitterNameTextField: NSTextField?
@@ -276,19 +303,6 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     }
 }
 
-extension Double {
-    func delay(delay:() -> Void) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(self * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), delay)
-    }
-    
-    func animate(animate:() -> Void, _ completionHandler:() -> Void) {
-        NSAnimationContext.runAnimationGroup({ context in
-            context.duration = self
-            animate()
-        }, completionHandler: completionHandler)
-    }
-}
-
 extension String {
     func toURIFormat() -> String {
         var string = self.lowercaseString.trim()
@@ -296,8 +310,11 @@ extension String {
         // Separate words with hyphens
         string = string.stringByReplacingOccurrencesOfString(" ", withString: "-", options:nil, range: nil)
         
+        // Strip existing file extension
+        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "", options: nil, range: nil)
+        
         // Strip all non-alphanumeric characters
-        string = NSRegularExpression(pattern: "[^0-9a-z-_]", options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(string, options: nil, range: NSMakeRange(0, count(string)), withTemplate: "")
+        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
         if (!string.isEmpty) {
             string += Manager.URIExtension
         }

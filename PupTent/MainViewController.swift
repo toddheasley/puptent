@@ -15,12 +15,24 @@ class MainViewController: NSViewController {
             return !NSUserDefaults.standardUserDefaults().path.isEmpty
         }
     }
+    var empty: Bool {
+        get {
+            if let emptyView = self.emptyView {
+                return !emptyView.hidden
+            }
+            return true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
+        
+        self.emptyView!.wantsLayer = true
+        self.emptyView!.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        
         self.siteViewController = SiteViewController(nibName: "Site", bundle: nil)
         self.view.addSubview(self.siteViewController!.view)
         
@@ -33,17 +45,16 @@ class MainViewController: NSViewController {
         }
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.toggleEmpty(self.empty, animated: false)
+    }
+    
     private func openSite(path: String, animated: Bool) {
         var error: NSError?
         let manager = Manager(path: path, error: &error)
         if (error != nil) {
-            if let window = self.view.window {
-                
-                // Suppress error on launch; only show if the application has a window
-                var alert: NSAlert = NSAlert()
-                alert.messageText = "\(error!.localizedDescription)"
-                alert.runModal()
-            }
+            self.alert(error!.localizedDescription)
             return
         }
         
@@ -56,13 +67,26 @@ class MainViewController: NSViewController {
     }
     
     private func toggleEmpty(empty: Bool, animated: Bool) {
+        if let window = self.view.window as? Window {
+            window.toggleToolbar(empty)
+        }
         self.siteViewController!.view.hidden = empty
         self.emptyView!.hidden = !empty
+    }
+    
+    private func alert(text: String) {
+        self.alertLabel?.hidden = text.isEmpty
+        self.alertLabel?.stringValue = "\(text)"
+        5.0.delay {
+            self.alertLabel?.hidden = true
+            self.alertLabel?.stringValue = ""
+        }
     }
     
     // MARK: IBOutlet, IBAction
     @IBOutlet weak var makeNewSiteButton: NSButton?
     @IBOutlet weak var openSiteButton: NSButton?
+    @IBOutlet weak var alertLabel: NSTextField?
     @IBOutlet weak var emptyView: NSView?
     
     @IBAction func forget(sender: AnyObject?) {
@@ -84,9 +108,8 @@ class MainViewController: NSViewController {
             }
             let path = openPanel.URL!.path! + "/"
             if let error = Manager.pitch(path) as NSError! {
-                var alert: NSAlert = NSAlert()
-                alert.messageText = "\(error.localizedDescription)"
-                alert.runModal()
+                self.alert(error.localizedDescription)
+                return
             }
             self.openSite(path, animated: true)
         })
