@@ -15,16 +15,6 @@ class MainViewController: NSViewController {
             return !NSUserDefaults.standardUserDefaults().path.isEmpty
         }
     }
-    var canDeletePage: Bool {
-        get {
-            return self.siteViewController?.selectedPage.index >= 0
-        }
-    }
-    var canDismissPage: Bool {
-        get {
-            return self.siteViewController?.tableView?.selectedRow > -1
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,31 +33,17 @@ class MainViewController: NSViewController {
         }
     }
     
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        
-        // Remove preview button from view
-        self.previewButton?.removeFromSuperview()
-        if let window = self.view.window as? Window, view = window.titleBarView as NSView! {
-            
-            // Insert preview button into window title bar
-            view.addSubview(self.previewButton!)
-            
-            self.previewButton!.translatesAutoresizingMaskIntoConstraints = true
-            var frame = self.previewButton!.frame
-            frame.origin.x = view.bounds.size.width - frame.size.width - 4.0
-            frame.origin.y = 8.0
-            self.previewButton!.frame = frame
-        }
-    }
-    
     private func openSite(path: String, animated: Bool) {
         var error: NSError?
         let manager = Manager(path: path, error: &error)
         if (error != nil) {
-            
-            // TODO: Present custom alert view (on window)
-            println("\(error!.localizedDescription)")
+            if let window = self.view.window {
+                
+                // Suppress error on launch; only show if the application has a window
+                var alert: NSAlert = NSAlert()
+                alert.messageText = "\(error!.localizedDescription)"
+                alert.runModal()
+            }
             return
         }
         
@@ -80,26 +56,14 @@ class MainViewController: NSViewController {
     }
     
     private func toggleEmpty(empty: Bool, animated: Bool) {
-        self.previewButton!.hidden = empty
         self.siteViewController!.view.hidden = empty
         self.emptyView!.hidden = !empty
     }
     
     // MARK: IBOutlet, IBAction
-    @IBOutlet weak var previewButton: NSButton?
     @IBOutlet weak var makeNewSiteButton: NSButton?
     @IBOutlet weak var openSiteButton: NSButton?
     @IBOutlet weak var emptyView: NSView?
-    
-    @IBAction func preview(sender: AnyObject?) {
-        if let manager = self.siteViewController?.manager {
-            var URI = manager.site.URI
-            if let page = self.siteViewController?.selectedPage.page {
-                URI = page.URI
-            }
-            NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
-        }
-    }
     
     @IBAction func forget(sender: AnyObject?) {
         self.toggleEmpty(true, animated: true)
@@ -120,10 +84,9 @@ class MainViewController: NSViewController {
             }
             let path = openPanel.URL!.path! + "/"
             if let error = Manager.pitch(path) as NSError! {
-                
-                // TODO: Present custom alert view (on window)
-                println("\(error.localizedDescription)")
-                return
+                var alert: NSAlert = NSAlert()
+                alert.messageText = "\(error.localizedDescription)"
+                alert.runModal()
             }
             self.openSite(path, animated: true)
         })
@@ -140,20 +103,6 @@ class MainViewController: NSViewController {
             }
             self.openSite(openPanel.URL!.path! + "/", animated: true)
         })
-    }
-    
-    @IBAction func makeNewPage(sender: AnyObject?) {
-        self.siteViewController?.selectNewPage()
-    }
-    
-    @IBAction func deletePage(sender: AnyObject?) {
-        if (self.canDeletePage) {
-            self.siteViewController?.deleteSelectedPage()
-        }
-    }
-    
-    @IBAction func dismissPage(sender: AnyObject?) {
-        self.siteViewController?.dismissSelectedPage()
     }
 }
 

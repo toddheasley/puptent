@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14D98g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7525"/>
     </dependencies>
@@ -352,20 +352,16 @@ CA
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="80" y="40" width="450" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="8A860415-D64D-4D0F-B87F-576D14EB80D0" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="tfn-Dl-6vb">
-                            <allowedToolbarItems/>
-                            <defaultToolbarItems/>
-                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="oYN-gl-7fc" kind="relationship" relationship="window.shadowedContentViewController" id="2lQ-m8-HP6"/>
                     </connections>
                 </windowController>
             </objects>
-            <point key="canvasLocation" x="141" y="421"/>
+            <point key="canvasLocation" x="140" y="281"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="U6t-f9-9Bs">
@@ -378,14 +374,6 @@ CA
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="1RH-tP-BIV" userLabel="Empty View">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c31-ss-QZM">
-                                        <rect key="frame" x="18" y="324" width="414" height="29"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="Dch-kh-Zcr">
-                                            <font key="font" metaFont="system" size="24"/>
-                                            <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
                                         <rect key="frame" x="125" y="254" width="200" height="32"/>
                                         <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
@@ -406,16 +394,6 @@ CA
                                             <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atz-qG-LAi">
-                                        <rect key="frame" x="360" y="557" width="90" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Preview" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iib-OL-doq">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="preview:" target="oYN-gl-7fc" id="YpE-8Q-sMV"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </customView>
                         </subviews>
@@ -430,12 +408,11 @@ CA
                         <outlet property="emptyView" destination="1RH-tP-BIV" id="NHj-Mz-D7h"/>
                         <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
                         <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>
-                        <outlet property="previewButton" destination="atz-qG-LAi" id="aKe-qi-oWN"/>
                     </connections>
                 </viewController>
                 <customObject id="5uz-4r-usm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="680" y="403"/>
+            <point key="canvasLocation" x="686" y="227"/>
         </scene>
     </scenes>
 </document>

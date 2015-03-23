@@ -14,14 +14,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             switch menuItem {
             case self.forgetMenuItem!:
                 return mainViewController.canForget
-            case self.newPageMenuItem!:
-                fallthrough
-            case self.previewItem!:
+            case self.newPageMenuItem!, self.previewItem!:
                 return mainViewController.siteViewController?.manager != nil
             case self.deletePageMenuItem!:
-                return mainViewController.canDeletePage
+                return mainViewController.siteViewController?.selectedPage.index > -1
             case self.dismissPageMenuItem!:
-                return mainViewController.canDismissPage
+                return mainViewController.siteViewController?.tableView?.selectedRow > -1
             default:
                 return true
             }
@@ -43,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var previewItem: NSMenuItem?
     
     @IBAction func preview(sender: AnyObject?) {
-        self.mainViewController?.preview(self)
+        self.mainViewController?.siteViewController?.preview(self)
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
@@ -59,15 +57,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        self.mainViewController?.makeNewPage(sender)
+        self.mainViewController?.siteViewController?.selectNewPage()
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
-        self.mainViewController?.deletePage(sender)
+        self.mainViewController?.siteViewController?.deleteSelectedPage()
     }
     
     @IBAction func dismissPage(sender: AnyObject?) {
-        self.mainViewController?.dismissPage(sender)
+        self.mainViewController?.siteViewController?.dismissSelectedPage()
     }
     
     @IBAction func close(sender: AnyObject?) {

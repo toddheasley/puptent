@@ -34,6 +34,8 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         self.tableView!.selectionHighlightStyle = NSTableViewSelectionHighlightStyle.None
         self.tableView!.postsBoundsChangedNotifications = true
         
+        self.label!.textColor = NSColor.grayColor().colorWithAlphaComponent(0.5)
+        
         // Subscribe to table view scroll notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleBoundsChange:", name: NSViewBoundsDidChangeNotification, object: nil)
     }
@@ -163,10 +165,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                             cell.content = NSImage(named: "MissingImage")
                         }
                     case .Audio, .Video:
-                        
-                        // TODO: AVPlayer cell content height
-                        
-                        break
+                        cell.content = section.URI
                     case .Basic:
                         cell.content = section.text
                     }
@@ -184,9 +183,9 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 
                 // Configure name/URI cell
                 cell.delegate = self
-                cell.textField!.textColor = NSColor.textColor().colorWithAlphaComponent(0.9)
+                cell.textField!.textColor = NSColor.textColor()
                 cell.textField!.stringValue = page.name
-                cell.URITextField!.textColor = NSColor.grayColor()
+                cell.URITextField!.textColor = self.label!.textColor
                 cell.URITextField!.stringValue = page.URI
                 cell.index = page.index
                 return cell
@@ -295,8 +294,13 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         self.delegate?.dismissPageViewController(self, animated: true)
     }
     @IBAction func delete(sender: AnyObject?) {
-        
-        // TODO: Present custom confirm view
+        var alert = NSAlert()
+        alert.messageText = "Delete this page?"
+        alert.addButtonWithTitle("Delete")
+        alert.addButtonWithTitle("Cancel")
+        if (alert.runModal() !=  NSAlertFirstButtonReturn) {
+            return
+        }
         
         // Notify delegate
         self.delegate?.handlePageViewControllerDelete(self)

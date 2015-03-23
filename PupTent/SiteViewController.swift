@@ -93,12 +93,9 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         
         self.iconView?.wantsLayer = true
         self.iconView?.layer?.masksToBounds = true
-        self.iconView?.layer?.borderColor = NSColor.lightGrayColor().colorWithAlphaComponent(0.5).CGColor
+        self.iconView?.layer?.borderColor = NSColor.grayColor().colorWithAlphaComponent(0.5).CGColor
         self.iconView?.layer?.borderWidth = 1.0
         self.iconView?.layer?.cornerRadius = 5.0
-        
-        self.nameTextField!.textColor = NSColor.textColor().colorWithAlphaComponent(0.9)
-        self.twitterNameTextField!.textColor = self.nameTextField!.textColor
         
         self.tableView!.registerForDraggedTypes([draggedType])
         self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
@@ -262,11 +259,19 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
             if let image = imageView.image, data = image.TIFFRepresentation {
                 
-                // TODO: NSImage PNG conversion/compression
-                
                 // Write new bookmark icon with image data
                 data.writeToURL(URL, atomically: true)
             }
+        }
+    }
+    
+    @IBAction func preview(sender: AnyObject?) {
+        if let manager = self.manager {
+            var URI = manager.site.URI
+            if let page = self.selectedPage.page {
+                URI = page.URI
+            }
+            NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
         }
     }
 }

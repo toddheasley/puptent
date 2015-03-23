@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C0BC85F1AA55B350044A71C /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0BC85D1AA55B350044A71C /* SiteViewController.swift */; };
 		5C0BC8601AA55B350044A71C /* Site.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C0BC85E1AA55B350044A71C /* Site.xib */; };
-		5C12994A1AB5E07D00FB1881 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1299491AB5E07D00FB1881 /* NSImage.swift */; };
 		5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
-		5C4AE5381A7A7D0400BF15F3 /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */; };
 		5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */; };
 		5CA7FB321A7A7BCF00D95984 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */; };
 		5CA7FB341A7A7BCF00D95984 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CA7FB331A7A7BCF00D95984 /* Images.xcassets */; };
@@ -19,15 +17,14 @@
 		5CB1B1ED1AAC92D100B33E7F /* PageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */; };
 		5CB377131AA7BE6200234303 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB377111AA7BE6200234303 /* PageViewController.swift */; };
 		5CB377141AA7BE6200234303 /* Page.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB377121AA7BE6200234303 /* Page.xib */; };
+		5CBF29BD1ABF91FF0049010C /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBF29BC1ABF91FF0049010C /* PupKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5C0BC85D1AA55B350044A71C /* SiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewController.swift; sourceTree = "<group>"; };
 		5C0BC85E1AA55B350044A71C /* Site.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Site.xib; sourceTree = "<group>"; };
-		5C1299491AB5E07D00FB1881 /* NSImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		5C3ACE591A7A7E4500A7884D /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PupKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/PupTent-cxskoiqkbzoodfbisaosgmkipygo/Build/Products/Debug/PupKit.framework"; sourceTree = "<group>"; };
 		5CA7FB2E1A7A7BCF00D95984 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +33,7 @@
 		5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCellView.swift; sourceTree = "<group>"; };
 		5CB377111AA7BE6200234303 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		5CB377121AA7BE6200234303 /* Page.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Page.xib; sourceTree = "<group>"; };
+		5CBF29BC1ABF91FF0049010C /* PupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PupKit.framework; path = "../../../Library/Developer/Xcode/DerivedData/PupTent-cjdtewoeysofmxbpqxolkriddlqm/Build/Products/Debug/PupKit.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C4AE5381A7A7D0400BF15F3 /* PupKit.framework in Frameworks */,
+				5CBF29BD1ABF91FF0049010C /* PupKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				5CA7FB2C1A7A7BCF00D95984 /* PupTent */,
-				5C4AE5371A7A7D0400BF15F3 /* PupKit.framework */,
+				5CBF29BC1ABF91FF0049010C /* PupKit.framework */,
 				5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */,
 			);
 			sourceTree = "<group>";
@@ -68,7 +66,6 @@
 				5CB1B1EC1AAC92D100B33E7F /* PageCellView.swift */,
 				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
 				5C3ACE591A7A7E4500A7884D /* Window.swift */,
-				5C1299491AB5E07D00FB1881 /* NSImage.swift */,
 				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
 				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
 				5C0BC85E1AA55B350044A71C /* Site.xib */,
@@ -178,7 +175,6 @@
 				5CA7FB321A7A7BCF00D95984 /* MainViewController.swift in Sources */,
 				5CB1B1ED1AAC92D100B33E7F /* PageCellView.swift in Sources */,
 				5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */,
-				5C12994A1AB5E07D00FB1881 /* NSImage.swift in Sources */,
 				5CB377131AA7BE6200234303 /* PageViewController.swift in Sources */,
 				5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */,
 				5C0BC85F1AA55B350044A71C /* SiteViewController.swift in Sources */,
@@ -281,7 +277,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PupTent-cjdtewoeysofmxbpqxolkriddlqm/Build/Products/Debug",
+				);
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "Pup Tent";
@@ -293,7 +292,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/PupTent-cjdtewoeysofmxbpqxolkriddlqm/Build/Products/Debug",
+				);
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "Pup Tent";

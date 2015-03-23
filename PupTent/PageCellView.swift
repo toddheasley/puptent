@@ -76,7 +76,7 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
                 frame.size.height = self.textField!.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, maximumTextFieldHeight)).height
                 self.textField!.hidden = false
             }
-            frame.size.height += (self.verticalSpaceConstraint!.constant * 2.0)
+            frame.size.height += (self.imageViewSpaceConstraint!.constant * 2.0)
             self.frame = frame
         }
         get {
@@ -102,7 +102,7 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
         textField.font = self.textField!.font
         textField.stringValue = self.textField!.stringValue
         
-        let height: CGFloat = textField.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, maximumTextFieldHeight)).height + (self.verticalSpaceConstraint!.constant * 2.0)
+        let height: CGFloat = textField.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, maximumTextFieldHeight)).height + (self.textFieldSpaceConstraint!.constant * 2.0)
         if (height != self.frame.size.height + 5.0) {
             
             // Notify delegate
@@ -125,7 +125,8 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
     }
     
     // MARK: IBOutlet, IBAction
-    @IBOutlet weak var verticalSpaceConstraint: NSLayoutConstraint?
+    @IBOutlet weak var textFieldSpaceConstraint: NSLayoutConstraint?
+    @IBOutlet weak var imageViewSpaceConstraint: NSLayoutConstraint?
     
     @IBAction func deleteImage(sender: AnyObject?) {
         
