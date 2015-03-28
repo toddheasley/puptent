@@ -14,15 +14,13 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     var path: String?
     var page: Page? {
         didSet {
-            self.label!.stringValue = ""
-            self.deleteButton!.hidden = true
+            
+            self.pageCellView!.deleteButton!.hidden = true
             if let page = self.page {
-                self.label!.stringValue = page.name
-                self.deleteButton!.hidden = page.URI.isEmpty
+                self.pageCellView!.deleteButton!.hidden = page.URI.isEmpty
             }
             self.tableView!.scrollToBeginningOfDocument(self)
             self.tableView!.reloadData()
-            self.label!.hidden = true
         }
     }
     
@@ -37,15 +35,13 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         self.tableView!.selectionHighlightStyle = NSTableViewSelectionHighlightStyle.None
         self.tableView!.postsBoundsChangedNotifications = true
         
-        self.label!.textColor = NSColor.grayColor().colorWithAlphaComponent(0.5)
-        
         // Subscribe to table view scroll notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleBoundsChange:", name: NSViewBoundsDidChangeNotification, object: nil)
     }
     
     func handleBoundsChange(notification: NSNotification) {
         if let clipView = notification.object as? NSClipView {
-            self.label?.hidden = clipView.bounds.origin.y < 47.0
+            
         }
     }
     
@@ -188,7 +184,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 cell.delegate = self
                 cell.textField!.textColor = NSColor.textColor()
                 cell.textField!.stringValue = page.name
-                cell.URITextField!.textColor = self.label!.textColor
+                cell.URITextField!.textColor = NSColor.lightGrayColor()
                 cell.URITextField!.stringValue = page.URI
                 cell.index = page.index
                 return cell
@@ -206,7 +202,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                         if let path = self.path, URL = NSURL(fileURLWithPath: path + section.URI), image = NSImage(contentsOfURL: URL) {
                             cell.content = image
                         } else {
-                            cell.content = NSImage(named: "MissingImage")
+                            cell.content = NSImage(named: "NSStopProgressTemplate")
                         }
                     case .Audio, .Video:
                         cell.content = section.URI
@@ -259,9 +255,8 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 page.index = self.pageCellView!.index
                 
                 // Update
-                self.label!.stringValue = page.name
                 if (!page.URI.isEmpty) {
-                    self.deleteButton!.hidden = false
+                    self.pageCellView!.deleteButton!.hidden = false
                 }
             }
             
@@ -273,33 +268,21 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     func handlePageCellViewDelete(pageCellView: NSTableCellView) {
         if let page = self.page {
             let row = self.tableView!.rowForView(pageCellView) - 1
-            
             if (row > -1 && row < page.sections.count) {
+                
+                // Delete page section
                 page.sections.removeAtIndex(row)
                 
                 // Notify delegate
                 self.delegate?.handlePageViewControllerChange(self)
+                
+                self.tableView!.reloadData()
+                return
             }
-            self.tableView!.reloadData()
-        }
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var tableView: NSTableView?
-    @IBOutlet weak var pageCellView: PageDetailsCellView?
-    @IBOutlet weak var dismissButton: NSButton?
-    @IBOutlet weak var deleteButton: NSButton?
-    @IBOutlet weak var label: NSTextField?
-    
-    @IBAction func dismiss(sender: AnyObject?) {
-        
-        // Notify delegate
-        self.delegate?.dismissPageViewController(self, animated: true)
-    }
-    @IBAction func delete(sender: AnyObject?) {
-        if let page = self.page {
+            
+            // Delete entire page
             var alert = NSAlert()
-            alert.messageText = page.name
+            alert.messageText = ""
             alert.informativeText = "Delete this page?"
             alert.addButtonWithTitle("Delete")
             alert.addButtonWithTitle("Cancel")
@@ -312,6 +295,17 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 self.delegate?.handlePageViewControllerDelete(self)
             })
         }
+    }
+    
+    // MARK: IBOutlet, IBAction
+    @IBOutlet weak var tableView: NSTableView?
+    @IBOutlet weak var pageCellView: PageDetailsCellView?
+    @IBOutlet weak var dismissButton: NSButton?
+    
+    @IBAction func dismiss(sender: AnyObject?) {
+        
+        // Notify delegate
+        self.delegate?.dismissPageViewController(self, animated: true)
     }
 }
 

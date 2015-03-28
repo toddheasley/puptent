@@ -215,7 +215,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
             
             // Configure default "new page cell"
             cell.textField!.stringValue = "New Page"
-            cell.textField!.textColor = NSColor.grayColor()
+            cell.textField!.textColor = NSColor.lightGrayColor()
             cell.imageView!.image = NSImage(named: "NSStatusNone")
             if (row < site.pages.count) {
                 

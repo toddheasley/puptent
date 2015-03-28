@@ -1,8 +1,6 @@
-__Pup Tent__
+__![Pup Tent](https://raw.githubusercontent.com/toddheasley/puptent/master/PupTent/Images.xcassets/AppIcon.appiconset/AppIcon-128.png =64x64) Pup Tent__
 
-Pup Tent is a Mac app that generates bite-size, static HTML sites. It's ideal for publishing to [Github Pages](https://pages.github.com) or [Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) and provides an ultra-lightweight alternative to static site generators like [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
-
-An example of Pup Tent in action can be found at [toddheasley.github.io](http://toddheasley.github.io).
+Built on the belief that there's still a place for personal, snack-sized web sites, Pup Tent is a Mac app with a simple drag-and-drop interface for making small, static HTML pages. It's ideal for publishing to [Github Pages](https://pages.github.com) and provides an ultra-lightweight alternative to static site generators like [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
 
 ---
 
@@ -15,7 +13,7 @@ An `ls` will reveal that a site skeleton has been created with the following:
 * `index.json` - Configure the site and manage pages
 * `default.css` - Style the site with CSS
 * `apple-touch-icon.png` - Add a custom bookmark icon 
-* `media` - Suggested (optional) directory for storing media associated with pages
+* `media` - Add media associated with pages
 
 To generate the actual HTML pages, run:
 

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7525" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7525"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7528.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PageViewController" customModule="Pup_Tent" customModuleProvider="target">
             <connections>
-                <outlet property="deleteButton" destination="mYv-SF-LpD" id="fLG-Gn-clt"/>
                 <outlet property="dismissButton" destination="crQ-l7-uaF" id="8tb-PH-WHM"/>
-                <outlet property="label" destination="yz1-9M-C1P" id="KS3-2y-dGj"/>
                 <outlet property="pageCellView" destination="gov-D1-gvU" id="auU-hw-6Mf"/>
                 <outlet property="tableView" destination="bZD-V4-hDJ" id="3TU-sT-XHS"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -21,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="33" horizontalPageScroll="10" verticalLineScroll="33" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLt-21-cud" userLabel="Table View">
-                    <rect key="frame" x="0.0" y="0.0" width="450" height="451"/>
+                    <rect key="frame" x="0.0" y="0.0" width="450" height="485"/>
                     <clipView key="contentView" id="ide-gL-P31">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,25 +106,6 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="YNT-Cx-Flp" userLabel="Page View">
                     <rect key="frame" x="0.0" y="452" width="450" height="33"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="488-3W-w3Q" userLabel="Background View">
-                            <rect key="frame" x="0.0" y="0.0" width="450" height="33"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" drawsBackground="YES" id="Mp3-1u-Hlh">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yz1-9M-C1P">
-                            <rect key="frame" x="35" y="8" width="317" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="17" id="IjE-YI-m0U"/>
-                            </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Page Name" id="nbV-DM-4L1">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="crQ-l7-uaF" userLabel="Dismiss Button">
                             <rect key="frame" x="4" y="0.0" width="31" height="31"/>
                             <constraints>
@@ -141,34 +120,11 @@
                                 <action selector="dismiss:" target="-2" id="AS6-6n-4q3"/>
                             </connections>
                         </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="mYv-SF-LpD">
-                            <rect key="frame" x="388" y="8" width="56" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="56" id="TRP-SW-Xcl"/>
-                                <constraint firstAttribute="height" constant="17" id="VSB-qg-md6"/>
-                            </constraints>
-                            <buttonCell key="cell" type="bevel" title="Delete" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Gge-uI-e4s">
-                                <behavior key="behavior" lightByContents="YES"/>
-                                <font key="font" metaFont="cellTitle"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="delete:" target="-2" id="VrC-bQ-ets"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="centerY" secondItem="yz1-9M-C1P" secondAttribute="centerY" id="015-UT-Jil"/>
                         <constraint firstAttribute="height" constant="33" id="Gyh-vC-HWC"/>
-                        <constraint firstItem="488-3W-w3Q" firstAttribute="leading" secondItem="YNT-Cx-Flp" secondAttribute="leading" id="PBF-FA-Vqa"/>
                         <constraint firstAttribute="bottom" secondItem="crQ-l7-uaF" secondAttribute="bottom" id="STz-Ke-K5Y"/>
-                        <constraint firstAttribute="bottom" secondItem="488-3W-w3Q" secondAttribute="bottom" id="bG6-K2-MvA"/>
-                        <constraint firstItem="488-3W-w3Q" firstAttribute="top" secondItem="YNT-Cx-Flp" secondAttribute="top" id="bPO-js-dAa"/>
-                        <constraint firstItem="yz1-9M-C1P" firstAttribute="leading" secondItem="YNT-Cx-Flp" secondAttribute="leading" constant="37" id="cmB-Oc-Ang"/>
-                        <constraint firstAttribute="trailing" secondItem="488-3W-w3Q" secondAttribute="trailing" id="dpA-9x-d55"/>
-                        <constraint firstAttribute="trailing" secondItem="yz1-9M-C1P" secondAttribute="trailing" constant="100" id="hae-gn-qvk"/>
-                        <constraint firstAttribute="trailing" secondItem="mYv-SF-LpD" secondAttribute="trailing" constant="6" id="qfq-0B-ANI"/>
                         <constraint firstItem="crQ-l7-uaF" firstAttribute="leading" secondItem="YNT-Cx-Flp" secondAttribute="leading" constant="4" id="w9K-jV-foa"/>
-                        <constraint firstAttribute="centerY" secondItem="mYv-SF-LpD" secondAttribute="centerY" id="xty-b8-5r5"/>
                     </constraints>
                 </customView>
                 <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-LY-6XB">
@@ -187,7 +143,7 @@
                 <constraint firstAttribute="trailing" secondItem="YNT-Cx-Flp" secondAttribute="trailing" id="Cbg-Mw-ZYD"/>
                 <constraint firstAttribute="trailing" secondItem="YLt-21-cud" secondAttribute="trailing" id="Ebu-sC-pYM"/>
                 <constraint firstAttribute="bottom" secondItem="YLt-21-cud" secondAttribute="bottom" id="e8c-cQ-vQo"/>
-                <constraint firstItem="YLt-21-cud" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="34" id="fP8-Ue-Yrs"/>
+                <constraint firstItem="YLt-21-cud" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="fP8-Ue-Yrs"/>
                 <constraint firstItem="fd8-LY-6XB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gxD-X4-NhI"/>
                 <constraint firstItem="YNT-Cx-Flp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="qnt-vm-gMy"/>
                 <constraint firstItem="fd8-LY-6XB" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="uyA-fS-3uS"/>
@@ -196,11 +152,11 @@
             <point key="canvasLocation" x="567" y="460.5"/>
         </customView>
         <tableCellView identifier="Page" id="gov-D1-gvU" customClass="PageDetailsCellView" customModule="Pup_Tent" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="450" height="88"/>
+            <rect key="frame" x="0.0" y="0.0" width="450" height="121"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAm-T8-tvy" userLabel="Page Name Text Field">
-                    <rect key="frame" x="35" y="46" width="380" height="27"/>
+                    <rect key="frame" x="35" y="46" width="296" height="27"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="f0v-TX-qvW"/>
                     </constraints>
@@ -214,7 +170,7 @@
                     </connections>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iah-hW-eCf" userLabel="URI Text Field">
-                    <rect key="frame" x="35" y="27" width="380" height="17"/>
+                    <rect key="frame" x="35" y="27" width="296" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="PWX-Dh-nJV"/>
                     </constraints>
@@ -250,26 +206,43 @@
                         <action selector="toggleIndex:" target="gov-D1-gvU" id="1Sk-3u-wHj"/>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="VrY-ol-qaX" userLabel="Delete Button">
+                    <rect key="frame" x="346" y="46" width="69" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="jmQ-RY-1lw"/>
+                        <constraint firstAttribute="height" constant="21" id="vNf-Wl-pAR"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="Delete" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="glD-E6-Tfn">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="delete:" target="gov-D1-gvU" id="ZUJ-tb-lHI"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="Vyj-wF-v6N" firstAttribute="leading" secondItem="gov-D1-gvU" secondAttribute="leading" constant="9" id="358-W6-jBN"/>
-                <constraint firstItem="DAm-T8-tvy" firstAttribute="top" secondItem="gov-D1-gvU" secondAttribute="top" constant="15" id="6ch-SF-agM"/>
+                <constraint firstItem="DAm-T8-tvy" firstAttribute="top" secondItem="gov-D1-gvU" secondAttribute="top" constant="48" id="6ch-SF-agM"/>
                 <constraint firstItem="psH-72-IWj" firstAttribute="leading" secondItem="gov-D1-gvU" secondAttribute="leading" constant="36" id="Bth-yU-9Ub"/>
                 <constraint firstItem="DAm-T8-tvy" firstAttribute="leading" secondItem="gov-D1-gvU" secondAttribute="leading" constant="37" id="CFJ-A0-IgR"/>
                 <constraint firstItem="Iah-hW-eCf" firstAttribute="trailing" secondItem="DAm-T8-tvy" secondAttribute="trailing" id="HOu-S5-hX7"/>
                 <constraint firstAttribute="bottom" secondItem="psH-72-IWj" secondAttribute="bottom" constant="9" id="N4P-FC-1wx"/>
                 <constraint firstItem="Iah-hW-eCf" firstAttribute="top" secondItem="DAm-T8-tvy" secondAttribute="bottom" constant="2" id="Pho-gw-Uqd"/>
                 <constraint firstItem="Iah-hW-eCf" firstAttribute="leading" secondItem="DAm-T8-tvy" secondAttribute="leading" id="WFS-uf-UwU"/>
-                <constraint firstItem="Vyj-wF-v6N" firstAttribute="top" secondItem="gov-D1-gvU" secondAttribute="top" constant="19" id="WZ7-2M-2dN"/>
+                <constraint firstItem="Vyj-wF-v6N" firstAttribute="top" secondItem="gov-D1-gvU" secondAttribute="top" constant="52" id="WZ7-2M-2dN"/>
+                <constraint firstItem="DAm-T8-tvy" firstAttribute="centerY" secondItem="VrY-ol-qaX" secondAttribute="centerY" id="a1Z-w4-wdw"/>
                 <constraint firstAttribute="trailing" secondItem="psH-72-IWj" secondAttribute="trailing" constant="36" id="fjM-Rp-KWW"/>
-                <constraint firstAttribute="trailing" secondItem="DAm-T8-tvy" secondAttribute="trailing" constant="37" id="iLY-qC-Sla"/>
+                <constraint firstAttribute="trailing" secondItem="DAm-T8-tvy" secondAttribute="trailing" constant="121" id="iLY-qC-Sla"/>
+                <constraint firstAttribute="trailing" secondItem="VrY-ol-qaX" secondAttribute="trailing" constant="37" id="rjm-60-ZdF"/>
             </constraints>
             <connections>
                 <outlet property="URITextField" destination="Iah-hW-eCf" id="LBZ-6s-tzh"/>
+                <outlet property="deleteButton" destination="VrY-ol-qaX" id="7Cv-8e-ktU"/>
                 <outlet property="indexButton" destination="Vyj-wF-v6N" id="tA0-mc-LwM"/>
                 <outlet property="textField" destination="DAm-T8-tvy" id="QK0-xV-Xcb"/>
             </connections>
-            <point key="canvasLocation" x="567" y="844"/>
+            <point key="canvasLocation" x="567" y="843.5"/>
         </tableCellView>
     </objects>
     <resources>

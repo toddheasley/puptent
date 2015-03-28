@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7525"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7528.3"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -375,50 +375,84 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="1RH-tP-BIV" userLabel="Empty View">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hQV-un-ZZw" userLabel="Empty View">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                        <rect key="frame" x="125" y="308" width="200" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
+                                        <rect key="frame" x="110" y="147" width="230" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="OQE-8G-vpm"/>
+                                            <constraint firstAttribute="width" constant="226" id="UUb-DW-dC5"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" title="Open Existing Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="openExistingSite:" target="oYN-gl-7fc" id="94R-cT-Ehw"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                        <rect key="frame" x="125" y="248" width="200" height="32"/>
-                                        <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
+                                        <rect key="frame" x="110" y="110" width="230" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="226" id="lna-R3-haS"/>
+                                            <constraint firstAttribute="height" constant="21" id="ucD-jt-AcM"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" title="Make New Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
                                         </connections>
                                     </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK6-4y-0Ym">
-                                        <rect key="frame" x="129" y="359" width="192" height="63"/>
-                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Bk1-8L-YoT">
-                                            <font key="font" metaFont="system"/>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qKj-ch-gAf">
+                                        <rect key="frame" x="110" y="377" width="230" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="sL1-Zy-dem"/>
+                                            <constraint firstAttribute="width" constant="226" id="ygE-YA-wuH"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="AXQ-tP-nE4">
+                                            <font key="font" metaFont="system" size="23"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK6-4y-0Ym">
+                                        <rect key="frame" x="110" y="187" width="230" height="90"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="226" id="UrE-vZ-ZdY"/>
+                                            <constraint firstAttribute="height" constant="90" id="XwT-ek-GSX"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Bk1-8L-YoT">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="qKj-ch-gAf" secondAttribute="centerX" id="25I-qy-fyn"/>
+                                    <constraint firstAttribute="centerX" secondItem="lpk-eC-cZ0" secondAttribute="centerX" id="JhL-tc-Pp6"/>
+                                    <constraint firstAttribute="centerX" secondItem="cVI-3x-Nf7" secondAttribute="centerX" id="NGQ-uk-QlE"/>
+                                    <constraint firstItem="lpk-eC-cZ0" firstAttribute="top" secondItem="kK6-4y-0Ym" secondAttribute="bottom" constant="16" id="Oql-rY-BzE"/>
+                                    <constraint firstAttribute="centerX" secondItem="kK6-4y-0Ym" secondAttribute="centerX" id="Vq3-V8-vZF"/>
+                                    <constraint firstAttribute="bottom" secondItem="cVI-3x-Nf7" secondAttribute="bottom" constant="113" id="YDD-lv-lud"/>
+                                    <constraint firstItem="cVI-3x-Nf7" firstAttribute="top" secondItem="lpk-eC-cZ0" secondAttribute="bottom" constant="16" id="ane-BI-CEM"/>
+                                    <constraint firstItem="qKj-ch-gAf" firstAttribute="top" secondItem="hQV-un-ZZw" secondAttribute="top" constant="180" id="unL-bm-kDD"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="1RH-tP-BIV" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="6dA-Zu-K35"/>
-                            <constraint firstAttribute="bottom" secondItem="1RH-tP-BIV" secondAttribute="bottom" id="ARi-Pj-Gf7"/>
-                            <constraint firstAttribute="trailing" secondItem="1RH-tP-BIV" secondAttribute="trailing" id="goE-bF-L5w"/>
-                            <constraint firstItem="1RH-tP-BIV" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="pSz-G3-3rA"/>
+                            <constraint firstItem="hQV-un-ZZw" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="L8A-lt-wxP"/>
+                            <constraint firstAttribute="bottom" secondItem="hQV-un-ZZw" secondAttribute="bottom" id="kjS-sZ-ky0"/>
+                            <constraint firstItem="hQV-un-ZZw" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="ydo-zh-hIF"/>
+                            <constraint firstAttribute="trailing" secondItem="hQV-un-ZZw" secondAttribute="trailing" id="zzk-SX-dqj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="alertLabel" destination="kK6-4y-0Ym" id="hRs-tT-Vdk"/>
-                        <outlet property="emptyView" destination="1RH-tP-BIV" id="NHj-Mz-D7h"/>
+                        <outlet property="emptyView" destination="hQV-un-ZZw" id="atc-QD-vS5"/>
                         <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
                         <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>
                     </connections>

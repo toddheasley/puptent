@@ -42,12 +42,19 @@ class PageDetailsCellView: PageCellView, NSTextFieldDelegate {
     // MARK: IBOutlet, IBAction
     @IBOutlet weak var URITextField: NSTextField?
     @IBOutlet weak var indexButton: NSButton?
+    @IBOutlet weak var deleteButton: NSButton?
     
     @IBAction func toggleIndex(sender: AnyObject?) {
         self.index = !self.index
         
         // Notify delegate
         self.delegate?.handlePageCellViewChange(self)
+    }
+    
+    @IBAction func delete(sender: AnyObject?) {
+        
+        // Notify delegate
+        self.delegate?.handlePageCellViewDelete(self)
     }
 }
 
@@ -73,7 +80,7 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
                 }
                 
                 // Calculate text field height
-                frame.size.height = self.textField!.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, maximumTextFieldHeight)).height
+                frame.size.height = self.textField!.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, 0.0)).height
                 self.textField!.hidden = false
             }
             frame.size.height += (self.imageViewSpaceConstraint!.constant * 2.0)
@@ -89,7 +96,6 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
         }
     }
     var editing: Bool = false
-    private let maximumTextFieldHeight: CGFloat = 10000.0
     
     // MARK: NSTextFieldDelegate
     func control(control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
@@ -102,8 +108,8 @@ class PageSectionCellView: PageCellView, NSTextFieldDelegate {
         textField.font = self.textField!.font
         textField.stringValue = self.textField!.stringValue
         
-        let height: CGFloat = textField.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, maximumTextFieldHeight)).height + (self.textFieldSpaceConstraint!.constant * 2.0)
-        if (height != self.frame.size.height + 5.0) {
+        let height: CGFloat = textField.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, 0.0)).height + (self.textFieldSpaceConstraint!.constant * 2.0)
+        if (height != self.frame.size.height + 5.0) { // NSTextContainer magic number
             
             // Notify delegate
             self.delegate?.handlePageCellViewChange(self)
