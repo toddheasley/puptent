@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/toddheasley/puptent/master/PupTent/Images.xcassets/AppIcon.appiconset/AppIcon-32@2x.png)
 
-Built on the belief that there's still a place for personal, snack-sized web pages, Pup Tent is a Mac app with a simple drag-and-drop interface for making small, static HTML sites. It's ideal for publishing to [Github Pages](https://pages.github.com) and provides an ultra-lightweight alternative to [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
+Built on the belief that there's still a place for personal, snack-size web pages, Pup Tent is a Mac app with a simple drag-and-drop interface for making small, static HTML sites. It's ideal for publishing to [Github Pages](https://pages.github.com) and provides an ultra-lightweight alternative to [Cactus](https://github.com/koenbok/Cactus) and [Jekyll](http://jekyllrb.com).
 
 ---
 
