@@ -161,7 +161,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                         if let path = self.path, URL = NSURL(fileURLWithPath: path + section.URI), image = NSImage(contentsOfURL: URL) {
                             cell.content = image
                         } else {
-                            cell.content = NSImage(named: "MissingImage")
+                            cell.content = NSImage(named: "NSStopProgressTemplate")
                         }
                     case .Audio, .Video:
                         cell.content = section.URI
@@ -277,23 +277,23 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 self.delegate?.handlePageViewControllerChange(self)
                 
                 self.tableView!.reloadData()
-                return
-            }
-            
-            // Delete entire page
-            var alert = NSAlert()
-            alert.messageText = ""
-            alert.informativeText = "Delete this page?"
-            alert.addButtonWithTitle("Delete")
-            alert.addButtonWithTitle("Cancel")
-            alert.beginSheetModalForWindow(self.view.window!, completionHandler: { response in
-                if (response != NSAlertFirstButtonReturn) {
-                    return
-                }
+            } else if (row == -1) {
                 
-                // Notify delegate
-                self.delegate?.handlePageViewControllerDelete(self)
-            })
+                // Delete entire page
+                var alert = NSAlert()
+                alert.messageText = ""
+                alert.informativeText = "Delete this page?"
+                alert.addButtonWithTitle("Delete")
+                alert.addButtonWithTitle("Cancel")
+                alert.beginSheetModalForWindow(self.view.window!, completionHandler: { response in
+                    if (response != NSAlertFirstButtonReturn) {
+                        return
+                    }
+                    
+                    // Notify delegate
+                    self.delegate?.handlePageViewControllerDelete(self)
+                })
+            }
         }
     }
     
