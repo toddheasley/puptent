@@ -11,7 +11,7 @@ public class Page: Archiving {
     public var index: Bool
     public var name: String
     public var URI: String
-    public var sections: Array<PageSection>
+    public var sections: [PageSection]
     
     public convenience init() {
         self.init(dictionary: [
@@ -23,94 +23,80 @@ public class Page: Archiving {
     }
     
     // MARK: Archiving
-    public var manifest: Array<String> {
-        get {
-            var manifest = [String]()
-            for section in self.sections {
-                manifest.extend(section.manifest)
-            }
-            if (!self.URI.isEmpty) {
-                manifest.append(self.URI)
-            }
-            return manifest
+    public var manifest: [String] {
+        var manifest = [String]()
+        for section in self.sections {
+            manifest.extend(section.manifest)
         }
+        if (!self.URI.isEmpty) {
+            manifest.append(self.URI)
+        }
+        return manifest
     }
     
-    public var dictionary: NSDictionary {
-        get {
-            var sections: Array<NSDictionary> = []
-            for section in self.sections {
-                sections.append(section.dictionary)
-            }
-            return [
-                ArchivingKeys.index: self.index,
-                ArchivingKeys.name: self.name,
-                ArchivingKeys.URI: self.URI,
-                ArchivingKeys.sections: sections
-            ]
+    public var dictionary: [String: AnyObject] {
+        var sections: [AnyObject] = []
+        for section in self.sections {
+            sections.append(section.dictionary)
         }
+        return [
+            ArchivingKeys.index: self.index,
+            ArchivingKeys.name: self.name,
+            ArchivingKeys.URI: self.URI,
+            ArchivingKeys.sections: sections
+        ]
     }
     
-    public required init(dictionary: NSDictionary) {
+    public required init(dictionary: [String: AnyObject]) {
         self.index = dictionary[ArchivingKeys.index] as! Bool
         self.name = dictionary[ArchivingKeys.name] as! String
         self.URI = dictionary[ArchivingKeys.URI] as! String
         self.sections = []
-        for section in dictionary[ArchivingKeys.sections] as! Array<NSDictionary> {
-            self.sections.append(PageSection(dictionary: section as NSDictionary))
+        for section in dictionary[ArchivingKeys.sections] as! [AnyObject] {
+            self.sections.append(PageSection(dictionary: section as! [String: AnyObject]))
         }
     }
 }
 
-public enum PageSectionType: Int {
-    case Basic = 0, Image = 1, Audio = 2, Video = 3
-}
-
 public class PageSection: Archiving {
-    public var type: PageSectionType
+    public enum Type: String {
+        case Basic = "basic"
+        case Image = "image"
+        case Audio = "audio"
+        case Video = "video"
+    }
+    
+    public var type: Type
     public var text: String
     public var URI: String
     
     public convenience init() {
         self.init(dictionary: [
-            ArchivingKeys.type: ArchivingKeys.types[PageSectionType.Basic.rawValue],
+            ArchivingKeys.type: Type.Basic.rawValue,
             ArchivingKeys.text: "",
             ArchivingKeys.URI: ""
         ])
     }
     
     // Archiving
-    public var manifest: Array<String> {
-        get {
-            var manifest = [String]()
-            if (!self.URI.isEmpty) {
-                manifest.append(self.URI)
-            }
-            return manifest
+    public var manifest: [String] {
+        var manifest = [String]()
+        if (!self.URI.isEmpty) {
+            manifest.append(self.URI)
         }
+        return manifest
     }
     
-    public var dictionary: NSDictionary {
-        get {
-            return [
-                ArchivingKeys.type: ArchivingKeys.types[self.type.rawValue],
-                ArchivingKeys.text: self.text,
-                ArchivingKeys.URI: self.URI
-            ]
-        }
+    public var dictionary: [String: AnyObject] {
+        return [
+            ArchivingKeys.type: self.type.rawValue,
+            ArchivingKeys.text: self.text,
+            ArchivingKeys.URI: self.URI
+        ]
     }
     
-    required public init(dictionary: NSDictionary) {
-        switch dictionary[ArchivingKeys.type] as! String {
-        case ArchivingKeys.types[1]:
-            self.type = .Image
-        case ArchivingKeys.types[2]:
-            self.type = .Audio
-        case ArchivingKeys.types[3]:
-            self.type = .Video
-        default:
-            self.type = .Basic
-        }
+    required public init(dictionary: [String: AnyObject]) {
+        self.type = Type(rawValue: dictionary[ArchivingKeys.type] as! String)!
         self.text = dictionary[ArchivingKeys.text] as! String
         self.URI = dictionary[ArchivingKeys.URI] as! String
     }

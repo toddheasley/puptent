@@ -126,6 +126,8 @@
 		5CA7FB221A7A7BCF00D95984 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "@toddheasley";
 				TargetAttributes = {
@@ -299,6 +301,7 @@
 				);
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_NAME = "Pup Tent";
 			};
 			name = Debug;
@@ -314,6 +317,7 @@
 				);
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_NAME = "Pup Tent";
 			};
 			name = Release;

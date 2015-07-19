@@ -57,7 +57,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         if (rowIndexes.firstIndex > 0 && rowIndexes.firstIndex < tableView.numberOfRows - 1) {
             
             // Allow existing page cells to be dragged
-            var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
+            let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
             pboard.declareTypes([draggedType], owner: self)
             pboard.setData(data, forType: draggedType)
             return true
@@ -114,12 +114,19 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                     if let path = self.path, pasteboardURL = NSURL(fromPasteboard: info.draggingPasteboard()) {
                         if let URL = NSURL(fileURLWithPath: path + Manager.mediaPath + "/" + pasteboardURL.lastPathComponent!) {
                             
-                            // Move existing media file to trash
-                            NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
+                            do {
+                                // Move existing media file to trash
+                                try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
+                            } catch _ {
+                            }
                             
                             // Copy new image file
                             var error: NSError?
-                            NSFileManager.defaultManager().copyItemAtURL(pasteboardURL, toURL: URL, error: &error)
+                            do {
+                                try NSFileManager.defaultManager().copyItemAtURL(pasteboardURL, toURL: URL)
+                            } catch var error1 as NSError {
+                                error = error1
+                            }
                             if let error = error {
                                 
                                 // Copy failed
@@ -152,7 +159,7 @@ class PageViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         case 0:
             return self.pageCellView!.frame.size.height
         default:
-            if let cell = tableView.makeViewWithIdentifier(tableView.tableColumns[0].identifier!, owner: self) as? PageSectionCellView, let page = self.page {
+            if let cell = tableView.makeViewWithIdentifier(tableView.tableColumns[0].identifier, owner: self) as? PageSectionCellView, let page = self.page {
                 cell.content = ""
                 if (row <= page.sections.count) {
                     let section = page.sections[row - 1]

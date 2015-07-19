@@ -52,7 +52,13 @@ class MainViewController: NSViewController {
     
     private func openSite(path: String, animated: Bool) {
         var error: NSError?
-        let manager = Manager(path: path, error: &error)
+        let manager: Manager?
+        do {
+            manager = try Manager(path: path)
+        } catch let error1 as NSError {
+            error = error1
+            manager = nil
+        }
         if (error != nil) {
             self.alert(error!.localizedDescription)
             return
@@ -116,7 +122,7 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func openExistingSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
+        let openPanel: NSOpenPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Existing Site..."

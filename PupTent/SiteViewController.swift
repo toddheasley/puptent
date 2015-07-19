@@ -165,7 +165,7 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
         if (rowIndexes.firstIndex < tableView.numberOfRows - 1) {
             
             // Allow existing page cells to be dragged
-            var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
+            let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
             pboard.declareTypes([draggedType], owner: self)
             pboard.setData(data, forType: draggedType)
             return true
@@ -282,8 +282,11 @@ class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewData
     @IBAction func changeIcon(sender: AnyObject?) {
         if let URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI), imageView = sender as? NSImageView {
             
-            // Move existing media file to trash
-            NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
+            do {
+                // Move existing media file to trash
+                try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
+            } catch _ {
+            }
             if let image = imageView.image, data = image.TIFFRepresentation {
                 
                 // Write new bookmark icon with image data
@@ -308,10 +311,10 @@ extension String {
         var string = self.lowercaseString.trim()
         
         // Separate words with hyphens
-        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-", options:nil, range: nil)
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-", options:[], range: nil)
         
         // Strip existing file extension
-        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "", options: nil, range: nil)
+        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "", options: [], range: nil)
         
         // Strip all non-alphanumeric characters
         string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
@@ -323,14 +326,14 @@ extension String {
     
     func toTwitterFormat() -> String {
         var string = self.fromTwitterFormat()
-        if (count(string) > 0) {
+        if (string.characters.count > 0) {
             return "@\(string)"
         }
         return string
     }
     
     func fromTwitterFormat() -> String {
-        return self.strip().stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
+        return self.strip().stringByReplacingOccurrencesOfString("@", withString: "", options: [], range: nil)
     }
     
     func strip() -> String {

@@ -8,26 +8,25 @@
 import Foundation
 
 protocol Archiving {
-    var manifest: Array<String> {
+    var manifest: [String] {
         get
     }
     
-    var dictionary: NSDictionary {
+    var dictionary: [String: AnyObject] {
         get
     }
     
-    init(dictionary: NSDictionary)
+    init(dictionary: [String: AnyObject])
 }
 
 struct ArchivingKeys {
     static let name = "name"
     static let URI = "URI"
+    static let baseURL = "baseURL"
     static let twitterName = "twitterName"
-    static let domain = "domain"
     static let pages = "pages"
     static let index = "index"
     static let sections = "sections"
     static let type = "type"
-    static let types = ["basic", "image", "audio", "video"]
     static let text = "text"
 }
