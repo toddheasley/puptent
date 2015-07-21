@@ -125,8 +125,8 @@
 				5CB4CDF01A7A64AE001C70BE /* Manager.swift */,
 				5CB4CDF21A7A64AE001C70BE /* Site.swift */,
 				5CB4CDF11A7A64AE001C70BE /* Page.swift */,
-				5CB4CDEF1A7A64AE001C70BE /* HTML.swift */,
 				5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */,
+				5CB4CDEF1A7A64AE001C70BE /* HTML.swift */,
 				5CB4CDD61A7A644F001C70BE /* Info.plist */,
 				5CB4CDFE1A7A6611001C70BE /* main.swift */,
 			);
@@ -489,6 +489,7 @@
 				5C71814A1B5BD42800481CCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CB4CDCC1A7A644F001C70BE /* Build configuration list for PBXProject "PupKit" */ = {
 			isa = XCConfigurationList;

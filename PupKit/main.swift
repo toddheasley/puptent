@@ -21,7 +21,7 @@ if (Process.arguments.count > 1) {
 }
 
 do {
-    switch (option) {
+    switch option {
     case options[0]:
         try Manager.pitch(path)
     case options[1]:

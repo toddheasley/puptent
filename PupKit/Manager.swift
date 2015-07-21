@@ -10,17 +10,13 @@ import Foundation
 typealias PupKit = Manager
 
 public class Manager {
-    public static let bookmarkIconURI: String = "apple-touch-icon.png"
-    public static let stylesheetURI: String = "default.css"
     public static let mediaPath: String = "media" // Suggested media directory
     public static let manifestURI: String = "index.json"
     public static let URIExtension: String = ".html"
     public var site: Site!
     public private(set) var path: String
     private let gitURIs: [String] = ["README", "README.md", "CNAME"]
-    private static var bookmarkIconData: String {
-        return "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
-    }
+    private static var bookmarkIconData: String = "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
     
     public init(path: String) throws {
         self.path = path.componentsSeparatedByString(Manager.manifestURI)[0]
@@ -34,7 +30,7 @@ public class Manager {
     }
     
     public class func exists(path: String) -> Bool {
-        return NSFileManager.defaultManager().fileExistsAtPath(path + self.manifestURI, isDirectory: nil)
+        return NSFileManager.defaultManager().fileExistsAtPath("\(path)\(self.manifestURI)", isDirectory: nil)
     }
     
     public class func pitch(path: String) throws {
@@ -55,9 +51,9 @@ public class Manager {
             
             // Write blank auxiliary files
             NSData().writeToFile("\(path)\(site.URI)", atomically: true)
-            NSData().writeToFile("\(path)\(Manager.stylesheetURI)", atomically: true)
+            NSData().writeToFile("\(path)\(HTML.stylesheetURI)", atomically: true)
             if let data = NSData(base64EncodedString: Manager.bookmarkIconData, options: []) {
-                data.writeToFile(path + Manager.bookmarkIconURI, atomically: true)
+                data.writeToFile("\(path)\(HTML.bookmarkIconURI)", atomically: true)
             }
         } catch {
             throw error
@@ -70,6 +66,11 @@ public class Manager {
             
             // Write JSON manifest file
             data.writeToFile("\(self.path)\(Manager.manifestURI)", atomically: true)
+            
+            // Write HTML files
+            HTML.generate(self.site) { URI, data in
+                data.writeToFile("\(self.path)\(URI)", atomically: true)
+            }
         } catch {
             throw error
         }
@@ -80,9 +81,9 @@ public class Manager {
         // Assemble manifest of active files
         var manifest: [String] = [
             Manager.manifestURI,
-            Manager.bookmarkIconURI,
-            Manager.stylesheetURI,
-            Manager.mediaPath
+            Manager.mediaPath,
+            HTML.bookmarkIconURI,
+            HTML.stylesheetURI
         ]
         if let executableURI = NSBundle.mainBundle().executablePath?.lastPathComponent {
             manifest.append(executableURI)
