@@ -182,9 +182,9 @@
 			productReference = 5C504F181A7AE8AC00662FF2 /* PupKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5CB4CDFB1A7A6611001C70BE /* pupkit */ = {
+		5CB4CDFB1A7A6611001C70BE /* PupKitCLI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5CB4CE001A7A6611001C70BE /* Build configuration list for PBXNativeTarget "pupkit" */;
+			buildConfigurationList = 5CB4CE001A7A6611001C70BE /* Build configuration list for PBXNativeTarget "PupKitCLI" */;
 			buildPhases = (
 				5CB4CDF81A7A6611001C70BE /* Sources */,
 				5CB4CDF91A7A6611001C70BE /* Frameworks */,
@@ -194,7 +194,7 @@
 			);
 			dependencies = (
 			);
-			name = pupkit;
+			name = PupKitCLI;
 			productName = puptent;
 			productReference = 5C504F191A7AE8AC00662FF2 /* pupkit */;
 			productType = "com.apple.product-type.tool";
@@ -235,7 +235,7 @@
 			targets = (
 				5CB4CDD11A7A644F001C70BE /* PupKit */,
 				5C71813F1B5BD42800481CCF /* PupKitTests */,
-				5CB4CDFB1A7A6611001C70BE /* pupkit */,
+				5CB4CDFB1A7A6611001C70BE /* PupKitCLI */,
 			);
 		};
 /* End PBXProject section */
@@ -262,15 +262,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C7181511B5BD4B700481CCF /* HTML.swift in Sources */,
-				5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */,
 				5C71814D1B5BD4A600481CCF /* Manager.swift in Sources */,
 				5C7181551B5BD5C800481CCF /* ManagerTests.swift in Sources */,
-				5C7181571B5BD60600481CCF /* HTMLTests.swift in Sources */,
-				5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */,
 				5C71814F1B5BD4AF00481CCF /* Site.swift in Sources */,
-				5C71814E1B5BD4AB00481CCF /* Archiving.swift in Sources */,
+				5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */,
 				5C7181501B5BD4B300481CCF /* Page.swift in Sources */,
+				5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */,
+				5C71814E1B5BD4AB00481CCF /* Archiving.swift in Sources */,
+				5C7181511B5BD4B700481CCF /* HTML.swift in Sources */,
+				5C7181571B5BD60600481CCF /* HTMLTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,18 +464,15 @@
 		5CB4CE011A7A6611001C70BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				PRODUCT_NAME = pupkit;
 			};
 			name = Debug;
 		};
 		5CB4CE021A7A6611001C70BE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = pupkit;
 			};
 			name = Release;
 		};
@@ -509,7 +506,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5CB4CE001A7A6611001C70BE /* Build configuration list for PBXNativeTarget "pupkit" */ = {
+		5CB4CE001A7A6611001C70BE /* Build configuration list for PBXNativeTarget "PupKitCLI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5CB4CE011A7A6611001C70BE /* Debug */,

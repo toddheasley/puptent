@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5CA7FB291A7A7BCF00D95984"
-               BuildableName = "Pup Tent.app"
-               BlueprintName = "PupTent"
-               ReferencedContainer = "container:PupTent.xcodeproj">
+               BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
+               BuildableName = "pupkit"
+               BlueprintName = "PupKitCLI"
+               ReferencedContainer = "container:PupKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CA7FB291A7A7BCF00D95984"
-            BuildableName = "Pup Tent.app"
-            BlueprintName = "PupTent"
-            ReferencedContainer = "container:PupTent.xcodeproj">
+            BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
+            BuildableName = "pupkit"
+            BlueprintName = "PupKitCLI"
+            ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CA7FB291A7A7BCF00D95984"
-            BuildableName = "Pup Tent.app"
-            BlueprintName = "PupTent"
-            ReferencedContainer = "container:PupTent.xcodeproj">
+            BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
+            BuildableName = "pupkit"
+            BlueprintName = "PupKitCLI"
+            ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5CA7FB291A7A7BCF00D95984"
-            BuildableName = "Pup Tent.app"
-            BlueprintName = "PupTent"
-            ReferencedContainer = "container:PupTent.xcodeproj">
+            BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
+            BuildableName = "pupkit"
+            BlueprintName = "PupKitCLI"
+            ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
