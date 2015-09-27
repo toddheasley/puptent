@@ -32,9 +32,9 @@ class PageTests: XCTestCase {
     }
     
     func testDictionary() {
-        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.index] as! Bool, self.dictionary[ArchivingKeys.index] as! Bool)
-        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.name] as! String, self.dictionary[ArchivingKeys.name] as! String)
-        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.URI] as! String, self.dictionary[ArchivingKeys.URI] as! String)
+        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.index] as? Bool, self.dictionary[ArchivingKeys.index] as? Bool)
+        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.name] as? String, self.dictionary[ArchivingKeys.name] as? String)
+        XCTAssertEqual(self.page!.dictionary[ArchivingKeys.URI] as? String, self.dictionary[ArchivingKeys.URI] as? String)
         XCTAssertEqual((self.page!.dictionary[ArchivingKeys.sections] as! [AnyObject]).count, 1)
     }
     
@@ -60,9 +60,9 @@ class PageSectionTests: XCTestCase {
     }
     
     func testDictionary() {
-        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.type] as! String, self.dictionary[ArchivingKeys.type] as! String)
-        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.text] as! String, self.dictionary[ArchivingKeys.text] as! String)
-        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.URI] as! String, self.dictionary[ArchivingKeys.URI] as! String)
+        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.type] as? String, self.dictionary[ArchivingKeys.type] as? String)
+        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.text] as? String, self.dictionary[ArchivingKeys.text] as? String)
+        XCTAssertEqual(self.pageSection!.dictionary[ArchivingKeys.URI] as? String, self.dictionary[ArchivingKeys.URI] as? String)
     }
     
     func testManifest() {

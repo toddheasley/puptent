@@ -34,7 +34,7 @@ public class Site: Archiving {
     public var manifest: [String] {
         var manifest = [String]()
         for page in self.pages {
-            manifest.extend(page.manifest)
+            manifest.appendContentsOf(page.manifest)
         }
         if (!self.URI.isEmpty) {
             manifest.append(self.URI)

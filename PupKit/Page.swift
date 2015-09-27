@@ -26,7 +26,7 @@ public class Page: Archiving {
     public var manifest: [String] {
         var manifest = [String]()
         for section in self.sections {
-            manifest.extend(section.manifest)
+            manifest.appendContentsOf(section.manifest)
         }
         if (!self.URI.isEmpty) {
             manifest.append(self.URI)

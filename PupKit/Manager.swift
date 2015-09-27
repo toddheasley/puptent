@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias PupKit = Manager
-
 public class Manager {
     public static let mediaPath: String = "media" // Suggested media directory
     public static let manifestURI: String = "index.json"
@@ -17,21 +15,6 @@ public class Manager {
     public private(set) var path: String
     private let gitURIs: [String] = ["README", "README.md", "CNAME"]
     private static var bookmarkIconData: String = "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
-    
-    public init(path: String) throws {
-        self.path = path.componentsSeparatedByString(Manager.manifestURI)[0]
-        do {
-            let data: NSData = try NSData(contentsOfURL: NSURL.fileURLWithPath("\(path)\(Manager.manifestURI)"), options: [])
-            let dictionary: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! [String: AnyObject]
-            self.site = Site(dictionary: dictionary)
-        } catch  {
-            throw error
-        }
-    }
-    
-    public class func exists(path: String) -> Bool {
-        return NSFileManager.defaultManager().fileExistsAtPath("\(path)\(self.manifestURI)", isDirectory: nil)
-    }
     
     public class func pitch(path: String) throws {
         if (Manager.exists(path)) {
@@ -85,11 +68,11 @@ public class Manager {
             HTML.bookmarkIconURI,
             HTML.stylesheetURI
         ]
-        if let executableURI = NSBundle.mainBundle().executablePath?.lastPathComponent {
+        if let executableURI = NSBundle.mainBundle().executableURL?.lastPathComponent {
             manifest.append(executableURI)
         }
-        manifest.extend(self.gitURIs)
-        manifest.extend(self.site.manifest)
+        manifest.appendContentsOf(self.gitURIs)
+        manifest.appendContentsOf(self.site.manifest)
         
         let enumerator: NSDirectoryEnumerator = NSFileManager.defaultManager().enumeratorAtPath(self.path)!
         while let URI = enumerator.nextObject() as? String {
@@ -102,6 +85,21 @@ public class Manager {
                     throw error
                 }
             }
+        }
+    }
+    
+    public class func exists(path: String) -> Bool {
+        return NSFileManager.defaultManager().fileExistsAtPath("\(path)\(self.manifestURI)", isDirectory: nil)
+    }
+    
+    public init(path: String) throws {
+        self.path = path.componentsSeparatedByString(Manager.manifestURI)[0]
+        do {
+            let data: NSData = try NSData(contentsOfURL: NSURL.fileURLWithPath("\(path)\(Manager.manifestURI)"), options: [])
+            let dictionary: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! [String: AnyObject]
+            self.site = Site(dictionary: dictionary)
+        } catch  {
+            throw error
         }
     }
 }

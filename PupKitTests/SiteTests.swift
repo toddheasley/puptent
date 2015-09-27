@@ -43,10 +43,10 @@ class SiteTests: XCTestCase {
     }
     
     func testDictionary() {
-        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.name] as! String, self.dictionary[ArchivingKeys.name] as! String)
-        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.URI] as! String, self.dictionary[ArchivingKeys.URI] as! String)
-        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.baseURL] as! String, self.dictionary[ArchivingKeys.baseURL] as! String)
-        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.twitterName] as! String, self.dictionary[ArchivingKeys.twitterName] as! String)
+        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.name] as? String, self.dictionary[ArchivingKeys.name] as? String)
+        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.URI] as? String, self.dictionary[ArchivingKeys.URI] as? String)
+        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.baseURL] as? String, self.dictionary[ArchivingKeys.baseURL] as? String)
+        XCTAssertEqual(self.site!.dictionary[ArchivingKeys.twitterName] as? String, self.dictionary[ArchivingKeys.twitterName] as? String)
         XCTAssertEqual((self.site!.dictionary[ArchivingKeys.pages] as! [AnyObject]).count, 2)
     }
     
