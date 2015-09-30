@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7528.3"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -78,11 +79,6 @@ CA
 </string>
                                             <connections>
                                                 <action selector="deletePage:" target="Voe-Tx-rLC" id="QDk-wf-Ppv"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Close Page" enabled="NO" keyEquivalent="[" id="x8g-LU-b27">
-                                            <connections>
-                                                <action selector="dismissPage:" target="Ady-hI-5gd" id="WNO-YZ-JTT"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="O1h-z7-Itm"/>
@@ -337,7 +333,6 @@ CA
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Pup_Tent" customModuleProvider="target">
                     <connections>
                         <outlet property="deletePageMenuItem" destination="xw6-Jz-Q7h" id="oZN-WW-6yD"/>
-                        <outlet property="dismissPageMenuItem" destination="x8g-LU-b27" id="jF3-rK-MyR"/>
                         <outlet property="forgetMenuItem" destination="IAo-SY-fd9" id="6L5-4b-Hzc"/>
                         <outlet property="newPageMenuItem" destination="Gxs-NH-PM1" id="oeV-Xg-Ty7"/>
                         <outlet property="previewItem" destination="DVo-aG-piG" id="E71-50-Ch4"/>
@@ -352,7 +347,7 @@ CA
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="80" y="40" width="450" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="75E0C72C-70C7-4D0E-A3F1-AE5002E01ECE" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="4lR-92-6LS">
@@ -374,88 +369,8 @@ CA
                     <view key="view" id="FSw-Yy-tpY">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hQV-un-ZZw" userLabel="Empty View">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
-                                <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                        <rect key="frame" x="110" y="147" width="230" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="OQE-8G-vpm"/>
-                                            <constraint firstAttribute="width" constant="226" id="UUb-DW-dC5"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="bevel" title="Open Existing Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="openExistingSite:" target="oYN-gl-7fc" id="94R-cT-Ehw"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                        <rect key="frame" x="110" y="110" width="230" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="226" id="lna-R3-haS"/>
-                                            <constraint firstAttribute="height" constant="21" id="ucD-jt-AcM"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="bevel" title="Make New Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
-                                        </connections>
-                                    </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qKj-ch-gAf">
-                                        <rect key="frame" x="110" y="377" width="230" height="33"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="33" id="sL1-Zy-dem"/>
-                                            <constraint firstAttribute="width" constant="226" id="ygE-YA-wuH"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="AXQ-tP-nE4">
-                                            <font key="font" metaFont="system" size="23"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK6-4y-0Ym">
-                                        <rect key="frame" x="110" y="187" width="230" height="90"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="226" id="UrE-vZ-ZdY"/>
-                                            <constraint firstAttribute="height" constant="90" id="XwT-ek-GSX"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Bk1-8L-YoT">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="qKj-ch-gAf" secondAttribute="centerX" id="25I-qy-fyn"/>
-                                    <constraint firstAttribute="centerX" secondItem="lpk-eC-cZ0" secondAttribute="centerX" id="JhL-tc-Pp6"/>
-                                    <constraint firstAttribute="centerX" secondItem="cVI-3x-Nf7" secondAttribute="centerX" id="NGQ-uk-QlE"/>
-                                    <constraint firstItem="lpk-eC-cZ0" firstAttribute="top" secondItem="kK6-4y-0Ym" secondAttribute="bottom" constant="16" id="Oql-rY-BzE"/>
-                                    <constraint firstAttribute="centerX" secondItem="kK6-4y-0Ym" secondAttribute="centerX" id="Vq3-V8-vZF"/>
-                                    <constraint firstAttribute="bottom" secondItem="cVI-3x-Nf7" secondAttribute="bottom" constant="113" id="YDD-lv-lud"/>
-                                    <constraint firstItem="cVI-3x-Nf7" firstAttribute="top" secondItem="lpk-eC-cZ0" secondAttribute="bottom" constant="16" id="ane-BI-CEM"/>
-                                    <constraint firstItem="qKj-ch-gAf" firstAttribute="top" secondItem="hQV-un-ZZw" secondAttribute="top" constant="180" id="unL-bm-kDD"/>
-                                </constraints>
-                            </customView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="hQV-un-ZZw" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="L8A-lt-wxP"/>
-                            <constraint firstAttribute="bottom" secondItem="hQV-un-ZZw" secondAttribute="bottom" id="kjS-sZ-ky0"/>
-                            <constraint firstItem="hQV-un-ZZw" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="ydo-zh-hIF"/>
-                            <constraint firstAttribute="trailing" secondItem="hQV-un-ZZw" secondAttribute="trailing" id="zzk-SX-dqj"/>
-                        </constraints>
+                        <animations/>
                     </view>
-                    <connections>
-                        <outlet property="alertLabel" destination="kK6-4y-0Ym" id="hRs-tT-Vdk"/>
-                        <outlet property="emptyView" destination="hQV-un-ZZw" id="atc-QD-vS5"/>
-                        <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
-                        <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>
-                    </connections>
                 </viewController>
                 <customObject id="5uz-4r-usm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
