@@ -22,7 +22,6 @@ protocol Archiving {
 struct ArchivingKeys {
     static let name = "name"
     static let URI = "URI"
-    static let baseURL = "baseURL"
     static let twitterName = "twitterName"
     static let pages = "pages"
     static let index = "index"

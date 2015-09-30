@@ -40,20 +40,20 @@ public class Page: Archiving {
             sections.append(section.dictionary)
         }
         return [
-            ArchivingKeys.index: self.index,
-            ArchivingKeys.name: self.name,
-            ArchivingKeys.URI: self.URI,
+            ArchivingKeys.index: index,
+            ArchivingKeys.name: name,
+            ArchivingKeys.URI: URI,
             ArchivingKeys.sections: sections
         ]
     }
     
     public required init(dictionary: [String: AnyObject]) {
-        self.index = dictionary[ArchivingKeys.index] as! Bool
-        self.name = dictionary[ArchivingKeys.name] as! String
-        self.URI = dictionary[ArchivingKeys.URI] as! String
-        self.sections = []
+        index = dictionary[ArchivingKeys.index] as! Bool
+        name = dictionary[ArchivingKeys.name] as! String
+        URI = dictionary[ArchivingKeys.URI] as! String
+        sections = []
         for section in dictionary[ArchivingKeys.sections] as! [AnyObject] {
-            self.sections.append(PageSection(dictionary: section as! [String: AnyObject]))
+            sections.append(PageSection(dictionary: section as! [String: AnyObject]))
         }
     }
 }
@@ -81,23 +81,23 @@ public class PageSection: Archiving {
     // Archiving
     public var manifest: [String] {
         var manifest = [String]()
-        if (!self.URI.isEmpty) {
-            manifest.append(self.URI)
+        if (!URI.isEmpty) {
+            manifest.append(URI)
         }
         return manifest
     }
     
     public var dictionary: [String: AnyObject] {
         return [
-            ArchivingKeys.type: self.type.rawValue,
-            ArchivingKeys.text: self.text,
-            ArchivingKeys.URI: self.URI
+            ArchivingKeys.type: type.rawValue,
+            ArchivingKeys.text: text,
+            ArchivingKeys.URI: URI
         ]
     }
     
     required public init(dictionary: [String: AnyObject]) {
-        self.type = Type(rawValue: dictionary[ArchivingKeys.type] as! String)!
-        self.text = dictionary[ArchivingKeys.text] as! String
-        self.URI = dictionary[ArchivingKeys.URI] as! String
+        type = Type(rawValue: dictionary[ArchivingKeys.type] as! String)!
+        text = dictionary[ArchivingKeys.text] as! String
+        URI = dictionary[ArchivingKeys.URI] as! String
     }
 }

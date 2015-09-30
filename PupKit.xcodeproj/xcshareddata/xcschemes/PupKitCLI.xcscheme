@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
-               BuildableName = "pupkit"
+               BuildableName = "pup_kit"
                BlueprintName = "PupKitCLI"
                ReferencedContainer = "container:PupKit.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
-            BuildableName = "pupkit"
+            BuildableName = "pup_kit"
             BlueprintName = "PupKitCLI"
             ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
-            BuildableName = "pupkit"
+            BuildableName = "pup_kit"
             BlueprintName = "PupKitCLI"
             ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5CB4CDFB1A7A6611001C70BE"
-            BuildableName = "pupkit"
+            BuildableName = "pup_kit"
             BlueprintName = "PupKitCLI"
             ReferencedContainer = "container:PupKit.xcodeproj">
          </BuildableReference>

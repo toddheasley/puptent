@@ -31,58 +31,58 @@ extension HTML {
             
             // Generate page HTML
             var mainElements: [HTML] = [
-                self.h1("\(page.name)")
+                h1("\(page.name)")
             ]
             mainElements.appendContentsOf(page.sections.map{
                 switch $0.type {
                 case .Basic:
-                    return self.p(HTML(string: $0.text))
+                    return p(HTML(string: $0.text))
                 case .Image:
-                    return self.p(self.img($0.URI))
+                    return figure(a(img($0.URI), href: $0.URI))
                 case .Audio:
-                    return self.p(self.audio($0.URI))
+                    return figure(audio($0.URI))
                 case .Video:
-                    return self.p(self.video($0.URI))
+                    return figure(video($0.URI))
                 }
             })
-            completion(URI: page.URI, data: self.joinElements([
-                self.doctype(),
-                self.title("\(page.name) - \(site.name)"),
-                self.meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
-                self.meta(.Viewport, content: self.viewport),
-                self.meta(.BookmarkTitle, content: "\(site.name)"),
-                self.link(.BookmarkIcon, href: self.bookmarkIconURI),
-                self.link(.Stylesheet, href: self.stylesheetURI),
-                self.header([
-                    self.h1(self.a("\(site.name)", href: site.URI))
+            completion(URI: page.URI, data: joinElements([
+                doctype(),
+                title("\(page.name) - \(site.name)"),
+                meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
+                meta(.Viewport, content: viewport),
+                meta(.BookmarkTitle, content: "\(site.name)"),
+                link(.BookmarkIcon, href: bookmarkIconURI),
+                link(.Stylesheet, href: stylesheetURI),
+                header([
+                    h1(a("\(site.name)", href: site.URI))
                 ]),
-                self.main(mainElements),
-                self.menu(site.indexedPages.map{
-                    return self.p($0.URI == page.URI ? self.span($0.name) : self.a("\($0.name)", href: $0.URI))
+                main(mainElements),
+                menu(site.indexedPages.map{
+                    return p($0.URI == page.URI ? span($0.name) : a("\($0.name)", href: $0.URI))
                 }),
-                self.footer([
-                    self.p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
+                footer([
+                    p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
                 ])
             ]).dataUsingEncoding(NSUTF8StringEncoding)!)
         }
         
         // Generate index HTML
-        completion(URI: site.URI, data: self.joinElements([
-            self.doctype(),
-            self.title("\(site.name)"),
-            self.meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
-            self.meta(.Viewport, content: self.viewport),
-            self.meta(.BookmarkTitle, content: "\(site.name)"),
-            self.link(.BookmarkIcon, href: self.bookmarkIconURI),
-            self.link(.Stylesheet, href: self.stylesheetURI),
-            self.header([
-                self.h1("\(site.name)")
+        completion(URI: site.URI, data: joinElements([
+            doctype(),
+            title("\(site.name)"),
+            meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
+            meta(.Viewport, content: viewport),
+            meta(.BookmarkTitle, content: "\(site.name)"),
+            link(.BookmarkIcon, href: bookmarkIconURI),
+            link(.Stylesheet, href: stylesheetURI),
+            header([
+                h1("\(site.name)")
             ]),
-            self.menu(site.indexedPages.map{
-                return self.p(self.a("\($0.name)", href: $0.URI))
+            menu(site.indexedPages.map{
+                return p(a("\($0.name)", href: $0.URI))
             }),
-            self.footer([
-                self.p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
+            footer([
+                p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
             ])
         ]).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
@@ -104,19 +104,19 @@ extension HTML {
     }
     
     private static func header(elements: [HTML]) -> HTML {
-        return "<header>\(self.joinElements(elements, indent: true))</header>"
+        return "<header>\(joinElements(elements, indent: true))</header>"
     }
     
     private static func footer(elements: [HTML]) -> HTML {
-        return "<footer>\(self.joinElements(elements, indent: true))</footer>"
+        return "<footer>\(joinElements(elements, indent: true))</footer>"
     }
     
     private static func main(elements: [HTML]) -> HTML {
-        return "<main>\(self.joinElements(elements, indent: true))</main>"
+        return "<main>\(joinElements(elements, indent: true))</main>"
     }
     
     private static func menu(elements: [HTML]) -> HTML {
-        return "<menu>\(self.joinElements(elements, indent: true))</menu>"
+        return "<menu>\(joinElements(elements, indent: true))</menu>"
     }
     
     private static func h1(content: HTML) -> HTML {
@@ -125,6 +125,10 @@ extension HTML {
     
     private static func p(content: HTML) -> HTML {
         return "<p>\(content)</p>"
+    }
+    
+    private static func figure(content: HTML) -> HTML {
+        return "<figure>\(content)</figure>"
     }
     
     private static func audio(src: String) -> HTML {
@@ -149,9 +153,9 @@ extension HTML {
     
     private static func joinElements(elements: [HTML], indent: Bool = false) -> HTML {
         if (indent && !elements.isEmpty) {
-            return "\(self.newLine)    " + elements.joinWithSeparator("\(self.newLine)    ") + self.newLine
+            return "\(newLine)    " + elements.joinWithSeparator("\(newLine)    ") + newLine
         }
-        return elements.joinWithSeparator(self.newLine)
+        return elements.joinWithSeparator(newLine)
     }
     
     init(string: String) {

@@ -10,23 +10,11 @@ import XCTest
 class ManagerTests: XCTestCase {
     let path: String = "\(NSTemporaryDirectory())PupKitTests/"
     
-    override func setUp() {
-        super.setUp()
-        do {
-            if (NSFileManager.defaultManager().fileExistsAtPath(self.path)) {
-                try NSFileManager.defaultManager().removeItemAtPath(self.path)
-            }
-            try NSFileManager.defaultManager().createDirectoryAtPath(self.path, withIntermediateDirectories: false, attributes: nil)
-        } catch {
-            XCTFail("\(error)")
-        }
-    }
-    
     func testPitch() {
         do {
-            try Manager.pitch(self.path)
-            XCTAssertTrue(Manager.exists(self.path))
-            _ = try Manager(path: self.path)
+            try Manager.pitch(path)
+            XCTAssertTrue(Manager.exists(path))
+            _ = try Manager(path: path)
         } catch {
             XCTFail("\(error)")
         }
@@ -34,11 +22,11 @@ class ManagerTests: XCTestCase {
     
     func testBuild() {
         do {
-            try Manager.pitch(self.path)
-            var manager = try Manager(path: self.path)
+            try Manager.pitch(path)
+            var manager = try Manager(path: path)
             manager.site.name = "Site"
             try manager.build()
-            manager = try Manager(path: self.path)
+            manager = try Manager(path: path)
             XCTAssertEqual(manager.site.name, "Site")
         } catch {
             XCTFail("\(error)")
@@ -47,16 +35,28 @@ class ManagerTests: XCTestCase {
     
     func testClean() {
         do {
-            try Manager.pitch(self.path)
-            NSData().writeToFile("\(self.path)README.md", atomically: true)
-            NSData().writeToFile("\(self.path)CNAME", atomically: true)
-            NSData().writeToFile("\(self.path)\(Manager.mediaPath)/extra.jpg", atomically: true)
-            NSData().writeToFile("\(self.path)extra.txt", atomically: true)
-            try Manager(path: self.path).clean()
-            XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath("\(self.path)README.md"))
-            XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath("\(self.path)CNAME"))
-            XCTAssertFalse(NSFileManager.defaultManager().fileExistsAtPath("\(self.path)\(Manager.mediaPath)/extra.jpg"))
-            XCTAssertFalse(NSFileManager.defaultManager().fileExistsAtPath("\(self.path)extra.txt"))
+            try Manager.pitch(path)
+            NSData().writeToFile("\(path)README.md", atomically: true)
+            NSData().writeToFile("\(path)CNAME", atomically: true)
+            NSData().writeToFile("\(path)\(Manager.mediaPath)/extra.jpg", atomically: true)
+            NSData().writeToFile("\(path)extra.txt", atomically: true)
+            try Manager(path: path).clean()
+            XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath("\(path)README.md"))
+            XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath("\(path)CNAME"))
+            XCTAssertFalse(NSFileManager.defaultManager().fileExistsAtPath("\(path)\(Manager.mediaPath)/extra.jpg"))
+            XCTAssertFalse(NSFileManager.defaultManager().fileExistsAtPath("\(path)extra.txt"))
+        } catch {
+            XCTFail("\(error)")
+        }
+    }
+    
+    override func setUp() {
+        super.setUp()
+        do {
+            if (NSFileManager.defaultManager().fileExistsAtPath(path)) {
+                try NSFileManager.defaultManager().removeItemAtPath(path)
+            }
+            try NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
         } catch {
             XCTFail("\(error)")
         }
@@ -64,7 +64,7 @@ class ManagerTests: XCTestCase {
     
     override func tearDown() {
         do {
-            try NSFileManager.defaultManager().removeItemAtPath(self.path)
+            try NSFileManager.defaultManager().removeItemAtPath(path)
         } catch {
             XCTAssert(false, "\(error)")
         }

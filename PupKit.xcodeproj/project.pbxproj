@@ -54,7 +54,7 @@
 
 /* Begin PBXFileReference section */
 		5C504F181A7AE8AC00662FF2 /* PupKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PupKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C504F191A7AE8AC00662FF2 /* pupkit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pupkit; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C504F191A7AE8AC00662FF2 /* pup */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pup; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C7181401B5BD42800481CCF /* PupKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PupKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C7181441B5BD42800481CCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C71814B1B5BD49500481CCF /* SiteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteTests.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 				5C7181411B5BD42800481CCF /* PupKitTests */,
 				5C504F181A7AE8AC00662FF2 /* PupKit.framework */,
 				5C7181401B5BD42800481CCF /* PupKitTests.xctest */,
-				5C504F191A7AE8AC00662FF2 /* pupkit */,
+				5C504F191A7AE8AC00662FF2 /* pup */,
 			);
 			sourceTree = "<group>";
 		};
@@ -196,7 +196,7 @@
 			);
 			name = PupKitCLI;
 			productName = puptent;
-			productReference = 5C504F191A7AE8AC00662FF2 /* pupkit */;
+			productReference = 5C504F191A7AE8AC00662FF2 /* pup */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -467,7 +467,7 @@
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_NAME = pupkit;
+				PRODUCT_NAME = pup;
 			};
 			name = Debug;
 		};
@@ -475,7 +475,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_NAME = pupkit;
+				PRODUCT_NAME = pup;
 			};
 			name = Release;
 		};

@@ -7,7 +7,7 @@ Pup Tent is a Mac app with a drag-and-drop interface for making small, static HT
 
 Behind the scenes, Pup Tent uses `PupKit` framework, which includes a command line interface. To use Pup Tent from the command line, archive the `PupKitCLI` target and move the archived `pupkit` executable into an empty directory. In the Mac Terminal, `cd` into the directory and run:
 
-`./pupkit pitch`
+`./pup pitch`
 
 An `ls` will reveal that a site skeleton has been created with the following:
 
@@ -18,8 +18,8 @@ An `ls` will reveal that a site skeleton has been created with the following:
 
 To generate the actual HTML pages, run:
 
-`./pupkit build`
+`./pup build`
 
 To clean up any files and pages no longer referenced in the `index.json` site manifest, run:
 
-`./pupkit clean`
+`./pup clean`
