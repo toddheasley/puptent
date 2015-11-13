@@ -9,7 +9,10 @@ import Cocoa
 import PupKit
 
 class MainViewController: NSViewController {
-    var siteViewController: SiteViewController?
+    var siteViewController: SiteViewController!
+    @IBOutlet var emptyView: NSView!
+    @IBOutlet var makeNewSiteButton: NSButton!
+    @IBOutlet var openExistingSiteButton: NSButton!
     
     var canForget: Bool {
         return !NSUserDefaults.standardUserDefaults().path.isEmpty
@@ -18,6 +21,9 @@ class MainViewController: NSViewController {
     private func openSite(path: String, animated: Bool) {
         do {
             let manager = try Manager(path: path)
+            
+            view.window?.toolbarHidden = false
+            siteViewController.view.hidden = false
             
             // Remember path
             NSUserDefaults.standardUserDefaults().path = manager.path
@@ -29,6 +35,9 @@ class MainViewController: NSViewController {
     
     @IBAction func forget(sender: AnyObject?) {
         NSUserDefaults.standardUserDefaults().path = ""
+        
+        view.window?.toolbarHidden = true
+        siteViewController.view.hidden = true
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
@@ -67,10 +76,16 @@ class MainViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
+        
+        siteViewController = SiteViewController(nibName: "Site", bundle: nil)
+        siteViewController.view.hidden = true
+        view.addSubview(siteViewController.view)
+        
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.whiteColor().CGColor
         
         if (canForget) {
             
@@ -80,6 +95,7 @@ class MainViewController: NSViewController {
     }
     
     override func viewWillAppear() {
+        super.viewWillAppear()
         view.window?.toolbarHidden = true
     }
 }

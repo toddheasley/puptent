@@ -348,8 +348,9 @@ CA
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
-                        <rect key="contentRect" x="80" y="40" width="450" height="400"/>
+                        <rect key="contentRect" x="80" y="40" width="920" height="560"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="640" height="480"/>
                         <toolbar key="toolbar" implicitIdentifier="75E0C72C-70C7-4D0E-A3F1-AE5002E01ECE" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="4lR-92-6LS">
                             <allowedToolbarItems/>
                             <defaultToolbarItems/>
@@ -360,21 +361,92 @@ CA
                     </connections>
                 </windowController>
             </objects>
-            <point key="canvasLocation" x="140" y="281"/>
+            <point key="canvasLocation" x="360" y="397"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="U6t-f9-9Bs">
             <objects>
                 <viewController id="oYN-gl-7fc" customClass="MainViewController" customModule="Pup_Tent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FSw-Yy-tpY">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
+                        <rect key="frame" x="0.0" y="0.0" width="920" height="560"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="iAq-k3-TCV">
+                                <rect key="frame" x="220" y="120" width="480" height="320"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y6S-Gg-XRK">
+                                        <rect key="frame" x="150" y="174" width="180" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="176" id="CvQ-s6-d9w"/>
+                                            <constraint firstAttribute="height" constant="44" id="fwf-5U-1yz"/>
+                                        </constraints>
+                                        <animations/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" usesSingleLineMode="YES" id="iAf-Jm-npU">
+                                            <font key="font" metaFont="systemThin" size="36"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yob-lV-Yhq">
+                                        <rect key="frame" x="150" y="108" width="180" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="168" id="6OQ-rl-DhD"/>
+                                            <constraint firstAttribute="height" constant="21" id="8GL-Vc-bjF"/>
+                                        </constraints>
+                                        <animations/>
+                                        <buttonCell key="cell" type="push" title="New Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vem-Qc-9bU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="makeNewSite:" target="oYN-gl-7fc" id="2OI-oo-Ony"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uiS-Dl-CbC">
+                                        <rect key="frame" x="150" y="75" width="180" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="168" id="Dxs-pq-glP"/>
+                                            <constraint firstAttribute="height" constant="21" id="ieZ-4e-lwC"/>
+                                        </constraints>
+                                        <animations/>
+                                        <buttonCell key="cell" type="push" title="Open Existing Site..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnl-ig-8Nb">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openExistingSite:" target="oYN-gl-7fc" id="TVe-Qs-IVp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="480" id="5ch-AN-886"/>
+                                    <constraint firstItem="Yob-lV-Yhq" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="65H-bi-Mjw"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="9ju-3x-PVa"/>
+                                    <constraint firstItem="Yob-lV-Yhq" firstAttribute="top" secondItem="Y6S-Gg-XRK" secondAttribute="bottom" constant="38" id="Lcl-DQ-HRS"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="centerX" secondItem="Y6S-Gg-XRK" secondAttribute="centerX" id="QWx-We-iLo"/>
+                                    <constraint firstItem="Y6S-Gg-XRK" firstAttribute="centerY" secondItem="iAq-k3-TCV" secondAttribute="centerY" constant="-36" id="lpZ-Fu-eil"/>
+                                    <constraint firstAttribute="height" constant="320" id="pjU-9G-pyv"/>
+                                    <constraint firstItem="Y6S-Gg-XRK" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="v0I-nQ-YbO"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="top" secondItem="Yob-lV-Yhq" secondAttribute="bottom" constant="12" id="vwu-aY-wdI"/>
+                                </constraints>
+                                <animations/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="iAq-k3-TCV" firstAttribute="centerY" secondItem="FSw-Yy-tpY" secondAttribute="centerY" id="2ce-aX-KXr"/>
+                            <constraint firstItem="iAq-k3-TCV" firstAttribute="centerX" secondItem="FSw-Yy-tpY" secondAttribute="centerX" id="pV2-rY-CmF"/>
+                        </constraints>
                         <animations/>
                     </view>
+                    <connections>
+                        <outlet property="emptyView" destination="iAq-k3-TCV" id="SbV-cc-Twj"/>
+                        <outlet property="makeNewSiteButton" destination="Yob-lV-Yhq" id="w6H-Rq-8K7"/>
+                        <outlet property="openExistingSiteButton" destination="uiS-Dl-CbC" id="umo-Zg-CcF"/>
+                    </connections>
                 </viewController>
                 <customObject id="5uz-4r-usm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="686" y="227"/>
+            <point key="canvasLocation" x="1394" y="397"/>
         </scene>
     </scenes>
 </document>

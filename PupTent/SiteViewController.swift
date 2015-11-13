@@ -24,4 +24,11 @@ class SiteViewController: NSViewController {
     @IBAction func deletePage(sender: AnyObject?) {
         
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.redColor().CGColor
+    }
 }

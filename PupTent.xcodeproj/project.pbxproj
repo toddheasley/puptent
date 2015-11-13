@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0B95241BBC35B2000E28EF /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0B95221BBC35B2000E28EF /* SiteViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		5C0B95251BBC35B2000E28EF /* SiteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C0B95231BBC35B2000E28EF /* SiteView.xib */; settings = {ASSET_TAGS = (); }; };
+		5C0B95251BBC35B2000E28EF /* Site.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C0B95231BBC35B2000E28EF /* Site.xib */; settings = {ASSET_TAGS = (); }; };
 		5C1D08731AC72DD900BED343 /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBF29BC1ABF91FF0049010C /* PupKit.framework */; };
 		5C1D08741AC72DD900BED343 /* PupKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBF29BC1ABF91FF0049010C /* PupKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
@@ -34,7 +34,7 @@
 
 /* Begin PBXFileReference section */
 		5C0B95221BBC35B2000E28EF /* SiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteViewController.swift; sourceTree = "<group>"; };
-		5C0B95231BBC35B2000E28EF /* SiteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteView.xib; sourceTree = "<group>"; };
+		5C0B95231BBC35B2000E28EF /* Site.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Site.xib; sourceTree = "<group>"; };
 		5C3ACE591A7A7E4500A7884D /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		5C4AE5341A7A7C5800BF15F3 /* Pup Tent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pup Tent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CA7FB2E1A7A7BCF00D95984 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 				5C3ACE591A7A7E4500A7884D /* Window.swift */,
 				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
 				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
-				5C0B95231BBC35B2000E28EF /* SiteView.xib */,
+				5C0B95231BBC35B2000E28EF /* Site.xib */,
 				5CA7FB2D1A7A7BCF00D95984 /* Supporting Files */,
 			);
 			path = PupTent;
@@ -152,7 +152,7 @@
 			files = (
 				5CA7FB341A7A7BCF00D95984 /* Images.xcassets in Resources */,
 				5CA7FB371A7A7BCF00D95984 /* Main.storyboard in Resources */,
-				5C0B95251BBC35B2000E28EF /* SiteView.xib in Resources */,
+				5C0B95251BBC35B2000E28EF /* Site.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
