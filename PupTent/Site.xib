@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
@@ -15,6 +15,34 @@
         <customView id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="920" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-gt-gCg">
+                    <rect key="frame" x="0.0" y="0.0" width="920" height="560"/>
+                    <subviews>
+                        <customView fixedFrame="YES" id="T4L-Dm-MHN" userLabel="Left View">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </customView>
+                        <customView fixedFrame="YES" id="qh1-aa-Mts" userLabel="Right View">
+                            <rect key="frame" x="321" y="0.0" width="599" height="560"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </customView>
+                    </subviews>
+                    <animations/>
+                    <holdingPriorities>
+                        <real value="260"/>
+                        <real value="240"/>
+                    </holdingPriorities>
+                </splitView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ov8-gt-gCg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="N5r-48-S7C"/>
+                <constraint firstAttribute="trailing" secondItem="ov8-gt-gCg" secondAttribute="trailing" id="VWB-US-cxe"/>
+                <constraint firstItem="ov8-gt-gCg" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="YaH-Bf-5cP"/>
+                <constraint firstAttribute="bottom" secondItem="ov8-gt-gCg" secondAttribute="bottom" id="bpg-eS-XWM"/>
+            </constraints>
             <animations/>
         </customView>
     </objects>

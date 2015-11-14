@@ -29,6 +29,6 @@ class SiteViewController: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.redColor().CGColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
     }
 }

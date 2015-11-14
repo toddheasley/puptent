@@ -83,9 +83,10 @@ class MainViewController: NSViewController {
         siteViewController = SiteViewController(nibName: "Site", bundle: nil)
         siteViewController.view.hidden = true
         view.addSubview(siteViewController.view)
+        view.pin(siteViewController.view, inset: 0.0)
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
         
         if (canForget) {
             
@@ -96,7 +97,7 @@ class MainViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.toolbarHidden = true
+        view.window?.toolbarHidden = !canForget
     }
 }
 
