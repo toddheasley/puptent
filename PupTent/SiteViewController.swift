@@ -8,10 +8,14 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController {
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+    private let draggedType = "Page"
+    var manager: Manager!
     var selectedPage: (index: Int, page: Page?) {
         return (-1, nil)
     }
+    
+    @IBOutlet var tableView: NSTableView!
     
     @IBAction func preview(sender: AnyObject?) {
         
@@ -30,5 +34,124 @@ class SiteViewController: NSViewController {
         
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
+        
+        tableView.registerForDraggedTypes([draggedType])
+        tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+    }
+    
+    init?(manager: Manager) {
+        super.init(nibName: "Site", bundle: nil)
+        self.manager = manager
+    }
+    
+    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        return nil
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        return nil
+    }
+    
+    // MARK: NSTableViewDataSource
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        return manager.site.pages.count + 1 // Add "new page" cell to existing pages
+    }
+    
+    func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pasteboard: NSPasteboard) -> Bool {
+        if (rowIndexes.firstIndex > tableView.numberOfRows - 2) {
+            
+            // Prevent "new page" cell drag
+            return false
+        }
+        
+        // Allow existing page cells drag
+        pasteboard.declareTypes([draggedType], owner: self)
+        pasteboard.setData(NSKeyedArchiver.archivedDataWithRootObject(rowIndexes), forType: draggedType)
+        return true
+    }
+    
+    func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+        if (dropOperation == NSTableViewDropOperation.Above && row < tableView.numberOfRows) {
+            
+            // Allow cell drop in rows above "new page" cell
+            return NSDragOperation.Move
+        }
+        
+        // Prevent cells drop onto other cells and below "new page" cell
+        return NSDragOperation.None
+    }
+    
+    func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+        guard let data = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSIndexSet where row < tableView.numberOfRows else {
+            return false
+        }
+        
+        var selectedPage: Page?
+        if (tableView.selectedRow > -1) {
+            
+            // Remember current page selection
+            selectedPage = manager.site.pages[tableView.selectedRow]
+        }
+        
+        var index = row
+        if (indexSet.firstIndex < index) {
+            index--
+        }
+        
+        // Move page to new index in data source
+        let page: Page = manager.site.pages[indexSet.firstIndex]
+        manager.site.pages.removeAtIndex(indexSet.firstIndex)
+        manager.site.pages.insert(page, atIndex: index)
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch {
+            print(error)
+        }
+        
+        tableView.reloadData()
+        if let selectedPage = selectedPage {
+            
+            // Restore page selection
+            tableView.selectRowIndexes(NSIndexSet(index: (manager.site.pages as NSArray).indexOfObject(selectedPage)), byExtendingSelection: false)
+        }
+        return true
+    }
+    
+    // MARK: NSTableViewDelegate
+    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let tableColumn = tableColumn, view = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as? PageCellView else {
+            return nil
+        }
+        
+        // Configure as blank "new page" cell
+        view.textField!.stringValue = ""
+        view.secondaryTextField!.stringValue = ""
+        view.imageView!.image = NSImage(named: "NSStatusNone")
+        if (row < manager.site.pages.count) {
+            
+            // Configure cell for existing page
+            let page = manager.site.pages[row]
+            view.textField!.stringValue = "\(page.name)"
+            view.secondaryTextField!.stringValue = "\(page.URI)"
+            if (page.index) {
+                view.imageView!.image = NSImage(named: "NSStatusAvailable")
+            }
+        }
+        return view
+    }
+    
+    func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        return PageRowView(index: row)
+    }
+    
+    func tableViewSelectionDidChange(notification: NSNotification) {
+        guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
+            return
+        }
+        
+        print("tableViewSelectionDidChange: \(tableView.selectedRow)")
     }
 }

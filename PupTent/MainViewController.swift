@@ -9,7 +9,7 @@ import Cocoa
 import PupKit
 
 class MainViewController: NSViewController {
-    var siteViewController: SiteViewController!
+    var siteViewController: SiteViewController?
     @IBOutlet var emptyView: NSView!
     @IBOutlet var makeNewSiteButton: NSButton!
     @IBOutlet var openExistingSiteButton: NSButton!
@@ -22,22 +22,30 @@ class MainViewController: NSViewController {
         do {
             let manager = try Manager(path: path)
             
+            siteViewController = SiteViewController(manager: manager)
+            guard let siteViewController = siteViewController else {
+                return
+            }
+            view.addSubview(siteViewController.view)
+            view.pin(siteViewController.view, inset: 0.0)
             view.window?.toolbarHidden = false
-            siteViewController.view.hidden = false
             
             // Remember path
             NSUserDefaults.standardUserDefaults().path = manager.path
         } catch {
+            forget(self)
             print((error as NSError).localizedDescription)
             return
         }
     }
     
     @IBAction func forget(sender: AnyObject?) {
-        NSUserDefaults.standardUserDefaults().path = ""
-        
         view.window?.toolbarHidden = true
-        siteViewController.view.hidden = true
+        siteViewController?.view.removeFromSuperview()
+        siteViewController = nil
+        
+        // Forget path
+        NSUserDefaults.standardUserDefaults().path = ""
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
@@ -79,11 +87,6 @@ class MainViewController: NSViewController {
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
-        
-        siteViewController = SiteViewController(nibName: "Site", bundle: nil)
-        siteViewController.view.hidden = true
-        view.addSubview(siteViewController.view)
-        view.pin(siteViewController.view, inset: 0.0)
         
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
