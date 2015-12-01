@@ -10,13 +10,19 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     weak var mainViewController: MainViewController?
-    @IBOutlet weak var forgetMenuItem: NSMenuItem?
-    @IBOutlet weak var newPageMenuItem: NSMenuItem?
-    @IBOutlet weak var deletePageMenuItem: NSMenuItem?
-    @IBOutlet weak var previewItem: NSMenuItem?
+    @IBOutlet weak var forgetMenuItem: NSMenuItem!
+    @IBOutlet weak var settingsMenuItem: NSMenuItem!
+    @IBOutlet weak var openInFinderMenuItem: NSMenuItem!
+    @IBOutlet weak var newPageMenuItem: NSMenuItem!
+    @IBOutlet weak var deletePageMenuItem: NSMenuItem!
+    @IBOutlet weak var previewItem: NSMenuItem!
     
     @IBAction func preview(sender: AnyObject?) {
         mainViewController?.siteViewController?.preview(self)
+    }
+    
+    @IBAction func openInFinder(sender: AnyObject?) {
+        mainViewController?.openInFinder(sender)
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
@@ -29,6 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func forget(sender: AnyObject?) {
         mainViewController?.forget(sender)
+    }
+    
+    @IBAction func openSettings(sender: AnyObject?) {
+        mainViewController?.siteViewController?.openSettings(sender)
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
@@ -44,17 +54,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-        guard let _ = mainViewController else {
+        guard let mainViewController = mainViewController else {
             return false
         }
         
         switch menuItem {
-        case forgetMenuItem!:
-            return mainViewController!.canForget
-        case newPageMenuItem!, previewItem!:
-            return mainViewController!.siteViewController != nil
-        case deletePageMenuItem!:
-            return mainViewController!.siteViewController?.selectedPage.index > -1
+        case forgetMenuItem:
+            return mainViewController.canForget
+        case settingsMenuItem, openInFinderMenuItem, newPageMenuItem, previewItem:
+            return mainViewController.siteViewController != nil
+        case deletePageMenuItem:
+            return mainViewController.siteViewController?.selectedPage.index > -1
         default:
             return true
         }

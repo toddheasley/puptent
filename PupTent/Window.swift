@@ -8,6 +8,9 @@
 import Cocoa
 
 class Window: NSWindow {
+    @IBOutlet var pathLabel: NSButton!
+    @IBOutlet var settingsButton: NSButton!
+    
     override init(contentRect: NSRect, styleMask aStyle: Int, backing bufferingType: NSBackingStoreType, `defer` flag: Bool) {
         super.init(contentRect: contentRect, styleMask: aStyle, backing: bufferingType, `defer`: flag)
         titleVisibility = NSWindowTitleVisibility.Hidden
@@ -29,6 +32,7 @@ extension NSWindow {
     var toolbarHidden: Bool {
         set {
             toolbar?.showsBaselineSeparator = !newValue
+            toolbar?.visible = !newValue
             titlebarAppearsTransparent = newValue
         }
         get {

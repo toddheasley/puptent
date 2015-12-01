@@ -8,25 +8,56 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, SettingsViewDelegate, PageViewDelegate {
     private let draggedType = "Page"
     var manager: Manager!
     var selectedPage: (index: Int, page: Page?) {
+        if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
+            return ( tableView.selectedRow, manager.site.pages[tableView.selectedRow])
+        }
         return (-1, nil)
     }
     
+    private func clearDetailView() {
+        for subview in detailView.subviews {
+            subview.removeFromSuperview()
+        }
+    }
+    
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var detailView: NSView!
+    
+    @IBAction func openSettings(sender: AnyObject?) {
+        tableView.deselectAll(self)
+        (view.window as? Window)?.settingsButton.state = 1
+        clearDetailView()
+        
+    }
     
     @IBAction func preview(sender: AnyObject?) {
-        
+        guard let page = self.selectedPage.page else {
+            NSWorkspace.sharedWorkspace().openFile(manager.path + manager.site.URI)
+            return
+        }
+        NSWorkspace.sharedWorkspace().openFile(manager.path + page.URI)
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        
+        tableView.selectRowIndexes(NSIndexSet(index: tableView.numberOfRows - 1), byExtendingSelection: false)
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
+        if (tableView.selectedRow < 0 || tableView.selectedRow >= manager.site.pages.count) {
+            return
+        }
         
+        do {
+            manager.site.pages.removeAtIndex(tableView.selectedRow)
+            try manager.build()
+            tableView.removeRowsAtIndexes(NSIndexSet(index: tableView.selectedRow), withAnimation: .EffectNone)
+        } catch {
+            print(error)
+        }
     }
     
     override func viewDidLoad() {
@@ -37,6 +68,13 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         
         tableView.registerForDraggedTypes([draggedType])
         tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        if (selectedPage.index < 0) {
+            openSettings(self)
+        }
     }
     
     init?(manager: Manager) {
@@ -149,9 +187,37 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     func tableViewSelectionDidChange(notification: NSNotification) {
         guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
+            openSettings(self)
             return
         }
+        (view.window as? Window)?.settingsButton.state = 0
+        clearDetailView()
         
-        print("tableViewSelectionDidChange: \(tableView.selectedRow)")
+        var page: Page?
+        if (tableView.selectedRow < manager.site.pages.count) {
+            page = manager.site.pages[tableView.selectedRow]
+        }
+        if let pageViewController = PageViewController(page: page) {
+            pageViewController.delegate = self
+            detailView.addSubview(pageViewController.view)
+            view.pin(pageViewController.view, inset: 0.0)
+        }
+    }
+    
+    // MARK: SettingsViewDelegate
+    
+    
+    
+    // MARK: PageViewDelegate
+    func pageDidChange(page: Page) {
+        do {
+            try manager.build()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func pageDidDelete(page: Page) {
+        deletePage(self)
     }
 }

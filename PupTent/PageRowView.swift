@@ -15,10 +15,7 @@ class PageRowView: NSTableRowView {
     }
     
     override func drawSelectionInRect(dirtyRect: NSRect) {
-        NSColor.controlHighlightColor().colorWithAlphaComponent(0.35).setFill()
-        if (emphasized) {
-            NSColor.selectedTextBackgroundColor().colorWithAlphaComponent(0.4).setFill()
-        }
+        NSColor.selectedTextBackgroundColor().colorWithAlphaComponent(emphasized ? 1.0: 0.35).setFill()
         let path = NSBezierPath(rect: dirtyRect)
         path.fill()
     }

@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
             <connections>
+                <outlet property="detailView" destination="qh1-aa-Mts" id="QvR-ov-zZi"/>
                 <outlet property="tableView" destination="cmz-7N-ZFh" id="zye-BF-7I3"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -31,7 +32,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="56" rowSizeStyle="automatic" viewBased="YES" id="cmz-7N-ZFh">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <animations/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -55,7 +56,7 @@
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R0N-D4-Pfc">
-                                                                        <rect key="frame" x="13" y="29" width="262" height="17"/>
+                                                                        <rect key="frame" x="13" y="29" width="259" height="17"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="17" id="uMh-Gj-kdL"/>
                                                                         </constraints>
@@ -67,19 +68,19 @@
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l0u-Fc-5Me" userLabel="Secondary Text Field">
-                                                                        <rect key="frame" x="13" y="13" width="262" height="16"/>
+                                                                        <rect key="frame" x="13" y="13" width="259" height="16"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="16" id="Dk2-Ed-OS6"/>
                                                                         </constraints>
                                                                         <animations/>
                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="new-page.html" id="CdA-7y-oRk">
-                                                                            <font key="font" metaFont="system" size="12"/>
+                                                                            <font key="font" metaFont="cellTitle"/>
                                                                             <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="64X-bd-utu">
-                                                                        <rect key="frame" x="288" y="19" width="17" height="17"/>
+                                                                        <rect key="frame" x="285" y="19" width="17" height="17"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="17" id="NLx-zh-3zy"/>
                                                                             <constraint firstAttribute="width" constant="17" id="Qd9-sT-a8T"/>

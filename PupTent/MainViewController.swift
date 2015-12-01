@@ -28,6 +28,7 @@ class MainViewController: NSViewController {
             }
             view.addSubview(siteViewController.view)
             view.pin(siteViewController.view, inset: 0.0)
+            (view.window as? Window)?.pathLabel.title = manager.path
             view.window?.toolbarHidden = false
             
             // Remember path
@@ -82,6 +83,10 @@ class MainViewController: NSViewController {
         })
     }
     
+    @IBAction func openInFinder(sender: AnyObject?) {
+        NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: NSUserDefaults.standardUserDefaults().path))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
@@ -100,6 +105,7 @@ class MainViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        (view.window as? Window)?.pathLabel.title = NSUserDefaults.standardUserDefaults().path
         view.window?.toolbarHidden = !canForget
     }
 }
