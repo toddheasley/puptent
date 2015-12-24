@@ -103,3 +103,24 @@ public class Manager {
         }
     }
 }
+
+extension String {
+    public var URIFormat: String {
+        var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        // Separate words with hyphens
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        
+        // Strip existing file extension
+        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "")
+        
+        // Strip all non-alphanumeric characters
+        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
+    }
+    
+    public func twitterFormat(format: Bool = true) -> String {
+        let string = stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("@", withString: "")
+        return format ? "@\(string)" : string
+    }
+}

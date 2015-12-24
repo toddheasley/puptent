@@ -8,5 +8,5 @@
 import Cocoa
 
 class PageCellView: NSTableCellView {
-    @IBOutlet var secondaryTextField: NSTextField!
+    @IBOutlet weak var secondaryTextField: NSTextField!
 }

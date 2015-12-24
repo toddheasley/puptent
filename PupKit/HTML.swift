@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias HTML = String
+public typealias HTML = String
 
 enum HTMLMetaName: String {
     case Generator = "generator"
@@ -21,8 +21,8 @@ enum HTMLLinkRel: String {
 }
 
 extension HTML {
-    static let bookmarkIconURI: String = "apple-touch-icon.png"
-    static let stylesheetURI: String = "default.css"
+    public static let bookmarkIconURI: String = "apple-touch-icon.png"
+    public static let stylesheetURI: String = "default.css"
     static let viewport: String = "initial-scale=1.0, user-scalable=no"
     private static let newLine: String = "\n"
     

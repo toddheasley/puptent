@@ -11,6 +11,25 @@ import PupKit
 class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, SettingsViewDelegate, PageViewDelegate {
     private let draggedType = "Page"
     var manager: Manager!
+    @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var detailView: NSView!
+    
+    var detailViewController: NSViewController? {
+        didSet{
+            for subview in detailView.subviews {
+                subview.removeFromSuperview()
+            }
+            (view.window as? Window)?.settingsButton.state = 0
+            if let _ = detailViewController as? SettingsViewController {
+                (view.window as? Window)?.settingsButton.state = 1
+            }
+            if let detailViewController = detailViewController {
+                detailView.addSubview(detailViewController.view)
+                detailView.pin(detailViewController.view, inset: 0.0)
+            }
+        }
+    }
+    
     var selectedPage: (index: Int, page: Page?) {
         if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
             return ( tableView.selectedRow, manager.site.pages[tableView.selectedRow])
@@ -18,20 +37,18 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         return (-1, nil)
     }
     
-    private func clearDetailView() {
-        for subview in detailView.subviews {
-            subview.removeFromSuperview()
-        }
-    }
-    
-    @IBOutlet var tableView: NSTableView!
-    @IBOutlet var detailView: NSView!
-    
     @IBAction func openSettings(sender: AnyObject?) {
         tableView.deselectAll(self)
-        (view.window as? Window)?.settingsButton.state = 1
-        clearDetailView()
         
+        var settings = Settings()
+        settings.name = manager.site.name
+        settings.twitterName = manager.site.twitterName
+        settings.bookmarkIconURL = NSURL(fileURLWithPath: manager.path + HTML.bookmarkIconURI)
+        settings.stylesheetURL = NSURL(fileURLWithPath: manager.path + HTML.stylesheetURI)
+        
+        let settingsViewController = SettingsViewController(settings: settings)
+        settingsViewController?.delegate = self
+        detailViewController = settingsViewController
     }
     
     @IBAction func preview(sender: AnyObject?) {
@@ -127,7 +144,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         }
         
         var selectedPage: Page?
-        if (tableView.selectedRow > -1) {
+        if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
             
             // Remember current page selection
             selectedPage = manager.site.pages[tableView.selectedRow]
@@ -154,6 +171,8 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             
             // Restore page selection
             tableView.selectRowIndexes(NSIndexSet(index: (manager.site.pages as NSArray).indexOfObject(selectedPage)), byExtendingSelection: false)
+        } else {
+            openSettings(self)
         }
         return true
     }
@@ -190,23 +209,26 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             openSettings(self)
             return
         }
-        (view.window as? Window)?.settingsButton.state = 0
-        clearDetailView()
         
         var page: Page?
         if (tableView.selectedRow < manager.site.pages.count) {
             page = manager.site.pages[tableView.selectedRow]
         }
-        if let pageViewController = PageViewController(page: page) {
-            pageViewController.delegate = self
-            detailView.addSubview(pageViewController.view)
-            view.pin(pageViewController.view, inset: 0.0)
-        }
+        let pageViewController = PageViewController(page: page)
+        pageViewController?.delegate = self
+        detailViewController = pageViewController
     }
     
     // MARK: SettingsViewDelegate
-    
-    
+    func settingsDidChange(settings: Settings) {
+        manager.site.name = settings.name
+        manager.site.twitterName = settings.twitterName
+        do {
+            try manager.build()
+        } catch {
+            print(error)
+        }
+    }
     
     // MARK: PageViewDelegate
     func pageDidChange(page: Page) {
