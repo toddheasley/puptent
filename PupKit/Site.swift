@@ -10,7 +10,7 @@ import Foundation
 public class Site: Archiving {
     public var name: String
     public var URI: String
-    public var twitterName: String
+    public var twitter: String
     public var pages: [Page]
     
     public var indexedPages: [Page] {
@@ -23,7 +23,7 @@ public class Site: Archiving {
         self.init(dictionary: [
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
-            ArchivingKeys.twitterName: "",
+            ArchivingKeys.twitter: "",
             ArchivingKeys.pages: []
         ])
     }
@@ -31,7 +31,7 @@ public class Site: Archiving {
     // MARK: Archiving
     public var manifest: [String] {
         var manifest = [String]()
-        for page in self.pages {
+        for page in pages {
             manifest.appendContentsOf(page.manifest)
         }
         if (!URI.isEmpty) {
@@ -48,7 +48,7 @@ public class Site: Archiving {
         return [
             ArchivingKeys.name: name,
             ArchivingKeys.URI: URI,
-            ArchivingKeys.twitterName: twitterName,
+            ArchivingKeys.twitter: twitter,
             ArchivingKeys.pages: pages
         ]
     }
@@ -56,7 +56,7 @@ public class Site: Archiving {
     public required init(dictionary: [String: AnyObject]) {
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String
-        twitterName = dictionary[ArchivingKeys.twitterName] as! String
+        twitter = dictionary[ArchivingKeys.twitter] as! String
         pages = []
         for page in dictionary[ArchivingKeys.pages] as! [AnyObject] {
             pages.append(Page(dictionary: page as! [String: AnyObject]))

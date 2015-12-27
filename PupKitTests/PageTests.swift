@@ -13,24 +13,21 @@ class PageTests: XCTestCase {
         ArchivingKeys.index: true,
         ArchivingKeys.name: "Page",
         ArchivingKeys.URI: "page.html",
-        ArchivingKeys.sections: [
-            [
-                ArchivingKeys.type: "image",
-                ArchivingKeys.text: "Section",
-                ArchivingKeys.URI: "section.jpg"
-            ]
-        ]
+        ArchivingKeys.body: "Image: /media/page.jpg and audio: /media/page.m4a"
     ]
     
     func testDictionary() {
         XCTAssertEqual(page.dictionary[ArchivingKeys.index] as? Bool, dictionary[ArchivingKeys.index] as? Bool)
         XCTAssertEqual(page.dictionary[ArchivingKeys.name] as? String, dictionary[ArchivingKeys.name] as? String)
         XCTAssertEqual(page.dictionary[ArchivingKeys.URI] as? String, dictionary[ArchivingKeys.URI] as? String)
-        XCTAssertEqual((page.dictionary[ArchivingKeys.sections] as! [AnyObject]).count, 1)
+        XCTAssertEqual((page.dictionary[ArchivingKeys.body] as! String), "Image: /media/page.jpg and audio: /media/page.m4a")
     }
     
     func testManifest() {
-        XCTAssertEqual(page.manifest, ["section.jpg", "page.html"])
+        XCTAssertEqual(page.manifest.count, 3)
+        XCTAssertTrue(page.manifest.contains("media/page.jpg"))
+        XCTAssertTrue(page.manifest.contains("media/page.m4a"))
+        XCTAssertTrue(page.manifest.contains("page.html"))
     }
     
     override func setUp() {
@@ -39,33 +36,6 @@ class PageTests: XCTestCase {
         XCTAssertTrue(page.index)
         XCTAssertEqual(page.name, "Page")
         XCTAssertEqual(page.URI, "page.html")
-        XCTAssertEqual(page.sections[0].text, "Section")
-    }
-}
-
-class PageSectionTests: XCTestCase {
-    var pageSection: PageSection!
-    let dictionary: [String: AnyObject] = [
-        ArchivingKeys.type: "image",
-        ArchivingKeys.text: "Section",
-        ArchivingKeys.URI: "section.jpg"
-    ]
-    
-    func testDictionary() {
-        XCTAssertEqual(pageSection.dictionary[ArchivingKeys.type] as? String, dictionary[ArchivingKeys.type] as? String)
-        XCTAssertEqual(pageSection.dictionary[ArchivingKeys.text] as? String, dictionary[ArchivingKeys.text] as? String)
-        XCTAssertEqual(pageSection.dictionary[ArchivingKeys.URI] as? String, dictionary[ArchivingKeys.URI] as? String)
-    }
-    
-    func testManifest() {
-        XCTAssertEqual(pageSection.manifest, ["section.jpg"])
-    }
-    
-    override func setUp() {
-        super.setUp()
-        pageSection = PageSection(dictionary: dictionary)
-        XCTAssertEqual(pageSection.type.rawValue, "image")
-        XCTAssertEqual(pageSection.text, "Section")
-        XCTAssertEqual(pageSection.URI, "section.jpg")
+        XCTAssertEqual(page.body, "Image: /media/page.jpg and audio: /media/page.m4a")
     }
 }

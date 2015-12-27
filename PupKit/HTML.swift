@@ -24,27 +24,12 @@ extension HTML {
     public static let bookmarkIconURI: String = "apple-touch-icon.png"
     public static let stylesheetURI: String = "default.css"
     static let viewport: String = "initial-scale=1.0, user-scalable=no"
-    private static let newLine: String = "\n"
+    static let newLine: String = "\n"
     
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
             
             // Generate page HTML
-            var mainElements: [HTML] = [
-                h1("\(page.name)")
-            ]
-            mainElements.appendContentsOf(page.sections.map{
-                switch $0.type {
-                case .Basic:
-                    return p(HTML(string: $0.text))
-                case .Image:
-                    return figure(a(img($0.URI), href: $0.URI))
-                case .Audio:
-                    return figure(audio($0.URI))
-                case .Video:
-                    return figure(video($0.URI))
-                }
-            })
             completion(URI: page.URI, data: joinElements([
                 doctype(),
                 title("\(page.name) - \(site.name)"),
@@ -56,12 +41,15 @@ extension HTML {
                 header([
                     h1(a("\(site.name)", href: site.URI))
                 ]),
-                main(mainElements),
+                main([
+                    h1("\(page.name)"),
+                    p("\(page.body)")
+                ]),
                 menu(site.indexedPages.map{
                     return p($0.URI == page.URI ? span($0.name) : a("\($0.name)", href: $0.URI))
                 }),
                 footer([
-                    p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
+                    p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
                 ])
             ]).dataUsingEncoding(NSUTF8StringEncoding)!)
         }
@@ -82,7 +70,7 @@ extension HTML {
                 return p(a("\($0.name)", href: $0.URI))
             }),
             footer([
-                p(HTML(string: site.twitterName.isEmpty ? "" : "@\(site.twitterName)"))
+                p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
             ])
         ]).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
@@ -127,10 +115,6 @@ extension HTML {
         return "<p>\(content)</p>"
     }
     
-    private static func figure(content: HTML) -> HTML {
-        return "<figure>\(content)</figure>"
-    }
-    
     private static func audio(src: String) -> HTML {
         return "<audio src=\"\(src)\" preload=\"metadata\" controls></audio>"
     }
@@ -160,8 +144,11 @@ extension HTML {
     
     init(string: String) {
         let patterns: [(String, String)] = [
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4a|mp3)", "$1<audio src=\"/$2.$3\" preload=\"metadata\" controls>"), // Embed local audio
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4v|mov|mp4)", "$1<video src=\"/$2.$3\" preload=\"metadata\" controls>"), // Embed local video
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", "$1<a href=\"/$2.$3\"><img src=\"/$2.$3\"></a>"), // Embed local images
             ("(https?:\\/\\/)([\\w\\-\\.!~?&+\\*'\"(),\\/]+)", "<a href=\"$1$2\">$2</a>"), // Hyperlink absolute URLs
-            ("(^|\\\n|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
             ("(^|\\s)([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4})", "$1<a href=\"mailto:$2\">$2</a>"), // Hyperlink email addresses
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags
@@ -173,5 +160,37 @@ extension HTML {
         }
         HTML = HTML.stringByReplacingOccurrencesOfString("\n", withString: "<br>")
         self.init(HTML)
+    }
+}
+
+extension String {
+    public var manifest: [String] {
+        let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)
+        return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{
+            ((self as NSString).substringWithRange($0.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
+        }
+    }
+    
+    public var URIFormat: String {
+        var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        // Separate words with hyphens
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        
+        // Strip existing file extension
+        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "")
+        
+        // Strip all non-alphanumeric characters
+        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
+    }
+    
+    public func twitterFormat(format: Bool = true) -> String {
+        let string = stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("@", withString: "")
+        return format ? "@\(string)" : string
+    }
+    
+    public func trim() -> String {
+        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
 }

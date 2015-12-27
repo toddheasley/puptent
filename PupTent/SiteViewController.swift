@@ -8,27 +8,11 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, SettingsViewDelegate, PageViewDelegate {
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     private let draggedType = "Page"
     var manager: Manager!
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var detailView: NSView!
-    
-    var detailViewController: NSViewController? {
-        didSet{
-            for subview in detailView.subviews {
-                subview.removeFromSuperview()
-            }
-            (view.window as? Window)?.settingsButton.state = 0
-            if let _ = detailViewController as? SettingsViewController {
-                (view.window as? Window)?.settingsButton.state = 1
-            }
-            if let detailViewController = detailViewController {
-                detailView.addSubview(detailViewController.view)
-                detailView.pin(detailViewController.view, inset: 0.0)
-            }
-        }
-    }
     
     var selectedPage: (index: Int, page: Page?) {
         if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
@@ -40,15 +24,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBAction func openSettings(sender: AnyObject?) {
         tableView.deselectAll(self)
         
-        var settings = Settings()
-        settings.name = manager.site.name
-        settings.twitterName = manager.site.twitterName
-        settings.bookmarkIconURL = NSURL(fileURLWithPath: manager.path + HTML.bookmarkIconURI)
-        settings.stylesheetURL = NSURL(fileURLWithPath: manager.path + HTML.stylesheetURI)
         
-        let settingsViewController = SettingsViewController(settings: settings)
-        settingsViewController?.delegate = self
-        detailViewController = settingsViewController
     }
     
     @IBAction func preview(sender: AnyObject?) {
@@ -179,7 +155,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: NSTableViewDelegate
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let tableColumn = tableColumn, view = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as? PageCellView else {
+        guard let view = tableView.makeViewWithIdentifier("PageCellView", owner: self) as? PageCellView else {
             return nil
         }
         
@@ -214,32 +190,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         if (tableView.selectedRow < manager.site.pages.count) {
             page = manager.site.pages[tableView.selectedRow]
         }
-        let pageViewController = PageViewController(page: page)
-        pageViewController?.delegate = self
-        detailViewController = pageViewController
-    }
-    
-    // MARK: SettingsViewDelegate
-    func settingsDidChange(settings: Settings) {
-        manager.site.name = settings.name
-        manager.site.twitterName = settings.twitterName
-        do {
-            try manager.build()
-        } catch {
-            print(error)
-        }
-    }
-    
-    // MARK: PageViewDelegate
-    func pageDidChange(page: Page) {
-        do {
-            try manager.build()
-        } catch {
-            print(error)
-        }
-    }
-    
-    func pageDidDelete(page: Page) {
-        deletePage(self)
+        
+        
     }
 }
