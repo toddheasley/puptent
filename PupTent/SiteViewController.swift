@@ -8,12 +8,11 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate {
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate, PageViewDelegate {
     private let draggedType: String = "Page"
-    private var timer: NSTimer?
     var manager: Manager!
     @IBOutlet var tableView: NSTableView!
-    @IBOutlet var textView: NSTextView!
+    @IBOutlet var pageView: PageView!
     
     var selectedPage: (index: Int, page: Page?) {
         if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
@@ -24,6 +23,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     @IBAction func openSettings(sender: AnyObject?) {
         tableView.deselectAll(self)
+        pageView.string = ""
         (self.view.window as? Window)?.settingsButton.state = 1
     }
     
@@ -62,20 +62,14 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         tableView.registerForDraggedTypes([draggedType])
         tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
         
-        textView.textContainerInset = NSMakeSize(11.0, 13.0)
+        pageView.textContainerInset = NSMakeSize(11.0, 13.0)
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textViewDidChange:", name: NSTextDidChangeNotification, object: nil)
         if (selectedPage.index < 0) {
             openSettings(self)
         }
-    }
-    
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     init?(manager: Manager) {
@@ -190,7 +184,6 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
-        textView.string = ""
         guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
             openSettings(self)
             return
@@ -204,7 +197,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             view.textField?.becomeFirstResponder()
             view.button.enabled = true
         }
-        textView.string = page.body
+        pageView.string = page.body
         (self.view.window as? Window)?.settingsButton.state = 0
     }
     
@@ -234,18 +227,13 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         tableView.reloadData()
     }
     
-    // MARK: NSTextDidChangeNotification
-    func textViewDidChange(notification: NSNotification) {
-        timer?.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "captureTextView", userInfo: nil, repeats: false)
-    }
-    
-    func captureTextView() {
-        if (tableView.selectedRow < 0) {
+    // MARK: PageViewDelegate
+    func pageViewDidChange(view: PageView) {
+        guard let string = view.string where tableView.selectedRow > -1 else {
             return
         }
         let page = manager.site.pages[tableView.selectedRow]
-        page.body = textView.string!
+        page.body = string
         do {
             try manager.build()
             try manager.clean()

@@ -7,8 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
             <connections>
+                <outlet property="pageView" destination="OIf-nf-jau" id="hNB-q8-han"/>
                 <outlet property="tableView" destination="cmz-7N-ZFh" id="zye-BF-7I3"/>
-                <outlet property="textView" destination="OIf-nf-jau" id="C1z-f5-wLS"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -163,7 +163,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="OIf-nf-jau">
+                                            <textView findStyle="panel" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="OIf-nf-jau" customClass="PageView" customModule="Pup_Tent" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <animations/>
@@ -173,6 +173,9 @@
                                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <size key="minSize" width="599" height="560"/>
                                                 <size key="maxSize" width="599" height="10000000"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="-2" id="aen-t2-Znc"/>
+                                                </connections>
                                             </textView>
                                         </subviews>
                                         <animations/>
