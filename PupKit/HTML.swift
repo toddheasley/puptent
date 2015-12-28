@@ -28,6 +28,10 @@ extension HTML {
     
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
+            var mainElements: [String] = page.body.componentsSeparatedByString("\(HTML.newLine)\(HTML.newLine)").map{
+                p(HTML(string: $0))
+            }
+            mainElements.insert(h1("\(page.name)"), atIndex: 0)
             
             // Generate page HTML
             completion(URI: page.URI, data: joinElements([
@@ -41,10 +45,7 @@ extension HTML {
                 header([
                     h1(a("\(site.name)", href: site.URI))
                 ]),
-                main([
-                    h1("\(page.name)"),
-                    p("\(page.body)")
-                ]),
+                main(mainElements),
                 menu(site.indexedPages.map{
                     return p($0.URI == page.URI ? span($0.name) : a("\($0.name)", href: $0.URI))
                 }),
@@ -144,11 +145,11 @@ extension HTML {
     
     init(string: String) {
         let patterns: [(String, String)] = [
-            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4a|mp3)", "$1<audio src=\"/$2.$3\" preload=\"metadata\" controls>"), // Embed local audio
-            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4v|mov|mp4)", "$1<video src=\"/$2.$3\" preload=\"metadata\" controls>"), // Embed local video
-            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", "$1<a href=\"/$2.$3\"><img src=\"/$2.$3\"></a>"), // Embed local images
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4a|mp3)", "$1<audio src=\"$2.$3\" preload=\"metadata\" controls>"), // Embed local audio
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4v|mov|mp4)", "$1<video src=\"$2.$3\" preload=\"metadata\" controls>"), // Embed local video
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", "$1<a href=\"$2.$3\"><img src=\"$2.$3\"></a>"), // Embed local images
             ("(https?:\\/\\/)([\\w\\-\\.!~?&+\\*'\"(),\\/]+)", "<a href=\"$1$2\">$2</a>"), // Hyperlink absolute URLs
-            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"$2\">$2</a>"), // Hyperlink relative URIs
             ("(^|\\s)([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4})", "$1<a href=\"mailto:$2\">$2</a>"), // Hyperlink email addresses
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags

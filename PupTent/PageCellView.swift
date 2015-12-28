@@ -6,7 +6,48 @@
 //
 
 import Cocoa
+import PupKit
 
-class PageCellView: NSTableCellView {
-    @IBOutlet weak var secondaryTextField: NSTextField!
+@objc protocol PageCellViewDelegate {
+    func pageCellViewDidChange(view: PageCellView)
+}
+
+class PageCellView: NSTableCellView, NSTextFieldDelegate {
+    @IBOutlet weak var delegate: PageCellViewDelegate?
+    @IBOutlet var secondaryTextField: NSTextField!
+    @IBOutlet var button: PageCellButton!
+    
+    @IBAction func toggleButton(sender: AnyObject?) {
+        button.state = button.state
+        delegate?.pageCellViewDidChange(self)
+    }
+    
+    // MARK: NSTextFieldDelegate
+    override func controlTextDidEndEditing(notification: NSNotification) {
+        if let textField = textField, control = notification.object as? NSTextField {
+            switch control {
+            case textField:
+                control.stringValue = control.stringValue.trim()
+                if (secondaryTextField.stringValue.isEmpty) {
+                    secondaryTextField.stringValue = control.stringValue.URIFormat
+                }
+            case secondaryTextField:
+                if (control.stringValue.isEmpty) {
+                    control.stringValue = textField.stringValue
+                }
+                control.stringValue = control.stringValue.URIFormat
+            default:
+                break
+            }
+        }
+        delegate?.pageCellViewDidChange(self)
+    }
+}
+
+class PageCellButton: NSButton {
+    override var state: Int {
+        didSet{
+            image = state == 1 ? NSImage(named: "NSStatusAvailable") : NSImage(named: "NSStatusNone")
+        }
+    }
 }

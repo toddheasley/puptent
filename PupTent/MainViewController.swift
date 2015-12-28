@@ -10,9 +10,9 @@ import PupKit
 
 class MainViewController: NSViewController {
     var siteViewController: SiteViewController?
-    @IBOutlet weak var emptyView: NSView!
-    @IBOutlet weak var makeNewSiteButton: NSButton!
-    @IBOutlet weak var openExistingSiteButton: NSButton!
+    @IBOutlet var emptyView: NSView!
+    @IBOutlet var makeNewSiteButton: NSButton!
+    @IBOutlet var openExistingSiteButton: NSButton!
     
     var canForget: Bool {
         return !NSUserDefaults.standardUserDefaults().path.isEmpty

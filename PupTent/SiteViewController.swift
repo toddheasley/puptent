@@ -8,11 +8,12 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
-    private let draggedType = "Page"
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate {
+    private let draggedType: String = "Page"
+    private var timer: NSTimer?
     var manager: Manager!
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var detailView: NSView!
+    @IBOutlet var tableView: NSTableView!
+    @IBOutlet var textView: NSTextView!
     
     var selectedPage: (index: Int, page: Page?) {
         if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
@@ -23,8 +24,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     @IBAction func openSettings(sender: AnyObject?) {
         tableView.deselectAll(self)
-        
-        
+        (self.view.window as? Window)?.settingsButton.state = 1
     }
     
     @IBAction func preview(sender: AnyObject?) {
@@ -61,13 +61,21 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         
         tableView.registerForDraggedTypes([draggedType])
         tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        
+        textView.textContainerInset = NSMakeSize(11.0, 13.0)
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textViewDidChange:", name: NSTextDidChangeNotification, object: nil)
         if (selectedPage.index < 0) {
             openSettings(self)
         }
+    }
+    
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     init?(manager: Manager) {
@@ -160,18 +168,19 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         }
         
         // Configure as blank "new page" cell
+        view.delegate = self
         view.textField!.stringValue = ""
         view.secondaryTextField!.stringValue = ""
-        view.imageView!.image = NSImage(named: "NSStatusNone")
+        view.button.enabled = false
+        view.button.state = 0
         if (row < manager.site.pages.count) {
             
             // Configure cell for existing page
             let page = manager.site.pages[row]
             view.textField!.stringValue = "\(page.name)"
             view.secondaryTextField!.stringValue = "\(page.URI)"
-            if (page.index) {
-                view.imageView!.image = NSImage(named: "NSStatusAvailable")
-            }
+            view.button.enabled = true
+            view.button.state = page.index ? 1 : 0
         }
         return view
     }
@@ -181,16 +190,67 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
+        textView.string = ""
         guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
             openSettings(self)
             return
         }
         
-        var page: Page?
+        var page: Page = Page()
         if (tableView.selectedRow < manager.site.pages.count) {
             page = manager.site.pages[tableView.selectedRow]
+        } else if let view = tableView.viewAtColumn(0, row: tableView.selectedRow, makeIfNecessary: false) as? PageCellView {
+            manager.site.pages.append(page)
+            view.textField?.becomeFirstResponder()
+            view.button.enabled = true
         }
-        
-        
+        textView.string = page.body
+        (self.view.window as? Window)?.settingsButton.state = 0
+    }
+    
+    // MARK: PageCellViewDelegate
+    func pageCellViewDidChange(view: PageCellView) {
+        if (tableView.selectedRow < 0) {
+            return
+        }
+        let page = manager.site.pages[tableView.selectedRow]
+        if (view.textField!.stringValue.isEmpty) {
+            if (page.name.isEmpty) {
+                manager.site.pages.removeAtIndex(tableView.selectedRow)
+            }
+            tableView.deselectAll(self)
+            tableView.reloadData()
+            return
+        }
+        page.name = view.textField!.stringValue
+        page.URI = view.secondaryTextField.stringValue
+        page.index = view.button.state == 1
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch {
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+    // MARK: NSTextDidChangeNotification
+    func textViewDidChange(notification: NSNotification) {
+        timer?.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "captureTextView", userInfo: nil, repeats: false)
+    }
+    
+    func captureTextView() {
+        if (tableView.selectedRow < 0) {
+            return
+        }
+        let page = manager.site.pages[tableView.selectedRow]
+        page.body = textView.string!
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch {
+            print(error)
+        }
     }
 }
