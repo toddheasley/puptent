@@ -19,6 +19,7 @@
 		5CA7FB341A7A7BCF00D95984 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CA7FB331A7A7BCF00D95984 /* Images.xcassets */; };
 		5CA7FB371A7A7BCF00D95984 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CA7FB351A7A7BCF00D95984 /* Main.storyboard */; };
 		5CDB48A41C15F03900D9EF68 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDB48A31C15F03900D9EF68 /* ImageView.swift */; };
+		5CE70D9B1C320891004991B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE70D9A1C320891004991B0 /* SettingsView.swift */; };
 		5CEF3AE61C0A8C6000D292DF /* PageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */; };
 		5CF411F01C319C26002D69F2 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF411EF1C319C26002D69F2 /* PageView.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		5CA7FB331A7A7BCF00D95984 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5CA7FB361A7A7BCF00D95984 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CDB48A31C15F03900D9EF68 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		5CE70D9A1C320891004991B0 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageRowView.swift; sourceTree = "<group>"; };
 		5CF411EF1C319C26002D69F2 /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +83,7 @@
 			children = (
 				5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */,
 				5C0B95221BBC35B2000E28EF /* SiteViewController.swift */,
+				5CE70D9A1C320891004991B0 /* SettingsView.swift */,
 				5CF411EF1C319C26002D69F2 /* PageView.swift */,
 				5C8B1FC21C0A2C13001D4FE4 /* PageCellView.swift */,
 				5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */,
@@ -192,6 +195,7 @@
 				5CEF3AE61C0A8C6000D292DF /* PageRowView.swift in Sources */,
 				5CA7FB321A7A7BCF00D95984 /* MainViewController.swift in Sources */,
 				5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */,
+				5CE70D9B1C320891004991B0 /* SettingsView.swift in Sources */,
 				5C8B1FC31C0A2C13001D4FE4 /* PageCellView.swift in Sources */,
 				5CA7FB301A7A7BCF00D95984 /* AppDelegate.swift in Sources */,
 				5CF411F01C319C26002D69F2 /* PageView.swift in Sources */,

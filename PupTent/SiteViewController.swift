@@ -8,10 +8,12 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate, PageViewDelegate {
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate, PageViewDelegate, SettingsViewDelegate {
     private let draggedType: String = "Page"
     var manager: Manager!
+    @IBOutlet var splitView: NSSplitView!
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var settingsView: SettingsView!
     @IBOutlet var pageView: PageView!
     
     var selectedPage: (index: Int, page: Page?) {
@@ -25,6 +27,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         tableView.deselectAll(self)
         pageView.string = ""
         (self.view.window as? Window)?.settingsButton.state = 1
+        settingsView.hidden = false
     }
     
     @IBAction func preview(sender: AnyObject?) {
@@ -61,6 +64,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         
         tableView.registerForDraggedTypes([draggedType])
         tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        
+        settingsView.delegate = self
+        splitView.subviews[1].addSubview(settingsView)
+        splitView.subviews[1].pin(settingsView, inset: 0.0)
         
         pageView.textContainerInset = NSMakeSize(11.0, 13.0)
     }
@@ -199,6 +206,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         }
         pageView.string = page.body
         (self.view.window as? Window)?.settingsButton.state = 0
+        settingsView.hidden = true
     }
     
     // MARK: PageCellViewDelegate
@@ -240,5 +248,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch {
             print(error)
         }
+    }
+    
+    // MARK: SettingsViewDelegate
+    func settingsViewDidChange(view: SettingsView) {
+        
     }
 }

@@ -8,6 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
             <connections>
                 <outlet property="pageView" destination="OIf-nf-jau" id="hNB-q8-han"/>
+                <outlet property="settingsView" destination="JKd-Lc-fz8" id="DMe-zy-scC"/>
+                <outlet property="splitView" destination="ov8-gt-gCg" id="wEC-vO-6tj"/>
                 <outlet property="tableView" destination="cmz-7N-ZFh" id="zye-BF-7I3"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -218,6 +220,12 @@
             </constraints>
             <animations/>
             <point key="canvasLocation" x="389" y="360"/>
+        </customView>
+        <customView id="JKd-Lc-fz8" customClass="SettingsView" customModule="Pup_Tent" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <animations/>
+            <point key="canvasLocation" x="1244.5" y="360"/>
         </customView>
     </objects>
     <resources>
