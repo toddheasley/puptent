@@ -8,9 +8,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
             <connections>
                 <outlet property="pageView" destination="OIf-nf-jau" id="hNB-q8-han"/>
+                <outlet property="pagesTableView" destination="cmz-7N-ZFh" id="3md-Ak-LBB"/>
                 <outlet property="settingsView" destination="JKd-Lc-fz8" id="DMe-zy-scC"/>
                 <outlet property="splitView" destination="ov8-gt-gCg" id="wEC-vO-6tj"/>
-                <outlet property="tableView" destination="cmz-7N-ZFh" id="zye-BF-7I3"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>

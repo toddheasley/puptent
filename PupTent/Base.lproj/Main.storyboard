@@ -370,12 +370,12 @@ CA
                                 <toolbarItem implicitItemIdentifier="A2A53031-D269-4954-8499-742C81DE33BB" label="" paletteLabel="Path Label" id="f9W-Yt-m8x">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="120" height="25"/>
-                                    <size key="maxSize" width="480" height="25"/>
+                                    <size key="maxSize" width="280" height="25"/>
                                     <button key="view" verticalHuggingPriority="750" id="0c9-4U-wbC">
                                         <rect key="frame" x="0.0" y="14" width="120" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <animations/>
-                                        <buttonCell key="cell" type="roundTextured" title="~/Documents" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="ASX-Fb-dbj">
+                                        <buttonCell key="cell" type="roundTextured" title="~/Documents" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingMiddle" state="on" imageScaling="proportionallyDown" inset="2" id="ASX-Fb-dbj">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>

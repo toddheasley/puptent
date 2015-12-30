@@ -28,7 +28,7 @@ class MainViewController: NSViewController {
             }
             view.addSubview(siteViewController.view)
             view.pin(siteViewController.view, inset: 0.0)
-            (view.window as? Window)?.pathLabel.title = manager.path
+            (view.window as? Window)?.pathLabel.title = (manager.path as NSString).stringByAbbreviatingWithTildeInPath
             view.window?.toolbarHidden = false
             
             // Remember path
@@ -105,8 +105,20 @@ class MainViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        (view.window as? Window)?.pathLabel.title = NSUserDefaults.standardUserDefaults().path
+        (view.window as? Window)?.pathLabel.title = (NSUserDefaults.standardUserDefaults().path as NSString).stringByAbbreviatingWithTildeInPath
         view.window?.toolbarHidden = !canForget
+    }
+}
+
+extension NSView {
+    func pin(subview: NSView, inset: CGFloat) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints([
+            NSLayoutConstraint(item: subview, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Left, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: inset)
+        ])
     }
 }
 

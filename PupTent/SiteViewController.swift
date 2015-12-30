@@ -12,20 +12,19 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     private let draggedType: String = "Page"
     var manager: Manager!
     @IBOutlet var splitView: NSSplitView!
-    @IBOutlet var tableView: NSTableView!
-    @IBOutlet var settingsView: SettingsView!
+    @IBOutlet var pagesTableView: NSTableView!
     @IBOutlet var pageView: PageView!
+    @IBOutlet var settingsView: SettingsView!
     
     var selectedPage: (index: Int, page: Page?) {
-        if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
-            return ( tableView.selectedRow, manager.site.pages[tableView.selectedRow])
+        if (pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count) {
+            return (pagesTableView.selectedRow, manager.site.pages[pagesTableView.selectedRow])
         }
         return (-1, nil)
     }
     
     @IBAction func openSettings(sender: AnyObject?) {
-        tableView.deselectAll(self)
-        pageView.string = ""
+        pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
         settingsView.hidden = false
     }
@@ -39,18 +38,18 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        tableView.selectRowIndexes(NSIndexSet(index: tableView.numberOfRows - 1), byExtendingSelection: false)
+        pagesTableView.selectRowIndexes(NSIndexSet(index: pagesTableView.numberOfRows - 1), byExtendingSelection: false)
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
-        if (tableView.selectedRow < 0 || tableView.selectedRow >= manager.site.pages.count) {
+        if (pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count) {
             return
         }
         
         do {
-            manager.site.pages.removeAtIndex(tableView.selectedRow)
+            manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
             try manager.build()
-            tableView.removeRowsAtIndexes(NSIndexSet(index: tableView.selectedRow), withAnimation: .EffectNone)
+            pagesTableView.removeRowsAtIndexes(NSIndexSet(index: pagesTableView.selectedRow), withAnimation: .EffectNone)
         } catch {
             print(error)
         }
@@ -62,14 +61,15 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
         
-        tableView.registerForDraggedTypes([draggedType])
-        tableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        pagesTableView.registerForDraggedTypes([draggedType])
+        pagesTableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
         
         settingsView.delegate = self
         splitView.subviews[1].addSubview(settingsView)
         splitView.subviews[1].pin(settingsView, inset: 0.0)
         
         pageView.textContainerInset = NSMakeSize(11.0, 13.0)
+        pageView.path = manager.path
     }
     
     override func viewWillAppear() {
@@ -127,13 +127,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         guard let data = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSIndexSet where row < tableView.numberOfRows else {
             return false
         }
-        
-        var selectedPage: Page?
-        if (tableView.selectedRow > -1 && tableView.selectedRow < manager.site.pages.count) {
-            
-            // Remember current page selection
-            selectedPage = manager.site.pages[tableView.selectedRow]
-        }
+        let selectedPage = self.selectedPage.page // Remember current page selection
         
         var index = row
         if (indexSet.firstIndex < index) {
@@ -191,6 +185,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
+        pageView.string = ""
         guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
             openSettings(self)
             return
@@ -211,16 +206,15 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: PageCellViewDelegate
     func pageCellViewDidChange(view: PageCellView) {
-        if (tableView.selectedRow < 0) {
+        guard let page = selectedPage.page else {
             return
         }
-        let page = manager.site.pages[tableView.selectedRow]
         if (view.textField!.stringValue.isEmpty) {
             if (page.name.isEmpty) {
-                manager.site.pages.removeAtIndex(tableView.selectedRow)
+                manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
             }
-            tableView.deselectAll(self)
-            tableView.reloadData()
+            pagesTableView.deselectAll(self)
+            pagesTableView.reloadData()
             return
         }
         page.name = view.textField!.stringValue
@@ -232,15 +226,14 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch {
             print(error)
         }
-        tableView.reloadData()
+        pagesTableView.reloadData()
     }
     
     // MARK: PageViewDelegate
     func pageViewDidChange(view: PageView) {
-        guard let string = view.string where tableView.selectedRow > -1 else {
+        guard let string = view.string, page = selectedPage.page else {
             return
         }
-        let page = manager.site.pages[tableView.selectedRow]
         page.body = string
         do {
             try manager.build()
