@@ -224,7 +224,46 @@
         <customView id="JKd-Lc-fz8" customClass="SettingsView" customModule="Pup_Tent" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="193-2I-hEC">
+                    <rect key="frame" x="17" y="454" width="48" height="48"/>
+                    <animations/>
+                    <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="Jmi-pR-95H"/>
+                    <connections>
+                        <action selector="bookmarkIconDidChange:" target="JKd-Lc-fz8" id="gcR-gT-mk2"/>
+                    </connections>
+                </imageView>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AyT-iT-dkU">
+                    <rect key="frame" x="70" y="483" width="96" height="22"/>
+                    <animations/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="B2I-Zh-x8i">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="JKd-Lc-fz8" id="r8j-tT-bwb"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etU-jW-Tvf">
+                    <rect key="frame" x="70" y="451" width="96" height="22"/>
+                    <animations/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="iAQ-e3-ojv">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="JKd-Lc-fz8" id="cnf-uT-Prb"/>
+                    </connections>
+                </textField>
+            </subviews>
             <animations/>
+            <connections>
+                <outlet property="bookmarkIconImageView" destination="193-2I-hEC" id="O9J-ij-rtY"/>
+                <outlet property="nameTextField" destination="AyT-iT-dkU" id="cuL-TG-Mho"/>
+                <outlet property="twitterTextField" destination="etU-jW-Tvf" id="0la-mM-FHl"/>
+            </connections>
             <point key="canvasLocation" x="1244.5" y="360"/>
         </customView>
     </objects>

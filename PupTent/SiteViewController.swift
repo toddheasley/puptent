@@ -26,6 +26,9 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBAction func openSettings(sender: AnyObject?) {
         pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
+        settingsView.path = manager.path
+        settingsView.nameTextField.stringValue = manager.site.name
+        settingsView.twitterTextField.stringValue = manager.site.twitter.twitterFormat()
         settingsView.hidden = false
     }
     
@@ -49,6 +52,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         do {
             manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
             try manager.build()
+            try manager.clean()
             pagesTableView.removeRowsAtIndexes(NSIndexSet(index: pagesTableView.selectedRow), withAnimation: .EffectNone)
         } catch {
             print(error)
@@ -245,6 +249,13 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: SettingsViewDelegate
     func settingsViewDidChange(view: SettingsView) {
-        
+        manager.site.name = view.nameTextField.stringValue
+        manager.site.twitter = view.twitterTextField.stringValue.twitterFormat(false)
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch {
+            print(error)
+        }
     }
 }

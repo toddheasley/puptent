@@ -24,7 +24,6 @@ extension HTML {
     public static let bookmarkIconURI: String = "apple-touch-icon.png"
     public static let stylesheetURI: String = "default.css"
     static let viewport: String = "initial-scale=1.0, user-scalable=no"
-    static let newLine: String = "\n"
     
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
@@ -165,6 +164,9 @@ extension HTML {
 }
 
 extension String {
+    public static let newLine: String = "\n"
+    public static let separator: String = "-"
+    
     public var manifest: [String] {
         let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)
         return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{
@@ -176,7 +178,7 @@ extension String {
         var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         // Separate words with hyphens
-        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: String.separator)
         
         // Strip existing file extension
         string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "")

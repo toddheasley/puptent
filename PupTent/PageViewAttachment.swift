@@ -28,9 +28,13 @@ class PageViewAttachmentCell: NSTextAttachmentCell {
         guard let textView = textContainer.textView, image = image else {
             return NSZeroRect
         }
-        let width: CGFloat = textContainer.size.width - textView.textContainerInset.width
-        let scale: CGFloat = image.size.width < width ? 1.0 : width / image.size.width
-        return NSMakeRect(0.0, 0.0, width, image.size.height * scale)
+        let imageSize = NSMakeSize(image.size.width / 2.0, image.size.height / 2.0)
+        var width: CGFloat = textContainer.size.width - textView.textContainerInset.width
+        let scale: CGFloat = imageSize.width <= width ? 1.0 : width / imageSize.width
+        if (imageSize.width < width) {
+            width = imageSize.width
+        }
+        return NSMakeRect(0.0, 0.0, width, imageSize.height * scale)
     }
     
     override func drawWithFrame(cellFrame: NSRect, inView controlView: NSView?) {

@@ -12,7 +12,7 @@ import PupKit
     func pageViewDidChange(view: PageView)
 }
 
-class PageView: NSTextView {
+class PageView: NSTextView, NSTextStorageDelegate {
     private var timer: NSTimer?
     var path: String?
     
@@ -69,7 +69,7 @@ class PageView: NSTextView {
                 // Process dragged files; discard dragged directories
                 var isDirectory = ObjCBool(false)
                 if (NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isDirectory) && !isDirectory) {
-                    let URL = NSURL(fileURLWithPath: "\(self.path!)\(Manager.mediaPath)/\(fileName)")
+                    let URL = NSURL(fileURLWithPath: "\(self.path!)\(Manager.mediaPath)/\(fileName.stringByReplacingOccurrencesOfString(" ", withString: String.separator))")
                     do {
                         
                         // Copy file into media directory
@@ -86,33 +86,19 @@ class PageView: NSTextView {
                     let attachmentString = NSMutableAttributedString(string: "")
                     if let attachment = PageViewAttachment(path: URL.path!) {
                         attachmentString.appendAttributedString(NSAttributedString(attachment: attachment))
-                        attachmentString.appendAttributedString(NSAttributedString(string: "\n"))
+                        attachmentString.appendAttributedString(NSAttributedString(string: String.newLine))
                     }
                     let point: NSPoint = convertPoint(sender.draggingLocation(), fromView: nil)
                     textStorage?.replaceCharactersInRange(NSMakeRange(characterIndexForInsertionAtPoint(point), 0), withAttributedString: attachmentString)
                 }
             }
         }
-        textDidChange(nil)
+        didChangeText()
         return true
     }
     
-    override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
-        super.init(frame: frameRect, textContainer: container)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textDidChange:", name: NSTextDidChangeNotification, object: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textDidChange:", name: NSTextDidChangeNotification, object: nil)
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    // MARK: NSTextDidChangeNotification
-    func textDidChange(notification: NSNotification?) {
+    override func didChangeText() {
+        super.didChangeText()
         timer?.invalidate()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "pageViewDidChange", userInfo: nil, repeats: false)
     }
@@ -121,5 +107,30 @@ class PageView: NSTextView {
         if let delegate = delegate as? PageViewDelegate {
             delegate.pageViewDidChange(self)
         }
+    }
+    
+    override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
+        super.init(frame: frameRect, textContainer: container)
+        textStorage?.delegate = self
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        textStorage?.delegate = self
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: NSTextStorageDelegate
+    func textStorage(textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        textStorage.enumerateAttribute(NSAttachmentAttributeName, inRange: editedRange, options: NSAttributedStringEnumerationOptions()){ attachment, range, stop in
+            
+        }
+    }
+    
+    func textStorage(textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        
     }
 }
