@@ -47,7 +47,7 @@ class PageView: NSTextView, NSTextStorageDelegate {
             // Replace attachments with file paths
             let attributedString = NSMutableAttributedString(attributedString: textStorage)
             attributedString.beginEditing()
-            attributedString.enumerateAttribute(NSAttachmentAttributeName, inRange: NSMakeRange(0, attributedString.length), options: .Reverse){ attachment, range, stop in
+            attributedString.enumerateAttribute(NSAttachmentAttributeName, inRange: NSMakeRange(0, attributedString.length), options: .Reverse){ attachment, range, _ in
                 if let attachment = attachment as? PageViewAttachment, attachmentPath = attachment.path {
                     let pathString = NSAttributedString(string: attachmentPath.stringByReplacingOccurrencesOfString(path, withString: "/"))
                     attributedString.replaceCharactersInRange(range, withAttributedString: pathString)
@@ -56,45 +56,6 @@ class PageView: NSTextView, NSTextStorageDelegate {
             attributedString.endEditing()
             return attributedString.string
         }
-    }
-    
-    override func performDragOperation(sender: NSDraggingInfo) -> Bool {
-        guard let _ = path, paths = sender.draggingPasteboard().propertyListForType(NSFilenamesPboardType) as? [String] else {
-            return false
-        }
-        sender.draggingPasteboard().clearContents()
-        for path in paths {
-            if let fileName = NSURL(fileURLWithPath: path).lastPathComponent {
-                
-                // Process dragged files; discard dragged directories
-                var isDirectory = ObjCBool(false)
-                if (NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isDirectory) && !isDirectory) {
-                    let URL = NSURL(fileURLWithPath: "\(self.path!)\(Manager.mediaPath)/\(fileName.stringByReplacingOccurrencesOfString(" ", withString: String.separator))")
-                    do {
-                        
-                        // Copy file into media directory
-                        if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
-                            try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
-                        }
-                        try NSFileManager.defaultManager().copyItemAtPath(path, toPath: URL.path!)
-                    } catch {
-                        Swift.print(error)
-                        continue
-                    }
-                    
-                    // Insert file as attachment
-                    let attachmentString = NSMutableAttributedString(string: "")
-                    if let attachment = PageViewAttachment(path: URL.path!) {
-                        attachmentString.appendAttributedString(NSAttributedString(attachment: attachment))
-                        attachmentString.appendAttributedString(NSAttributedString(string: String.newLine))
-                    }
-                    let point: NSPoint = convertPoint(sender.draggingLocation(), fromView: nil)
-                    textStorage?.replaceCharactersInRange(NSMakeRange(characterIndexForInsertionAtPoint(point), 0), withAttributedString: attachmentString)
-                }
-            }
-        }
-        didChangeText()
-        return true
     }
     
     override func didChangeText() {
@@ -119,18 +80,38 @@ class PageView: NSTextView, NSTextStorageDelegate {
         textStorage?.delegate = self
     }
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
     // MARK: NSTextStorageDelegate
     func textStorage(textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        textStorage.enumerateAttribute(NSAttachmentAttributeName, inRange: editedRange, options: NSAttributedStringEnumerationOptions()){ attachment, range, stop in
-            
+        textStorage.enumerateAttributesInRange(editedRange, options: NSAttributedStringEnumerationOptions()){ attributes, range, _ in
+            for (name, value) in attributes {
+                if let _ = value as? PageViewAttachment {
+                    continue // Attachmnet already processed; skip
+                }
+                guard let path = self.path, attachment = value as? NSTextAttachment, fileWrapper = attachment.fileWrapper, filename = fileWrapper.preferredFilename, data = fileWrapper.regularFileContents where name == NSAttachmentAttributeName && fileWrapper.regularFile else {
+                    
+                    // Attribute isn't a file attachment; strip attribute
+                    textStorage.removeAttribute(name, range: range)
+                    continue
+                }
+                
+                // Copy attached file to media directory
+                let URL = NSURL(fileURLWithPath: "\(path)\(Manager.mediaPath)/\(filename.stringByReplacingOccurrencesOfString(" ", withString: String.separator))")
+                do {
+                    if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
+                        try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
+                    }
+                    data.writeToURL(URL, atomically: true)
+                } catch {
+                    Swift.print(error)
+                }
+                
+                // Replace attachment
+                let attachmentString = NSMutableAttributedString(string: "")
+                if let attachment = PageViewAttachment(path: URL.path!) {
+                    attachmentString.appendAttributedString(NSAttributedString(attachment: attachment))
+                }
+                textStorage.replaceCharactersInRange(range, withAttributedString: attachmentString)
+            }
         }
-    }
-    
-    func textStorage(textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        
     }
 }

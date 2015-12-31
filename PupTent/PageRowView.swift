@@ -15,7 +15,7 @@ class PageRowView: NSTableRowView {
     }
     
     override func drawSelectionInRect(dirtyRect: NSRect) {
-        NSColor.gridColor().colorWithAlphaComponent(emphasized ? 0.35: 0.15).setFill()
+        NSColor.gridColor().colorWithAlphaComponent(emphasized ? 0.42: 0.21).setFill()
         let path = NSBezierPath(rect: dirtyRect)
         path.fill()
     }

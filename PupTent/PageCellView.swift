@@ -42,6 +42,17 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
         }
         delegate?.pageCellViewDidChange(self)
     }
+    
+    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+        guard let control = control as? NSTextField where control == textField && commandSelector == "cancelOperation:" else {
+            return false
+        }
+        
+        // Handle escape/cancel
+        control.resignFirstResponder()
+        delegate?.pageCellViewDidChange(self)
+        return true
+    }
 }
 
 class PageCellButton: NSButton {

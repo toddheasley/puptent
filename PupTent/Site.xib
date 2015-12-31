@@ -21,20 +21,20 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-gt-gCg">
-                    <rect key="frame" x="0.0" y="0.0" width="920" height="560"/>
+                    <rect key="frame" x="0.0" y="0.0" width="920" height="522"/>
                     <subviews>
                         <customView id="T4L-Dm-MHN" userLabel="Left View">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="56" horizontalPageScroll="10" verticalLineScroll="56" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grF-dx-yRJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                     <clipView key="contentView" drawsBackground="NO" id="NOR-Ut-p6x">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="56" rowSizeStyle="automatic" viewBased="YES" id="cmz-7N-ZFh">
-                                                <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <animations/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -156,24 +156,24 @@
                             <animations/>
                         </customView>
                         <customView id="qh1-aa-Mts" userLabel="Right View">
-                            <rect key="frame" x="321" y="0.0" width="599" height="560"/>
+                            <rect key="frame" x="321" y="0.0" width="599" height="522"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aw2-La-wG2">
-                                    <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
+                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aw2-La-wG2">
+                                    <rect key="frame" x="0.0" y="0.0" width="599" height="522"/>
                                     <clipView key="contentView" id="FPh-TA-TJ3">
-                                        <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="599" height="522"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView findStyle="panel" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="OIf-nf-jau" customClass="PageView" customModule="Pup_Tent" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="599" height="522"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <size key="minSize" width="599" height="560"/>
+                                                <size key="minSize" width="599" height="522"/>
                                                 <size key="maxSize" width="599" height="10000000"/>
                                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <size key="minSize" width="599" height="560"/>
+                                                <size key="minSize" width="599" height="522"/>
                                                 <size key="maxSize" width="599" height="10000000"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="-2" id="aen-t2-Znc"/>
@@ -189,8 +189,8 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <animations/>
                                     </scroller>
-                                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2G9-jm-3Zb">
-                                        <rect key="frame" x="583" y="0.0" width="16" height="560"/>
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2G9-jm-3Zb">
+                                        <rect key="frame" x="583" y="48" width="16" height="512"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <animations/>
                                     </scroller>
@@ -215,7 +215,7 @@
             <constraints>
                 <constraint firstItem="ov8-gt-gCg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="N5r-48-S7C"/>
                 <constraint firstAttribute="trailing" secondItem="ov8-gt-gCg" secondAttribute="trailing" id="VWB-US-cxe"/>
-                <constraint firstItem="ov8-gt-gCg" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="YaH-Bf-5cP"/>
+                <constraint firstItem="ov8-gt-gCg" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="38" id="YaH-Bf-5cP"/>
                 <constraint firstAttribute="bottom" secondItem="ov8-gt-gCg" secondAttribute="bottom" id="bpg-eS-XWM"/>
             </constraints>
             <animations/>

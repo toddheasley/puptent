@@ -230,7 +230,9 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch {
             print(error)
         }
-        pagesTableView.reloadData()
+        if (pagesTableView.numberOfRows == manager.site.pages.count) {
+            pagesTableView.insertRowsAtIndexes(NSIndexSet(index: manager.site.pages.count), withAnimation: .EffectNone)
+        }
     }
     
     // MARK: PageViewDelegate
