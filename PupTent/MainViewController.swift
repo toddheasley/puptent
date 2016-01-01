@@ -33,10 +33,17 @@ class MainViewController: NSViewController {
             
             // Remember path
             NSUserDefaults.standardUserDefaults().path = manager.path
-        } catch {
+        } catch let error as NSError {
             forget(self)
-            print((error as NSError).localizedDescription)
-            return
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel",
+                "Open in Finder"
+            ]).runModal{ response in
+                if (response == NSAlertFirstButtonReturn) {
+                    return
+                }
+                NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+            }
         }
     }
     
@@ -56,7 +63,7 @@ class MainViewController: NSViewController {
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Empty Folder..."
         openPanel.prompt = "Use This Folder"
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
+        openPanel.beginWithCompletionHandler{ result in
             if result != NSFileHandlingPanelOKButton {
                 return
             }
@@ -64,10 +71,18 @@ class MainViewController: NSViewController {
             do {
                 try Manager.pitch(path)
                 self.openSite(path, animated: true)
-            } catch {
-                print((error as NSError).localizedDescription)
+            } catch let error as NSError {
+                NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                    "Cancel",
+                    "Open in Finder"
+                ]).runModal{ response in
+                    if (response == NSAlertFirstButtonReturn) {
+                        return
+                    }
+                    NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+                }
             }
-        })
+        }
     }
     
     @IBAction func openExistingSite(sender: AnyObject?) {
@@ -75,12 +90,12 @@ class MainViewController: NSViewController {
         openPanel.canChooseDirectories = true
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Existing Site..."
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
+        openPanel.beginWithCompletionHandler{ result in
             if result != NSFileHandlingPanelOKButton {
                 return
             }
             self.openSite(openPanel.URL!.path! + "/", animated: true)
-        })
+        }
     }
     
     @IBAction func openInFinder(sender: AnyObject?) {
@@ -119,6 +134,29 @@ extension NSView {
             NSLayoutConstraint(item: subview, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: inset),
             NSLayoutConstraint(item: subview, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: inset)
         ])
+    }
+}
+
+extension NSAlert {
+    func runModal(completion: ((NSModalResponse) -> Void)? = nil) {
+        completion?(runModal())
+    }
+    
+    func beginSheetModalForWindow(window: NSWindow?, completion:  ((NSModalResponse) -> Void)? = nil) {
+        guard let window = window else {
+            runModal(completion)
+            return
+        }
+        beginSheetModalForWindow(window, completionHandler: completion)
+    }
+    
+    convenience init(message: String?, description: String? = nil, buttons: [String] = []) {
+        self.init()
+        messageText = message != nil ? message! : ""
+        informativeText = description != nil ? description! : ""
+        for button in buttons {
+            addButtonWithTitle(button)
+        }
     }
 }
 

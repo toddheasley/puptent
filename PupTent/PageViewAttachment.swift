@@ -28,7 +28,8 @@ class PageViewAttachmentCell: NSTextAttachmentCell {
         guard let textView = textContainer.textView, image = image else {
             return NSZeroRect
         }
-        let imageSize = NSMakeSize(image.size.width / 2.0, image.size.height / 2.0)
+        
+        let imageSize = image.size.width < 64.0 ? image.size : NSMakeSize(image.size.width / 2.0, image.size.height / 2.0)
         var width: CGFloat = textContainer.size.width - textView.textContainerInset.width
         let scale: CGFloat = imageSize.width <= width ? 1.0 : width / imageSize.width
         if (imageSize.width < width) {

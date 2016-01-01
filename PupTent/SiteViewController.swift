@@ -23,6 +23,11 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         return (-1, nil)
     }
     
+    var canDeletePage: Bool {
+        let index = selectedPage.index
+        return index > -1 && index < pagesTableView.numberOfRows - 1
+    }
+    
     @IBAction func openSettings(sender: AnyObject?) {
         pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
@@ -54,8 +59,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             try manager.build()
             try manager.clean()
             pagesTableView.removeRowsAtIndexes(NSIndexSet(index: pagesTableView.selectedRow), withAnimation: .EffectNone)
-        } catch {
-            print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
     }
     
@@ -145,8 +152,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         do {
             try manager.build()
             try manager.clean()
-        } catch {
-            print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
         
         tableView.reloadData()
@@ -227,8 +236,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         do {
             try manager.build()
             try manager.clean()
-        } catch {
-            print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
         if (pagesTableView.numberOfRows == manager.site.pages.count) {
             pagesTableView.insertRowsAtIndexes(NSIndexSet(index: manager.site.pages.count), withAnimation: .EffectNone)
@@ -244,8 +255,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         do {
             try manager.build()
             try manager.clean()
-        } catch {
-            print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
     }
     
@@ -256,8 +269,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         do {
             try manager.build()
             try manager.clean()
-        } catch {
-            print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
     }
 }

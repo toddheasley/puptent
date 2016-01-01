@@ -36,8 +36,16 @@ class SettingsView: NSView, NSTextFieldDelegate {
             if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
                 try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
             }
-        } catch {
-            Swift.print(error)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel",
+                "Open in Finder"
+            ]).beginSheetModalForWindow(window){ response in
+                self.path = path
+                if (response != NSAlertFirstButtonReturn) {
+                    NSWorkspace.sharedWorkspace().openURL(URL)
+                }
+            }
         }
         if let image = view.image {
             image.TIFFRepresentation?.writeToURL(URL, atomically: true)

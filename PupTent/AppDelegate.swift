@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         case settingsMenuItem, openInFinderMenuItem, newPageMenuItem, previewItem:
             return mainViewController.siteViewController != nil
         case deletePageMenuItem:
-            return mainViewController.siteViewController?.selectedPage.index > -1
+            return mainViewController.siteViewController != nil ? mainViewController.siteViewController!.canDeletePage : false
         default:
             return true
         }

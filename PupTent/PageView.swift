@@ -102,7 +102,10 @@ class PageView: NSTextView, NSTextStorageDelegate {
                     }
                     data.writeToURL(URL, atomically: true)
                 } catch {
-                    Swift.print(error)
+                    
+                    // File copy failed; strip attribute
+                    textStorage.removeAttribute(name, range: range)
+                    continue
                 }
                 
                 // Replace attachment
