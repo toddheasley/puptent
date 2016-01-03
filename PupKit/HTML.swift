@@ -190,7 +190,7 @@ extension String {
     
     public func twitterFormat(format: Bool = true) -> String {
         let string = stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("@", withString: "")
-        return format ? "@\(string)" : string
+        return format && !string.isEmpty ? "@\(string)" : string
     }
     
     public func trim() -> String {

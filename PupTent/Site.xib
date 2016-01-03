@@ -253,12 +253,12 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="etU-jW-Tvf">
-                    <rect key="frame" x="87" y="503" width="497" height="17"/>
+                    <rect key="frame" x="87" y="504" width="497" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="Ff6-cE-qC1"/>
                     </constraints>
                     <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="Twitter Name" drawsBackground="YES" id="iAQ-e3-ojv">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="@twitter" drawsBackground="YES" id="iAQ-e3-ojv">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -279,10 +279,10 @@
                                 <animations/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="10000000" height="466"/>
+                                <size key="minSize" width="569" height="466"/>
                                 <size key="maxSize" width="10000000" height="10000000"/>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="10000000" height="466"/>
+                                <size key="minSize" width="569" height="466"/>
                                 <size key="maxSize" width="10000000" height="10000000"/>
                             </textView>
                         </subviews>
@@ -296,7 +296,7 @@
                         <animations/>
                     </scroller>
                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="geh-L7-YDP">
-                        <rect key="frame" x="553" y="0.0" width="16" height="466"/>
+                        <rect key="frame" x="554" y="0.0" width="15" height="466"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
@@ -308,7 +308,7 @@
                 <constraint firstItem="ccT-pw-gf3" firstAttribute="leading" secondItem="JKd-Lc-fz8" secondAttribute="leading" constant="15" id="C3Q-Az-Jt6"/>
                 <constraint firstAttribute="bottom" secondItem="ccT-pw-gf3" secondAttribute="bottom" constant="11" id="F7X-E8-v6I"/>
                 <constraint firstItem="AyT-iT-dkU" firstAttribute="leading" secondItem="193-2I-hEC" secondAttribute="trailing" constant="15" id="NN4-Sw-wmg"/>
-                <constraint firstItem="etU-jW-Tvf" firstAttribute="top" secondItem="AyT-iT-dkU" secondAttribute="bottom" constant="7" id="NzA-1S-bYw"/>
+                <constraint firstItem="etU-jW-Tvf" firstAttribute="top" secondItem="AyT-iT-dkU" secondAttribute="bottom" constant="6" id="NzA-1S-bYw"/>
                 <constraint firstAttribute="trailing" secondItem="ccT-pw-gf3" secondAttribute="trailing" constant="15" id="Xfm-aj-kII"/>
                 <constraint firstItem="ccT-pw-gf3" firstAttribute="top" secondItem="193-2I-hEC" secondAttribute="bottom" constant="13" id="YSv-Mq-pqb"/>
                 <constraint firstItem="AyT-iT-dkU" firstAttribute="top" secondItem="JKd-Lc-fz8" secondAttribute="top" constant="10" id="Z3t-PU-mRe"/>

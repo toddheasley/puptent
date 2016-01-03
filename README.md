@@ -1,11 +1,11 @@
 Pup Tent
 ----
 
-Pup Tent is a Mac app with a drag-and-drop interface for making small, static HTML pages. It's ideal for publishing to [Github Pages](https://pages.github.com).
+Pup Tent is a Mac app with a drag-and-drop interface for making small, static web sites. It's ideal for publishing to [Github Pages](https://pages.github.com). Build from source by archiving the `PupTent` target or grab the **[pre-built, developer-signed app](PupTent.zip)**.
 
 ----
 
-Behind the scenes, Pup Tent uses `PupKit` framework, which includes a command line interface. To use Pup Tent from the command line, archive the `PupKitCLI` target and move the archived `pupkit` executable into an empty directory. In the Mac Terminal, `cd` into the directory and run:
+Behind the scenes, Pup Tent uses `PupKit` framework, which includes a command-line interface. To use Pup Tent from the command line, archive the `PupKitCLI` target and move the archived `pup` executable into an empty directory. In the Mac Terminal, `cd` into the directory and run:
 
 `./pup pitch`
 
