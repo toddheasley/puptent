@@ -461,7 +461,7 @@ CA
                                         </constraints>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" usesSingleLineMode="YES" id="iAf-Jm-npU">
-                                            <font key="font" metaFont="systemThin" size="36"/>
+                                            <font key="font" metaFont="system" size="36"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>

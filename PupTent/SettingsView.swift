@@ -12,17 +12,33 @@ import PupKit
     func settingsViewDidChange(view: SettingsView)
 }
 
-class SettingsView: NSView, NSTextFieldDelegate {
+class SettingsView: NSView, NSTextFieldDelegate, NSTextStorageDelegate {
+    private var timer: NSTimer?
     @IBOutlet weak var delegate: SettingsViewDelegate?
-    @IBOutlet var bookmarkIconImageView: NSImageView!
+    @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
     @IBOutlet var twitterTextField: NSTextField!
+    @IBOutlet var stylesheetTextView: NSTextView!
     
     var path: String? {
         didSet{
-            bookmarkIconImageView.image = nil
-            if let path = path, image = NSImage(contentsOfFile: "\(path)/\(HTML.bookmarkIconURI)") {
-                bookmarkIconImageView.image = image
+            guard let path = path else {
+                return
+            }
+            bookmarkIconView.image = NSImage(contentsOfFile: "\(path)/\(HTML.bookmarkIconURI)")
+            if (NSFileManager.defaultManager().fileExistsAtPath("\(path)/\(HTML.stylesheetURI)")) {
+                do {
+                    stylesheetTextView.string = try String(contentsOfFile: "\(path)/\(HTML.stylesheetURI)", encoding: NSUTF8StringEncoding)
+                } catch let error as NSError {
+                    NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                        "Cancel"
+                    ]).beginSheetModalForWindow(window)
+                }
+            }
+            stylesheetTextView.scrollRangeToVisible(NSMakeRange(0, 0)) // Reset scroll position
+            guard let string = stylesheetTextView.string where !string.isEmpty else {
+                stylesheetTextView.string = "/* CSS */"
+                return
             }
         }
     }
@@ -52,6 +68,25 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
     }
     
+    func stylesheetTextViewDidChange() {
+        guard let path = path else {
+            return
+        }
+        stylesheetTextView.string?.trim().dataUsingEncoding(NSUTF8StringEncoding)?.writeToFile("\(path)/\(HTML.stylesheetURI)", atomically: true)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.textBackgroundColor().CGColor
+        
+        stylesheetTextView.textStorage?.delegate = self
+        stylesheetTextView.textContainerInset = NSMakeSize(8.0, 10.0)
+        stylesheetTextView.font = NSFont(name: "Menlo", size: 11.0)
+        stylesheetTextView.textColor = NSColor.scrollBarColor()
+    }
+    
     // MARK: NSTextFieldDelegate
     override func controlTextDidEndEditing(notification: NSNotification) {
         if let control = notification.object as? NSTextField {
@@ -65,5 +100,11 @@ class SettingsView: NSView, NSTextFieldDelegate {
             }
         }
         delegate?.settingsViewDidChange(self)
+    }
+    
+    // MARK: NSTextStorageDelegate
+    func textStorage(textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        timer?.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "stylesheetTextViewDidChange", userInfo: nil, repeats: false)
     }
 }

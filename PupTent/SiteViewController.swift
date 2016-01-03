@@ -53,7 +53,6 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         if (pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count) {
             return
         }
-        
         do {
             manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
             try manager.build()
@@ -219,9 +218,11 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: PageCellViewDelegate
     func pageCellViewDidChange(view: PageCellView) {
-        guard let page = selectedPage.page else {
+        let row = pagesTableView.rowForView(view)
+        if (row < 0) {
             return
         }
+        let page = manager.site.pages[row]
         if (view.textField!.stringValue.isEmpty) {
             if (page.name.isEmpty) {
                 manager.site.pages.removeAtIndex(pagesTableView.selectedRow)

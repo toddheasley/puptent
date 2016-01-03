@@ -69,15 +69,11 @@ class PageView: NSTextView, NSTextStorageDelegate {
             delegate.pageViewDidChange(self)
         }
     }
-    
-    override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
-        super.init(frame: frameRect, textContainer: container)
-        textStorage?.delegate = self
-    }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         textStorage?.delegate = self
+        textContainerInset = NSMakeSize(11.0, 13.0)
     }
     
     // MARK: NSTextStorageDelegate

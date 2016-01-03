@@ -225,19 +225,26 @@
             <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="193-2I-hEC">
-                    <rect key="frame" x="17" y="454" width="48" height="48"/>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="193-2I-hEC" customClass="BookmarkIconView" customModule="Pup_Tent" customModuleProvider="target">
+                    <rect key="frame" x="15" y="490" width="57" height="57"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="57" id="EMU-jT-eMw"/>
+                        <constraint firstAttribute="height" constant="57" id="WWb-Of-0lf"/>
+                    </constraints>
                     <animations/>
-                    <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="Jmi-pR-95H"/>
+                    <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" id="Jmi-pR-95H"/>
                     <connections>
-                        <action selector="bookmarkIconDidChange:" target="JKd-Lc-fz8" id="gcR-gT-mk2"/>
+                        <action selector="bookmarkIconDidChange:" target="JKd-Lc-fz8" id="Jvq-Sh-rD7"/>
                     </connections>
                 </imageView>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AyT-iT-dkU">
-                    <rect key="frame" x="70" y="483" width="96" height="22"/>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AyT-iT-dkU">
+                    <rect key="frame" x="87" y="527" width="497" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="y8v-Tu-ore"/>
+                    </constraints>
                     <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Site Name" drawsBackground="YES" id="B2I-Zh-x8i">
-                        <font key="font" metaFont="system"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="Site Name" drawsBackground="YES" id="B2I-Zh-x8i">
+                        <font key="font" metaFont="system" size="21"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -245,10 +252,13 @@
                         <outlet property="delegate" destination="JKd-Lc-fz8" id="r8j-tT-bwb"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etU-jW-Tvf">
-                    <rect key="frame" x="70" y="451" width="96" height="22"/>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="etU-jW-Tvf">
+                    <rect key="frame" x="87" y="503" width="497" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="Ff6-cE-qC1"/>
+                    </constraints>
                     <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Twitter Name" drawsBackground="YES" id="iAQ-e3-ojv">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" placeholderString="Twitter Name" drawsBackground="YES" id="iAQ-e3-ojv">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -257,11 +267,60 @@
                         <outlet property="delegate" destination="JKd-Lc-fz8" id="cnf-uT-Prb"/>
                     </connections>
                 </textField>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccT-pw-gf3">
+                    <rect key="frame" x="15" y="11" width="569" height="466"/>
+                    <clipView key="contentView" id="efO-Yy-mJq">
+                        <rect key="frame" x="0.0" y="0.0" width="569" height="466"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView importsGraphics="NO" richText="NO" findStyle="panel" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="vBx-3l-Eye">
+                                <rect key="frame" x="0.0" y="0.0" width="569" height="466"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <animations/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="10000000" height="466"/>
+                                <size key="maxSize" width="10000000" height="10000000"/>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="10000000" height="466"/>
+                                <size key="maxSize" width="10000000" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <animations/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="qJM-MN-Ygq">
+                        <rect key="frame" x="0.0" y="450" width="569" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </scroller>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="geh-L7-YDP">
+                        <rect key="frame" x="553" y="0.0" width="16" height="466"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </scroller>
+                </scrollView>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="AyT-iT-dkU" secondAttribute="trailing" constant="15" id="1wt-u5-sYa"/>
+                <constraint firstItem="193-2I-hEC" firstAttribute="top" secondItem="JKd-Lc-fz8" secondAttribute="top" constant="13" id="2SV-kf-GAF"/>
+                <constraint firstItem="ccT-pw-gf3" firstAttribute="leading" secondItem="JKd-Lc-fz8" secondAttribute="leading" constant="15" id="C3Q-Az-Jt6"/>
+                <constraint firstAttribute="bottom" secondItem="ccT-pw-gf3" secondAttribute="bottom" constant="11" id="F7X-E8-v6I"/>
+                <constraint firstItem="AyT-iT-dkU" firstAttribute="leading" secondItem="193-2I-hEC" secondAttribute="trailing" constant="15" id="NN4-Sw-wmg"/>
+                <constraint firstItem="etU-jW-Tvf" firstAttribute="top" secondItem="AyT-iT-dkU" secondAttribute="bottom" constant="7" id="NzA-1S-bYw"/>
+                <constraint firstAttribute="trailing" secondItem="ccT-pw-gf3" secondAttribute="trailing" constant="15" id="Xfm-aj-kII"/>
+                <constraint firstItem="ccT-pw-gf3" firstAttribute="top" secondItem="193-2I-hEC" secondAttribute="bottom" constant="13" id="YSv-Mq-pqb"/>
+                <constraint firstItem="AyT-iT-dkU" firstAttribute="top" secondItem="JKd-Lc-fz8" secondAttribute="top" constant="10" id="Z3t-PU-mRe"/>
+                <constraint firstItem="etU-jW-Tvf" firstAttribute="trailing" secondItem="AyT-iT-dkU" secondAttribute="trailing" id="qbU-cH-hB4"/>
+                <constraint firstItem="193-2I-hEC" firstAttribute="leading" secondItem="JKd-Lc-fz8" secondAttribute="leading" constant="15" id="yaS-Bz-3NC"/>
+                <constraint firstItem="etU-jW-Tvf" firstAttribute="leading" secondItem="AyT-iT-dkU" secondAttribute="leading" id="zyg-6Y-06O"/>
+            </constraints>
             <animations/>
             <connections>
-                <outlet property="bookmarkIconImageView" destination="193-2I-hEC" id="O9J-ij-rtY"/>
+                <outlet property="bookmarkIconView" destination="193-2I-hEC" id="K0M-ly-RXH"/>
                 <outlet property="nameTextField" destination="AyT-iT-dkU" id="cuL-TG-Mho"/>
+                <outlet property="stylesheetTextView" destination="vBx-3l-Eye" id="Cnz-vP-XVm"/>
                 <outlet property="twitterTextField" destination="etU-jW-Tvf" id="0la-mM-FHl"/>
             </connections>
             <point key="canvasLocation" x="1244.5" y="360"/>
