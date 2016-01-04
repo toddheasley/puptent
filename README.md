@@ -1,7 +1,7 @@
 Pup Tent
 ----
 
-Pup Tent is a Mac app with a drag-and-drop interface for making small, static web sites. It's ideal for publishing to [Github Pages](https://pages.github.com). Build from source by archiving the `PupTent` target or grab the **[pre-built, developer-signed app](PupTent.zip)**.
+Pup Tent is a Mac app with a drag-and-drop interface for making small, static web sites. It's ideal for publishing to [Github Pages](https://pages.github.com). Build from source by archiving the `PupTent` target or grab the **[pre-built, developer-signed app](https://github.com/toddheasley/puptent/raw/master/PupTent.zip)**.
 
 ----
 
