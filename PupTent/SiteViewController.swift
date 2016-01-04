@@ -8,336 +8,272 @@
 import Cocoa
 import PupKit
 
-class SiteViewController: NSViewController, NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, PageViewControllerDelegate {
-    let draggedType = "Page"
-    var manager: Manager! {
-        didSet {
-            if let manager = self.manager {
-                if let URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI), let image = NSImage(contentsOfURL: URL) {
-                    self.iconView?.image = image
-                }
-                self.nameTextField?.stringValue = manager.site.name
-                self.twitterNameTextField?.stringValue = manager.site.twitterName.toTwitterFormat()
-                self.pageViewController!.path = manager.path
-            }
-            self.tableView?.reloadData()
+class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, PageCellViewDelegate, PageViewDelegate, SettingsViewDelegate {
+    private let draggedType: String = "Page"
+    var manager: Manager!
+    @IBOutlet var splitView: NSSplitView!
+    @IBOutlet var pagesTableView: NSTableView!
+    @IBOutlet var pageView: PageView!
+    @IBOutlet var settingsView: SettingsView!
+    
+    var selectedPage: (index: Int, page: Page?) {
+        if (pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count) {
+            return (pagesTableView.selectedRow, manager.site.pages[pagesTableView.selectedRow])
         }
-    }
-    var pageViewController: PageViewController?
-    var selectedPage: (page: Page?, index: Int) {
-        get {
-            if let site = self.manager?.site {
-                if (self.tableView!.selectedRow > -1 && self.tableView!.selectedRow < site.pages.count) {
-                    return (site.pages[self.tableView!.selectedRow], self.tableView!.selectedRow)
-                }
-            }
-            return (nil, -1)
-        }
+        return (-1, nil)
     }
     
-    func selectNewPage() {
-        self.tableView?.selectRowIndexes(NSIndexSet(index: self.tableView!.numberOfRows - 1), byExtendingSelection: false)
+    var canDeletePage: Bool {
+        let index = selectedPage.index
+        return index > -1 && index < pagesTableView.numberOfRows - 1
     }
     
-    func deleteSelectedPage() {
-        if let manager = self.manager {
-            if (self.selectedPage.index > -1) {
-                manager.site.pages.removeAtIndex(self.selectedPage.index)
-                self.tableView?.reloadData()
-                manager.build()
-                manager.clean()
-            }
-            self.togglePageViewHidden(true, animated: true)
-        }
+    @IBAction func openSettings(sender: AnyObject?) {
+        pagesTableView.deselectAll(self)
+        (self.view.window as? Window)?.settingsButton.state = 1
+        settingsView.path = manager.path
+        settingsView.nameTextField.stringValue = manager.site.name
+        settingsView.twitterTextField.stringValue = manager.site.twitter.twitterFormat()
+        settingsView.hidden = false
     }
     
-    func dismissSelectedPage() {
-        self.togglePageViewHidden(true, animated: true)
-    }
-    
-    private func togglePageViewHidden(hidden: Bool, animated: Bool) {
-        self.tableView!.hidden = false
-        self.pageView!.hidden = false
-        
-        // Configure animated transition
-        var delay: Double = 0.0
-        var duration: Double = 0.0
-        if (animated) {
-            delay = 0.2
-            duration = 0.1
-        }
-        if (hidden) {
-            delay.delay {
-                duration.animate({
-                    self.tableViewPositionConstraint!.animator().constant = 0.0
-                    self.pageViewPositionConstraint!.animator().constant = self.view.bounds.size.width - 1.0
-                }, {
-                    self.pageView!.hidden = true
-                    self.tableView!.deselectAll(self)
-                })
-            }
+    @IBAction func preview(sender: AnyObject?) {
+        guard let page = self.selectedPage.page else {
+            NSWorkspace.sharedWorkspace().openFile(manager.path + manager.site.URI)
             return
         }
-        delay.delay {
-            duration.animate({
-                self.tableViewPositionConstraint!.animator().constant = 0.0 - (self.view.bounds.size.width / 3.0)
-                self.pageViewPositionConstraint!.animator().constant = 0.0
-            }, {
-                self.tableView!.hidden = true
-            })
+        NSWorkspace.sharedWorkspace().openFile(manager.path + page.URI)
+    }
+    
+    @IBAction func makeNewPage(sender: AnyObject?) {
+        pagesTableView.selectRowIndexes(NSIndexSet(index: pagesTableView.numberOfRows - 1), byExtendingSelection: false)
+    }
+    
+    @IBAction func deletePage(sender: AnyObject?) {
+        if (pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count) {
+            return
+        }
+        do {
+            manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
+            try manager.build()
+            try manager.clean()
+            pagesTableView.removeRowsAtIndexes(NSIndexSet(index: pagesTableView.selectedRow), withAnimation: .EffectNone)
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.iconView?.wantsLayer = true
-        self.iconView?.layer?.masksToBounds = true
-        self.iconView?.layer?.borderColor = NSColor.grayColor().colorWithAlphaComponent(0.5).CGColor
-        self.iconView?.layer?.borderWidth = 1.0
-        self.iconView?.layer?.cornerRadius = 5.0
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
         
-        self.tableView!.registerForDraggedTypes([draggedType])
-        self.tableView!.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        pagesTableView.registerForDraggedTypes([draggedType])
+        pagesTableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
         
-        self.pageViewController = PageViewController(nibName: "Page", bundle: nil)
-        self.pageViewController!.delegate = self
-        self.pageView!.addSubview(self.pageViewController!.view)
-        self.togglePageViewHidden(true, animated: false)
+        settingsView.delegate = self
+        splitView.subviews[1].addSubview(settingsView)
+        splitView.subviews[1].pin(settingsView, inset: 0.0)
+        
+        pageView.textContainerInset = NSMakeSize(11.0, 13.0)
+        pageView.path = manager.path
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.previewButton?.hidden = false
-    }
-    
-    override func viewWillDisappear() {
-        super.viewWillDisappear()
-        self.previewButton?.hidden = true
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        if let window = self.view.window as? Window, titleBarView = window.titleBarView as NSView!, previewButton = self.previewButton {
-            
-            // Insert preview button into window title bar
-            previewButton.removeFromSuperview()
-            previewButton.translatesAutoresizingMaskIntoConstraints = true
-            
-            var frame = previewButton.frame
-            frame.origin.y = (titleBarView.bounds.size.height - frame.size.height) / 2.0
-            previewButton.frame = frame
-            
-            titleBarView.addSubview(previewButton)
+        if (selectedPage.index < 0) {
+            openSettings(self)
         }
     }
     
-    // MARK: NSTextFieldDelegate
-    func control(control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        if let textField = control as? NSTextField, manager = self.manager {
-            if (textField == self.nameTextField!) {
-                manager.site.name = textField.stringValue.strip()
-                textField.stringValue = manager.site.name
-            } else {
-                manager.site.twitterName = textField.stringValue.fromTwitterFormat()
-                textField.stringValue = manager.site.twitterName.toTwitterFormat()
-            }
-            manager.build()
-            manager.clean()
-        }
-        return true
+    init?(manager: Manager) {
+        super.init(nibName: "Site", bundle: nil)
+        self.manager = manager
+    }
+    
+    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        return nil
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        return nil
     }
     
     // MARK: NSTableViewDataSource
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-        
-        // Always include row for "new page" cell
-        var numberOfRows: Int = 1
-        if let site = self.manager?.site {
-            
-            // Add row for each existing page
-            numberOfRows += site.pages.count
-        }
-        return numberOfRows
+        return manager.site.pages.count + 1 // Add "new page" cell to existing pages
     }
     
-    func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pboard: NSPasteboard) -> Bool {
-        if (rowIndexes.firstIndex < tableView.numberOfRows - 1) {
+    func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pasteboard: NSPasteboard) -> Bool {
+        if (rowIndexes.firstIndex > tableView.numberOfRows - 2) {
             
-            // Allow existing page cells to be dragged
-            var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(rowIndexes)
-            pboard.declareTypes([draggedType], owner: self)
-            pboard.setData(data, forType: draggedType)
-            return true
+            // Prevent "new page" cell drag
+            return false
         }
         
-        // Prevent "new page" cell from being dragged
-        return false
+        // Allow existing page cells drag
+        pasteboard.declareTypes([draggedType], owner: self)
+        pasteboard.setData(NSKeyedArchiver.archivedDataWithRootObject(rowIndexes), forType: draggedType)
+        return true
     }
     
     func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
         if (dropOperation == NSTableViewDropOperation.Above && row < tableView.numberOfRows) {
             
-            // Allow cells to be dropped in rows above "new page" cell
+            // Allow cell drop in rows above "new page" cell
             return NSDragOperation.Move
         }
         
-        // Prevent cells from being dropped on other cells and below "new page" cell
+        // Prevent cells drop onto other cells and below "new page" cell
         return NSDragOperation.None
     }
     
     func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-        if (row < tableView.numberOfRows) {
-            if let manager = self.manager, data: NSData? = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as? NSIndexSet {
-                var index = row
-                if (indexSet.firstIndex < index) {
-                    index--
-                }
-                
-                // Move page to new index in data source
-                let page: Page = manager.site.pages[indexSet.firstIndex]
-                manager.site.pages.removeAtIndex(indexSet.firstIndex)
-                manager.site.pages.insert(page, atIndex: index)
-                
-                tableView.reloadData()
-                manager.build()
-                manager.clean()
-                
-                return true
-            }
+        guard let data = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSIndexSet where row < tableView.numberOfRows else {
+            return false
         }
-        return false
+        let selectedPage = self.selectedPage.page // Remember current page selection
+        
+        var index = row
+        if (indexSet.firstIndex < index) {
+            index--
+        }
+        
+        // Move page to new index in data source
+        let page: Page = manager.site.pages[indexSet.firstIndex]
+        manager.site.pages.removeAtIndex(indexSet.firstIndex)
+        manager.site.pages.insert(page, atIndex: index)
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
+        }
+        
+        tableView.reloadData()
+        if let selectedPage = selectedPage {
+            
+            // Restore page selection
+            tableView.selectRowIndexes(NSIndexSet(index: (manager.site.pages as NSArray).indexOfObject(selectedPage)), byExtendingSelection: false)
+        } else {
+            openSettings(self)
+        }
+        return true
     }
     
     // MARK: NSTableViewDelegate
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        if let cell = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self) as? NSTableCellView, let site = self.manager?.site {
-            
-            // Configure default "new page cell"
-            cell.textField!.stringValue = "New Page"
-            cell.textField!.textColor = NSColor.lightGrayColor()
-            cell.imageView!.image = NSImage(named: "NSStatusNone")
-            if (row < site.pages.count) {
-                
-                // Configure cell for existing page
-                var page: Page = site.pages[row]
-                cell.textField!.stringValue = page.name
-                cell.textField!.textColor = NSColor.textColor()
-                if (page.index) {
-                    cell.imageView!.image = NSImage(named: "NSStatusAvailable")
-                } else {
-                    cell.imageView!.image = NSImage(named: "NSStatusNone")
-                }
-            }
-            return cell
+        guard let view = tableView.makeViewWithIdentifier("PageCellView", owner: self) as? PageCellView else {
+            return nil
         }
-        return nil
+        
+        // Configure as blank "new page" cell
+        view.delegate = self
+        view.textField!.stringValue = ""
+        view.secondaryTextField!.stringValue = ""
+        view.button.enabled = false
+        view.button.state = 0
+        if (row < manager.site.pages.count) {
+            
+            // Configure cell for existing page
+            let page = manager.site.pages[row]
+            view.textField!.stringValue = "\(page.name)"
+            view.secondaryTextField!.stringValue = "\(page.URI)"
+            view.button.enabled = true
+            view.button.state = page.index ? 1 : 0
+        }
+        return view
+    }
+    
+    func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        return PageRowView(index: row)
     }
     
     func tableViewSelectionDidChange(notification: NSNotification) {
-        if let tableView = notification.object as? NSTableView, site = self.manager?.site {
-            if (tableView.selectedRow < 0) {
-                return
-            }
-            self.pageViewController!.page = Page()
-            if let page = self.selectedPage.page {
-                self.pageViewController!.page = page
-            }
-            self.togglePageViewHidden(false, animated: true)
+        pageView.string = ""
+        guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
+            openSettings(self)
+            return
         }
-    }
-    
-    // MARK: PageViewControllerDelegate
-    func handlePageViewControllerChange(pageViewController: PageViewController) {
-        if let manager = self.manager, page = pageViewController.page {
-            if (self.tableView!.selectedRow >= manager.site.pages.count && !page.URI.isEmpty) {
-                
-                // Add new page to site
-                manager.site.pages.append(page)
-            }
-            self.tableView!.reloadData()
-            manager.build()
-            manager.clean()
-        }
-    }
-    
-    func handlePageViewControllerDelete(pageViewController: PageViewController) {
-        self.deleteSelectedPage()
-    }
-    
-    func dismissPageViewController(pageViewController: PageViewController, animated: Bool) {
-        self.togglePageViewHidden(true, animated: animated)
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var previewButton: NSButton?
-    @IBOutlet weak var iconView: NSImageView?
-    @IBOutlet weak var nameTextField: NSTextField?
-    @IBOutlet weak var twitterNameTextField: NSTextField?
-    @IBOutlet weak var tableView: NSTableView?
-    @IBOutlet weak var tableViewPositionConstraint: NSLayoutConstraint?
-    @IBOutlet weak var pageView: NSView?
-    @IBOutlet weak var pageViewPositionConstraint: NSLayoutConstraint?
-    
-    @IBAction func changeIcon(sender: AnyObject?) {
-        if let URL = NSURL(fileURLWithPath: manager.path + Manager.bookmarkIconURI), imageView = sender as? NSImageView {
-            
-            // Move existing media file to trash
-            NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil, error: nil)
-            if let image = imageView.image, data = image.TIFFRepresentation {
-                
-                // Write new bookmark icon with image data
-                data.writeToURL(URL, atomically: true)
-            }
-        }
-    }
-    
-    @IBAction func preview(sender: AnyObject?) {
-        if let manager = self.manager {
-            var URI = manager.site.URI
-            if let page = self.selectedPage.page {
-                URI = page.URI
-            }
-            NSWorkspace.sharedWorkspace().openFile(manager.path + URI)
-        }
-    }
-}
-
-extension String {
-    func toURIFormat() -> String {
-        var string = self.lowercaseString.trim()
         
-        // Separate words with hyphens
-        string = string.stringByReplacingOccurrencesOfString(" ", withString: "-", options:nil, range: nil)
-        
-        // Strip existing file extension
-        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "", options: nil, range: nil)
-        
-        // Strip all non-alphanumeric characters
-        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
-        if (!string.isEmpty) {
-            string += Manager.URIExtension
+        var page: Page = Page()
+        if (tableView.selectedRow < manager.site.pages.count) {
+            page = manager.site.pages[tableView.selectedRow]
+        } else if let view = tableView.viewAtColumn(0, row: tableView.selectedRow, makeIfNecessary: false) as? PageCellView {
+            manager.site.pages.append(page)
+            view.textField?.becomeFirstResponder()
+            view.button.enabled = true
         }
-        return string
+        pageView.string = page.body
+        (self.view.window as? Window)?.settingsButton.state = 0
+        settingsView.hidden = true
     }
     
-    func toTwitterFormat() -> String {
-        var string = self.fromTwitterFormat()
-        if (count(string) > 0) {
-            return "@\(string)"
+    // MARK: PageCellViewDelegate
+    func pageCellViewDidChange(view: PageCellView) {
+        let row = pagesTableView.rowForView(view)
+        if (row < 0) {
+            return
         }
-        return string
+        let page = manager.site.pages[row]
+        if (view.textField!.stringValue.isEmpty) {
+            if (page.name.isEmpty) {
+                manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
+            }
+            pagesTableView.deselectAll(self)
+            pagesTableView.reloadData()
+            return
+        }
+        page.name = view.textField!.stringValue
+        page.URI = view.secondaryTextField.stringValue
+        page.index = view.button.state == 1
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
+        }
+        if (pagesTableView.numberOfRows == manager.site.pages.count) {
+            pagesTableView.insertRowsAtIndexes(NSIndexSet(index: manager.site.pages.count), withAnimation: .EffectNone)
+        }
     }
     
-    func fromTwitterFormat() -> String {
-        return self.strip().stringByReplacingOccurrencesOfString("@", withString: "", options: nil, range: nil)
+    // MARK: PageViewDelegate
+    func pageViewDidChange(view: PageView) {
+        guard let string = view.string, page = selectedPage.page else {
+            return
+        }
+        page.body = string
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
+        }
     }
     
-    func strip() -> String {
-        return self.trim()
-    }
-    
-    func trim() -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    // MARK: SettingsViewDelegate
+    func settingsViewDidChange(view: SettingsView) {
+        manager.site.name = view.nameTextField.stringValue
+        manager.site.twitter = view.twitterTextField.stringValue.twitterFormat(false)
+        do {
+            try manager.build()
+            try manager.clean()
+        } catch let error as NSError {
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel"
+            ]).beginSheetModalForWindow(view.window)
+        }
     }
 }

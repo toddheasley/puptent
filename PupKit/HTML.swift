@@ -7,134 +7,193 @@
 
 import Foundation
 
-public class HTML {
-    public class func generate(site: Site, bookmarkIconURI: String, stylesheetURI: String, delegate: HTMLDelegate) -> NSError? {
+public typealias HTML = String
+
+enum HTMLMetaName: String {
+    case Generator = "generator"
+    case Viewport = "viewport"
+    case BookmarkTitle = "apple-mobile-web-app-title"
+}
+
+enum HTMLLinkRel: String {
+    case Stylesheet = "stylesheet"
+    case BookmarkIcon = "apple-touch-icon"
+}
+
+extension HTML {
+    public static let bookmarkIconURI: String = "apple-touch-icon.png"
+    public static let stylesheetURI: String = "default.css"
+    static let viewport: String = "initial-scale=1.0, user-scalable=no"
+    
+    static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
-            if let error = delegate.handleHTML("".join([
-                HTML.head(site, page: page, bookmarkIconURI: bookmarkIconURI, stylesheetURI: stylesheetURI),
-                HTML.header(site, page: page),
-                HTML.main(site, page: page),
-                HTML.menu(site, page: page),
-                HTML.footer(site)
-            ]), URI: page.URI) as NSError? {
-                return error
+            var mainElements: [String] = page.body.componentsSeparatedByString("\(HTML.newLine)\(HTML.newLine)").map{
+                p(HTML(string: $0))
             }
+            mainElements.insert(h1("\(page.name)"), atIndex: 0)
+            
+            // Generate page HTML
+            completion(URI: page.URI, data: joinElements([
+                doctype(),
+                title("\(page.name) - \(site.name)"),
+                meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
+                meta(.Viewport, content: viewport),
+                meta(.BookmarkTitle, content: "\(site.name)"),
+                link(.BookmarkIcon, href: bookmarkIconURI),
+                link(.Stylesheet, href: stylesheetURI),
+                header([
+                    h1(a("\(site.name)", href: site.URI))
+                ]),
+                main(mainElements),
+                menu(site.indexedPages.map{
+                    return p($0.URI == page.URI ? span($0.name) : a("\($0.name)", href: $0.URI))
+                }),
+                footer([
+                    p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
+                ])
+            ]).dataUsingEncoding(NSUTF8StringEncoding)!)
         }
-        return delegate.handleHTML("".join([
-            HTML.head(site, page: nil, bookmarkIconURI: bookmarkIconURI, stylesheetURI: stylesheetURI),
-            HTML.header(site, page: nil),
-            HTML.menu(site, page: nil),
-            HTML.footer(site)
-        ]), URI: site.URI)
+        
+        // Generate index HTML
+        completion(URI: site.URI, data: joinElements([
+            doctype(),
+            title("\(site.name)"),
+            meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
+            meta(.Viewport, content: viewport),
+            meta(.BookmarkTitle, content: "\(site.name)"),
+            link(.BookmarkIcon, href: bookmarkIconURI),
+            link(.Stylesheet, href: stylesheetURI),
+            header([
+                h1("\(site.name)")
+            ]),
+            menu(site.indexedPages.map{
+                return p(a("\($0.name)", href: $0.URI))
+            }),
+            footer([
+                p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
+            ])
+        ]).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
     
-    private class func head(site: Site, page: Page?, bookmarkIconURI: String, stylesheetURI: String) -> String {
-        var title = site.name
-        if (page != nil) {
-            title = "\(page!.name) - \(title)"
-        }
-        return "".join([
-            "<!DOCTYPE html>\n",
-            "<title>\(title)</title>\n",
-            "<meta name=\"generator\" content=\"\(NSBundle.mainBundle().executablePath!.lastPathComponent)\">\n",
-            "<meta name=\"viewport\" content=\"initial-scale=1.0, user-scalable=no\">\n",
-            "<meta name=\"apple-mobile-web-app-title\" content=\"\(site.name)\">\n",
-            "<link rel=\"apple-touch-icon\" href=\"\(bookmarkIconURI)\">\n",
-            "<link rel=\"stylesheet\" href=\"\(stylesheetURI)\">\n"
-        ])
+    private static func doctype() -> HTML {
+        return "<!DOCTYPE html>"
     }
     
-    private class func header(site: Site, page: Page?) -> String {
-        var h1 = site.name
-        if (page != nil) {
-            h1 = "<a href=\"\(site.URI)\">\(site.name)</a>"
-        }
-        return "".join([
-            "<header>\n",
-            "    <h1>\(h1)</h1>\n",
-            "</header>\n"
-        ])
+    private static func meta(name: HTMLMetaName, content: String) -> HTML {
+        return "<meta name=\"\(name.rawValue)\" content=\"\(content)\">"
     }
     
-    private class func footer(site: Site) -> String {
-        var p = ""
-        if (!site.twitterName.isEmpty) {
-            p = "    <p><a href=\"https://twitter.com/\(site.twitterName)\">@\(site.twitterName)</a></p>\n"
-        }
-        return "".join([
-            "<footer>\n",
-            p,
-            "</footer>"
-        ])
+    private static func link(rel: HTMLLinkRel, href: String) -> HTML {
+        return "<link rel=\"\(rel.rawValue)\" href=\"\(href)\">"
     }
     
-    private class func main(site: Site, page: Page) -> String {
-        var HTML = [
-            "<main>\n",
-            "    <h1>\(page.name)</h1>\n"
-        ]
-        for section in page.sections {
-            switch (section.type) {
-            case .Image:
-                HTML.append("    <figure><a href=\"\(section.URI)\"><img src=\"\(section.URI)\"></a></figure>\n")
-            case .Audio:
-                HTML.append("    <figure><audio src=\"\(section.URI)\" preload=\"metadata\" controls></audio></figure>\n")
-            case .Video:
-                HTML.append("    <figure><video src=\"\(section.URI)\" preload=\"metadata\" controls></video></figure>\n")
-            case .Basic:
-                HTML.append("    <p>\(section.text.toHTML(true))</p>\n")
-            }
-        }
-        HTML.extend([
-            "</main>\n"
-        ])
-        return "".join(HTML)
+    private static func title(string: String) -> HTML {
+        return "<title>\(string)</title>"
     }
     
-    private class func menu(site: Site, page: Page?) -> String {
-        var HTML = [
-            "<menu>\n",
-            "    <hr>\n",
-            "    <ul>\n"
-        ]
-        for indexedPage in site.indexedPages {
-            if (page != nil && indexedPage.URI == page!.URI) {
-                HTML.append("        <li><span>\(indexedPage.name)</span></li>\n")
-            } else {
-                HTML.append("        <li><a href=\"\(indexedPage.URI)\">\(indexedPage.name)</a></li>\n")
-            }
-        }
-        HTML.extend([
-            "    </ul>\n",
-            "</menu>\n"
-        ])
-        return "".join(HTML)
+    private static func header(elements: [HTML]) -> HTML {
+        return "<header>\(joinElements(elements, indent: true))</header>"
     }
-}
-
-public protocol HTMLDelegate {
-    func handleHTML(HTML: String, URI: String) -> NSError?
-}
-
-extension String {
-    func toHTML(detectLinks: Bool) -> String {
-        let patterns = [
+    
+    private static func footer(elements: [HTML]) -> HTML {
+        return "<footer>\(joinElements(elements, indent: true))</footer>"
+    }
+    
+    private static func main(elements: [HTML]) -> HTML {
+        return "<main>\(joinElements(elements, indent: true))</main>"
+    }
+    
+    private static func menu(elements: [HTML]) -> HTML {
+        return "<menu>\(joinElements(elements, indent: true))</menu>"
+    }
+    
+    private static func h1(content: HTML) -> HTML {
+        return "<h1>\(content)</h1>"
+    }
+    
+    private static func p(content: HTML) -> HTML {
+        return "<p>\(content)</p>"
+    }
+    
+    private static func audio(src: String) -> HTML {
+        return "<audio src=\"\(src)\" preload=\"metadata\" controls></audio>"
+    }
+    
+    private static func video(src: String) -> HTML {
+        return "<video src=\"\(src)\" preload=\"metadata\" controls></video>"
+    }
+    
+    private static func img(src: String) -> HTML {
+        return "<img src=\"\(src)\">"
+    }
+    
+    private static func a(content: HTML, href: String) -> HTML {
+        return "<a href=\"\(href)\">\(content)</a>"
+    }
+    
+    private static func span(content: HTML) -> HTML {
+        return "<span>\(content)</span>"
+    }
+    
+    private static func joinElements(elements: [HTML], indent: Bool = false) -> HTML {
+        if (indent && !elements.isEmpty) {
+            return "\(newLine)    " + elements.joinWithSeparator("\(newLine)    ") + newLine
+        }
+        return elements.joinWithSeparator(newLine)
+    }
+    
+    init(string: String) {
+        let patterns: [(String, String)] = [
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4a|mp3)", "$1<audio src=\"$2.$3\" preload=\"metadata\" controls>"), // Embed local audio
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4v|mov|mp4)", "$1<video src=\"$2.$3\" preload=\"metadata\" controls>"), // Embed local video
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", "$1<a href=\"$2.$3\"><img src=\"$2.$3\"></a>"), // Embed local images
             ("(https?:\\/\\/)([\\w\\-\\.!~?&+\\*'\"(),\\/]+)", "<a href=\"$1$2\">$2</a>"), // Hyperlink absolute URLs
-            ("(^|\\\n|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"/$2\">$2</a>"), // Hyperlink relative URIs
+            ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", "$1<a href=\"$2\">$2</a>"), // Hyperlink relative URIs
             ("(^|\\s)([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4})", "$1<a href=\"mailto:$2\">$2</a>"), // Hyperlink email addresses
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags
         ]
-        var HTML: NSString = self
-        if (detectLinks) {
-            for pattern: (String, String) in patterns {
-                HTML = NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!.stringByReplacingMatchesInString(HTML as String, options: nil, range: NSMakeRange(0, HTML.length), withTemplate: pattern.1)
-            }
+        
+        var HTML = string
+        for pattern in patterns {
+            HTML = (try! NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive)).stringByReplacingMatchesInString(HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
         }
-        
-        // Convert line breaks
         HTML = HTML.stringByReplacingOccurrencesOfString("\n", withString: "<br>")
+        self.init(HTML)
+    }
+}
+
+extension String {
+    public static let newLine: String = "\n"
+    public static let separator: String = "-"
+    
+    public var manifest: [String] {
+        let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)
+        return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{
+            ((self as NSString).substringWithRange($0.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
+        }
+    }
+    
+    public var URIFormat: String {
+        var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
-        return HTML as String
+        // Separate words with hyphens
+        string = string.stringByReplacingOccurrencesOfString(" ", withString: String.separator)
+        
+        // Strip existing file extension
+        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "")
+        
+        // Strip all non-alphanumeric characters
+        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
+    }
+    
+    public func twitterFormat(format: Bool = true) -> String {
+        let string = stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("@", withString: "")
+        return format && !string.isEmpty ? "@\(string)" : string
+    }
+    
+    public func trim() -> String {
+        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
 }

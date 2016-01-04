@@ -9,79 +9,69 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-        if let mainViewController = self.mainViewController {
-            switch menuItem {
-            case self.forgetMenuItem!:
-                return mainViewController.canForget
-            case self.newPageMenuItem!, self.previewItem!:
-                return mainViewController.siteViewController?.manager != nil
-            case self.deletePageMenuItem!:
-                return mainViewController.siteViewController?.selectedPage.index > -1
-            case self.dismissPageMenuItem!:
-                return mainViewController.siteViewController?.tableView?.selectedRow > -1
-            default:
-                return true
-            }
-        }
-        return false
-    }
-    
-    // MARK: NSApplicationDelegate
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
-        return true;
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var mainViewController: MainViewController?
-    @IBOutlet weak var forgetMenuItem: NSMenuItem?
-    @IBOutlet weak var newPageMenuItem: NSMenuItem?
-    @IBOutlet weak var deletePageMenuItem: NSMenuItem?
-    @IBOutlet weak var dismissPageMenuItem: NSMenuItem?
-    @IBOutlet weak var previewItem: NSMenuItem?
+    weak var mainViewController: MainViewController?
+    @IBOutlet weak var forgetMenuItem: NSMenuItem!
+    @IBOutlet weak var settingsMenuItem: NSMenuItem!
+    @IBOutlet weak var openInFinderMenuItem: NSMenuItem!
+    @IBOutlet weak var newPageMenuItem: NSMenuItem!
+    @IBOutlet weak var deletePageMenuItem: NSMenuItem!
+    @IBOutlet weak var previewItem: NSMenuItem!
     
     @IBAction func preview(sender: AnyObject?) {
-        self.mainViewController?.siteViewController?.preview(self)
+        mainViewController?.siteViewController?.preview(self)
+    }
+    
+    @IBAction func openInFinder(sender: AnyObject?) {
+        mainViewController?.openInFinder(sender)
     }
     
     @IBAction func makeNewSite(sender: AnyObject?) {
-        self.mainViewController?.makeNewSite(sender)
+        mainViewController?.makeNewSite(sender)
     }
     
     @IBAction func openExistingSite(sender: AnyObject?) {
-        self.mainViewController?.openExistingSite(sender)
+        mainViewController?.openExistingSite(sender)
     }
     
     @IBAction func forget(sender: AnyObject?) {
-        self.mainViewController?.forget(sender)
+        mainViewController?.forget(sender)
+    }
+    
+    @IBAction func openSettings(sender: AnyObject?) {
+        mainViewController?.siteViewController?.openSettings(sender)
     }
     
     @IBAction func makeNewPage(sender: AnyObject?) {
-        self.mainViewController?.siteViewController?.selectNewPage()
+        mainViewController?.siteViewController?.makeNewPage(sender)
     }
     
     @IBAction func deletePage(sender: AnyObject?) {
-        self.mainViewController?.siteViewController?.deleteSelectedPage()
-    }
-    
-    @IBAction func dismissPage(sender: AnyObject?) {
-        self.mainViewController?.siteViewController?.dismissSelectedPage()
+        mainViewController?.siteViewController?.deletePage(sender)
     }
     
     @IBAction func close(sender: AnyObject?) {
         NSApplication.sharedApplication().keyWindow!.performClose(self)
     }
-}
-
-extension Double {
-    func delay(delay:() -> Void) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(self * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), delay)
+    
+    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+        guard let mainViewController = mainViewController else {
+            return false
+        }
+        
+        switch menuItem {
+        case forgetMenuItem:
+            return mainViewController.canForget
+        case settingsMenuItem, openInFinderMenuItem, newPageMenuItem, previewItem:
+            return mainViewController.siteViewController != nil
+        case deletePageMenuItem:
+            return mainViewController.siteViewController != nil ? mainViewController.siteViewController!.canDeletePage : false
+        default:
+            return true
+        }
     }
     
-    func animate(animate:() -> Void, _ completionHandler:() -> Void) {
-        NSAnimationContext.runAnimationGroup({ context in
-            context.duration = self
-            animate()
-            }, completionHandler: completionHandler)
+    // MARK: NSApplicationDelegate
+    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+        return true;
     }
 }

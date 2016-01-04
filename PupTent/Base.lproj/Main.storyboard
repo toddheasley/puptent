@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15D9c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7528.3"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -67,6 +68,17 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                                        <menuItem title="Site Settings" enabled="NO" keyEquivalent="," id="QJN-Uu-LvX" userLabel="Settings">
+                                            <connections>
+                                                <action selector="openSettings:" target="Voe-Tx-rLC" id="mOn-xG-AYR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open in Finder" enabled="NO" keyEquivalent="O" id="DVo-aG-piG">
+                                            <connections>
+                                                <action selector="openInFinder:" target="Voe-Tx-rLC" id="cIx-Ef-Ifx"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="ahh-4N-dVP"/>
                                         <menuItem title="New Page" enabled="NO" keyEquivalent="n" id="Gxs-NH-PM1">
                                             <connections>
                                                 <action selector="makeNewPage:" target="Voe-Tx-rLC" id="hgc-kH-T9m"/>
@@ -80,15 +92,10 @@ CA
                                                 <action selector="deletePage:" target="Voe-Tx-rLC" id="QDk-wf-Ppv"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Close Page" enabled="NO" keyEquivalent="[" id="x8g-LU-b27">
-                                            <connections>
-                                                <action selector="dismissPage:" target="Ady-hI-5gd" id="WNO-YZ-JTT"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="O1h-z7-Itm"/>
-                                        <menuItem title="Preview" enabled="NO" keyEquivalent="P" id="DVo-aG-piG">
+                                        <menuItem title="Preview" enabled="NO" keyEquivalent="P" id="wj3-qn-JfD">
                                             <connections>
-                                                <action selector="preview:" target="Voe-Tx-rLC" id="xoe-u9-Ypl"/>
+                                                <action selector="preview:" target="Voe-Tx-rLC" id="Ot8-2C-l5z"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -336,11 +343,12 @@ CA
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Pup_Tent" customModuleProvider="target">
                     <connections>
-                        <outlet property="deletePageMenuItem" destination="xw6-Jz-Q7h" id="oZN-WW-6yD"/>
-                        <outlet property="dismissPageMenuItem" destination="x8g-LU-b27" id="jF3-rK-MyR"/>
-                        <outlet property="forgetMenuItem" destination="IAo-SY-fd9" id="6L5-4b-Hzc"/>
-                        <outlet property="newPageMenuItem" destination="Gxs-NH-PM1" id="oeV-Xg-Ty7"/>
-                        <outlet property="previewItem" destination="DVo-aG-piG" id="E71-50-Ch4"/>
+                        <outlet property="deletePageMenuItem" destination="xw6-Jz-Q7h" id="dvB-Rn-QjL"/>
+                        <outlet property="forgetMenuItem" destination="IAo-SY-fd9" id="Tj6-6Q-L21"/>
+                        <outlet property="newPageMenuItem" destination="Gxs-NH-PM1" id="KPN-XW-qSp"/>
+                        <outlet property="openInFinderMenuItem" destination="DVo-aG-piG" id="bwd-om-Ygq"/>
+                        <outlet property="previewItem" destination="wj3-qn-JfD" id="esa-uF-4Ac"/>
+                        <outlet property="settingsMenuItem" destination="QJN-Uu-LvX" id="QWK-1j-KdI"/>
                     </connections>
                 </customObject>
             </objects>
@@ -350,116 +358,177 @@ CA
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="CNY-CP-kOF" customClass="AppDelegate" customModule="Pup_Tent" customModuleProvider="target"/>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
-                        <rect key="contentRect" x="80" y="40" width="450" height="400"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
+                        <rect key="contentRect" x="80" y="40" width="920" height="560"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="75E0C72C-70C7-4D0E-A3F1-AE5002E01ECE" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="labelOnly" sizeMode="small" id="4lR-92-6LS">
-                            <allowedToolbarItems/>
-                            <defaultToolbarItems/>
+                        <value key="minSize" type="size" width="640" height="480"/>
+                        <toolbar key="toolbar" implicitIdentifier="7BD18246-AF48-4D5F-A2AA-66B9846903CF" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="2ns-f4-moe">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="A2A53031-D269-4954-8499-742C81DE33BB" label="" paletteLabel="Path Label" id="f9W-Yt-m8x">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="120" height="25"/>
+                                    <size key="maxSize" width="280" height="25"/>
+                                    <button key="view" verticalHuggingPriority="750" id="0c9-4U-wbC">
+                                        <rect key="frame" x="0.0" y="14" width="120" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <animations/>
+                                        <buttonCell key="cell" type="roundTextured" title="~/Documents" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingMiddle" state="on" imageScaling="proportionallyDown" inset="2" id="ASX-Fb-dbj">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openInFinder:" target="CNY-CP-kOF" id="y7F-iB-Iyn"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="7FCB2378-7EED-4CF2-B5BA-459D578DD73C" label="" paletteLabel="Settings Button" image="NSActionTemplate" id="Jqr-Yf-ZxH">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="25" height="25"/>
+                                    <size key="maxSize" width="25" height="25"/>
+                                    <button key="view" verticalHuggingPriority="750" id="ofp-za-9PZ">
+                                        <rect key="frame" x="32" y="14" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <animations/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSActionTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rIw-fF-ADn">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openSettings:" target="CNY-CP-kOF" id="XJd-As-Xc8"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="CE58FC98-981A-41FC-B385-FDC39E5F0CA4" label="" paletteLabel="Preview Button" id="tHw-33-Fd0">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="63" height="25"/>
+                                    <size key="maxSize" width="63" height="25"/>
+                                    <button key="view" verticalHuggingPriority="750" id="L8S-xX-DiV">
+                                        <rect key="frame" x="12" y="14" width="63" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <animations/>
+                                        <buttonCell key="cell" type="roundTextured" title="Preview" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fNP-7W-RdE">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="preview:" target="CNY-CP-kOF" id="cKo-bD-kro"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="pg2-SB-7G8"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="cG4-yh-MUr"/>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="pg2-SB-7G8"/>
+                                <toolbarItem reference="cG4-yh-MUr"/>
+                                <toolbarItem reference="f9W-Yt-m8x"/>
+                                <toolbarItem reference="cG4-yh-MUr"/>
+                                <toolbarItem reference="Jqr-Yf-ZxH"/>
+                                <toolbarItem reference="tHw-33-Fd0"/>
+                            </defaultToolbarItems>
                         </toolbar>
+                        <connections>
+                            <outlet property="pathLabel" destination="0c9-4U-wbC" id="vQi-bG-y2D"/>
+                            <outlet property="settingsButton" destination="ofp-za-9PZ" id="J7b-To-YDR"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="oYN-gl-7fc" kind="relationship" relationship="window.shadowedContentViewController" id="2lQ-m8-HP6"/>
                     </connections>
                 </windowController>
             </objects>
-            <point key="canvasLocation" x="140" y="281"/>
+            <point key="canvasLocation" x="360" y="397"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="U6t-f9-9Bs">
             <objects>
                 <viewController id="oYN-gl-7fc" customClass="MainViewController" customModule="Pup_Tent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FSw-Yy-tpY">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
+                        <rect key="frame" x="0.0" y="0.0" width="920" height="560"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hQV-un-ZZw" userLabel="Empty View">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="590"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="iAq-k3-TCV">
+                                <rect key="frame" x="220" y="120" width="480" height="320"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lpk-eC-cZ0">
-                                        <rect key="frame" x="110" y="147" width="230" height="26"/>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y6S-Gg-XRK">
+                                        <rect key="frame" x="150" y="174" width="180" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="OQE-8G-vpm"/>
-                                            <constraint firstAttribute="width" constant="226" id="UUb-DW-dC5"/>
+                                            <constraint firstAttribute="width" constant="176" id="CvQ-s6-d9w"/>
+                                            <constraint firstAttribute="height" constant="44" id="fwf-5U-1yz"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="bevel" title="Open Existing Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5Ok-nB-dtr">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="openExistingSite:" target="oYN-gl-7fc" id="94R-cT-Ehw"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cVI-3x-Nf7">
-                                        <rect key="frame" x="110" y="110" width="230" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="226" id="lna-R3-haS"/>
-                                            <constraint firstAttribute="height" constant="21" id="ucD-jt-AcM"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="bevel" title="Make New Site..." bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6xy-90-8kD">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="makeNewSite:" target="oYN-gl-7fc" id="sae-Up-DqA"/>
-                                        </connections>
-                                    </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qKj-ch-gAf">
-                                        <rect key="frame" x="110" y="377" width="230" height="33"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="33" id="sL1-Zy-dem"/>
-                                            <constraint firstAttribute="width" constant="226" id="ygE-YA-wuH"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" id="AXQ-tP-nE4">
-                                            <font key="font" metaFont="system" size="23"/>
+                                        <animations/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" usesSingleLineMode="YES" id="iAf-Jm-npU">
+                                            <font key="font" metaFont="system" size="36"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kK6-4y-0Ym">
-                                        <rect key="frame" x="110" y="187" width="230" height="90"/>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yob-lV-Yhq">
+                                        <rect key="frame" x="156" y="113" width="168" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="226" id="UrE-vZ-ZdY"/>
-                                            <constraint firstAttribute="height" constant="90" id="XwT-ek-GSX"/>
+                                            <constraint firstAttribute="width" constant="168" id="6OQ-rl-DhD"/>
+                                            <constraint firstAttribute="height" constant="21" id="8GL-Vc-bjF"/>
                                         </constraints>
-                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Bk1-8L-YoT">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                        <animations/>
+                                        <buttonCell key="cell" type="roundTextured" title="New Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vem-Qc-9bU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="makeNewSite:" target="oYN-gl-7fc" id="2OI-oo-Ony"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uiS-Dl-CbC">
+                                        <rect key="frame" x="156" y="80" width="168" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="168" id="Dxs-pq-glP"/>
+                                            <constraint firstAttribute="height" constant="21" id="ieZ-4e-lwC"/>
+                                        </constraints>
+                                        <animations/>
+                                        <buttonCell key="cell" type="roundTextured" title="Open Existing Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnl-ig-8Nb">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openExistingSite:" target="oYN-gl-7fc" id="TVe-Qs-IVp"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="qKj-ch-gAf" secondAttribute="centerX" id="25I-qy-fyn"/>
-                                    <constraint firstAttribute="centerX" secondItem="lpk-eC-cZ0" secondAttribute="centerX" id="JhL-tc-Pp6"/>
-                                    <constraint firstAttribute="centerX" secondItem="cVI-3x-Nf7" secondAttribute="centerX" id="NGQ-uk-QlE"/>
-                                    <constraint firstItem="lpk-eC-cZ0" firstAttribute="top" secondItem="kK6-4y-0Ym" secondAttribute="bottom" constant="16" id="Oql-rY-BzE"/>
-                                    <constraint firstAttribute="centerX" secondItem="kK6-4y-0Ym" secondAttribute="centerX" id="Vq3-V8-vZF"/>
-                                    <constraint firstAttribute="bottom" secondItem="cVI-3x-Nf7" secondAttribute="bottom" constant="113" id="YDD-lv-lud"/>
-                                    <constraint firstItem="cVI-3x-Nf7" firstAttribute="top" secondItem="lpk-eC-cZ0" secondAttribute="bottom" constant="16" id="ane-BI-CEM"/>
-                                    <constraint firstItem="qKj-ch-gAf" firstAttribute="top" secondItem="hQV-un-ZZw" secondAttribute="top" constant="180" id="unL-bm-kDD"/>
+                                    <constraint firstAttribute="width" constant="480" id="5ch-AN-886"/>
+                                    <constraint firstItem="Yob-lV-Yhq" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="65H-bi-Mjw"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="9ju-3x-PVa"/>
+                                    <constraint firstItem="Yob-lV-Yhq" firstAttribute="top" secondItem="Y6S-Gg-XRK" secondAttribute="bottom" constant="38" id="Lcl-DQ-HRS"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="centerX" secondItem="Y6S-Gg-XRK" secondAttribute="centerX" id="QWx-We-iLo"/>
+                                    <constraint firstItem="Y6S-Gg-XRK" firstAttribute="centerY" secondItem="iAq-k3-TCV" secondAttribute="centerY" constant="-36" id="lpZ-Fu-eil"/>
+                                    <constraint firstAttribute="height" constant="320" id="pjU-9G-pyv"/>
+                                    <constraint firstItem="Y6S-Gg-XRK" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="v0I-nQ-YbO"/>
+                                    <constraint firstItem="uiS-Dl-CbC" firstAttribute="top" secondItem="Yob-lV-Yhq" secondAttribute="bottom" constant="12" id="vwu-aY-wdI"/>
                                 </constraints>
+                                <animations/>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="hQV-un-ZZw" firstAttribute="leading" secondItem="FSw-Yy-tpY" secondAttribute="leading" id="L8A-lt-wxP"/>
-                            <constraint firstAttribute="bottom" secondItem="hQV-un-ZZw" secondAttribute="bottom" id="kjS-sZ-ky0"/>
-                            <constraint firstItem="hQV-un-ZZw" firstAttribute="top" secondItem="FSw-Yy-tpY" secondAttribute="top" id="ydo-zh-hIF"/>
-                            <constraint firstAttribute="trailing" secondItem="hQV-un-ZZw" secondAttribute="trailing" id="zzk-SX-dqj"/>
+                            <constraint firstItem="iAq-k3-TCV" firstAttribute="centerY" secondItem="FSw-Yy-tpY" secondAttribute="centerY" id="2ce-aX-KXr"/>
+                            <constraint firstItem="iAq-k3-TCV" firstAttribute="centerX" secondItem="FSw-Yy-tpY" secondAttribute="centerX" id="pV2-rY-CmF"/>
                         </constraints>
+                        <animations/>
                     </view>
                     <connections>
-                        <outlet property="alertLabel" destination="kK6-4y-0Ym" id="hRs-tT-Vdk"/>
-                        <outlet property="emptyView" destination="hQV-un-ZZw" id="atc-QD-vS5"/>
-                        <outlet property="makeNewSiteButton" destination="cVI-3x-Nf7" id="Yyp-0f-qkj"/>
-                        <outlet property="openSiteButton" destination="lpk-eC-cZ0" id="ltl-Ol-myB"/>
+                        <outlet property="emptyView" destination="iAq-k3-TCV" id="SbV-cc-Twj"/>
+                        <outlet property="makeNewSiteButton" destination="Yob-lV-Yhq" id="w6H-Rq-8K7"/>
+                        <outlet property="openExistingSiteButton" destination="uiS-Dl-CbC" id="umo-Zg-CcF"/>
                     </connections>
                 </viewController>
                 <customObject id="5uz-4r-usm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="686" y="227"/>
+            <point key="canvasLocation" x="1394" y="397"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+    </resources>
 </document>

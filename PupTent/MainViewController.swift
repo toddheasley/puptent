@@ -10,18 +10,96 @@ import PupKit
 
 class MainViewController: NSViewController {
     var siteViewController: SiteViewController?
+    @IBOutlet var emptyView: NSView!
+    @IBOutlet var makeNewSiteButton: NSButton!
+    @IBOutlet var openExistingSiteButton: NSButton!
+    
     var canForget: Bool {
-        get {
-            return !NSUserDefaults.standardUserDefaults().path.isEmpty
+        return !NSUserDefaults.standardUserDefaults().path.isEmpty
+    }
+    
+    private func openSite(path: String, animated: Bool) {
+        do {
+            let manager = try Manager(path: path)
+            
+            siteViewController = SiteViewController(manager: manager)
+            guard let siteViewController = siteViewController else {
+                return
+            }
+            view.addSubview(siteViewController.view)
+            view.pin(siteViewController.view, inset: 0.0)
+            (view.window as? Window)?.pathLabel.title = (manager.path as NSString).stringByAbbreviatingWithTildeInPath
+            view.window?.toolbarHidden = false
+            
+            // Remember path
+            NSUserDefaults.standardUserDefaults().path = manager.path
+        } catch let error as NSError {
+            forget(self)
+            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                "Cancel",
+                "Open in Finder"
+            ]).runModal{ response in
+                if (response == NSAlertFirstButtonReturn) {
+                    return
+                }
+                NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+            }
         }
     }
-    var empty: Bool {
-        get {
-            if let emptyView = self.emptyView {
-                return !emptyView.hidden
+    
+    @IBAction func forget(sender: AnyObject?) {
+        view.window?.toolbarHidden = true
+        siteViewController?.view.removeFromSuperview()
+        siteViewController = nil
+        
+        // Forget path
+        NSUserDefaults.standardUserDefaults().path = ""
+    }
+    
+    @IBAction func makeNewSite(sender: AnyObject?) {
+        let openPanel: NSOpenPanel = NSOpenPanel()
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.title = "Choose an Empty Folder..."
+        openPanel.prompt = "Use This Folder"
+        openPanel.beginWithCompletionHandler{ result in
+            if result != NSFileHandlingPanelOKButton {
+                return
             }
-            return true
+            let path = openPanel.URL!.path! + "/"
+            do {
+                try Manager.pitch(path)
+                self.openSite(path, animated: true)
+            } catch let error as NSError {
+                NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+                    "Cancel",
+                    "Open in Finder"
+                ]).runModal{ response in
+                    if (response == NSAlertFirstButtonReturn) {
+                        return
+                    }
+                    NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+                }
+            }
         }
+    }
+    
+    @IBAction func openExistingSite(sender: AnyObject?) {
+        let openPanel: NSOpenPanel = NSOpenPanel()
+        openPanel.canChooseDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.title = "Choose an Existing Site..."
+        openPanel.beginWithCompletionHandler{ result in
+            if result != NSFileHandlingPanelOKButton {
+                return
+            }
+            self.openSite(openPanel.URL!.path! + "/", animated: true)
+        }
+    }
+    
+    @IBAction func openInFinder(sender: AnyObject?) {
+        NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: NSUserDefaults.standardUserDefaults().path))
     }
     
     override func viewDidLoad() {
@@ -30,102 +108,55 @@ class MainViewController: NSViewController {
             delegate.mainViewController = self
         }
         
-        self.emptyView!.wantsLayer = true
-        self.emptyView!.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
         
-        self.siteViewController = SiteViewController(nibName: "Site", bundle: nil)
-        self.view.addSubview(self.siteViewController!.view)
-        
-        // Default to empty state
-        self.toggleEmpty(true, animated: false)
-        if (self.canForget) {
+        if (canForget) {
             
             // Open most recent site
-            self.openSite(NSUserDefaults.standardUserDefaults().path, animated: false)
+            openSite(NSUserDefaults.standardUserDefaults().path, animated: false)
         }
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.toggleEmpty(self.empty, animated: false)
+        (view.window as? Window)?.pathLabel.title = (NSUserDefaults.standardUserDefaults().path as NSString).stringByAbbreviatingWithTildeInPath
+        view.window?.toolbarHidden = !canForget
+    }
+}
+
+extension NSView {
+    func pin(subview: NSView, inset: CGFloat) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints([
+            NSLayoutConstraint(item: subview, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Left, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: inset)
+        ])
+    }
+}
+
+extension NSAlert {
+    func runModal(completion: ((NSModalResponse) -> Void)? = nil) {
+        completion?(runModal())
     }
     
-    private func openSite(path: String, animated: Bool) {
-        var error: NSError?
-        let manager = Manager(path: path, error: &error)
-        if (error != nil) {
-            self.alert(error!.localizedDescription)
+    func beginSheetModalForWindow(window: NSWindow?, completion:  ((NSModalResponse) -> Void)? = nil) {
+        guard let window = window else {
+            runModal(completion)
             return
         }
-        
-        // Remember path
-        NSUserDefaults.standardUserDefaults().path = manager!.path
-        
-        // Configure site view controller
-        self.siteViewController!.manager = manager!
-        self.toggleEmpty(false, animated: true)
+        beginSheetModalForWindow(window, completionHandler: completion)
     }
     
-    private func toggleEmpty(empty: Bool, animated: Bool) {
-        if let window = self.view.window as? Window {
-            window.toggleToolbar(empty)
+    convenience init(message: String?, description: String? = nil, buttons: [String] = []) {
+        self.init()
+        messageText = message != nil ? message! : ""
+        informativeText = description != nil ? description! : ""
+        for button in buttons {
+            addButtonWithTitle(button)
         }
-        self.siteViewController!.view.hidden = empty
-        self.emptyView!.hidden = !empty
-    }
-    
-    private func alert(text: String) {
-        self.alertLabel?.hidden = text.isEmpty
-        self.alertLabel?.stringValue = "\(text)"
-        5.0.delay {
-            self.alertLabel?.hidden = true
-            self.alertLabel?.stringValue = ""
-        }
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var makeNewSiteButton: NSButton?
-    @IBOutlet weak var openSiteButton: NSButton?
-    @IBOutlet weak var alertLabel: NSTextField?
-    @IBOutlet weak var emptyView: NSView?
-    
-    @IBAction func forget(sender: AnyObject?) {
-        self.toggleEmpty(true, animated: true)
-        NSUserDefaults.standardUserDefaults().path = ""
-        self.siteViewController?.manager = nil
-    }
-    
-    @IBAction func makeNewSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Empty Folder..."
-        openPanel.prompt = "Use This Folder"
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            let path = openPanel.URL!.path! + "/"
-            if let error = Manager.pitch(path) as NSError! {
-                self.alert(error.localizedDescription)
-                return
-            }
-            self.openSite(path, animated: true)
-        })
-    }
-    
-    @IBAction func openExistingSite(sender: AnyObject?) {
-        var openPanel: NSOpenPanel = NSOpenPanel()
-        openPanel.canChooseDirectories = true
-        openPanel.canChooseFiles = false
-        openPanel.title = "Choose an Existing Site..."
-        openPanel.beginWithCompletionHandler( { (result) -> Void in
-            if result != NSFileHandlingPanelOKButton {
-                return
-            }
-            self.openSite(openPanel.URL!.path! + "/", animated: true)
-        })
     }
 }
 

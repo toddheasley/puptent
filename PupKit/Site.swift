@@ -10,17 +10,12 @@ import Foundation
 public class Site: Archiving {
     public var name: String
     public var URI: String
-    public var twitterName: String
-    public var pages: Array<Page>
-    public var indexedPages: Array<Page> {
-        get {
-            var pages: Array<Page> = []
-            for page in self.pages {
-                if (page.index) {
-                    pages.append(page)
-                }
-            }
-            return pages
+    public var twitter: String
+    public var pages: [Page]
+    
+    public var indexedPages: [Page] {
+        return pages.filter{ page in
+            return page.index
         }
     }
     
@@ -28,47 +23,43 @@ public class Site: Archiving {
         self.init(dictionary: [
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
-            ArchivingKeys.twitterName: "",
+            ArchivingKeys.twitter: "",
             ArchivingKeys.pages: []
         ])
     }
     
     // MARK: Archiving
-    public var manifest: Array<String> {
-        get {
-            var manifest = [String]()
-            for page in self.pages {
-                manifest.extend(page.manifest)
-            }
-            if (!self.URI.isEmpty) {
-                manifest.append(self.URI)
-            }
-            return manifest
+    public var manifest: [String] {
+        var manifest = [String]()
+        for page in pages {
+            manifest.appendContentsOf(page.manifest)
         }
+        if (!URI.isEmpty) {
+            manifest.append(URI)
+        }
+        return manifest
     }
     
-    public var dictionary: NSDictionary {
-        get {
-            var pages: Array<NSDictionary> = []
-            for page in self.pages {
-                pages.append(page.dictionary)
-            }
-            return [
-                ArchivingKeys.name: self.name,
-                ArchivingKeys.URI: self.URI,
-                ArchivingKeys.twitterName: self.twitterName,
-                ArchivingKeys.pages: pages
-            ]
+    public var dictionary: [String: AnyObject] {
+        var pages: [AnyObject] = []
+        for page in self.pages {
+            pages.append(page.dictionary)
         }
+        return [
+            ArchivingKeys.name: name,
+            ArchivingKeys.URI: URI,
+            ArchivingKeys.twitter: twitter,
+            ArchivingKeys.pages: pages
+        ]
     }
     
-    public required init(dictionary: NSDictionary) {
-        self.name = dictionary[ArchivingKeys.name] as! String
-        self.URI = dictionary[ArchivingKeys.URI] as! String
-        self.twitterName = dictionary[ArchivingKeys.twitterName] as! String
-        self.pages = []
-        for page in dictionary[ArchivingKeys.pages] as! Array<NSDictionary> {
-            self.pages.append(Page(dictionary: page as NSDictionary))
+    public required init(dictionary: [String: AnyObject]) {
+        name = dictionary[ArchivingKeys.name] as! String
+        URI = dictionary[ArchivingKeys.URI] as! String
+        twitter = dictionary[ArchivingKeys.twitter] as! String
+        pages = []
+        for page in dictionary[ArchivingKeys.pages] as! [AnyObject] {
+            pages.append(Page(dictionary: page as! [String: AnyObject]))
         }
     }
 }

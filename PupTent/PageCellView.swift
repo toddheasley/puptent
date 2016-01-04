@@ -8,144 +8,57 @@
 import Cocoa
 import PupKit
 
-class PageDetailsCellView: PageCellView, NSTextFieldDelegate {
-    var index: Bool = false {
-        didSet {
-            if (self.index) {
-                self.indexButton!.image = NSImage(named: "NSStatusAvailable")
-            } else {
-                self.indexButton!.image = NSImage(named: "NSStatusNone")
-            }
-        }
+@objc protocol PageCellViewDelegate {
+    func pageCellViewDidChange(view: PageCellView)
+}
+
+class PageCellView: NSTableCellView, NSTextFieldDelegate {
+    @IBOutlet weak var delegate: PageCellViewDelegate?
+    @IBOutlet var secondaryTextField: NSTextField!
+    @IBOutlet var button: PageCellButton!
+    
+    @IBAction func toggleButton(sender: AnyObject?) {
+        button.state = button.state
+        delegate?.pageCellViewDidChange(self)
     }
     
     // MARK: NSTextFieldDelegate
-    func control(control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        if let textField = control as? NSTextField {
-            if (textField == self.textField!) {
-                textField.stringValue = textField.stringValue.strip()
-                if (self.URITextField!.stringValue.isEmpty) {
-                    
-                    // Suggest default URI
-                    self.URITextField!.stringValue = textField.stringValue.toURIFormat()
+    override func controlTextDidEndEditing(notification: NSNotification) {
+        if let textField = textField, control = notification.object as? NSTextField {
+            switch control {
+            case textField:
+                control.stringValue = control.stringValue.trim()
+                if (secondaryTextField.stringValue.isEmpty) {
+                    secondaryTextField.stringValue = control.stringValue.URIFormat
                 }
-            } else {
-                textField.stringValue = textField.stringValue.toURIFormat()
+            case secondaryTextField:
+                if (control.stringValue.isEmpty) {
+                    control.stringValue = textField.stringValue
+                }
+                control.stringValue = control.stringValue.URIFormat
+            default:
+                break
             }
-            
-            // Notify delegate
-            self.delegate?.handlePageCellViewChange(self)
         }
+        delegate?.pageCellViewDidChange(self)
+    }
+    
+    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+        guard let control = control as? NSTextField where control == textField && commandSelector == "cancelOperation:" else {
+            return false
+        }
+        
+        // Handle escape/cancel
+        control.resignFirstResponder()
+        delegate?.pageCellViewDidChange(self)
         return true
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var URITextField: NSTextField?
-    @IBOutlet weak var indexButton: NSButton?
-    @IBOutlet weak var deleteButton: NSButton?
-    
-    @IBAction func toggleIndex(sender: AnyObject?) {
-        self.index = !self.index
-        
-        // Notify delegate
-        self.delegate?.handlePageCellViewChange(self)
-    }
-    
-    @IBAction func delete(sender: AnyObject?) {
-        
-        // Notify delegate
-        self.delegate?.handlePageCellViewDelete(self)
     }
 }
 
-class PageSectionCellView: PageCellView, NSTextFieldDelegate {
-    var content: AnyObject? {
-        set {
-            var frame = self.frame
-            self.textField!.hidden = true
-            self.textField!.stringValue = ""
-            self.imageView!.hidden = true
-            self.imageView!.image = nil
-            if let image = newValue as? NSImage {
-                frame.size.height = image.size.height
-                if (image.size.width > self.imageView!.frame.size.width) {
-                    frame.size.height = self.imageView!.frame.size.width * (image.size.height / image.size.width)
-                }
-                self.imageView!.unregisterDraggedTypes()
-                self.imageView!.image = image
-                self.imageView!.hidden = false
-            } else {
-                if let text = newValue as? String {
-                    self.textField!.stringValue = text
-                }
-                
-                // Calculate text field height
-                frame.size.height = self.textField!.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, 0.0)).height
-                self.textField!.hidden = false
-            }
-            frame.size.height += (self.imageViewSpaceConstraint!.constant * 2.0)
-            self.frame = frame
-        }
-        get {
-            if let image = self.imageView!.image {
-                return image
-            } else if (!self.textField!.stringValue.isEmpty) {
-                return self.textField?.stringValue
-            }
-            return nil
+class PageCellButton: NSButton {
+    override var state: Int {
+        didSet{
+            image = state == 1 ? NSImage(named: "NSStatusAvailable") : NSImage(named: "NSStatusNone")
         }
     }
-    var editing: Bool = false
-    
-    // MARK: NSTextFieldDelegate
-    func control(control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
-        self.editing = true
-        return true
-    }
-    
-    override func controlTextDidChange(obj: NSNotification) {
-        let textField = NSTextField(frame: self.textField!.frame)
-        textField.font = self.textField!.font
-        textField.stringValue = self.textField!.stringValue
-        
-        let height: CGFloat = textField.sizeThatFits(CGSizeMake(self.textField!.frame.size.width, 0.0)).height + (self.textFieldSpaceConstraint!.constant * 2.0)
-        if (height != self.frame.size.height + 5.0) { // NSTextContainer magic number
-            
-            // Notify delegate
-            self.delegate?.handlePageCellViewChange(self)
-        }
-    }
-    
-    func control(control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        self.editing = false
-        if let textField = control as? NSTextField {
-            
-            // Notify delegate
-            if (textField.stringValue.isEmpty) {
-                self.delegate?.handlePageCellViewDelete(self)
-            } else {
-                self.delegate?.handlePageCellViewChange(self)
-            }
-        }
-        return true
-    }
-    
-    // MARK: IBOutlet, IBAction
-    @IBOutlet weak var textFieldSpaceConstraint: NSLayoutConstraint?
-    @IBOutlet weak var imageViewSpaceConstraint: NSLayoutConstraint?
-    
-    @IBAction func deleteImage(sender: AnyObject?) {
-        
-        // Notify delegate
-        self.delegate?.handlePageCellViewDelete(self)
-    }
-}
-
-class PageCellView: NSTableCellView {
-    var delegate: PageCellViewDelegate?
-}
-
-protocol PageCellViewDelegate {
-    func handlePageCellViewChange(pageCellView: NSTableCellView)
-    func handlePageCellViewDelete(pageCellView: NSTableCellView)
 }
