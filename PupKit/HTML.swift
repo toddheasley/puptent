@@ -23,7 +23,7 @@ enum HTMLLinkRel: String {
 extension HTML {
     public static let bookmarkIconURI: String = "apple-touch-icon.png"
     public static let stylesheetURI: String = "default.css"
-    static let viewport: String = "initial-scale=1.0, user-scalable=no"
+    static let viewport: String = "initial-scale=1.0"
     
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
