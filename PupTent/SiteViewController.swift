@@ -141,7 +141,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         
         var index = row
         if (indexSet.firstIndex < index) {
-            index--
+            index -= 1
         }
         
         // Move page to new index in data source
