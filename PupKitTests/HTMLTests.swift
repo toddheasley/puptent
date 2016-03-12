@@ -20,7 +20,7 @@ class HTMLTests: XCTestCase {
         HTML.generate(site) { URI, data in
             XCTAssertTrue(["site.html", "page.html"].contains(URI))
             XCTAssertNotNil(data)
-            count++
+            count += 1
         }
         XCTAssertTrue(count == 2)
     }

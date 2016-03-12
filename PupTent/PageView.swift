@@ -61,7 +61,7 @@ class PageView: NSTextView, NSTextStorageDelegate {
     override func didChangeText() {
         super.didChangeText()
         timer?.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "pageViewDidChange", userInfo: nil, repeats: false)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(PageView.pageViewDidChange), userInfo: nil, repeats: false)
     }
     
     func pageViewDidChange() {

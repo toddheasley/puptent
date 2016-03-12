@@ -44,7 +44,7 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
-        guard let control = control as? NSTextField where control == textField && commandSelector == "cancelOperation:" else {
+        guard let control = control as? NSTextField where control == textField && commandSelector == #selector(NSResponder.cancelOperation(_:)) else {
             return false
         }
         

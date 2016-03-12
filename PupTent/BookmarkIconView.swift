@@ -37,7 +37,7 @@ class BookmarkIconView: NSImageView {
         
         button.alphaValue = 0.0
         button.target = self
-        button.action = "chooseImage:"
+        button.action = #selector(BookmarkIconView.chooseImage(_:))
         addSubview(button)
         pin(button, inset: 0.0)
     }
