@@ -25,6 +25,71 @@ extension HTML {
     public static let stylesheetURI: String = "default.css"
     static let viewport: String = "initial-scale=1.0"
     
+    private static func doctype() -> HTML {
+        return "<!DOCTYPE html>"
+    }
+    
+    private static func meta(name: HTMLMetaName, content: String) -> HTML {
+        return "<meta name=\"\(name.rawValue)\" content=\"\(content)\">"
+    }
+    
+    private static func link(rel: HTMLLinkRel, href: String) -> HTML {
+        return "<link rel=\"\(rel.rawValue)\" href=\"\(href)\">"
+    }
+    
+    private static func title(string: String) -> HTML {
+        return "<title>\(string)</title>"
+    }
+    
+    private static func header(elements: [HTML]) -> HTML {
+        return "<header>\(join(elements, indent: true))</header>"
+    }
+    
+    private static func footer(elements: [HTML]) -> HTML {
+        return "<footer>\(join(elements, indent: true))</footer>"
+    }
+    
+    private static func article(elements: [HTML]) -> HTML {
+        return "<article>\(join(elements, indent: true))</article>"
+    }
+    
+    private static func section(elements: [HTML]) -> HTML {
+        return "<section>\(join(elements, indent: true))</section>"
+    }
+    
+    private static func h1(content: HTML) -> HTML {
+        return "<h1>\(content)</h1>"
+    }
+    
+    private static func p(content: HTML) -> HTML {
+        return "<p>\(content)</p>"
+    }
+    
+    private static func audio(src: String) -> HTML {
+        return "<audio src=\"\(src)\" preload=\"metadata\" controls></audio>"
+    }
+    
+    private static func video(src: String) -> HTML {
+        return "<video src=\"\(src)\" preload=\"metadata\" controls></video>"
+    }
+    
+    private static func img(src: String) -> HTML {
+        return "<img src=\"\(src)\">"
+    }
+    
+    private static func a(content: HTML, href: String) -> HTML {
+        return "<a href=\"\(href)\">\(content)</a>"
+    }
+    
+    private static func join(elements: [HTML], indent: Bool = false) -> HTML {
+        if (indent && !elements.isEmpty) {
+            return "\(newLine)    " + elements.map{ element in
+                return element.replace("\(newLine)", "\(newLine)    ")
+                }.joinWithSeparator("\(newLine)    ") + newLine
+        }
+        return elements.joinWithSeparator(newLine)
+    }
+    
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
             var articleElements: [String] = page.body.componentsSeparatedByString("\(HTML.newLine)\(HTML.newLine)").map{ string in
@@ -33,7 +98,7 @@ extension HTML {
             articleElements.insert(h1("\(page.name)"), atIndex: 0)
             
             // Generate page HTML
-            completion(URI: page.URI, data: joinElements([
+            completion(URI: page.URI, data: join([
                 doctype(),
                 title("\(page.name) - \(site.name)"),
                 meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
@@ -52,7 +117,7 @@ extension HTML {
         }
         
         // Generate index HTML
-        completion(URI: site.URI, data: joinElements([
+        completion(URI: site.URI, data: join([
             doctype(),
             title("\(site.name)"),
             meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
@@ -80,71 +145,6 @@ extension HTML {
         ]).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
     
-    private static func doctype() -> HTML {
-        return "<!DOCTYPE html>"
-    }
-    
-    private static func meta(name: HTMLMetaName, content: String) -> HTML {
-        return "<meta name=\"\(name.rawValue)\" content=\"\(content)\">"
-    }
-    
-    private static func link(rel: HTMLLinkRel, href: String) -> HTML {
-        return "<link rel=\"\(rel.rawValue)\" href=\"\(href)\">"
-    }
-    
-    private static func title(string: String) -> HTML {
-        return "<title>\(string)</title>"
-    }
-    
-    private static func header(elements: [HTML]) -> HTML {
-        return "<header>\(joinElements(elements, indent: true))</header>"
-    }
-    
-    private static func footer(elements: [HTML]) -> HTML {
-        return "<footer>\(joinElements(elements, indent: true))</footer>"
-    }
-    
-    private static func article(elements: [HTML]) -> HTML {
-        return "<article>\(joinElements(elements, indent: true))</article>"
-    }
-    
-    private static func section(elements: [HTML]) -> HTML {
-        return "<section>\(joinElements(elements, indent: true))</section>"
-    }
-    
-    private static func h1(content: HTML) -> HTML {
-        return "<h1>\(content)</h1>"
-    }
-    
-    private static func p(content: HTML) -> HTML {
-        return "<p>\(content)</p>"
-    }
-    
-    private static func audio(src: String) -> HTML {
-        return "<audio src=\"\(src)\" preload=\"metadata\" controls></audio>"
-    }
-    
-    private static func video(src: String) -> HTML {
-        return "<video src=\"\(src)\" preload=\"metadata\" controls></video>"
-    }
-    
-    private static func img(src: String) -> HTML {
-        return "<img src=\"\(src)\">"
-    }
-    
-    private static func a(content: HTML, href: String) -> HTML {
-        return "<a href=\"\(href)\">\(content)</a>"
-    }
-    
-    private static func joinElements(elements: [HTML], indent: Bool = false) -> HTML {
-        if (indent && !elements.isEmpty) {
-            return "\(newLine)    " + elements.map{ element in
-                return element.replace("\(newLine)", "\(newLine)    ")
-            }.joinWithSeparator("\(newLine)    ") + newLine
-        }
-        return elements.joinWithSeparator(newLine)
-    }
-    
     init(string: String) {
         let patterns: [(String, String)] = [
             ("(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(m4a|mp3)", "$1<audio src=\"$2.$3\" preload=\"metadata\" controls>"), // Embed local audio
@@ -170,14 +170,14 @@ extension String {
     public static let newLine: String = "\n"
     public static let separator: String = "-"
     
-    public var excerpt: String? {
+    var excerpt: String? {
         if let _ = image {
             return nil
         }
         return !split(String.newLine)[0].isEmpty ? split(String.newLine)[0] : nil
     }
     
-    public var image: String? {
+    var image: String? {
         let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .CaseInsensitive)
         let images = expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
             return ((self as NSString).substringWithRange(result.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
@@ -219,7 +219,7 @@ extension String {
     }
     
     public func replace(string: String, _ with: String) -> String {
-        return self.stringByReplacingOccurrencesOfString(string, withString: with)
+        return stringByReplacingOccurrencesOfString(string, withString: with)
     }
     
     public func trim() -> String {

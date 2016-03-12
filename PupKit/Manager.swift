@@ -11,7 +11,7 @@ public class Manager {
     public static let mediaPath: String = "media" // Suggested media directory
     public static let manifestURI: String = "index.json"
     public static let URIExtension: String = ".html"
-    public var site: Site!
+    public private(set) var site: Site!
     public private(set) var path: String
     private let gitURIs: [String] = ["README", "README.md", "CNAME"]
     private static var bookmarkIconData: String = "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
@@ -34,7 +34,9 @@ public class Manager {
             
             // Write blank auxiliary files
             NSData().writeToFile("\(path)\(site.URI)", atomically: true)
-            NSData().writeToFile("\(path)\(HTML.stylesheetURI)", atomically: true)
+            CSS().generate{ data in
+                data.writeToFile("\(path)\(HTML.stylesheetURI)", atomically: true)
+            }
             if let data = NSData(base64EncodedString: Manager.bookmarkIconData, options: []) {
                 data.writeToFile("\(path)\(HTML.bookmarkIconURI)", atomically: true)
             }
@@ -97,7 +99,7 @@ public class Manager {
         do {
             let data: NSData = try NSData(contentsOfURL: NSURL.fileURLWithPath("\(path)\(Manager.manifestURI)"), options: [])
             let dictionary: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! [String: AnyObject]
-            self.site = Site(dictionary: dictionary)
+            site = Site(dictionary: dictionary)
         } catch  {
             throw error
         }
