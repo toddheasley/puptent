@@ -32,9 +32,6 @@ class BookmarkIconView: NSImageView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        wantsLayer = true
-        layer?.backgroundColor = NSColor.windowBackgroundColor().CGColor
-        
         button.alphaValue = 0.0
         button.target = self
         button.action = #selector(BookmarkIconView.chooseImage(_:))

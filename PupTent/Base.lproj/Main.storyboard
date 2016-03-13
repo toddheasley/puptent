@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15D9c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10115" systemVersion="15E61b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10115"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -364,7 +364,7 @@ CA
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="80" y="40" width="920" height="560"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="640" height="480"/>
+                        <value key="minSize" type="size" width="760" height="480"/>
                         <toolbar key="toolbar" implicitIdentifier="7BD18246-AF48-4D5F-A2AA-66B9846903CF" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="2ns-f4-moe">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="A2A53031-D269-4954-8499-742C81DE33BB" label="" paletteLabel="Path Label" id="f9W-Yt-m8x">
@@ -374,7 +374,6 @@ CA
                                     <button key="view" verticalHuggingPriority="750" id="0c9-4U-wbC">
                                         <rect key="frame" x="0.0" y="14" width="120" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <animations/>
                                         <buttonCell key="cell" type="roundTextured" title="~/Documents" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingMiddle" state="on" imageScaling="proportionallyDown" inset="2" id="ASX-Fb-dbj">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -391,7 +390,6 @@ CA
                                     <button key="view" verticalHuggingPriority="750" id="ofp-za-9PZ">
                                         <rect key="frame" x="32" y="14" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <animations/>
                                         <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSActionTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rIw-fF-ADn">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -408,7 +406,6 @@ CA
                                     <button key="view" verticalHuggingPriority="750" id="L8S-xX-DiV">
                                         <rect key="frame" x="12" y="14" width="63" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <animations/>
                                         <buttonCell key="cell" type="roundTextured" title="Preview" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fNP-7W-RdE">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -459,7 +456,6 @@ CA
                                             <constraint firstAttribute="width" constant="176" id="CvQ-s6-d9w"/>
                                             <constraint firstAttribute="height" constant="44" id="fwf-5U-1yz"/>
                                         </constraints>
-                                        <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" usesSingleLineMode="YES" id="iAf-Jm-npU">
                                             <font key="font" metaFont="system" size="36"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -472,7 +468,6 @@ CA
                                             <constraint firstAttribute="width" constant="168" id="6OQ-rl-DhD"/>
                                             <constraint firstAttribute="height" constant="21" id="8GL-Vc-bjF"/>
                                         </constraints>
-                                        <animations/>
                                         <buttonCell key="cell" type="roundTextured" title="New Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vem-Qc-9bU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -487,7 +482,6 @@ CA
                                             <constraint firstAttribute="width" constant="168" id="Dxs-pq-glP"/>
                                             <constraint firstAttribute="height" constant="21" id="ieZ-4e-lwC"/>
                                         </constraints>
-                                        <animations/>
                                         <buttonCell key="cell" type="roundTextured" title="Open Existing Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnl-ig-8Nb">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -508,14 +502,12 @@ CA
                                     <constraint firstItem="Y6S-Gg-XRK" firstAttribute="centerX" secondItem="iAq-k3-TCV" secondAttribute="centerX" id="v0I-nQ-YbO"/>
                                     <constraint firstItem="uiS-Dl-CbC" firstAttribute="top" secondItem="Yob-lV-Yhq" secondAttribute="bottom" constant="12" id="vwu-aY-wdI"/>
                                 </constraints>
-                                <animations/>
                             </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="iAq-k3-TCV" firstAttribute="centerY" secondItem="FSw-Yy-tpY" secondAttribute="centerY" id="2ce-aX-KXr"/>
                             <constraint firstItem="iAq-k3-TCV" firstAttribute="centerX" secondItem="FSw-Yy-tpY" secondAttribute="centerX" id="pV2-rY-CmF"/>
                         </constraints>
-                        <animations/>
                     </view>
                     <connections>
                         <outlet property="emptyView" destination="iAq-k3-TCV" id="SbV-cc-Twj"/>

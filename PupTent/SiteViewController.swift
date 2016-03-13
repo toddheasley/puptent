@@ -31,9 +31,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBAction func openSettings(sender: AnyObject?) {
         pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
-        settingsView.path = manager.path
-        settingsView.nameTextField.stringValue = manager.site.name
-        settingsView.twitterTextField.stringValue = manager.site.twitter.twitterFormat()
+        settingsView.bookmarkIconPath = "\(manager.path)\(HTML.bookmarkIconURI)"
+        settingsView.nameTextField.stringValue = "\(manager.site.name)"
+        settingsView.twitterTextField.stringValue = "\(manager.site.twitter.twitterFormat())"
+        settingsView.stylesheetPath = "\(manager.path)\(HTML.stylesheetURI)"
         settingsView.hidden = false
     }
     

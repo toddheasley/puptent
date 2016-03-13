@@ -12,42 +12,84 @@ import PupKit
     func settingsViewDidChange(view: SettingsView)
 }
 
-class SettingsView: NSView, NSTextFieldDelegate, NSTextStorageDelegate {
+class SettingsView: NSView, NSTextFieldDelegate {
     private var timer: NSTimer?
     @IBOutlet weak var delegate: SettingsViewDelegate?
     @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
     @IBOutlet var twitterTextField: NSTextField!
-    @IBOutlet var stylesheetTextView: NSTextView!
+    @IBOutlet var fontPopUpButton: NSPopUpButton!
+    @IBOutlet var backgroundColorWell: NSColorWell!
+    @IBOutlet var textColorWell: NSColorWell!
+    @IBOutlet var linkColorWell: NSColorWell!
+    @IBOutlet var visitedLinkColorWell: NSColorWell!
     
-    var path: String? {
+    var bookmarkIconPath: String? {
         didSet{
-            guard let path = path else {
+            guard let bookmarkIconPath = bookmarkIconPath else {
+                bookmarkIconView.image = nil
                 return
             }
-            bookmarkIconView.image = NSImage(contentsOfFile: "\(path)/\(HTML.bookmarkIconURI)")
-            if (NSFileManager.defaultManager().fileExistsAtPath("\(path)/\(HTML.stylesheetURI)")) {
-                do {
-                    stylesheetTextView.string = try String(contentsOfFile: "\(path)/\(HTML.stylesheetURI)", encoding: NSUTF8StringEncoding)
-                } catch let error as NSError {
-                    NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
-                        "Cancel"
-                    ]).beginSheetModalForWindow(window)
-                }
+            bookmarkIconView.image = NSImage(contentsOfURL: NSURL.fileURLWithPath(bookmarkIconPath))
+        }
+    }
+    
+    var stylesheetPath: String? {
+        didSet{
+            var stylesheet = CSS()
+            if let stylesheetPath = stylesheetPath, data = NSData(contentsOfURL: NSURL.fileURLWithPath(stylesheetPath)) {
+                stylesheet = CSS(data: data)
             }
-            stylesheetTextView.scrollRangeToVisible(NSMakeRange(0, 0)) // Reset scroll position
-            guard let string = stylesheetTextView.string where !string.isEmpty else {
-                stylesheetTextView.string = "/* CSS */"
-                return
+            switch stylesheet.font {
+            case .Serif:
+                fontPopUpButton.selectItemAtIndex(0)
+            case .Sans:
+                fontPopUpButton.selectItemAtIndex(1)
+            case .Mono:
+                fontPopUpButton.selectItemAtIndex(2)
+            }
+            if let backgroundColor = NSColor(string: stylesheet.backgroundColor) {
+                backgroundColorWell.color = backgroundColor
+            }
+            if let textColor = NSColor(string: stylesheet.textColor) {
+                textColorWell.color = textColor
+            }
+            if let linkColor = NSColor(string: stylesheet.linkColor.link) {
+                linkColorWell.color = linkColor
+            }
+            if let visitedLinkColor = NSColor(string: stylesheet.linkColor.visited) {
+                visitedLinkColorWell.color = visitedLinkColor
             }
         }
     }
     
-    @IBAction func bookmarkIconDidChange(sender: AnyObject?) {
-        guard let path = path, view = sender as? NSImageView else {
+    func makeNewStylesheet() {
+        guard let stylesheetPath = stylesheetPath else {
             return
         }
-        let URL = NSURL(fileURLWithPath: "\(path)/\(HTML.bookmarkIconURI)")
+        let stylesheet = CSS()
+        switch fontPopUpButton.indexOfSelectedItem {
+        case 1:
+            stylesheet.font = .Sans
+        case 2:
+            stylesheet.font = .Mono
+        default:
+            stylesheet.font = .Serif
+        }
+        stylesheet.backgroundColor = backgroundColorWell.color.string
+        stylesheet.textColor = textColorWell.color.string
+        stylesheet.linkColor.link = linkColorWell.color.string
+        stylesheet.linkColor.visited = visitedLinkColorWell.color.string
+        stylesheet.generate{ data in
+            data.writeToURL(NSURL.fileURLWithPath(stylesheetPath), atomically: true)
+        }
+    }
+    
+    @IBAction func bookmarkIconDidChange(sender: AnyObject?) {
+        guard let path = bookmarkIconPath, sender = sender as? NSImageView else {
+            return
+        }
+        let URL = NSURL(fileURLWithPath: path)
         do {
             if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
                 try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
@@ -57,34 +99,30 @@ class SettingsView: NSView, NSTextFieldDelegate, NSTextStorageDelegate {
                 "Cancel",
                 "Open in Finder"
             ]).beginSheetModalForWindow(window){ response in
-                self.path = path
                 if (response != NSAlertFirstButtonReturn) {
                     NSWorkspace.sharedWorkspace().openURL(URL)
                 }
             }
         }
-        if let image = view.image {
+        if let image = sender.image {
             image.TIFFRepresentation?.writeToURL(URL, atomically: true)
         }
     }
     
-    func stylesheetTextViewDidChange() {
-        guard let path = path else {
-            return
-        }
-        stylesheetTextView.string?.trim().dataUsingEncoding(NSUTF8StringEncoding)?.writeToFile("\(path)/\(HTML.stylesheetURI)", atomically: true)
+    @IBAction func fontDidChange(sender: AnyObject?) {
+        makeNewStylesheet()
+    }
+    
+    @IBAction func colorDidChange(sender: AnyObject?) {
+        timer?.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(SettingsView.makeNewStylesheet), userInfo: nil, repeats: false)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.textBackgroundColor().CGColor
-        
-        stylesheetTextView.textStorage?.delegate = self
-        stylesheetTextView.textContainerInset = NSMakeSize(8.0, 10.0)
-        stylesheetTextView.font = NSFont(name: "Menlo", size: 11.0)
-        stylesheetTextView.textColor = NSColor.scrollBarColor()
+        layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
     }
     
     // MARK: NSTextFieldDelegate
@@ -101,10 +139,22 @@ class SettingsView: NSView, NSTextFieldDelegate, NSTextStorageDelegate {
         }
         delegate?.settingsViewDidChange(self)
     }
+}
+
+extension NSColor {
+    var string: String {
+        var red: CGFloat = 0.0, green: CGFloat = 0.0, blue: CGFloat = 0.0, alpha: CGFloat = 0.0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        let hex:Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255) << 0
+        return NSString(format:"#%06x", hex).uppercaseString as String
+    }
     
-    // MARK: NSTextStorageDelegate
-    func textStorage(textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        timer?.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "stylesheetTextViewDidChange", userInfo: nil, repeats: false)
+    convenience init?(string: String) {
+        if (!string.hasPrefix("#") || string.characters.count != 7) {
+            return nil
+        }
+        var hex:UInt32 = 0
+        NSScanner(string: string.replace("#", "")).scanHexInt(&hex)
+        self.init(red: CGFloat((hex & 0xFF0000) >> 16) / 255.0, green: CGFloat((hex & 0x00FF00) >> 8) / 255.0, blue: CGFloat(hex & 0x00FF) / 255.0, alpha: 1.0)
     }
 }

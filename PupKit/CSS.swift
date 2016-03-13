@@ -69,7 +69,7 @@ public class CSS {
         return blocks.joinWithSeparator("\(String.newLine)\(String.newLine)")
     }
     
-    func generate(completion: (data: NSData) -> Void) {
+    public func generate(completion: (data: NSData) -> Void) {
         completion(data: join([
             block("body", rules: [
                 ("background", "\(backgroundColor)"),
@@ -104,7 +104,7 @@ public class CSS {
         ]).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
     
-    init(data: NSData = NSData()) {
+    public init(data: NSData = NSData()) {
         guard let string = String(data: data, encoding: NSUTF8StringEncoding) where !string.isEmpty else {
             return
         }
