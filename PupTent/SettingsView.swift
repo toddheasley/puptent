@@ -18,11 +18,33 @@ class SettingsView: NSView, NSTextFieldDelegate {
     @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
     @IBOutlet var twitterTextField: NSTextField!
+    @IBOutlet var twitterTestButton: NSButton!
     @IBOutlet var fontPopUpButton: NSPopUpButton!
     @IBOutlet var backgroundColorWell: NSColorWell!
     @IBOutlet var textColorWell: NSColorWell!
     @IBOutlet var linkColorWell: NSColorWell!
     @IBOutlet var visitedLinkColorWell: NSColorWell!
+    
+    var nameText: String {
+        set{
+            nameTextField.stringValue = newValue.trim()
+        }
+        get{
+            return nameTextField.stringValue.trim()
+        }
+    }
+    
+    var twitterText: String {
+        set{
+            twitterTextField.stringValue = newValue.twitterFormat()
+            twitterTestButton.enabled = !twitterTextField.stringValue.twitterFormat(false).isEmpty
+            twitterTestButton.image = NSImage(named: "NSStatusNone")
+            twitterTestButton.title = "Test"
+        }
+        get{
+            return twitterTextField.stringValue.twitterFormat(false)
+        }
+    }
     
     var bookmarkIconPath: String? {
         didSet{
@@ -85,6 +107,27 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
     }
     
+    @IBAction func testTwitter(sender: AnyObject?) {
+        guard let URL = NSURL(string: "https://twitter.com/\(twitterText)") where !twitterText.isEmpty else {
+            return
+        }
+        if (twitterTestButton.title == "View") {
+            NSWorkspace.sharedWorkspace().openURL(URL)
+            return
+        }
+        self.twitterTestButton.image = NSImage(named: "NSStatusNone")
+        NSURLSession.sharedSession().dataTaskWithURL(URL){ data, response, error in
+            guard let response = response as? NSHTTPURLResponse where response.statusCode == 200 else {
+                self.twitterTestButton.image = NSImage(named: "NSStatusUnavailable")
+                return
+            }
+            dispatch_async(dispatch_get_main_queue()){
+                self.twitterTestButton.image = NSImage(named: "NSStatusAvailable")
+                self.twitterTestButton.title = "View"
+            }
+        }.resume()
+    }
+    
     @IBAction func bookmarkIconDidChange(sender: AnyObject?) {
         guard let path = bookmarkIconPath, sender = sender as? NSImageView else {
             return
@@ -126,16 +169,26 @@ class SettingsView: NSView, NSTextFieldDelegate {
     }
     
     // MARK: NSTextFieldDelegate
+    override func controlTextDidChange(obj: NSNotification) {
+        guard let control = obj.object as? NSTextField where control == twitterTextField else {
+            return
+        }
+        twitterTestButton.enabled = !twitterTextField.stringValue.twitterFormat(false).isEmpty
+        twitterTestButton.image = NSImage(named: "NSStatusNone")
+        twitterTestButton.title = "Test"
+    }
+    
     override func controlTextDidEndEditing(notification: NSNotification) {
-        if let control = notification.object as? NSTextField {
-            switch control {
-            case nameTextField:
-                control.stringValue = control.stringValue.trim()
-            case twitterTextField:
-                control.stringValue = control.stringValue.twitterFormat()
-            default:
-                break
-            }
+        guard let control = notification.object as? NSTextField else {
+            return
+        }
+        switch control {
+        case nameTextField:
+            control.stringValue = control.stringValue.trim()
+        case twitterTextField:
+            control.stringValue = control.stringValue.twitterFormat()
+        default:
+            return
         }
         delegate?.settingsViewDidChange(self)
     }
