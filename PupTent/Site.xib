@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10115" systemVersion="15E61b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10115" systemVersion="15E64a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10115"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
@@ -207,194 +208,211 @@
             <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ftm-KM-t4m">
-                    <rect key="frame" x="129" y="70" width="340" height="420"/>
-                    <subviews>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fOu-Lo-HoP" customClass="BookmarkIconView" customModule="Pup_Tent" customModuleProvider="target">
-                            <rect key="frame" x="191" y="231" width="76" height="76"/>
-                            <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="5aS-87-BOe"/>
-                            <connections>
-                                <action selector="bookmarkIconDidChange:" target="UYI-lx-Gy0" id="jdP-GI-NEq"/>
-                            </connections>
-                        </imageView>
-                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i7x-Oq-S3S">
-                            <rect key="frame" x="108" y="338" width="140" height="22"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="3JV-ki-e2H">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <outlet property="delegate" destination="UYI-lx-Gy0" id="227-Vp-5iH"/>
-                            </connections>
-                        </textField>
-                        <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEW-nB-SHo">
-                            <rect key="frame" x="194" y="134" width="44" height="23"/>
-                            <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="colorDidChange:" target="UYI-lx-Gy0" id="07C-tY-k8y"/>
-                            </connections>
-                        </colorWell>
-                        <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wR5-Sy-srC">
-                            <rect key="frame" x="194" y="103" width="44" height="23"/>
-                            <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="colorDidChange:" target="UYI-lx-Gy0" id="euK-8D-ttc"/>
-                            </connections>
-                        </colorWell>
-                        <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n4L-m3-OL2">
-                            <rect key="frame" x="194" y="72" width="44" height="23"/>
-                            <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="colorDidChange:" target="UYI-lx-Gy0" id="hvz-W4-6Ht"/>
-                            </connections>
-                        </colorWell>
-                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TC6-Jd-a7B">
-                            <rect key="frame" x="108" y="370" width="220" height="22"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="3Mi-5X-Ua9">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <outlet property="delegate" destination="UYI-lx-Gy0" id="Say-ea-Zrh"/>
-                            </connections>
-                        </textField>
-                        <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDR-el-GQe">
-                            <rect key="frame" x="194" y="41" width="44" height="23"/>
-                            <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="colorDidChange:" target="UYI-lx-Gy0" id="NRg-C1-Okm"/>
-                            </connections>
-                        </colorWell>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3IO-Xd-rwv">
-                            <rect key="frame" x="18" y="137" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Color" id="f1h-tL-qff">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nmv-G7-WNR">
-                            <rect key="frame" x="18" y="106" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Text Color" id="CFs-bh-qTA">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-KI-DHx">
-                            <rect key="frame" x="18" y="75" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Link Color" id="KIH-9z-ffd">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PRb-sz-Ehw">
-                            <rect key="frame" x="18" y="44" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Visited Link Color" id="D4U-hA-MfR">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-2p-yfM">
-                            <rect key="frame" x="7" y="372" width="90" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Site Name" id="G0j-jT-0k8">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ow7-vY-WT9">
-                            <rect key="frame" x="12" y="341" width="90" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Twitter Name" id="sWm-RH-OMO">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-je-MQT">
-                            <rect key="frame" x="18" y="261" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Bookmark Icon" id="FXW-80-Jt6">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4LE-Ul-oKa">
-                            <rect key="frame" x="188" y="175" width="110" height="25"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P03-7z-xrA">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                                <menu key="menu" id="Rsx-mV-I4K">
-                                    <items>
-                                        <menuItem title="Serif" id="6qJ-sO-Bq2">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Serif">
-                                                    <attributes>
-                                                        <font key="NSFont" size="13" name="TimesNewRomanPSMT"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </menuItem>
-                                        <menuItem title="Sans-Serif" id="zbN-Pk-wOP">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Sans-Serif">
-                                                    <attributes>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </menuItem>
-                                        <menuItem title="Monospace" id="jXl-St-SY7">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Monospace">
-                                                    <attributes>
-                                                        <font key="NSFont" size="13" name="CourierNewPSMT"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <action selector="fontDidChange:" target="UYI-lx-Gy0" id="SxZ-Ge-sso"/>
-                            </connections>
-                        </popUpButton>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o5c-qy-1Av">
-                            <rect key="frame" x="18" y="180" width="160" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Font" id="aln-m1-y8J">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJ7-dg-tRu">
-                            <rect key="frame" x="256" y="336" width="72" height="25"/>
-                            <buttonCell key="cell" type="roundTextured" title="Test" bezelStyle="texturedRounded" image="NSStatusNone" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iPJ-n3-HvY">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system" size="11"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="testTwitter:" target="UYI-lx-Gy0" id="DNG-bG-JF7"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="420" id="EYw-fm-5xU"/>
-                        <constraint firstAttribute="width" constant="340" id="Lqb-so-xv4"/>
-                    </constraints>
-                </customView>
+                <box title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dLd-cD-NbV">
+                    <rect key="frame" x="17" y="15" width="565" height="527"/>
+                    <view key="contentView" id="97H-zD-Wde">
+                        <rect key="frame" x="1" y="1" width="563" height="525"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ftm-KM-t4m">
+                                <rect key="frame" x="122" y="73" width="320" height="380"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i7x-Oq-S3S">
+                                        <rect key="frame" x="86" y="319" width="140" height="22"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="@username" drawsBackground="YES" id="3JV-ki-e2H">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <outlet property="delegate" destination="UYI-lx-Gy0" id="227-Vp-5iH"/>
+                                        </connections>
+                                    </textField>
+                                    <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEW-nB-SHo">
+                                        <rect key="frame" x="172" y="101" width="44" height="23"/>
+                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="colorDidChange:" target="UYI-lx-Gy0" id="07C-tY-k8y"/>
+                                        </connections>
+                                    </colorWell>
+                                    <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wR5-Sy-srC">
+                                        <rect key="frame" x="172" y="70" width="44" height="23"/>
+                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="colorDidChange:" target="UYI-lx-Gy0" id="euK-8D-ttc"/>
+                                        </connections>
+                                    </colorWell>
+                                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TC6-Jd-a7B">
+                                        <rect key="frame" x="86" y="350" width="220" height="22"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="3Mi-5X-Ua9">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <outlet property="delegate" destination="UYI-lx-Gy0" id="Say-ea-Zrh"/>
+                                        </connections>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ow7-vY-WT9">
+                                        <rect key="frame" x="8" y="321" width="70" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Twitter" id="sWm-RH-OMO">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJ7-dg-tRu">
+                                        <rect key="frame" x="234" y="317" width="72" height="25"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Test" bezelStyle="texturedRounded" image="NSStatusNone" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iPJ-n3-HvY">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="testTwitter:" target="UYI-lx-Gy0" id="DNG-bG-JF7"/>
+                                        </connections>
+                                    </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-2p-yfM">
+                                        <rect key="frame" x="8" y="352" width="70" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Site Name" id="G0j-jT-0k8">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fOu-Lo-HoP" customClass="BookmarkIconView" customModule="Pup_Tent" customModuleProvider="target">
+                                        <rect key="frame" x="168" y="212" width="76" height="76"/>
+                                        <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="5aS-87-BOe"/>
+                                        <connections>
+                                            <action selector="bookmarkIconDidChange:" target="UYI-lx-Gy0" id="jdP-GI-NEq"/>
+                                        </connections>
+                                    </imageView>
+                                    <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n4L-m3-OL2">
+                                        <rect key="frame" x="172" y="39" width="44" height="23"/>
+                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="colorDidChange:" target="UYI-lx-Gy0" id="hvz-W4-6Ht"/>
+                                        </connections>
+                                    </colorWell>
+                                    <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDR-el-GQe">
+                                        <rect key="frame" x="172" y="8" width="44" height="23"/>
+                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="colorDidChange:" target="UYI-lx-Gy0" id="NRg-C1-Okm"/>
+                                        </connections>
+                                    </colorWell>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3IO-Xd-rwv">
+                                        <rect key="frame" x="12" y="104" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Color" id="f1h-tL-qff">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nmv-G7-WNR">
+                                        <rect key="frame" x="12" y="73" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Text Color" id="CFs-bh-qTA">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-KI-DHx">
+                                        <rect key="frame" x="12" y="42" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Link Color" id="KIH-9z-ffd">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PRb-sz-Ehw">
+                                        <rect key="frame" x="12" y="11" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Visited Link Color" id="D4U-hA-MfR">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4LE-Ul-oKa">
+                                        <rect key="frame" x="170" y="156" width="110" height="25"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P03-7z-xrA">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="Rsx-mV-I4K">
+                                                <items>
+                                                    <menuItem title="Serif" id="6qJ-sO-Bq2">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Serif">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="13" name="TimesNewRomanPSMT"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </menuItem>
+                                                    <menuItem title="Sans-Serif" id="zbN-Pk-wOP">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Sans-Serif">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </menuItem>
+                                                    <menuItem title="Monospace" id="jXl-St-SY7">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Monospace">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="13" name="CourierNewPSMT"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="fontDidChange:" target="UYI-lx-Gy0" id="SxZ-Ge-sso"/>
+                                        </connections>
+                                    </popUpButton>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o5c-qy-1Av">
+                                        <rect key="frame" x="12" y="161" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Font" id="aln-m1-y8J">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-je-MQT">
+                                        <rect key="frame" x="8" y="266" width="150" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Bookmark Icon" id="FXW-80-Jt6">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="380" id="XbS-GG-prm"/>
+                                    <constraint firstAttribute="width" constant="320" id="hjV-Ff-r1Z"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Ftm-KM-t4m" firstAttribute="centerY" secondItem="97H-zD-Wde" secondAttribute="centerY" id="9Xu-LD-5eg"/>
+                            <constraint firstItem="Ftm-KM-t4m" firstAttribute="centerX" secondItem="97H-zD-Wde" secondAttribute="centerX" id="ZKj-d7-4nW"/>
+                        </constraints>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
             </subviews>
             <constraints>
-                <constraint firstItem="Ftm-KM-t4m" firstAttribute="centerY" secondItem="UYI-lx-Gy0" secondAttribute="centerY" id="SEl-Js-e69"/>
-                <constraint firstItem="Ftm-KM-t4m" firstAttribute="centerX" secondItem="UYI-lx-Gy0" secondAttribute="centerX" id="d68-WF-hgK"/>
+                <constraint firstItem="dLd-cD-NbV" firstAttribute="leading" secondItem="UYI-lx-Gy0" secondAttribute="leading" constant="20" id="2lV-ZS-d0W"/>
+                <constraint firstAttribute="trailing" secondItem="dLd-cD-NbV" secondAttribute="trailing" constant="20" id="VPj-Pq-uiL"/>
+                <constraint firstItem="dLd-cD-NbV" firstAttribute="top" secondItem="UYI-lx-Gy0" secondAttribute="top" constant="20" id="dZt-TH-XRq"/>
+                <constraint firstAttribute="bottom" secondItem="dLd-cD-NbV" secondAttribute="bottom" constant="19" id="fQs-6J-g5F"/>
             </constraints>
             <connections>
                 <outlet property="backgroundColorWell" destination="zEW-nB-SHo" id="K42-WS-rTs"/>

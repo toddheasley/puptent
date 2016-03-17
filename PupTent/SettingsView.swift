@@ -117,11 +117,11 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
         self.twitterTestButton.image = NSImage(named: "NSStatusNone")
         NSURLSession.sharedSession().dataTaskWithURL(URL){ data, response, error in
-            guard let response = response as? NSHTTPURLResponse where response.statusCode == 200 else {
-                self.twitterTestButton.image = NSImage(named: "NSStatusUnavailable")
-                return
-            }
             dispatch_async(dispatch_get_main_queue()){
+                guard let response = response as? NSHTTPURLResponse where response.statusCode == 200 else {
+                    self.twitterTestButton.image = NSImage(named: "NSStatusUnavailable")
+                    return
+                }
                 self.twitterTestButton.image = NSImage(named: "NSStatusAvailable")
                 self.twitterTestButton.title = "View"
             }
@@ -204,6 +204,7 @@ extension NSColor {
     
     convenience init?(string: String) {
         if (!string.hasPrefix("#") || string.characters.count != 7) {
+            self.init()
             return nil
         }
         var hex:UInt32 = 0
