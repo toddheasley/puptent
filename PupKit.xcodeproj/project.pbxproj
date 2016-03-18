@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C4A32941C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
+		5C4A32951C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
+		5C4A32961C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
+		5C4A32981C8CCDB10039976D /* CSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32971C8CCDB10039976D /* CSSTests.swift */; };
 		5C7181451B5BD42800481CCF /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C504F181A7AE8AC00662FF2 /* PupKit.framework */; };
 		5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71814B1B5BD49500481CCF /* SiteTests.swift */; };
 		5C71814D1B5BD4A600481CCF /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF01A7A64AE001C70BE /* Manager.swift */; };
@@ -53,6 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5C4A32931C8CC5080039976D /* CSS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSS.swift; sourceTree = "<group>"; };
+		5C4A32971C8CCDB10039976D /* CSSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSSTests.swift; sourceTree = "<group>"; };
 		5C504F181A7AE8AC00662FF2 /* PupKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PupKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C504F191A7AE8AC00662FF2 /* pup */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pup; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C7181401B5BD42800481CCF /* PupKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PupKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +109,7 @@
 				5C71814B1B5BD49500481CCF /* SiteTests.swift */,
 				5C7181521B5BD58C00481CCF /* PageTests.swift */,
 				5C7181561B5BD60600481CCF /* HTMLTests.swift */,
+				5C4A32971C8CCDB10039976D /* CSSTests.swift */,
 				5C7181441B5BD42800481CCF /* Info.plist */,
 			);
 			path = PupKitTests;
@@ -127,6 +134,7 @@
 				5CB4CDF11A7A64AE001C70BE /* Page.swift */,
 				5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */,
 				5CB4CDEF1A7A64AE001C70BE /* HTML.swift */,
+				5C4A32931C8CC5080039976D /* CSS.swift */,
 				5CB4CDD61A7A644F001C70BE /* Info.plist */,
 				5CB4CDFE1A7A6611001C70BE /* main.swift */,
 			);
@@ -262,11 +270,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C4A32981C8CCDB10039976D /* CSSTests.swift in Sources */,
 				5C71814D1B5BD4A600481CCF /* Manager.swift in Sources */,
 				5C7181551B5BD5C800481CCF /* ManagerTests.swift in Sources */,
 				5C71814F1B5BD4AF00481CCF /* Site.swift in Sources */,
 				5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */,
 				5C7181501B5BD4B300481CCF /* Page.swift in Sources */,
+				5C4A32951C8CC5080039976D /* CSS.swift in Sources */,
 				5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */,
 				5C71814E1B5BD4AB00481CCF /* Archiving.swift in Sources */,
 				5C7181511B5BD4B700481CCF /* HTML.swift in Sources */,
@@ -281,6 +291,7 @@
 				5CB4CDF41A7A64AE001C70BE /* HTML.swift in Sources */,
 				5CB4CDF71A7A64AE001C70BE /* Site.swift in Sources */,
 				5CB4CDF51A7A64AE001C70BE /* Manager.swift in Sources */,
+				5C4A32941C8CC5080039976D /* CSS.swift in Sources */,
 				5CB4CDF61A7A64AE001C70BE /* Page.swift in Sources */,
 				5CB4CDF31A7A64AE001C70BE /* Archiving.swift in Sources */,
 			);
@@ -295,6 +306,7 @@
 				5CB4CE041A7A673B001C70BE /* Manager.swift in Sources */,
 				5CB4CE051A7A673E001C70BE /* Page.swift in Sources */,
 				5CB4CDFF1A7A6611001C70BE /* main.swift in Sources */,
+				5C4A32961C8CC5080039976D /* CSS.swift in Sources */,
 				5CB4CE071A7A674E001C70BE /* Archiving.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

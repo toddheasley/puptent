@@ -20,7 +20,7 @@ class HTMLTests: XCTestCase {
         HTML.generate(site) { URI, data in
             XCTAssertTrue(["site.html", "page.html"].contains(URI))
             XCTAssertNotNil(data)
-            count++
+            count += 1
         }
         XCTAssertTrue(count == 2)
     }
@@ -44,6 +44,20 @@ class HTMLTests: XCTestCase {
 }
 
 class StringTests: XCTestCase {
+    func testExcerpt() {
+        XCTAssertNil("".excerpt)
+        XCTAssertNil("/media/page.gif".excerpt)
+        XCTAssertEqual("String\n and whitespace".excerpt, "String")
+        XCTAssertEqual("String".excerpt, "String")
+    }
+    
+    func testImage() {
+        XCTAssertNil("".image)
+        XCTAssertNil("String and\n/media/page.gif".image)
+        XCTAssertEqual("String and /media/page.gif".image, "media/page.gif")
+        XCTAssertEqual("/media/page.gif and string".image, "media/page.gif")
+    }
+    
     func testManifest() {
         XCTAssertEqual("Image: /media/page.jpg and audio: /media/page.m4a".manifest.count, 2)
         XCTAssertTrue("Image: /media/page.jpg and audio: /media/page.m4a".manifest.contains("media/page.jpg"))
@@ -60,6 +74,20 @@ class StringTests: XCTestCase {
         XCTAssertEqual("@name".twitterFormat(), "@name")
         XCTAssertEqual("@name".twitterFormat(false), "name")
         XCTAssertEqual("name".twitterFormat(), "@name")
+    }
+    
+    func testSplit() {
+        XCTAssertEqual("String with whitespace".split(" ").count, 3)
+        XCTAssertEqual("String with whitespace".split(" "), ["String", "with", "whitespace"])
+        XCTAssertEqual("String".split(" ").count, 1)
+        XCTAssertEqual("String".split(" "), ["String"])
+        XCTAssertEqual("".split(" ").count, 1)
+        XCTAssertEqual("".split(" "), [""])
+    }
+    
+    func testReplace() {
+        XCTAssertEqual("\n String with\nwhitespace".replace("\n", " "), "  String with whitespace")
+        XCTAssertEqual("String with whitespace".replace("\n", "\t"), "String with whitespace")
     }
     
     func testTrim() {
