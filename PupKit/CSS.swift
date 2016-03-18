@@ -24,7 +24,7 @@ public class CSS {
     public var font: FontFamily = .Serif
     public var backgroundColor: String = "#FFFFFF"
     public var textColor: String = "#000000"
-    public var linkColor: (link: String, visited: String) = ("#0000FF", "#FF00FF")
+    public var linkColor: (link: String, visited: String) = ("#0000E9", "#420078")
     
     private func value(target: String, property: String, selector: String? = nil) -> String? {
         var target = target.stringByReplacingOccurrencesOfString(String.newLine, withString: "")
@@ -79,17 +79,38 @@ public class CSS {
                 ("margin", "auto"),
                 ("max-width", "768px")
             ]),
-            block("h1", rules: [
-                ("font-size", "1em")
-            ]),
             block("img, audio, video", rules: [
                 ("width", "100%")
+            ]),
+            block("img", rules: [
+                ("display", "block")
             ]),
             block("a", rules: [
                 ("color", "\(linkColor.link)")
             ]),
             block("a:visited", rules: [
                 ("color", "\(linkColor.visited)")
+            ]),
+            block("h1", rules: [
+                ("font-size", "1em")
+            ]),
+            block("header h1", rules: [
+                ("margin-bottom", "0")
+            ]),
+            block("article > h1", rules: [
+                ("margin", "0.2em auto 4em auto")
+            ]),
+            block("article p:last-child, article > section:last-child", rules: [
+                ("margin-bottom", "4em")
+            ]),
+            block("article > section:first-child", rules: [
+                ("margin-top", "4em")
+            ]),
+            block("section", rules: [
+                ("margin", "2em auto")
+            ]),
+            block("section p", rules: [
+                ("margin", "0.2em auto")
             ]),
             media("(pointer: fine)", blocks: [
                 block("header, article, footer", rules: [
