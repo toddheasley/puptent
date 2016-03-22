@@ -32,6 +32,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
         settingsView.nameText = manager.site.name
+        settingsView.URLText = manager.site.URL
         settingsView.twitterText = manager.site.twitter
         settingsView.bookmarkIconPath = "\(manager.path)\(HTML.bookmarkIconURI)"
         settingsView.stylesheetPath = "\(manager.path)\(HTML.stylesheetURI)"
@@ -267,6 +268,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     // MARK: SettingsViewDelegate
     func settingsViewDidChange(view: SettingsView) {
         manager.site.name = view.nameText
+        manager.site.URL = view.URLText
         manager.site.twitter = view.twitterText
         do {
             try manager.build()

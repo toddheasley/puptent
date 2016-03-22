@@ -21,8 +21,16 @@ public class Manager {
             return
         }
         
+        let pathComponents = path.split("/").filter{ string in
+            !string.isEmpty
+        }
         let site: Site = Site()
         site.URI = "index\(Manager.URIExtension)"
+        if let string = pathComponents.last where string.split(".").count == 3 && string.hasSuffix(".github.io") {
+            
+            // Pre-populate Github Page URL
+            site.URL = "https://\(string)"
+        }
         do {
             let data: NSData = try NSJSONSerialization.dataWithJSONObject(site.dictionary, options: NSJSONWritingOptions())
             

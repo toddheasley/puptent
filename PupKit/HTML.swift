@@ -13,6 +13,11 @@ enum HTMLMetaName: String {
     case Generator = "generator"
     case Viewport = "viewport"
     case BookmarkTitle = "apple-mobile-web-app-title"
+    case TwitterCard = "twitter:card"
+    case TwitterTitle = "twitter:title"
+    case TwitterDescription = "twitter:description"
+    case TwitterImage = "twitter:image"
+    case TwitterSite = "twitter:site"
 }
 
 enum HTMLLinkRel: String {
@@ -92,13 +97,13 @@ extension HTML {
     
     static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
         for page in site.pages {
+            
+            // Generate page HTML
             var articleElements: [String] = page.body.componentsSeparatedByString("\(HTML.newLine)\(HTML.newLine)").map{ string in
                 return p(HTML(string: string))
             }
             articleElements.insert(h1("\(page.name)"), atIndex: 0)
-            
-            // Generate page HTML
-            completion(URI: page.URI, data: join([
+            var pageElements: [String] = [
                 doctype(),
                 title("\(page.name) - \(site.name)"),
                 meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
@@ -111,13 +116,28 @@ extension HTML {
                 ]),
                 article(articleElements),
                 footer([
-                    p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
+                    p(HTML(string: site.twitter.isEmpty ? "" : "\(site.twitter.twitterFormat())"))
                 ])
-            ]).dataUsingEncoding(NSUTF8StringEncoding)!)
+            ]
+            if let excerpt = page.body.excerpt where !site.twitter.isEmpty {
+                var twitterElements: [String] = [
+                    meta(.TwitterSite, content: "\(site.twitter.twitterFormat())"),
+                    meta(.TwitterTitle, content: "\(page.name)"),
+                    meta(.TwitterDescription, content: "\(excerpt)")
+                ]
+                if let image = page.body.image, URL = NSURL(string: image, relativeToURL: NSURL(string: site.URL)) where !site.URL.isEmpty {
+                    twitterElements.insert(meta(.TwitterCard, content: "summary_large_image"), atIndex: 0)
+                    twitterElements.append(meta(.TwitterImage, content: "\(URL.absoluteString)"))
+                } else {
+                    twitterElements.insert(meta(.TwitterCard, content: "summary"), atIndex: 0)
+                }
+                pageElements.insertContentsOf(twitterElements, at: 4)
+            }
+            completion(URI: page.URI, data: join(pageElements).dataUsingEncoding(NSUTF8StringEncoding)!)
         }
         
         // Generate index HTML
-        completion(URI: site.URI, data: join([
+        let indexElements: [String] = [
             doctype(),
             title("\(site.name)"),
             meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
@@ -132,9 +152,9 @@ extension HTML {
                 var sectionElements: [HTML] = [
                     p(a(page.URI, href: page.URI))
                 ]
-                if let image = page.body.image {
-                    sectionElements.insert(p(img(image)), atIndex: 0)
-                } else if let excerpt = page.body.excerpt {
+                if let image = page.body.image where page.body.hasPrefix("/\(image)") {
+                    sectionElements.insert(p(a(img(image), href: page.URI)), atIndex: 0)
+                } else if let excerpt = page.body.excerpt where page.body.hasPrefix("\(excerpt)") {
                     sectionElements.insert(p(HTML(string: excerpt)), atIndex: 0)
                 }
                 return section(sectionElements)
@@ -142,7 +162,8 @@ extension HTML {
             footer([
                 p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
             ])
-        ]).dataUsingEncoding(NSUTF8StringEncoding)!)
+        ]
+        completion(URI: site.URI, data: join(indexElements).dataUsingEncoding(NSUTF8StringEncoding)!)
     }
     
     init(string: String) {
@@ -170,43 +191,43 @@ extension String {
     public static let newLine: String = "\n"
     public static let separator: String = "-"
     
-    var excerpt: String? {
-        if let _ = image {
-            return nil
-        }
-        return !split(String.newLine)[0].isEmpty ? split(String.newLine)[0] : nil
-    }
-    
-    var image: String? {
-        let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .CaseInsensitive)
-        let images = expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
-            return ((self as NSString).substringWithRange(result.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
-        }
-        if (!images.isEmpty && split(String.newLine)[0].containsString(images[0])) {
-            return images[0]
+    public var excerpt: String? {
+        for string in split(String.newLine) {
+            if (!string.isEmpty && string.images.isEmpty) {
+                return string
+            }
         }
         return nil
     }
     
+    public var image: String? {
+        return images.isEmpty ? nil : images[0]
+    }
+    
+    public var images: [String] {
+        return find(try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .CaseInsensitive))
+    }
+    
     public var manifest: [String] {
-        let expression = try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)
-        return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
-            return ((self as NSString).substringWithRange(result.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
-        }
+        return find(try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive))
     }
     
     public var URIFormat: String {
         var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         // Separate words with hyphens
-        string = string.stringByReplacingOccurrencesOfString(" ", withString: String.separator)
+        string = string.replace(" ", String.separator)
         
         // Strip existing file extension
-        string = string.stringByReplacingOccurrencesOfString("\(Manager.URIExtension)", withString: "")
+        string = string.replace(Manager.URIExtension, "")
         
         // Strip all non-alphanumeric characters
         string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
         return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
+    }
+    
+    public var URLFormat: String {
+        return lowercaseString.trim()
     }
     
     public func twitterFormat(format: Bool = true) -> String {
@@ -224,5 +245,11 @@ extension String {
     
     public func trim() -> String {
         return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    }
+    
+    private func find(expression: NSRegularExpression) -> [String] {
+        return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
+            return ((self as NSString).substringWithRange(result.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
+        }
     }
 }
