@@ -17,6 +17,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
     @IBOutlet weak var delegate: SettingsViewDelegate?
     @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
+    @IBOutlet var URLTextField: NSTextField!
     @IBOutlet var twitterTextField: NSTextField!
     @IBOutlet var twitterTestButton: NSButton!
     @IBOutlet var fontPopUpButton: NSPopUpButton!
@@ -31,6 +32,16 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
         get{
             return nameTextField.stringValue.trim()
+        }
+    }
+    
+    var URLText: String {
+        set{
+            URLTextField.stringValue = newValue.URLFormat
+            
+        }
+        get{
+            return URLTextField.stringValue
         }
     }
     
@@ -105,6 +116,10 @@ class SettingsView: NSView, NSTextFieldDelegate {
         stylesheet.generate{ data in
             data.writeToURL(NSURL.fileURLWithPath(stylesheetPath), atomically: true)
         }
+    }
+    
+    @IBAction func testURL(sender: AnyObject) {
+        
     }
     
     @IBAction func testTwitter(sender: AnyObject?) {
@@ -185,6 +200,8 @@ class SettingsView: NSView, NSTextFieldDelegate {
         switch control {
         case nameTextField:
             control.stringValue = control.stringValue.trim()
+        case URLTextField:
+            control.stringValue = control.stringValue.URLFormat
         case twitterTextField:
             control.stringValue = control.stringValue.twitterFormat()
         default:

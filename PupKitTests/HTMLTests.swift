@@ -46,16 +46,27 @@ class HTMLTests: XCTestCase {
 class StringTests: XCTestCase {
     func testExcerpt() {
         XCTAssertNil("".excerpt)
-        XCTAssertNil("/media/page.gif".excerpt)
+        XCTAssertNil("/media/page.gif and\n/media/page.jpg".excerpt)
         XCTAssertEqual("String\n and whitespace".excerpt, "String")
         XCTAssertEqual("String".excerpt, "String")
+        XCTAssertEqual("/media/page.gif and\n/media/page.jpg\nString and whitespace".excerpt, "String and whitespace")
     }
     
     func testImage() {
-        XCTAssertNil("".image)
-        XCTAssertNil("String and\n/media/page.gif".image)
+        XCTAssertNil("String and whitespace".image)
         XCTAssertEqual("String and /media/page.gif".image, "media/page.gif")
         XCTAssertEqual("/media/page.gif and string".image, "media/page.gif")
+    }
+    
+    func testImages() {
+        XCTAssertTrue("String and whitespace".images.isEmpty)
+        XCTAssertEqual("/media/page.jpg and string\n/media/page.gif".images, [
+            "media/page.jpg",
+            "media/page.gif"
+        ])
+        XCTAssertEqual("String and /media/page.gif".images, [
+            "media/page.gif"
+        ])
     }
     
     func testManifest() {
@@ -70,6 +81,11 @@ class StringTests: XCTestCase {
         XCTAssertEqual("page-name.txt".URIFormat, "page-nametxt\(Manager.URIExtension)")
     }
     
+    func testURLFormat() {
+        XCTAssertEqual("".URLFormat, "")
+        XCTAssertEqual(" Username.GitHub.IO".URLFormat, "username.github.io")
+    }
+    
     func testTwitterFormat() {
         XCTAssertEqual("@name".twitterFormat(), "@name")
         XCTAssertEqual("@name".twitterFormat(false), "name")
@@ -78,11 +94,19 @@ class StringTests: XCTestCase {
     
     func testSplit() {
         XCTAssertEqual("String with whitespace".split(" ").count, 3)
-        XCTAssertEqual("String with whitespace".split(" "), ["String", "with", "whitespace"])
+        XCTAssertEqual("String with whitespace".split(" "), [
+            "String",
+            "with",
+            "whitespace"
+        ])
         XCTAssertEqual("String".split(" ").count, 1)
-        XCTAssertEqual("String".split(" "), ["String"])
+        XCTAssertEqual("String".split(" "), [
+            "String"
+        ])
         XCTAssertEqual("".split(" ").count, 1)
-        XCTAssertEqual("".split(" "), [""])
+        XCTAssertEqual("".split(" "), [
+            ""
+        ])
     }
     
     func testReplace() {

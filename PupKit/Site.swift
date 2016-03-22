@@ -10,6 +10,7 @@ import Foundation
 public class Site: Archiving {
     public var name: String
     public var URI: String
+    public var URL: String = ""
     public var twitter: String
     public var pages: [Page]
     
@@ -23,6 +24,7 @@ public class Site: Archiving {
         self.init(dictionary: [
             ArchivingKeys.name: "",
             ArchivingKeys.URI: "",
+            ArchivingKeys.URL: "",
             ArchivingKeys.twitter: "",
             ArchivingKeys.pages: []
         ])
@@ -48,6 +50,7 @@ public class Site: Archiving {
         return [
             ArchivingKeys.name: name,
             ArchivingKeys.URI: URI,
+            ArchivingKeys.URL: URL,
             ArchivingKeys.twitter: twitter,
             ArchivingKeys.pages: pages
         ]
@@ -56,6 +59,9 @@ public class Site: Archiving {
     public required init(dictionary: [String: AnyObject]) {
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String
+        if let URL = dictionary[ArchivingKeys.URL] as? String {
+            self.URL = URL
+        }
         twitter = dictionary[ArchivingKeys.twitter] as! String
         pages = []
         for page in dictionary[ArchivingKeys.pages] as! [AnyObject] {
