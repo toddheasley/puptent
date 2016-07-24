@@ -2,7 +2,7 @@
 //  Window.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -11,20 +11,15 @@ class Window: NSWindow {
     @IBOutlet var pathLabel: NSButton!
     @IBOutlet var settingsButton: NSButton!
     
-    override init(contentRect: NSRect, styleMask aStyle: Int, backing bufferingType: NSBackingStoreType, `defer` flag: Bool) {
+    override init(contentRect: NSRect, styleMask aStyle: NSWindowStyleMask, backing bufferingType: NSBackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: aStyle, backing: bufferingType, defer: flag)
-        titleVisibility = .Hidden
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        titleVisibility = .Hidden
+        titleVisibility = .hidden
     }
 }
 
 extension NSWindow {
     var titleBar: NSView? {
-        guard let _ = contentView, _ = contentView!.superview else {
+        guard let _ = contentView, let _ = contentView!.superview else {
             return nil
         }
         return contentView!.superview!.subviews[1]
@@ -33,7 +28,7 @@ extension NSWindow {
     var toolbarHidden: Bool {
         set {
             toolbar?.showsBaselineSeparator = !newValue
-            toolbar?.visible = !newValue
+            toolbar?.isVisible = !newValue
             titlebarAppearsTransparent = newValue
         }
         get {

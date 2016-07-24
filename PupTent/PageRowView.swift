@@ -2,7 +2,7 @@
 //  PageRowView.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -11,23 +11,23 @@ class PageRowView: NSTableRowView {
     private var index: Int = -1
     
     override var interiorBackgroundStyle: NSBackgroundStyle {
-        return .Light
+        return .light
     }
     
-    override func drawSelectionInRect(dirtyRect: NSRect) {
-        NSColor.gridColor().colorWithAlphaComponent(emphasized ? 0.42: 0.21).setFill()
+    override func drawSelection(in dirtyRect: NSRect) {
+        NSColor.gridColor().withAlphaComponent(isEmphasized ? 0.42: 0.21).setFill()
         let path = NSBezierPath(rect: dirtyRect)
         path.fill()
     }
     
-    override func drawBackgroundInRect(dirtyRect: NSRect) {
-        super.drawBackgroundInRect(dirtyRect)
+    override func drawBackground(in dirtyRect: NSRect) {
+        super.drawBackground(in: dirtyRect)
         
-        guard let tableView = superview as? NSTableView where !selected else {
+        guard let tableView = superview as? NSTableView, !isSelected else {
             return
         }
         
-        tableView.gridColor.colorWithAlphaComponent(0.7).setFill()
+        tableView.gridColor.withAlphaComponent(0.7).setFill()
         if (index + 1 < tableView.numberOfRows) {
             NSBezierPath(rect: NSMakeRect(15.0, dirtyRect.size.height - 0.5, dirtyRect.size.width - 15.0, 0.5)).fill()
         }

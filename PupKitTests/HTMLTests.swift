@@ -2,7 +2,7 @@
 //  HTMLTests.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import XCTest
@@ -17,7 +17,7 @@ class HTMLTests: XCTestCase {
         site.pages.append(page)
         
         var count: Int = 0
-        HTML.generate(site) { URI, data in
+        HTML.generate(site: site) { URI, data in
             XCTAssertTrue(["site.html", "page.html"].contains(URI))
             XCTAssertNotNil(data)
             count += 1
@@ -88,30 +88,30 @@ class StringTests: XCTestCase {
     
     func testTwitterFormat() {
         XCTAssertEqual("@name".twitterFormat(), "@name")
-        XCTAssertEqual("@name".twitterFormat(false), "name")
+        XCTAssertEqual("@name".twitterFormat(format: false), "name")
         XCTAssertEqual("name".twitterFormat(), "@name")
     }
     
     func testSplit() {
-        XCTAssertEqual("String with whitespace".split(" ").count, 3)
-        XCTAssertEqual("String with whitespace".split(" "), [
+        XCTAssertEqual("String with whitespace".split(string: " ").count, 3)
+        XCTAssertEqual("String with whitespace".split(string: " "), [
             "String",
             "with",
             "whitespace"
         ])
-        XCTAssertEqual("String".split(" ").count, 1)
-        XCTAssertEqual("String".split(" "), [
+        XCTAssertEqual("String".split(string: " ").count, 1)
+        XCTAssertEqual("String".split(string: " "), [
             "String"
         ])
-        XCTAssertEqual("".split(" ").count, 1)
-        XCTAssertEqual("".split(" "), [
+        XCTAssertEqual("".split(string: " ").count, 1)
+        XCTAssertEqual("".split(string: " "), [
             ""
         ])
     }
     
     func testReplace() {
-        XCTAssertEqual("\n String with\nwhitespace".replace("\n", " "), "  String with whitespace")
-        XCTAssertEqual("String with whitespace".replace("\n", "\t"), "String with whitespace")
+        XCTAssertEqual("\n String with\nwhitespace".replace(string: "\n", " "), "  String with whitespace")
+        XCTAssertEqual("String with whitespace".replace(string: "\n", "\t"), "String with whitespace")
     }
     
     func testTrim() {

@@ -2,7 +2,7 @@
 //  PageTests.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import XCTest

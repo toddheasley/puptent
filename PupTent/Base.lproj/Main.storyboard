@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10115" systemVersion="15E61b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -369,8 +369,8 @@ CA
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="A2A53031-D269-4954-8499-742C81DE33BB" label="" paletteLabel="Path Label" id="f9W-Yt-m8x">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="120" height="25"/>
-                                    <size key="maxSize" width="280" height="25"/>
+                                    <size key="minSize" width="120" height="27"/>
+                                    <size key="maxSize" width="280" height="27"/>
                                     <button key="view" verticalHuggingPriority="750" id="0c9-4U-wbC">
                                         <rect key="frame" x="0.0" y="14" width="120" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -385,8 +385,8 @@ CA
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="7FCB2378-7EED-4CF2-B5BA-459D578DD73C" label="" paletteLabel="Settings Button" image="NSActionTemplate" id="Jqr-Yf-ZxH">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="25" height="25"/>
-                                    <size key="maxSize" width="25" height="25"/>
+                                    <size key="minSize" width="25" height="27"/>
+                                    <size key="maxSize" width="27" height="27"/>
                                     <button key="view" verticalHuggingPriority="750" id="ofp-za-9PZ">
                                         <rect key="frame" x="32" y="14" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -401,8 +401,8 @@ CA
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="CE58FC98-981A-41FC-B385-FDC39E5F0CA4" label="" paletteLabel="Preview Button" id="tHw-33-Fd0">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="63" height="25"/>
-                                    <size key="maxSize" width="63" height="25"/>
+                                    <size key="minSize" width="63" height="27"/>
+                                    <size key="maxSize" width="63" height="27"/>
                                     <button key="view" verticalHuggingPriority="750" id="L8S-xX-DiV">
                                         <rect key="frame" x="12" y="14" width="63" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

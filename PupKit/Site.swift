@@ -2,7 +2,7 @@
 //  Site.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
@@ -34,7 +34,7 @@ public class Site: Archiving {
     public var manifest: [String] {
         var manifest = [String]()
         for page in pages {
-            manifest.appendContentsOf(page.manifest)
+            manifest.append(contentsOf: page.manifest)
         }
         if (!URI.isEmpty) {
             manifest.append(URI)

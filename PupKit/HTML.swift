@@ -2,7 +2,7 @@
 //  HTML.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
@@ -10,19 +10,19 @@ import Foundation
 public typealias HTML = String
 
 enum HTMLMetaName: String {
-    case Generator = "generator"
-    case Viewport = "viewport"
-    case BookmarkTitle = "apple-mobile-web-app-title"
-    case TwitterCard = "twitter:card"
-    case TwitterTitle = "twitter:title"
-    case TwitterDescription = "twitter:description"
-    case TwitterImage = "twitter:image"
-    case TwitterSite = "twitter:site"
+    case generator = "generator"
+    case viewport = "viewport"
+    case bookmarkTitle = "apple-mobile-web-app-title"
+    case twitterCard = "twitter:card"
+    case twitterTitle = "twitter:title"
+    case twitterDescription = "twitter:description"
+    case twitterImage = "twitter:image"
+    case twitterSite = "twitter:site"
 }
 
 enum HTMLLinkRel: String {
-    case Stylesheet = "stylesheet"
-    case BookmarkIcon = "apple-touch-icon"
+    case stylesheet = "stylesheet"
+    case bookmarkIcon = "apple-touch-icon"
 }
 
 extension HTML {
@@ -47,19 +47,19 @@ extension HTML {
     }
     
     private static func header(elements: [HTML]) -> HTML {
-        return "<header>\(join(elements, indent: true))</header>"
+        return "<header>\(join(elements: elements, indent: true))</header>"
     }
     
     private static func footer(elements: [HTML]) -> HTML {
-        return "<footer>\(join(elements, indent: true))</footer>"
+        return "<footer>\(join(elements: elements, indent: true))</footer>"
     }
     
     private static func article(elements: [HTML]) -> HTML {
-        return "<article>\(join(elements, indent: true))</article>"
+        return "<article>\(join(elements: elements, indent: true))</article>"
     }
     
     private static func section(elements: [HTML]) -> HTML {
-        return "<section>\(join(elements, indent: true))</section>"
+        return "<section>\(join(elements: elements, indent: true))</section>"
     }
     
     private static func h1(content: HTML) -> HTML {
@@ -89,81 +89,81 @@ extension HTML {
     private static func join(elements: [HTML], indent: Bool = false) -> HTML {
         if (indent && !elements.isEmpty) {
             return "\(newLine)    " + elements.map{ element in
-                return element.replace("\(newLine)", "\(newLine)    ")
-                }.joinWithSeparator("\(newLine)    ") + newLine
+                return element.replace(string: "\(newLine)", "\(newLine)    ")
+                }.joined(separator: "\(newLine)    ") + newLine
         }
-        return elements.joinWithSeparator(newLine)
+        return elements.joined(separator: newLine)
     }
     
-    static func generate(site: Site, completion: (URI: String, data: NSData) -> Void) {
+    static func generate(site: Site, completion: (URI: String, data: Data) -> Void) {
         for page in site.pages {
             
             // Generate page HTML
-            var articleElements: [String] = page.body.componentsSeparatedByString("\(HTML.newLine)\(HTML.newLine)").map{ string in
-                return p(HTML(string: string))
+            var articleElements: [String] = page.body.components(separatedBy: "\(HTML.newLine)\(HTML.newLine)").map{ string in
+                return p(content: HTML(string: string))
             }
-            articleElements.insert(h1("\(page.name)"), atIndex: 0)
+            articleElements.insert(h1(content: "\(page.name)"), at: 0)
             var pageElements: [String] = [
                 doctype(),
-                title("\(page.name) - \(site.name)"),
-                meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
-                meta(.Viewport, content: viewport),
-                meta(.BookmarkTitle, content: "\(site.name)"),
-                link(.BookmarkIcon, href: bookmarkIconURI),
-                link(.Stylesheet, href: stylesheetURI),
-                header([
-                    h1(a("\(site.name)", href: site.URI))
+                title(string: "\(page.name) - \(site.name)"),
+                meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent!)"),
+                meta(name: .viewport, content: viewport),
+                meta(name: .bookmarkTitle, content: "\(site.name)"),
+                link(rel: .bookmarkIcon, href: bookmarkIconURI),
+                link(rel: .stylesheet, href: stylesheetURI),
+                header(elements: [
+                    h1(content: a(content: "\(site.name)", href: site.URI))
                 ]),
-                article(articleElements),
-                footer([
-                    p(HTML(string: site.twitter.isEmpty ? "" : "\(site.twitter.twitterFormat())"))
+                article(elements: articleElements),
+                footer(elements: [
+                    p(content: HTML(string: site.twitter.isEmpty ? "" : "\(site.twitter.twitterFormat())"))
                 ])
             ]
-            if let excerpt = page.body.excerpt where !site.twitter.isEmpty {
+            if let excerpt = page.body.excerpt, !site.twitter.isEmpty {
                 var twitterElements: [String] = [
-                    meta(.TwitterSite, content: "\(site.twitter.twitterFormat())"),
-                    meta(.TwitterTitle, content: "\(page.name)"),
-                    meta(.TwitterDescription, content: "\(excerpt)")
+                    meta(name: .twitterSite, content: "\(site.twitter.twitterFormat())"),
+                    meta(name: .twitterTitle, content: "\(page.name)"),
+                    meta(name: .twitterDescription, content: "\(excerpt)")
                 ]
-                if let image = page.body.image, URL = NSURL(string: image, relativeToURL: NSURL(string: site.URL)) where !site.URL.isEmpty {
-                    twitterElements.insert(meta(.TwitterCard, content: "summary_large_image"), atIndex: 0)
-                    twitterElements.append(meta(.TwitterImage, content: "\(URL.absoluteString)"))
+                if let image = page.body.image, let URL = URL(string: image, relativeTo: URL(string: site.URL)!), !site.URL.isEmpty {
+                    twitterElements.insert(meta(name: .twitterCard, content: "summary_large_image"), at: 0)
+                    twitterElements.append(meta(name: .twitterImage, content: "\(URL.absoluteString)"))
                 } else {
-                    twitterElements.insert(meta(.TwitterCard, content: "summary"), atIndex: 0)
+                    twitterElements.insert(meta(name: .twitterCard, content: "summary"), at: 0)
                 }
-                pageElements.insertContentsOf(twitterElements, at: 4)
+                pageElements.insert(contentsOf: twitterElements, at: 4)
             }
-            completion(URI: page.URI, data: join(pageElements).dataUsingEncoding(NSUTF8StringEncoding)!)
+            completion(URI: page.URI, data: join(elements: pageElements).data(using: String.Encoding.utf8)!)
         }
         
         // Generate index HTML
         let indexElements: [String] = [
             doctype(),
-            title("\(site.name)"),
-            meta(.Generator, content: "\(NSBundle.mainBundle().executableURL!.lastPathComponent!)"),
-            meta(.Viewport, content: viewport),
-            meta(.BookmarkTitle, content: "\(site.name)"),
-            link(.BookmarkIcon, href: bookmarkIconURI),
-            link(.Stylesheet, href: stylesheetURI),
-            header([
-                h1("\(site.name)")
+            title(string: "\(site.name)"),
+            meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent!)"),
+            meta(name: .viewport, content: viewport),
+            meta(name: .bookmarkTitle, content: "\(site.name)"),
+            link(rel: .bookmarkIcon, href: bookmarkIconURI),
+            link(rel: .stylesheet, href: stylesheetURI),
+            header(elements: [
+                h1(content: "\(site.name)")
             ]),
-            article(site.indexedPages.map{ page in
+            article(elements: site.indexedPages.map{ page in
                 var sectionElements: [HTML] = [
-                    p(a(page.URI, href: page.URI))
+                    p(content: a(content: page.URI, href: page.URI))
                 ]
-                if let image = page.body.image where page.body.hasPrefix("/\(image)") {
-                    sectionElements.insert(p(a(img(image), href: page.URI)), atIndex: 0)
-                } else if let excerpt = page.body.excerpt where page.body.hasPrefix("\(excerpt)") {
-                    sectionElements.insert(p(HTML(string: excerpt)), atIndex: 0)
+                if let image = page.body.image, page.body.hasPrefix("/\(image)") {
+                    sectionElements.insert(p(content: a(content: img(src: image), href: page.URI)), at: 0)
+                } else if let excerpt = page.body.excerpt, page.body.hasPrefix("\(excerpt)") {
+                    sectionElements.insert(p(content: HTML(string: excerpt)), at: 0)
                 }
-                return section(sectionElements)
+                return section(elements: sectionElements)
             }),
-            footer([
-                p(HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
+            footer(elements: [
+                p(content: HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
             ])
         ]
-        completion(URI: site.URI, data: join(indexElements).dataUsingEncoding(NSUTF8StringEncoding)!)
+        completion(URI: site.URI, data: join(elements: indexElements).data(using: String.Encoding.utf8)!)
     }
     
     init(string: String) {
@@ -180,9 +180,9 @@ extension HTML {
         
         var HTML = string
         for pattern in patterns {
-            HTML = (try! NSRegularExpression(pattern: pattern.0, options: NSRegularExpressionOptions.CaseInsensitive)).stringByReplacingMatchesInString(HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
+            HTML = (try! RegularExpression(pattern: pattern.0, options: RegularExpression.Options.caseInsensitive)).stringByReplacingMatches(in: HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
         }
-        HTML = HTML.stringByReplacingOccurrencesOfString("\n", withString: "<br>")
+        HTML = HTML.replacingOccurrences(of: "\n", with: "<br>")
         self.init(HTML)
     }
 }
@@ -192,7 +192,7 @@ extension String {
     public static let separator: String = "-"
     
     public var excerpt: String? {
-        for string in split(String.newLine) {
+        for string in split(string: String.newLine) {
             if (!string.isEmpty && string.images.isEmpty) {
                 return string
             }
@@ -205,51 +205,51 @@ extension String {
     }
     
     public var images: [String] {
-        return find(try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .CaseInsensitive))
+        return find(expression: try! RegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .caseInsensitive))
     }
     
     public var manifest: [String] {
-        return find(try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive))
+        return find(expression: try! RegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive))
     }
     
     public var URIFormat: String {
-        var string = lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var string = lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
         
         // Separate words with hyphens
-        string = string.replace(" ", String.separator)
+        string = string.replace(string: " ", String.separator)
         
         // Strip existing file extension
-        string = string.replace(Manager.URIExtension, "")
+        string = string.replace(string: Manager.URIExtension, "")
         
         // Strip all non-alphanumeric characters
-        string = string.stringByReplacingOccurrencesOfString("[^0-9a-z-_]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        string = string.replacingOccurrences(of: "[^0-9a-z-_]", with: "", options: .regularExpression, range: nil)
         return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
     }
     
     public var URLFormat: String {
-        return lowercaseString.trim()
+        return lowercased().trim()
     }
     
     public func twitterFormat(format: Bool = true) -> String {
-        let string = stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("@", withString: "")
+        let string = trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "@", with: "")
         return format && !string.isEmpty ? "@\(string)" : string
     }
     
     public func split(string: String) -> [String] {
-        return componentsSeparatedByString(string)
+        return components(separatedBy: string)
     }
     
     public func replace(string: String, _ with: String) -> String {
-        return stringByReplacingOccurrencesOfString(string, withString: with)
+        return replacingOccurrences(of: string, with: with)
     }
     
     public func trim() -> String {
-        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
-    private func find(expression: NSRegularExpression) -> [String] {
-        return expression.matchesInString(self, options: NSMatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
-            return ((self as NSString).substringWithRange(result.range).trim() as NSString).stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions(), range: NSMakeRange(0, 1))
+    private func find(expression: RegularExpression) -> [String] {
+        return expression.matches(in: self, options: RegularExpression.MatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
+            return ((self as NSString).substring(with: result.range).trim() as NSString).replacingOccurrences(of: "/", with: "", options: NSString.CompareOptions(), range: NSMakeRange(0, 1))
         }
     }
 }

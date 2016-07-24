@@ -2,7 +2,7 @@
 //  MainViewController.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -15,10 +15,10 @@ class MainViewController: NSViewController {
     @IBOutlet var openExistingSiteButton: NSButton!
     
     var canForget: Bool {
-        return !NSUserDefaults.standardUserDefaults().path.isEmpty
+        return !UserDefaults.standard.path.isEmpty
     }
     
-    private func openSite(path: String, animated: Bool) {
+    private func openSite(_ path: String, animated: Bool) {
         do {
             let manager = try Manager(path: path)
             
@@ -28,11 +28,11 @@ class MainViewController: NSViewController {
             }
             view.addSubview(siteViewController.view)
             view.pin(siteViewController.view, inset: 0.0)
-            (view.window as? Window)?.pathLabel.title = (manager.path as NSString).stringByAbbreviatingWithTildeInPath
+            (view.window as? Window)?.pathLabel.title = (manager.path as NSString).abbreviatingWithTildeInPath
             view.window?.toolbarHidden = false
             
             // Remember path
-            NSUserDefaults.standardUserDefaults().path = manager.path
+            UserDefaults.standard.path = manager.path
         } catch let error as NSError {
             forget(self)
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
@@ -42,34 +42,34 @@ class MainViewController: NSViewController {
                 if (response == NSAlertFirstButtonReturn) {
                     return
                 }
-                NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+                NSWorkspace.shared().open(URL(fileURLWithPath: path))
             }
         }
     }
     
-    @IBAction func forget(sender: AnyObject?) {
+    @IBAction func forget(_ sender: AnyObject?) {
         view.window?.toolbarHidden = true
         siteViewController?.view.removeFromSuperview()
         siteViewController = nil
         
         // Forget path
-        NSUserDefaults.standardUserDefaults().path = ""
+        UserDefaults.standard.path = ""
     }
     
-    @IBAction func makeNewSite(sender: AnyObject?) {
+    @IBAction func makeNewSite(_ sender: AnyObject?) {
         let openPanel: NSOpenPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = true
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Empty Folder..."
         openPanel.prompt = "Use This Folder"
-        openPanel.beginWithCompletionHandler{ result in
+        openPanel.begin{ result in
             if result != NSFileHandlingPanelOKButton {
                 return
             }
-            let path = openPanel.URL!.path! + "/"
+            let path = openPanel.url!.path! + "/"
             do {
-                try Manager.pitch(path)
+                try Manager.pitch(path: path)
                 self.openSite(path, animated: true)
             } catch let error as NSError {
                 NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
@@ -79,75 +79,75 @@ class MainViewController: NSViewController {
                     if (response == NSAlertFirstButtonReturn) {
                         return
                     }
-                    NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: path))
+                    NSWorkspace.shared().open(URL(fileURLWithPath: path))
                 }
             }
         }
     }
     
-    @IBAction func openExistingSite(sender: AnyObject?) {
+    @IBAction func openExistingSite(_ sender: AnyObject?) {
         let openPanel: NSOpenPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Existing Site..."
-        openPanel.beginWithCompletionHandler{ result in
+        openPanel.begin{ result in
             if result != NSFileHandlingPanelOKButton {
                 return
             }
-            self.openSite(openPanel.URL!.path! + "/", animated: true)
+            self.openSite(openPanel.url!.path! + "/", animated: true)
         }
     }
     
-    @IBAction func openInFinder(sender: AnyObject?) {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(fileURLWithPath: NSUserDefaults.standardUserDefaults().path))
+    @IBAction func openInFinder(_ sender: AnyObject?) {
+        NSWorkspace.shared().open(URL(fileURLWithPath: UserDefaults.standard.path))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let delegate = NSApplication.sharedApplication().delegate as? AppDelegate {
+        if let delegate = NSApplication.shared().delegate as? AppDelegate {
             delegate.mainViewController = self
         }
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor().cgColor
         
         if (canForget) {
             
             // Open most recent site
-            openSite(NSUserDefaults.standardUserDefaults().path, animated: false)
+            openSite(UserDefaults.standard.path, animated: false)
         }
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        (view.window as? Window)?.pathLabel.title = (NSUserDefaults.standardUserDefaults().path as NSString).stringByAbbreviatingWithTildeInPath
+        (view.window as? Window)?.pathLabel.title = (UserDefaults.standard.path as NSString).abbreviatingWithTildeInPath
         view.window?.toolbarHidden = !canForget
     }
 }
 
 extension NSView {
-    func pin(subview: NSView, inset: CGFloat) {
+    func pin(_ subview: NSView, inset: CGFloat) {
         subview.translatesAutoresizingMaskIntoConstraints = false
         addConstraints([
-            NSLayoutConstraint(item: subview, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: inset),
-            NSLayoutConstraint(item: subview, attribute: .Left, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1, constant: inset),
-            NSLayoutConstraint(item: subview, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: inset),
-            NSLayoutConstraint(item: subview, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: inset)
+            NSLayoutConstraint(item: subview, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: inset),
+            NSLayoutConstraint(item: subview, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: inset)
         ])
     }
 }
 
 extension NSAlert {
-    func runModal(completion: ((NSModalResponse) -> Void)? = nil) {
+    func runModal(_ completion: ((NSModalResponse) -> Void)? = nil) {
         completion?(runModal())
     }
     
-    func beginSheetModalForWindow(window: NSWindow?, completion:  ((NSModalResponse) -> Void)? = nil) {
+    func beginSheetModalForWindow(_ window: NSWindow?, completion:  ((NSModalResponse) -> Void)? = nil) {
         guard let window = window else {
             runModal(completion)
             return
         }
-        beginSheetModalForWindow(window, completionHandler: completion)
+        beginSheetModal(for: window, completionHandler: completion)
     }
     
     convenience init(message: String?, description: String? = nil, buttons: [String] = []) {
@@ -155,19 +155,19 @@ extension NSAlert {
         messageText = message != nil ? message! : ""
         informativeText = description != nil ? description! : ""
         for button in buttons {
-            addButtonWithTitle(button)
+            addButton(withTitle: button)
         }
     }
 }
 
-extension NSUserDefaults {
+extension UserDefaults {
     var path: String {
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue as NSString, forKey: "path")
-            NSUserDefaults.standardUserDefaults().synchronize()
+            UserDefaults.standard.set(newValue as NSString, forKey: "path")
+            UserDefaults.standard.synchronize()
         }
         get {
-            if let path: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("path") {
+            if let path: AnyObject = UserDefaults.standard.object(forKey: "path") {
                 return path as! String
             }
             return ""

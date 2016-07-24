@@ -2,18 +2,18 @@
 //  MainViewControllerTests.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import XCTest
 
 class NSUserDefaultsTests: XCTestCase {
     func testPath() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("path")
-        XCTAssertNotNil(NSUserDefaults.standardUserDefaults().path)
-        XCTAssertTrue(NSUserDefaults.standardUserDefaults().path.isEmpty)
-        NSUserDefaults.standardUserDefaults().path = "/Users/Documents"
-        XCTAssertEqual(NSUserDefaults.standardUserDefaults().path, "/Users/Documents")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("path")
+        UserDefaults.standard.removeObject(forKey: "path")
+        XCTAssertNotNil(UserDefaults.standard.path)
+        XCTAssertTrue(UserDefaults.standard.path.isEmpty)
+        UserDefaults.standard.path = "/Users/Documents"
+        XCTAssertEqual(UserDefaults.standard.path, "/Users/Documents")
+        UserDefaults.standard.removeObject(forKey: "path")
     }
 }

@@ -2,7 +2,7 @@
 //  BookmarkIconView.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -12,17 +12,17 @@ class BookmarkIconView: NSImageView {
     
     override var image: NSImage? {
         didSet{
-            button.hidden = image != nil
+            button.isHidden = image != nil
         }
     }
     
-    func chooseImage(sender: AnyObject) {
+    func chooseImage(_ sender: AnyObject) {
         let openPanel: NSOpenPanel = NSOpenPanel()
         openPanel.allowedFileTypes = NSImage.imageTypes()
         openPanel.title = "Choose a Bookmark Icon..."
         openPanel.prompt = "Use This Image"
-        openPanel.beginWithCompletionHandler{ result in
-            if let URL = openPanel.URL, image = NSImage(contentsOfURL: URL) where result == NSFileHandlingPanelOKButton {
+        openPanel.begin{ result in
+            if let URL = openPanel.url, let image = NSImage(contentsOf: URL), result == NSFileHandlingPanelOKButton {
                 self.image = image
                 self.sendAction(self.action, to: self.target)
             }
