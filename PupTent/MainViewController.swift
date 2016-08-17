@@ -67,7 +67,7 @@ class MainViewController: NSViewController {
             if result != NSFileHandlingPanelOKButton {
                 return
             }
-            let path = openPanel.url!.path! + "/"
+            let path = openPanel.url!.path + "/"
             do {
                 try Manager.pitch(path: path)
                 self.openSite(path, animated: true)
@@ -94,7 +94,7 @@ class MainViewController: NSViewController {
             if result != NSFileHandlingPanelOKButton {
                 return
             }
-            self.openSite(openPanel.url!.path! + "/", animated: true)
+            self.openSite(openPanel.url!.path + "/", animated: true)
         }
     }
     
@@ -109,7 +109,7 @@ class MainViewController: NSViewController {
         }
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.controlBackgroundColor().cgColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
         if (canForget) {
             
@@ -167,10 +167,7 @@ extension UserDefaults {
             UserDefaults.standard.synchronize()
         }
         get {
-            if let path: AnyObject = UserDefaults.standard.object(forKey: "path") {
-                return path as! String
-            }
-            return ""
+            return UserDefaults.standard.object(forKey: "path") as? String ?? ""
         }
     }
 }

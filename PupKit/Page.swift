@@ -31,7 +31,7 @@ public class Page: Archiving {
         return manifest
     }
     
-    public var dictionary: [String: AnyObject] {
+    public var dictionary: [String: Any] {
         return [
             ArchivingKeys.index: index,
             ArchivingKeys.name: name,
@@ -40,7 +40,7 @@ public class Page: Archiving {
         ]
     }
     
-    public required init(dictionary: [String: AnyObject]) {
+    public required init(dictionary: [String: Any]) {
         index = dictionary[ArchivingKeys.index] as! Bool
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String

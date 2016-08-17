@@ -29,7 +29,7 @@ public class CSS {
     private func value(target: String, property: String, selector: String? = nil) -> String? {
         var target = target.replacingOccurrences(of: String.newLine, with: "")
         if let selector = selector, !selector.isEmpty {
-            let matches = try! RegularExpression(pattern: "\(selector) \\{[^\\}]+\\}", options: .caseInsensitive).matches(in: target, options: RegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
+            let matches = try! NSRegularExpression(pattern: "\(selector) \\{[^\\}]+\\}", options: .caseInsensitive).matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
                 return ((target as NSString).substring(with: result.range).trim() as NSString)
             }
             if (matches.isEmpty) {
@@ -37,8 +37,8 @@ public class CSS {
             }
             target = matches[0] as String
         }
-        let expression = try! RegularExpression(pattern: "(\(property)): ([^;]+);", options: .caseInsensitive)
-        let matches = expression.matches(in: target, options: RegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
+        let expression = try! NSRegularExpression(pattern: "(\(property)): ([^;]+);", options: .caseInsensitive)
+        let matches = expression.matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
             return ((target as NSString).substring(with: result.range).trim() as NSString)
         }
         if (matches.isEmpty) {
@@ -69,8 +69,8 @@ public class CSS {
         return blocks.joined(separator: "\(String.newLine)\(String.newLine)")
     }
     
-    public func generate(completion: (data: Data) -> Void) {
-        completion(data: join(blocks: [
+    public func generate(completion: (Data) -> Void) {
+        completion(join(blocks: [
             block(selector: "body", rules: [
                 ("background", "\(backgroundColor)"),
                 ("color", "\(textColor)"),

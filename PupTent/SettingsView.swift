@@ -149,7 +149,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
         let URL = Foundation.URL(fileURLWithPath: path)
         do {
-            if (FileManager.default.fileExists(atPath: URL.path!)) {
+            if (FileManager.default.fileExists(atPath: URL.path)) {
                 try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
             }
         } catch let error as NSError {
@@ -180,7 +180,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         super.awakeFromNib()
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.controlBackgroundColor().cgColor
+        layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
     }
     
     // MARK: NSTextFieldDelegate

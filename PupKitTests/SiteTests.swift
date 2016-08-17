@@ -9,7 +9,7 @@ import XCTest
 
 class SiteTests: XCTestCase {
     var site: Site!
-    let dictionary: [String: AnyObject] = [
+    let dictionary: [String: Any] = [
         ArchivingKeys.name: "Site",
         ArchivingKeys.URI: "index.html",
         ArchivingKeys.twitter: "twitter",

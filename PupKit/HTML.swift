@@ -95,7 +95,7 @@ extension HTML {
         return elements.joined(separator: newLine)
     }
     
-    static func generate(site: Site, completion: (URI: String, data: Data) -> Void) {
+    static func generate(site: Site, completion: (String, Data) -> Void) {
         for page in site.pages {
             
             // Generate page HTML
@@ -106,7 +106,7 @@ extension HTML {
             var pageElements: [String] = [
                 doctype(),
                 title(string: "\(page.name) - \(site.name)"),
-                meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent!)"),
+                meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent)"),
                 meta(name: .viewport, content: viewport),
                 meta(name: .bookmarkTitle, content: "\(site.name)"),
                 link(rel: .bookmarkIcon, href: bookmarkIconURI),
@@ -133,14 +133,14 @@ extension HTML {
                 }
                 pageElements.insert(contentsOf: twitterElements, at: 4)
             }
-            completion(URI: page.URI, data: join(elements: pageElements).data(using: String.Encoding.utf8)!)
+            completion(page.URI, join(elements: pageElements).data(using: String.Encoding.utf8)!)
         }
         
         // Generate index HTML
         let indexElements: [String] = [
             doctype(),
             title(string: "\(site.name)"),
-            meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent!)"),
+            meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent)"),
             meta(name: .viewport, content: viewport),
             meta(name: .bookmarkTitle, content: "\(site.name)"),
             link(rel: .bookmarkIcon, href: bookmarkIconURI),
@@ -163,7 +163,7 @@ extension HTML {
                 p(content: HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
             ])
         ]
-        completion(URI: site.URI, data: join(elements: indexElements).data(using: String.Encoding.utf8)!)
+        completion(site.URI, join(elements: indexElements).data(using: String.Encoding.utf8)!)
     }
     
     init(string: String) {
@@ -180,10 +180,10 @@ extension HTML {
         
         var HTML = string
         for pattern in patterns {
-            HTML = (try! RegularExpression(pattern: pattern.0, options: RegularExpression.Options.caseInsensitive)).stringByReplacingMatches(in: HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
+            HTML = (try! NSRegularExpression(pattern: pattern.0, options: NSRegularExpression.Options.caseInsensitive)).stringByReplacingMatches(in: HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
         }
         HTML = HTML.replacingOccurrences(of: "\n", with: "<br>")
-        self.init(HTML)
+        self.init(HTML)!
     }
 }
 
@@ -205,11 +205,11 @@ extension String {
     }
     
     public var images: [String] {
-        return find(expression: try! RegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .caseInsensitive))
+        return find(expression: try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+).(png|gif|jpg|jpeg)", options: .caseInsensitive))
     }
     
     public var manifest: [String] {
-        return find(expression: try! RegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive))
+        return find(expression: try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive))
     }
     
     public var URIFormat: String {
@@ -247,8 +247,8 @@ extension String {
         return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
-    private func find(expression: RegularExpression) -> [String] {
-        return expression.matches(in: self, options: RegularExpression.MatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
+    private func find(expression: NSRegularExpression) -> [String] {
+        return expression.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
             return ((self as NSString).substring(with: result.range).trim() as NSString).replacingOccurrences(of: "/", with: "", options: NSString.CompareOptions(), range: NSMakeRange(0, 1))
         }
     }

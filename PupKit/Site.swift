@@ -42,8 +42,8 @@ public class Site: Archiving {
         return manifest
     }
     
-    public var dictionary: [String: AnyObject] {
-        var pages: [AnyObject] = []
+    public var dictionary: [String: Any] {
+        var pages: [Any] = []
         for page in self.pages {
             pages.append(page.dictionary)
         }
@@ -56,7 +56,7 @@ public class Site: Archiving {
         ]
     }
     
-    public required init(dictionary: [String: AnyObject]) {
+    public required init(dictionary: [String: Any]) {
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String
         if let URL = dictionary[ArchivingKeys.URL] as? String {

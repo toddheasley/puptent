@@ -224,7 +224,9 @@
 					};
 					5CB4CDD11A7A644F001C70BE = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 9Q3DL72K7D;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 					5CB4CDFB1A7A6611001C70BE = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -444,8 +446,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -466,8 +470,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

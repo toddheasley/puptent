@@ -12,11 +12,11 @@ protocol Archiving {
         get
     }
     
-    var dictionary: [String: AnyObject] {
+    var dictionary: [String: Any] {
         get
     }
     
-    init(dictionary: [String: AnyObject])
+    init(dictionary: [String: Any])
 }
 
 struct ArchivingKeys {

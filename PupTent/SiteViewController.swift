@@ -71,7 +71,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.controlBackgroundColor().cgColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
         pagesTableView.register(forDraggedTypes: [draggedType])
         pagesTableView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
@@ -112,7 +112,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pasteboard: NSPasteboard) -> Bool {
-        if (rowIndexes.first > tableView.numberOfRows - 2) {
+        if (rowIndexes.first! > tableView.numberOfRows - 2) {
             
             // Prevent "new page" cell drag
             return false
@@ -142,7 +142,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         let selectedPage = self.selectedPage.page // Remember current page selection
         
         var index = row
-        if (indexSet.first < index) {
+        if (indexSet.first! < index) {
             index -= 1
         }
         
