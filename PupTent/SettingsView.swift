@@ -126,7 +126,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         guard let URL = URL(string: "https://twitter.com/\(twitterText)"), !twitterText.isEmpty else {
             return
         }
-        if (twitterTestButton.title == "View") {
+        if twitterTestButton.title == "View" {
             NSWorkspace.shared().open(URL)
             return
         }
@@ -149,7 +149,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
         let URL = Foundation.URL(fileURLWithPath: path)
         do {
-            if (FileManager.default.fileExists(atPath: URL.path)) {
+            if FileManager.default.fileExists(atPath: URL.path) {
                 try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
             }
         } catch let error as NSError {
@@ -157,7 +157,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
                 "Cancel",
                 "Open in Finder"
             ]).beginSheetModal(for: window!){ response in
-                if (response != NSAlertFirstButtonReturn) {
+                if response != NSAlertFirstButtonReturn {
                     NSWorkspace.shared().open(URL)
                 }
             }
@@ -220,7 +220,7 @@ extension NSColor {
     }
     
     convenience init?(string: String) {
-        if (!string.hasPrefix("#") || string.characters.count != 7) {
+        if !string.hasPrefix("#") || string.characters.count != 7 {
             self.init()
             return nil
         }

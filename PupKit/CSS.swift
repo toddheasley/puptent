@@ -32,7 +32,7 @@ public class CSS {
             let matches = try! NSRegularExpression(pattern: "\(selector) \\{[^\\}]+\\}", options: .caseInsensitive).matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
                 return ((target as NSString).substring(with: result.range).trim() as NSString)
             }
-            if (matches.isEmpty) {
+            if matches.isEmpty {
                 return nil
             }
             target = matches[0] as String
@@ -41,11 +41,11 @@ public class CSS {
         let matches = expression.matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
             return ((target as NSString).substring(with: result.range).trim() as NSString)
         }
-        if (matches.isEmpty) {
+        if matches.isEmpty {
             return nil
         }
         let match = matches[0] as String
-        if (match.isEmpty) {
+        if match.isEmpty {
             return nil
         }
         return expression.stringByReplacingMatches(in: match, options: [], range: NSMakeRange(0, match.characters.count), withTemplate: "$2")

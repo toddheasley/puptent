@@ -28,11 +28,11 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
             switch control {
             case textField:
                 control.stringValue = control.stringValue.trim()
-                if (secondaryTextField.stringValue.isEmpty) {
+                if secondaryTextField.stringValue.isEmpty {
                     secondaryTextField.stringValue = control.stringValue.URIFormat
                 }
             case secondaryTextField:
-                if (control.stringValue.isEmpty) {
+                if control.stringValue.isEmpty {
                     control.stringValue = textField.stringValue
                 }
                 control.stringValue = control.stringValue.URIFormat

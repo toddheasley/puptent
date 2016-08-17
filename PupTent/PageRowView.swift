@@ -28,10 +28,10 @@ class PageRowView: NSTableRowView {
         }
         
         tableView.gridColor.withAlphaComponent(0.7).setFill()
-        if (index + 1 < tableView.numberOfRows) {
+        if index + 1 < tableView.numberOfRows {
             NSBezierPath(rect: NSMakeRect(15.0, dirtyRect.size.height - 0.5, dirtyRect.size.width - 15.0, 0.5)).fill()
         }
-        if (index > 0) {
+        if index > 0 {
             NSBezierPath(rect: NSMakeRect(15.0, 0.0, dirtyRect.size.width - 15.0, 0.5)).fill()
         }
     }

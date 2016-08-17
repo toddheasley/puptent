@@ -93,7 +93,7 @@ class PageView: NSTextView, NSTextStorageDelegate {
                 // Copy attached file to media directory
                 let URL = Foundation.URL(fileURLWithPath: "\(path)\(Manager.mediaPath)/\(filename.replacingOccurrences(of: " ", with: String.separator))")
                 do {
-                    if (FileManager.default.fileExists(atPath: URL.path)) {
+                    if FileManager.default.fileExists(atPath: URL.path) {
                         try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
                     }
                     let _ = try? data.write(to: URL, options: [.atomicWrite])

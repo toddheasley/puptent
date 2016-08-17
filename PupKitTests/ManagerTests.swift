@@ -53,7 +53,7 @@ class ManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         do {
-            if (FileManager.default.fileExists(atPath: path)) {
+            if FileManager.default.fileExists(atPath: path) {
                 try FileManager.default.removeItem(atPath: path)
             }
             try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)

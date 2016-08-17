@@ -39,7 +39,7 @@ class MainViewController: NSViewController {
                 "Cancel",
                 "Open in Finder"
             ]).runModal{ response in
-                if (response == NSAlertFirstButtonReturn) {
+                if response == NSAlertFirstButtonReturn {
                     return
                 }
                 NSWorkspace.shared().open(URL(fileURLWithPath: path))
@@ -76,7 +76,7 @@ class MainViewController: NSViewController {
                     "Cancel",
                     "Open in Finder"
                 ]).runModal{ response in
-                    if (response == NSAlertFirstButtonReturn) {
+                    if response == NSAlertFirstButtonReturn {
                         return
                     }
                     NSWorkspace.shared().open(URL(fileURLWithPath: path))
@@ -111,7 +111,7 @@ class MainViewController: NSViewController {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
-        if (canForget) {
+        if canForget {
             
             // Open most recent site
             openSite(UserDefaults.standard.path, animated: false)

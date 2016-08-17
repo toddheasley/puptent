@@ -17,7 +17,7 @@ public class Manager {
     private static var bookmarkIconData: String = "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
     
     public class func pitch(path: String) throws {
-        if (Manager.exists(path: path)) {
+        if Manager.exists(path: path) {
             return
         }
         
@@ -86,7 +86,7 @@ public class Manager {
         
         let enumerator: FileManager.DirectoryEnumerator = FileManager.default.enumerator(atPath: self.path)!
         while let URI = enumerator.nextObject() as? String {
-            if (!manifest.contains(URI) && !URI.hasPrefix(".")) {
+            if !manifest.contains(URI) && !URI.hasPrefix(".") {
                 do {
                     
                     // Not found in manifest; move file to trash

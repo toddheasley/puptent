@@ -25,7 +25,7 @@ public class Page: Archiving {
     // MARK: Archiving
     public var manifest: [String] {
         var manifest = body.manifest
-        if (!URI.isEmpty) {
+        if !URI.isEmpty {
             manifest.append(URI)
         }
         return manifest

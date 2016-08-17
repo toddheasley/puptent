@@ -17,7 +17,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBOutlet var settingsView: SettingsView!
     
     var selectedPage: (index: Int, page: Page?) {
-        if (pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count) {
+        if pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count {
             return (pagesTableView.selectedRow, manager.site.pages[pagesTableView.selectedRow])
         }
         return (-1, nil)
@@ -52,7 +52,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     @IBAction func deletePage(_ sender: AnyObject?) {
-        if (pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count) {
+        if pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count {
             return
         }
         do {
@@ -86,7 +86,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        if (selectedPage.index < 0) {
+        if selectedPage.index < 0 {
             openSettings(self)
         }
     }
@@ -112,7 +112,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pasteboard: NSPasteboard) -> Bool {
-        if (rowIndexes.first! > tableView.numberOfRows - 2) {
+        if rowIndexes.first! > tableView.numberOfRows - 2 {
             
             // Prevent "new page" cell drag
             return false
@@ -125,7 +125,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
-        if (dropOperation == NSTableViewDropOperation.above && row < tableView.numberOfRows) {
+        if dropOperation == NSTableViewDropOperation.above && row < tableView.numberOfRows {
             
             // Allow cell drop in rows above "new page" cell
             return NSDragOperation.move
@@ -142,7 +142,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         let selectedPage = self.selectedPage.page // Remember current page selection
         
         var index = row
-        if (indexSet.first! < index) {
+        if indexSet.first! < index {
             index -= 1
         }
         
@@ -182,7 +182,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         view.secondaryTextField!.stringValue = ""
         view.button.isEnabled = false
         view.button.state = 0
-        if (row < manager.site.pages.count) {
+        if row < manager.site.pages.count {
             
             // Configure cell for existing page
             let page = manager.site.pages[row]
@@ -206,7 +206,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         }
         
         var page: Page = Page()
-        if (tableView.selectedRow < manager.site.pages.count) {
+        if tableView.selectedRow < manager.site.pages.count {
             page = manager.site.pages[tableView.selectedRow]
         } else if let view = tableView.view(atColumn: 0, row: tableView.selectedRow, makeIfNecessary: false) as? PageCellView {
             manager.site.pages.append(page)
@@ -221,12 +221,12 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     // MARK: PageCellViewDelegate
     func pageCellViewDidChange(_ view: PageCellView) {
         let row = pagesTableView.row(for: view)
-        if (row < 0) {
+        if row < 0 {
             return
         }
         let page = manager.site.pages[row]
-        if (view.textField!.stringValue.isEmpty) {
-            if (page.name.isEmpty) {
+        if view.textField!.stringValue.isEmpty {
+            if page.name.isEmpty {
                 manager.site.pages.remove(at: pagesTableView.selectedRow)
             }
             pagesTableView.deselectAll(self)
@@ -244,7 +244,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
                 "Cancel"
             ]).beginSheetModal(for: view.window!)
         }
-        if (pagesTableView.numberOfRows == manager.site.pages.count) {
+        if pagesTableView.numberOfRows == manager.site.pages.count {
             pagesTableView.insertRows(at: IndexSet(integer: manager.site.pages.count), withAnimation: NSTableViewAnimationOptions())
         }
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-let name = Bundle.main.executableURL!.lastPathComponent!
+let name = Bundle.main.executableURL!.lastPathComponent
 let path = String(format:"%@/", Bundle.main.bundlePath)
 let options = [
     "pitch",
@@ -16,8 +16,8 @@ let options = [
 ]
 
 var option = ""
-if (Process.arguments.count > 1) {
-    option = Process.arguments[1]
+if CommandLine.arguments.count > 1 {
+    option = CommandLine.arguments[1]
 }
 
 do {

@@ -87,7 +87,7 @@ extension HTML {
     }
     
     private static func join(elements: [HTML], indent: Bool = false) -> HTML {
-        if (indent && !elements.isEmpty) {
+        if indent && !elements.isEmpty {
             return "\(newLine)    " + elements.map{ element in
                 return element.replace(string: "\(newLine)", "\(newLine)    ")
                 }.joined(separator: "\(newLine)    ") + newLine
@@ -193,7 +193,7 @@ extension String {
     
     public var excerpt: String? {
         for string in split(string: String.newLine) {
-            if (!string.isEmpty && string.images.isEmpty) {
+            if !string.isEmpty && string.images.isEmpty {
                 return string
             }
         }

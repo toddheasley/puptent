@@ -31,7 +31,7 @@ class PageViewAttachmentCell: NSTextAttachmentCell {
         let imageSize = image.size.width < 64.0 ? image.size : NSMakeSize(image.size.width / 2.0, image.size.height / 2.0)
         var width: CGFloat = textContainer.size.width - textView.textContainerInset.width
         let scale: CGFloat = imageSize.width <= width ? 1.0 : width / imageSize.width
-        if (imageSize.width < width) {
+        if imageSize.width < width {
             width = imageSize.width
         }
         return NSMakeRect(0.0, 0.0, width, imageSize.height * scale)
