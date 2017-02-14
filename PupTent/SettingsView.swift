@@ -2,18 +2,18 @@
 //  SettingsView.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
 import PupKit
 
 @objc protocol SettingsViewDelegate {
-    func settingsViewDidChange(view: SettingsView)
+    func settingsViewDidChange(_ view: SettingsView)
 }
 
 class SettingsView: NSView, NSTextFieldDelegate {
-    private var timer: NSTimer?
+    private var timer: Timer?
     @IBOutlet weak var delegate: SettingsViewDelegate?
     @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
@@ -48,12 +48,12 @@ class SettingsView: NSView, NSTextFieldDelegate {
     var twitterText: String {
         set{
             twitterTextField.stringValue = newValue.twitterFormat()
-            twitterTestButton.enabled = !twitterTextField.stringValue.twitterFormat(false).isEmpty
+            twitterTestButton.isEnabled = !twitterTextField.stringValue.twitterFormat(format: false).isEmpty
             twitterTestButton.image = NSImage(named: "NSStatusNone")
             twitterTestButton.title = "Test"
         }
         get{
-            return twitterTextField.stringValue.twitterFormat(false)
+            return twitterTextField.stringValue.twitterFormat(format: false)
         }
     }
     
@@ -63,23 +63,23 @@ class SettingsView: NSView, NSTextFieldDelegate {
                 bookmarkIconView.image = nil
                 return
             }
-            bookmarkIconView.image = NSImage(contentsOfURL: NSURL.fileURLWithPath(bookmarkIconPath))
+            bookmarkIconView.image = NSImage(contentsOf: URL(fileURLWithPath: bookmarkIconPath))
         }
     }
     
     var stylesheetPath: String? {
         didSet{
             var stylesheet = CSS()
-            if let stylesheetPath = stylesheetPath, data = NSData(contentsOfURL: NSURL.fileURLWithPath(stylesheetPath)) {
+            if let stylesheetPath = stylesheetPath, let data = try? Data(contentsOf: URL(fileURLWithPath: stylesheetPath)) {
                 stylesheet = CSS(data: data)
             }
             switch stylesheet.font {
-            case .Serif:
-                fontPopUpButton.selectItemAtIndex(0)
-            case .Sans:
-                fontPopUpButton.selectItemAtIndex(1)
-            case .Mono:
-                fontPopUpButton.selectItemAtIndex(2)
+            case .serif:
+                fontPopUpButton.selectItem(at: 0)
+            case .sans:
+                fontPopUpButton.selectItem(at: 1)
+            case .mono:
+                fontPopUpButton.selectItem(at: 2)
             }
             if let backgroundColor = NSColor(string: stylesheet.backgroundColor) {
                 backgroundColorWell.color = backgroundColor
@@ -103,37 +103,37 @@ class SettingsView: NSView, NSTextFieldDelegate {
         let stylesheet = CSS()
         switch fontPopUpButton.indexOfSelectedItem {
         case 1:
-            stylesheet.font = .Sans
+            stylesheet.font = .sans
         case 2:
-            stylesheet.font = .Mono
+            stylesheet.font = .mono
         default:
-            stylesheet.font = .Serif
+            stylesheet.font = .serif
         }
         stylesheet.backgroundColor = backgroundColorWell.color.string
         stylesheet.textColor = textColorWell.color.string
         stylesheet.linkColor.link = linkColorWell.color.string
         stylesheet.linkColor.visited = visitedLinkColorWell.color.string
         stylesheet.generate{ data in
-            data.writeToURL(NSURL.fileURLWithPath(stylesheetPath), atomically: true)
+            let _ = try? data.write(to: URL(fileURLWithPath: stylesheetPath), options: [.atomicWrite])
         }
     }
     
-    @IBAction func testURL(sender: AnyObject) {
+    @IBAction func testURL(_ sender: AnyObject) {
         
     }
     
-    @IBAction func testTwitter(sender: AnyObject?) {
-        guard let URL = NSURL(string: "https://twitter.com/\(twitterText)") where !twitterText.isEmpty else {
+    @IBAction func testTwitter(_ sender: AnyObject?) {
+        guard let URL = URL(string: "https://twitter.com/\(twitterText)"), !twitterText.isEmpty else {
             return
         }
-        if (twitterTestButton.title == "View") {
-            NSWorkspace.sharedWorkspace().openURL(URL)
+        if twitterTestButton.title == "View" {
+            NSWorkspace.shared().open(URL)
             return
         }
         self.twitterTestButton.image = NSImage(named: "NSStatusNone")
-        NSURLSession.sharedSession().dataTaskWithURL(URL){ data, response, error in
-            dispatch_async(dispatch_get_main_queue()){
-                guard let response = response as? NSHTTPURLResponse where response.statusCode == 200 else {
+        URLSession.shared.dataTask(with: URL){ data, response, error in
+            DispatchQueue.main.async{
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     self.twitterTestButton.image = NSImage(named: "NSStatusUnavailable")
                     return
                 }
@@ -143,57 +143,57 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }.resume()
     }
     
-    @IBAction func bookmarkIconDidChange(sender: AnyObject?) {
-        guard let path = bookmarkIconPath, sender = sender as? NSImageView else {
+    @IBAction func bookmarkIconDidChange(_ sender: AnyObject?) {
+        guard let path = bookmarkIconPath, let sender = sender as? NSImageView else {
             return
         }
-        let URL = NSURL(fileURLWithPath: path)
+        let URL = Foundation.URL(fileURLWithPath: path)
         do {
-            if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
-                try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
+            if FileManager.default.fileExists(atPath: URL.path) {
+                try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
             }
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel",
                 "Open in Finder"
-            ]).beginSheetModalForWindow(window){ response in
-                if (response != NSAlertFirstButtonReturn) {
-                    NSWorkspace.sharedWorkspace().openURL(URL)
+            ]).beginSheetModal(for: window!){ response in
+                if response != NSAlertFirstButtonReturn {
+                    NSWorkspace.shared().open(URL)
                 }
             }
         }
         if let image = sender.image {
-            image.TIFFRepresentation?.writeToURL(URL, atomically: true)
+            let _ = try? image.tiffRepresentation?.write(to: URL, options: [.atomicWrite])
         }
     }
     
-    @IBAction func fontDidChange(sender: AnyObject?) {
+    @IBAction func fontDidChange(_ sender: AnyObject?) {
         makeNewStylesheet()
     }
     
-    @IBAction func colorDidChange(sender: AnyObject?) {
+    @IBAction func colorDidChange(_ sender: AnyObject?) {
         timer?.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(SettingsView.makeNewStylesheet), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SettingsView.makeNewStylesheet), userInfo: nil, repeats: false)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
+        layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
     }
     
     // MARK: NSTextFieldDelegate
-    override func controlTextDidChange(obj: NSNotification) {
-        guard let control = obj.object as? NSTextField where control == twitterTextField else {
+    override func controlTextDidChange(_ obj: Notification) {
+        guard let control = obj.object as? NSTextField, control == twitterTextField else {
             return
         }
-        twitterTestButton.enabled = !twitterTextField.stringValue.twitterFormat(false).isEmpty
+        twitterTestButton.isEnabled = !twitterTextField.stringValue.twitterFormat(format: false).isEmpty
         twitterTestButton.image = NSImage(named: "NSStatusNone")
         twitterTestButton.title = "Test"
     }
     
-    override func controlTextDidEndEditing(notification: NSNotification) {
+    override func controlTextDidEndEditing(_ notification: Notification) {
         guard let control = notification.object as? NSTextField else {
             return
         }
@@ -216,16 +216,16 @@ extension NSColor {
         var red: CGFloat = 0.0, green: CGFloat = 0.0, blue: CGFloat = 0.0, alpha: CGFloat = 0.0
         getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         let hex:Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255) << 0
-        return NSString(format:"#%06x", hex).uppercaseString as String
+        return NSString(format:"#%06x", hex).uppercased as String
     }
     
     convenience init?(string: String) {
-        if (!string.hasPrefix("#") || string.characters.count != 7) {
+        if !string.hasPrefix("#") || string.characters.count != 7 {
             self.init()
             return nil
         }
         var hex:UInt32 = 0
-        NSScanner(string: string.replace("#", "")).scanHexInt(&hex)
+        Scanner(string: string.replace(string: "#", "")).scanHexInt32(&hex)
         self.init(red: CGFloat((hex & 0xFF0000) >> 16) / 255.0, green: CGFloat((hex & 0x00FF00) >> 8) / 255.0, blue: CGFloat(hex & 0x00FF) / 255.0, alpha: 1.0)
     }
 }

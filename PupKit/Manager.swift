@@ -2,7 +2,7 @@
 //  Manager.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
@@ -17,36 +17,36 @@ public class Manager {
     private static var bookmarkIconData: String = "iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAAcElEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BhppwABkzBLogAAAABJRU5ErkJggg==" // Base64-encoded blank PNG
     
     public class func pitch(path: String) throws {
-        if (Manager.exists(path)) {
+        if Manager.exists(path: path) {
             return
         }
         
-        let pathComponents = path.split("/").filter{ string in
+        let pathComponents = path.split(string: "/").filter{ string in
             !string.isEmpty
         }
         let site: Site = Site()
         site.URI = "index\(Manager.URIExtension)"
-        if let string = pathComponents.last where string.split(".").count == 3 && string.hasSuffix(".github.io") {
+        if let string = pathComponents.last, string.split(string: ".").count == 3 && string.hasSuffix(".github.io") {
             
             // Pre-populate Github Page URL
             site.URL = "https://\(string)"
         }
         do {
-            let data: NSData = try NSJSONSerialization.dataWithJSONObject(site.dictionary, options: NSJSONWritingOptions())
+            let data: Data = try JSONSerialization.data(withJSONObject: site.dictionary, options: JSONSerialization.WritingOptions())
             
             // Write JSON manifest file
-            data.writeToFile("\(path)\(Manager.manifestURI)", atomically: true)
+            let _ = try? data.write(to: URL(fileURLWithPath: "\(path)\(Manager.manifestURI)"), options: [.atomicWrite])
             
             // Create empty media directory
-            try NSFileManager.defaultManager().createDirectoryAtPath("\(path)\(Manager.mediaPath)", withIntermediateDirectories: false, attributes: nil)
+            let _ = try FileManager.default.createDirectory(atPath: "\(path)\(Manager.mediaPath)", withIntermediateDirectories: false, attributes: nil)
             
             // Write blank auxiliary files
-            NSData().writeToFile("\(path)\(site.URI)", atomically: true)
+            let _ = try? Data().write(to: URL(fileURLWithPath: "\(path)\(site.URI)"), options: [.atomicWrite])
             CSS().generate{ data in
-                data.writeToFile("\(path)\(HTML.stylesheetURI)", atomically: true)
+                let _ = try? data.write(to: URL(fileURLWithPath: "\(path)\(HTML.stylesheetURI)"), options: [.atomicWrite])
             }
-            if let data = NSData(base64EncodedString: Manager.bookmarkIconData, options: []) {
-                data.writeToFile("\(path)\(HTML.bookmarkIconURI)", atomically: true)
+            if let data = Data(base64Encoded: Manager.bookmarkIconData, options: []) {
+                let _ = try? data.write(to: URL(fileURLWithPath: "\(path)\(HTML.bookmarkIconURI)"), options: [.atomicWrite])
             }
         } catch {
             throw error
@@ -55,14 +55,14 @@ public class Manager {
     
     public func build() throws {
         do {
-            let data: NSData = try NSJSONSerialization.dataWithJSONObject(self.site.dictionary, options: NSJSONWritingOptions())
+            let data: Data = try JSONSerialization.data(withJSONObject: self.site.dictionary, options: JSONSerialization.WritingOptions())
             
             // Write JSON manifest file
-            data.writeToFile("\(self.path)\(Manager.manifestURI)", atomically: true)
+            let _ = try? data.write(to: URL(fileURLWithPath: "\(self.path)\(Manager.manifestURI)"), options: [.atomicWrite])
             
             // Write HTML files
-            HTML.generate(self.site) { URI, data in
-                data.writeToFile("\(self.path)\(URI)", atomically: true)
+            HTML.generate(site: self.site) { URI, data in
+                let _ = try? data.write(to: URL(fileURLWithPath: "\(self.path)\(URI)"), options: [.atomicWrite])
             }
         } catch {
             throw error
@@ -78,19 +78,19 @@ public class Manager {
             HTML.bookmarkIconURI,
             HTML.stylesheetURI
         ]
-        if let executableURI = NSBundle.mainBundle().executableURL?.lastPathComponent {
+        if let executableURI = Bundle.main.executableURL?.lastPathComponent {
             manifest.append(executableURI)
         }
-        manifest.appendContentsOf(self.gitURIs)
-        manifest.appendContentsOf(self.site.manifest)
+        manifest.append(contentsOf: self.gitURIs)
+        manifest.append(contentsOf: self.site.manifest)
         
-        let enumerator: NSDirectoryEnumerator = NSFileManager.defaultManager().enumeratorAtPath(self.path)!
+        let enumerator: FileManager.DirectoryEnumerator = FileManager.default.enumerator(atPath: self.path)!
         while let URI = enumerator.nextObject() as? String {
-            if (!manifest.contains(URI) && !URI.hasPrefix(".")) {
+            if !manifest.contains(URI) && !URI.hasPrefix(".") {
                 do {
                     
                     // Not found in manifest; move file to trash
-                    try NSFileManager.defaultManager().trashItemAtURL(NSURL.fileURLWithPath("\(self.path)\(URI)"), resultingItemURL: nil)
+                    try FileManager.default.trashItem(at: URL(fileURLWithPath: "\(self.path)\(URI)"), resultingItemURL: nil)
                 } catch {
                     throw error
                 }
@@ -99,14 +99,14 @@ public class Manager {
     }
     
     public class func exists(path: String) -> Bool {
-        return NSFileManager.defaultManager().fileExistsAtPath("\(path)\(self.manifestURI)", isDirectory: nil)
+        return FileManager.default.fileExists(atPath: "\(path)\(self.manifestURI)", isDirectory: nil)
     }
     
     public init(path: String) throws {
-        self.path = path.componentsSeparatedByString(Manager.manifestURI)[0]
+        self.path = path.components(separatedBy: Manager.manifestURI)[0]
         do {
-            let data: NSData = try NSData(contentsOfURL: NSURL.fileURLWithPath("\(path)\(Manager.manifestURI)"), options: [])
-            let dictionary: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as! [String: AnyObject]
+            let data: Data = try Data(contentsOf: URL(fileURLWithPath: "\(path)\(Manager.manifestURI)"), options: [])
+            let dictionary: [String: AnyObject] = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! [String: AnyObject]
             site = Site(dictionary: dictionary)
         } catch  {
             throw error

@@ -2,55 +2,55 @@
 //  PageView.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
 import PupKit
 
 @objc protocol PageViewDelegate: NSTextViewDelegate {
-    func pageViewDidChange(view: PageView)
+    func pageViewDidChange(_ view: PageView)
 }
 
 class PageView: NSTextView, NSTextStorageDelegate {
-    private var timer: NSTimer?
+    private var timer: Timer?
     var path: String?
     
     override var string: String? {
         set{
             scrollRangeToVisible(NSMakeRange(0, 0)) // Reset scroll position
             super.string = ""
-            guard let newValue = newValue, path = path, textStorage = textStorage else {
+            guard let newValue = newValue, let path = path, let textStorage = textStorage else {
                 return
             }
             
             // Expand file paths in string
-            let string = (try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)).stringByReplacingMatchesInString(newValue, options: [], range: NSMakeRange(0, newValue.characters.count), withTemplate: "$1\(path)$2")
+            let string = (try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive)).stringByReplacingMatches(in: newValue, options: [], range: NSMakeRange(0, newValue.characters.count), withTemplate: "$1\(path)$2")
             
             // Replace file paths with attachments
             let attributedString = NSMutableAttributedString(string: string)
-            let matches = (try! NSRegularExpression(pattern: "\(path)([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .CaseInsensitive)).matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, string.characters.count))
-            for match in matches.reverse() {
+            let matches = (try! NSRegularExpression(pattern: "\(path)([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive)).matches(in: string, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, string.characters.count))
+            for match in matches.reversed() {
                 var attachmentString = NSAttributedString(string: "")
-                if let attachment = PageViewAttachment(path: (string as NSString).substringWithRange(match.range)) {
+                if let attachment = PageViewAttachment(path: (string as NSString).substring(with: match.range)) {
                     attachmentString = NSAttributedString(attachment: attachment)
                 }
-                attributedString.replaceCharactersInRange(match.range, withAttributedString: attachmentString)
+                attributedString.replaceCharacters(in: match.range, with: attachmentString)
             }
-            textStorage.appendAttributedString(attributedString)
+            textStorage.append(attributedString)
         }
         get{
-            guard let path = path, textStorage = textStorage else {
+            guard let path = path, let textStorage = textStorage else {
                 return nil
             }
             
             // Replace attachments with file paths
             let attributedString = NSMutableAttributedString(attributedString: textStorage)
             attributedString.beginEditing()
-            attributedString.enumerateAttribute(NSAttachmentAttributeName, inRange: NSMakeRange(0, attributedString.length), options: .Reverse){ attachment, range, _ in
-                if let attachment = attachment as? PageViewAttachment, attachmentPath = attachment.path {
-                    let pathString = NSAttributedString(string: attachmentPath.stringByReplacingOccurrencesOfString(path, withString: "/"))
-                    attributedString.replaceCharactersInRange(range, withAttributedString: pathString)
+            attributedString.enumerateAttribute(NSAttachmentAttributeName, in: NSMakeRange(0, attributedString.length), options: .reverse){ attachment, range, _ in
+                if let attachment = attachment as? PageViewAttachment, let attachmentPath = attachment.path {
+                    let pathString = NSAttributedString(string: attachmentPath.replacingOccurrences(of: path, with: "/"))
+                    attributedString.replaceCharacters(in: range, with: pathString)
                 }
             }
             attributedString.endEditing()
@@ -61,7 +61,7 @@ class PageView: NSTextView, NSTextStorageDelegate {
     override func didChangeText() {
         super.didChangeText()
         timer?.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(PageView.pageViewDidChange), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(PageView.pageViewDidChange), userInfo: nil, repeats: false)
     }
     
     func pageViewDidChange() {
@@ -77,13 +77,13 @@ class PageView: NSTextView, NSTextStorageDelegate {
     }
     
     // MARK: NSTextStorageDelegate
-    func textStorage(textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        textStorage.enumerateAttributesInRange(editedRange, options: NSAttributedStringEnumerationOptions()){ attributes, range, _ in
+    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        textStorage.enumerateAttributes(in: editedRange, options: NSAttributedString.EnumerationOptions()){ attributes, range, _ in
             for (name, value) in attributes {
                 if let _ = value as? PageViewAttachment {
                     continue // Attachmnet already processed; skip
                 }
-                guard let path = self.path, attachment = value as? NSTextAttachment, fileWrapper = attachment.fileWrapper, filename = fileWrapper.preferredFilename, data = fileWrapper.regularFileContents where name == NSAttachmentAttributeName && fileWrapper.regularFile else {
+                guard let path = self.path, let attachment = value as? NSTextAttachment, let fileWrapper = attachment.fileWrapper, let filename = fileWrapper.preferredFilename, let data = fileWrapper.regularFileContents, name == NSAttachmentAttributeName && fileWrapper.isRegularFile else {
                     
                     // Attribute isn't a file attachment; strip attribute
                     textStorage.removeAttribute(name, range: range)
@@ -91,12 +91,12 @@ class PageView: NSTextView, NSTextStorageDelegate {
                 }
                 
                 // Copy attached file to media directory
-                let URL = NSURL(fileURLWithPath: "\(path)\(Manager.mediaPath)/\(filename.stringByReplacingOccurrencesOfString(" ", withString: String.separator))")
+                let URL = Foundation.URL(fileURLWithPath: "\(path)\(Manager.mediaPath)/\(filename.replacingOccurrences(of: " ", with: String.separator))")
                 do {
-                    if (NSFileManager.defaultManager().fileExistsAtPath(URL.path!)) {
-                        try NSFileManager.defaultManager().trashItemAtURL(URL, resultingItemURL: nil)
+                    if FileManager.default.fileExists(atPath: URL.path) {
+                        try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
                     }
-                    data.writeToURL(URL, atomically: true)
+                    let _ = try? data.write(to: URL, options: [.atomicWrite])
                 } catch {
                     
                     // File copy failed; strip attribute
@@ -106,10 +106,10 @@ class PageView: NSTextView, NSTextStorageDelegate {
                 
                 // Replace attachment
                 let attachmentString = NSMutableAttributedString(string: "")
-                if let attachment = PageViewAttachment(path: URL.path!) {
-                    attachmentString.appendAttributedString(NSAttributedString(attachment: attachment))
+                if let attachment = PageViewAttachment(path: URL.path) {
+                    attachmentString.append(NSAttributedString(attachment: attachment))
                 }
-                textStorage.replaceCharactersInRange(range, withAttributedString: attachmentString)
+                textStorage.replaceCharacters(in: range, with: attachmentString)
             }
         }
     }

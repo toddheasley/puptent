@@ -2,7 +2,7 @@
 //  Page.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
@@ -25,13 +25,13 @@ public class Page: Archiving {
     // MARK: Archiving
     public var manifest: [String] {
         var manifest = body.manifest
-        if (!URI.isEmpty) {
+        if !URI.isEmpty {
             manifest.append(URI)
         }
         return manifest
     }
     
-    public var dictionary: [String: AnyObject] {
+    public var dictionary: [String: Any] {
         return [
             ArchivingKeys.index: index,
             ArchivingKeys.name: name,
@@ -40,7 +40,7 @@ public class Page: Archiving {
         ]
     }
     
-    public required init(dictionary: [String: AnyObject]) {
+    public required init(dictionary: [String: Any]) {
         index = dictionary[ArchivingKeys.index] as! Bool
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String

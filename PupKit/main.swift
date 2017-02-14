@@ -2,13 +2,13 @@
 //  main.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
 
-let name = NSBundle.mainBundle().executableURL!.lastPathComponent!
-let path = String(format:"%@/", NSBundle.mainBundle().bundlePath)
+let name = Bundle.main.executableURL!.lastPathComponent
+let path = String(format:"%@/", Bundle.main.bundlePath)
 let options = [
     "pitch",
     "build",
@@ -16,14 +16,14 @@ let options = [
 ]
 
 var option = ""
-if (Process.arguments.count > 1) {
-    option = Process.arguments[1]
+if CommandLine.arguments.count > 1 {
+    option = CommandLine.arguments[1]
 }
 
 do {
     switch option {
     case options[0]:
-        try Manager.pitch(path)
+        try Manager.pitch(path: path)
     case options[1]:
         try Manager(path: path).build()
     case options[2]:

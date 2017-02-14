@@ -2,7 +2,7 @@
 //  SiteViewController.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -17,7 +17,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     @IBOutlet var settingsView: SettingsView!
     
     var selectedPage: (index: Int, page: Page?) {
-        if (pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count) {
+        if pagesTableView.selectedRow > -1 && pagesTableView.selectedRow < manager.site.pages.count {
             return (pagesTableView.selectedRow, manager.site.pages[pagesTableView.selectedRow])
         }
         return (-1, nil)
@@ -28,7 +28,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         return index > -1 && index < pagesTableView.numberOfRows - 1
     }
     
-    @IBAction func openSettings(sender: AnyObject?) {
+    @IBAction func openSettings(_ sender: AnyObject?) {
         pagesTableView.deselectAll(self)
         (self.view.window as? Window)?.settingsButton.state = 1
         settingsView.nameText = manager.site.name
@@ -36,34 +36,34 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         settingsView.twitterText = manager.site.twitter
         settingsView.bookmarkIconPath = "\(manager.path)\(HTML.bookmarkIconURI)"
         settingsView.stylesheetPath = "\(manager.path)\(HTML.stylesheetURI)"
-        settingsView.hidden = false
+        settingsView.isHidden = false
     }
     
-    @IBAction func preview(sender: AnyObject?) {
+    @IBAction func preview(_ sender: AnyObject?) {
         guard let page = self.selectedPage.page else {
-            NSWorkspace.sharedWorkspace().openFile(manager.path + manager.site.URI)
+            NSWorkspace.shared().openFile(manager.path + manager.site.URI)
             return
         }
-        NSWorkspace.sharedWorkspace().openFile(manager.path + page.URI)
+        NSWorkspace.shared().openFile(manager.path + page.URI)
     }
     
-    @IBAction func makeNewPage(sender: AnyObject?) {
-        pagesTableView.selectRowIndexes(NSIndexSet(index: pagesTableView.numberOfRows - 1), byExtendingSelection: false)
+    @IBAction func makeNewPage(_ sender: AnyObject?) {
+        pagesTableView.selectRowIndexes(IndexSet(integer: pagesTableView.numberOfRows - 1), byExtendingSelection: false)
     }
     
-    @IBAction func deletePage(sender: AnyObject?) {
-        if (pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count) {
+    @IBAction func deletePage(_ sender: AnyObject?) {
+        if pagesTableView.selectedRow < 0 || pagesTableView.selectedRow >= manager.site.pages.count {
             return
         }
         do {
-            manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
+            manager.site.pages.remove(at: pagesTableView.selectedRow)
             try manager.build()
             try manager.clean()
-            pagesTableView.removeRowsAtIndexes(NSIndexSet(index: pagesTableView.selectedRow), withAnimation: .EffectNone)
+            pagesTableView.removeRows(at: IndexSet(integer: pagesTableView.selectedRow), withAnimation: NSTableViewAnimationOptions())
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
-            ]).beginSheetModalForWindow(view.window)
+            ]).beginSheetModal(for: view.window!)
         }
     }
     
@@ -71,10 +71,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.controlBackgroundColor().CGColor
+        view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
-        pagesTableView.registerForDraggedTypes([draggedType])
-        pagesTableView.setDraggingSourceOperationMask(NSDragOperation.Move, forLocal: true)
+        pagesTableView.register(forDraggedTypes: [draggedType])
+        pagesTableView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
         
         settingsView.delegate = self
         splitView.subviews[1].addSubview(settingsView)
@@ -86,7 +86,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        if (selectedPage.index < 0) {
+        if selectedPage.index < 0 {
             openSettings(self)
         }
     }
@@ -96,7 +96,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         self.manager = manager
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         return nil
     }
@@ -107,12 +107,12 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     // MARK: NSTableViewDataSource
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    func numberOfRows(in tableView: NSTableView) -> Int {
         return manager.site.pages.count + 1 // Add "new page" cell to existing pages
     }
     
-    func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pasteboard: NSPasteboard) -> Bool {
-        if (rowIndexes.firstIndex > tableView.numberOfRows - 2) {
+    func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pasteboard: NSPasteboard) -> Bool {
+        if rowIndexes.first! > tableView.numberOfRows - 2 {
             
             // Prevent "new page" cell drag
             return false
@@ -120,50 +120,50 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         
         // Allow existing page cells drag
         pasteboard.declareTypes([draggedType], owner: self)
-        pasteboard.setData(NSKeyedArchiver.archivedDataWithRootObject(rowIndexes), forType: draggedType)
+        pasteboard.setData(NSKeyedArchiver.archivedData(withRootObject: rowIndexes), forType: draggedType)
         return true
     }
     
-    func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
-        if (dropOperation == NSTableViewDropOperation.Above && row < tableView.numberOfRows) {
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+        if dropOperation == NSTableViewDropOperation.above && row < tableView.numberOfRows {
             
             // Allow cell drop in rows above "new page" cell
-            return NSDragOperation.Move
+            return NSDragOperation.move
         }
         
         // Prevent cells drop onto other cells and below "new page" cell
-        return NSDragOperation.None
+        return NSDragOperation()
     }
     
-    func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-        guard let data = info.draggingPasteboard().dataForType(draggedType), indexSet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSIndexSet where row < tableView.numberOfRows else {
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+        guard let data = info.draggingPasteboard().data(forType: draggedType), let indexSet = NSKeyedUnarchiver.unarchiveObject(with: data) as? IndexSet, row < tableView.numberOfRows else {
             return false
         }
         let selectedPage = self.selectedPage.page // Remember current page selection
         
         var index = row
-        if (indexSet.firstIndex < index) {
+        if indexSet.first! < index {
             index -= 1
         }
         
         // Move page to new index in data source
-        let page: Page = manager.site.pages[indexSet.firstIndex]
-        manager.site.pages.removeAtIndex(indexSet.firstIndex)
-        manager.site.pages.insert(page, atIndex: index)
+        let page: Page = manager.site.pages[indexSet.first!]
+        manager.site.pages.remove(at: indexSet.first!)
+        manager.site.pages.insert(page, at: index)
         do {
             try manager.build()
             try manager.clean()
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
-            ]).beginSheetModalForWindow(view.window)
+            ]).beginSheetModal(for: view.window!)
         }
         
         tableView.reloadData()
         if let selectedPage = selectedPage {
             
             // Restore page selection
-            tableView.selectRowIndexes(NSIndexSet(index: (manager.site.pages as NSArray).indexOfObject(selectedPage)), byExtendingSelection: false)
+            tableView.selectRowIndexes(IndexSet(integer: (manager.site.pages as NSArray).index(of: selectedPage)), byExtendingSelection: false)
         } else {
             openSettings(self)
         }
@@ -171,8 +171,8 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     // MARK: NSTableViewDelegate
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let view = tableView.makeViewWithIdentifier("PageCellView", owner: self) as? PageCellView else {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let view = tableView.make(withIdentifier: "PageCellView", owner: self) as? PageCellView else {
             return nil
         }
         
@@ -180,54 +180,54 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         view.delegate = self
         view.textField!.stringValue = ""
         view.secondaryTextField!.stringValue = ""
-        view.button.enabled = false
+        view.button.isEnabled = false
         view.button.state = 0
-        if (row < manager.site.pages.count) {
+        if row < manager.site.pages.count {
             
             // Configure cell for existing page
             let page = manager.site.pages[row]
             view.textField!.stringValue = "\(page.name)"
             view.secondaryTextField!.stringValue = "\(page.URI)"
-            view.button.enabled = true
+            view.button.isEnabled = true
             view.button.state = page.index ? 1 : 0
         }
         return view
     }
     
-    func tableView(tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         return PageRowView(index: row)
     }
     
-    func tableViewSelectionDidChange(notification: NSNotification) {
+    func tableViewSelectionDidChange(_ notification: Notification) {
         pageView.string = ""
-        guard let tableView = notification.object as? NSTableView where tableView.selectedRow > -1 else {
+        guard let tableView = notification.object as? NSTableView, tableView.selectedRow > -1 else {
             openSettings(self)
             return
         }
         
         var page: Page = Page()
-        if (tableView.selectedRow < manager.site.pages.count) {
+        if tableView.selectedRow < manager.site.pages.count {
             page = manager.site.pages[tableView.selectedRow]
-        } else if let view = tableView.viewAtColumn(0, row: tableView.selectedRow, makeIfNecessary: false) as? PageCellView {
+        } else if let view = tableView.view(atColumn: 0, row: tableView.selectedRow, makeIfNecessary: false) as? PageCellView {
             manager.site.pages.append(page)
             view.textField?.becomeFirstResponder()
-            view.button.enabled = true
+            view.button.isEnabled = true
         }
         pageView.string = page.body
         (self.view.window as? Window)?.settingsButton.state = 0
-        settingsView.hidden = true
+        settingsView.isHidden = true
     }
     
     // MARK: PageCellViewDelegate
-    func pageCellViewDidChange(view: PageCellView) {
-        let row = pagesTableView.rowForView(view)
-        if (row < 0) {
+    func pageCellViewDidChange(_ view: PageCellView) {
+        let row = pagesTableView.row(for: view)
+        if row < 0 {
             return
         }
         let page = manager.site.pages[row]
-        if (view.textField!.stringValue.isEmpty) {
-            if (page.name.isEmpty) {
-                manager.site.pages.removeAtIndex(pagesTableView.selectedRow)
+        if view.textField!.stringValue.isEmpty {
+            if page.name.isEmpty {
+                manager.site.pages.remove(at: pagesTableView.selectedRow)
             }
             pagesTableView.deselectAll(self)
             pagesTableView.reloadData()
@@ -242,16 +242,16 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
-            ]).beginSheetModalForWindow(view.window)
+            ]).beginSheetModal(for: view.window!)
         }
-        if (pagesTableView.numberOfRows == manager.site.pages.count) {
-            pagesTableView.insertRowsAtIndexes(NSIndexSet(index: manager.site.pages.count), withAnimation: .EffectNone)
+        if pagesTableView.numberOfRows == manager.site.pages.count {
+            pagesTableView.insertRows(at: IndexSet(integer: manager.site.pages.count), withAnimation: NSTableViewAnimationOptions())
         }
     }
     
     // MARK: PageViewDelegate
-    func pageViewDidChange(view: PageView) {
-        guard let string = view.string, page = selectedPage.page else {
+    func pageViewDidChange(_ view: PageView) {
+        guard let string = view.string, let page = selectedPage.page else {
             return
         }
         page.body = string
@@ -261,12 +261,12 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
-            ]).beginSheetModalForWindow(view.window)
+            ]).beginSheetModal(for: view.window!)
         }
     }
     
     // MARK: SettingsViewDelegate
-    func settingsViewDidChange(view: SettingsView) {
+    func settingsViewDidChange(_ view: SettingsView) {
         manager.site.name = view.nameText
         manager.site.URL = view.URLText
         manager.site.twitter = view.twitterText
@@ -276,7 +276,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
-            ]).beginSheetModalForWindow(view.window)
+            ]).beginSheetModal(for: view.window!)
         }
     }
 }

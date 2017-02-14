@@ -2,14 +2,14 @@
 //  SiteTests.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import XCTest
 
 class SiteTests: XCTestCase {
     var site: Site!
-    let dictionary: [String: AnyObject] = [
+    let dictionary: [String: Any] = [
         ArchivingKeys.name: "Site",
         ArchivingKeys.URI: "index.html",
         ArchivingKeys.twitter: "twitter",

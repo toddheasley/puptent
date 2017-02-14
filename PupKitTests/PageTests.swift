@@ -2,14 +2,14 @@
 //  PageTests.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import XCTest
 
 class PageTests: XCTestCase {
     var page: Page!
-    let dictionary: [String: AnyObject] = [
+    let dictionary: [String: Any] = [
         ArchivingKeys.index: true,
         ArchivingKeys.name: "Page",
         ArchivingKeys.URI: "page.html",

@@ -2,7 +2,7 @@
 //  Site.swift
 //  PupKit
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Foundation
@@ -34,16 +34,16 @@ public class Site: Archiving {
     public var manifest: [String] {
         var manifest = [String]()
         for page in pages {
-            manifest.appendContentsOf(page.manifest)
+            manifest.append(contentsOf: page.manifest)
         }
-        if (!URI.isEmpty) {
+        if !URI.isEmpty {
             manifest.append(URI)
         }
         return manifest
     }
     
-    public var dictionary: [String: AnyObject] {
-        var pages: [AnyObject] = []
+    public var dictionary: [String: Any] {
+        var pages: [Any] = []
         for page in self.pages {
             pages.append(page.dictionary)
         }
@@ -56,7 +56,7 @@ public class Site: Archiving {
         ]
     }
     
-    public required init(dictionary: [String: AnyObject]) {
+    public required init(dictionary: [String: Any]) {
         name = dictionary[ArchivingKeys.name] as! String
         URI = dictionary[ArchivingKeys.URI] as! String
         if let URL = dictionary[ArchivingKeys.URL] as? String {

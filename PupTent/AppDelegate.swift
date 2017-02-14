@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PupTent
 //
-//  (c) 2015 @toddheasley
+//  (c) 2016 @toddheasley
 //
 
 import Cocoa
@@ -17,43 +17,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var deletePageMenuItem: NSMenuItem!
     @IBOutlet weak var previewItem: NSMenuItem!
     
-    @IBAction func preview(sender: AnyObject?) {
+    @IBAction func preview(_ sender: AnyObject?) {
         mainViewController?.siteViewController?.preview(self)
     }
     
-    @IBAction func openInFinder(sender: AnyObject?) {
+    @IBAction func openInFinder(_ sender: AnyObject?) {
         mainViewController?.openInFinder(sender)
     }
     
-    @IBAction func makeNewSite(sender: AnyObject?) {
+    @IBAction func makeNewSite(_ sender: AnyObject?) {
         mainViewController?.makeNewSite(sender)
     }
     
-    @IBAction func openExistingSite(sender: AnyObject?) {
+    @IBAction func openExistingSite(_ sender: AnyObject?) {
         mainViewController?.openExistingSite(sender)
     }
     
-    @IBAction func forget(sender: AnyObject?) {
+    @IBAction func forget(_ sender: AnyObject?) {
         mainViewController?.forget(sender)
     }
     
-    @IBAction func openSettings(sender: AnyObject?) {
+    @IBAction func openSettings(_ sender: AnyObject?) {
         mainViewController?.siteViewController?.openSettings(sender)
     }
     
-    @IBAction func makeNewPage(sender: AnyObject?) {
+    @IBAction func makeNewPage(_ sender: AnyObject?) {
         mainViewController?.siteViewController?.makeNewPage(sender)
     }
     
-    @IBAction func deletePage(sender: AnyObject?) {
+    @IBAction func deletePage(_ sender: AnyObject?) {
         mainViewController?.siteViewController?.deletePage(sender)
     }
     
-    @IBAction func close(sender: AnyObject?) {
-        NSApplication.sharedApplication().keyWindow!.performClose(self)
+    @IBAction func close(_ sender: AnyObject?) {
+        NSApplication.shared().keyWindow!.performClose(self)
     }
     
-    override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
+    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         guard let mainViewController = mainViewController else {
             return false
         }
@@ -71,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     // MARK: NSApplicationDelegate
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true;
     }
 }
