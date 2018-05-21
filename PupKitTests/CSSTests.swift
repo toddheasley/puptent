@@ -1,32 +1,24 @@
-//
-//  CSSTests.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import XCTest
-
-class FontFamilyTests: XCTestCase {
-    func testString() {
-        XCTAssertEqual(FontFamily(string: "sans-serif"), FontFamily.sans)
-        XCTAssertEqual(FontFamily(string: "12pt sans-serif"), FontFamily.sans)
-        XCTAssertEqual(FontFamily(string: "9px monospace bold"), FontFamily.mono)
-        XCTAssertEqual(FontFamily(string: "serif 1em"), FontFamily.serif)
-        XCTAssertNil(FontFamily(string: ""))
-    }
-}
+@testable import PupKit
 
 class CSSTests: XCTestCase {
+    func testFont() {
+        XCTAssertEqual(CSS.Font(string: "sans-serif"), .sans)
+        XCTAssertEqual(CSS.Font(string: "12pt sans-serif"), .sans)
+        XCTAssertEqual(CSS.Font(string: "9px monospace bold"), .mono)
+        XCTAssertEqual(CSS.Font(string: "serif 1em"), .serif)
+        XCTAssertNil(CSS.Font(string: ""))
+    }
+    
     func testGenerate() {
-        let stylesheet = CSS()
+        var stylesheet: CSS = CSS()
         stylesheet.font = .mono
         stylesheet.backgroundColor = "#FF0000"
         stylesheet.textColor = "#0000FF"
         stylesheet.linkColor = ("#FFFF00", "#00FFFF")
         stylesheet.generate{ data in
             let stylesheet = CSS(data: data)
-            XCTAssertEqual(stylesheet.font, FontFamily.mono)
+            XCTAssertEqual(stylesheet.font, .mono)
             XCTAssertEqual(stylesheet.backgroundColor, "#FF0000")
             XCTAssertEqual(stylesheet.textColor, "#0000FF")
             XCTAssertEqual(stylesheet.linkColor.link, "#FFFF00")

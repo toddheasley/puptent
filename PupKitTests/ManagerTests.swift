@@ -1,11 +1,5 @@
-//
-//  ManagerTests.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import XCTest
+@testable import PupKit
 
 class ManagerTests: XCTestCase {
     let path: String = "\(NSTemporaryDirectory())PupKitTests/"
@@ -38,12 +32,12 @@ class ManagerTests: XCTestCase {
             try Manager.pitch(path: path)
             NSData().write(toFile: "\(path)README.md", atomically: true)
             NSData().write(toFile: "\(path)CNAME", atomically: true)
-            NSData().write(toFile: "\(path)\(Manager.mediaPath)/extra.jpg", atomically: true)
+            NSData().write(toFile: "\(path)\(Manager.media)/extra.jpg", atomically: true)
             NSData().write(toFile: "\(path)extra.txt", atomically: true)
             try Manager(path: path).clean()
             XCTAssertTrue(FileManager.default.fileExists(atPath: "\(path)README.md"))
             XCTAssertTrue(FileManager.default.fileExists(atPath: "\(path)CNAME"))
-            XCTAssertFalse(FileManager.default.fileExists(atPath: "\(path)\(Manager.mediaPath)/extra.jpg"))
+            XCTAssertFalse(FileManager.default.fileExists(atPath: "\(path)\(Manager.media)/extra.jpg"))
             XCTAssertFalse(FileManager.default.fileExists(atPath: "\(path)extra.txt"))
         } catch {
             XCTFail("\(error)")

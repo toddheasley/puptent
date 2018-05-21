@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14112" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14112"/>
         <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SiteViewController" customModule="Pup_Tent" customModuleProvider="target">
@@ -35,7 +36,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="56" rowSizeStyle="automatic" viewBased="YES" id="cmz-7N-ZFh">
-                                                <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="gridColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
@@ -54,7 +55,7 @@
                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         <prototypeCellViews>
                                                             <tableCellView identifier="PageCellView" focusRingType="none" id="VTD-Ez-KhR" customClass="PageCellView" customModule="Pup_Tent" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="317" height="56"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R0N-D4-Pfc">
@@ -156,15 +157,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="599" height="522"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textView findStyle="panel" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="OIf-nf-jau" customClass="PageView" customModule="Pup_Tent" customModuleProvider="target">
+                                            <textView verticallyResizable="YES" findStyle="panel" allowsUndo="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="OIf-nf-jau" customClass="PageView" customModule="Pup_Tent" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="599" height="522"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="minSize" width="599" height="522"/>
                                                 <size key="maxSize" width="599" height="10000000"/>
                                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <size key="minSize" width="599" height="522"/>
-                                                <size key="maxSize" width="599" height="10000000"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="-2" id="aen-t2-Znc"/>
                                                 </connections>
@@ -208,7 +207,7 @@
             <rect key="frame" x="0.0" y="0.0" width="599" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dLd-cD-NbV">
+                <box borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dLd-cD-NbV">
                     <rect key="frame" x="17" y="15" width="565" height="527"/>
                     <view key="contentView" id="97H-zD-Wde">
                         <rect key="frame" x="1" y="1" width="563" height="525"/>
@@ -442,8 +441,6 @@
                             <constraint firstItem="Ftm-KM-t4m" firstAttribute="centerX" secondItem="97H-zD-Wde" secondAttribute="centerX" id="ZKj-d7-4nW"/>
                         </constraints>
                     </view>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
             </subviews>
             <constraints>
@@ -453,7 +450,6 @@
                 <constraint firstAttribute="bottom" secondItem="dLd-cD-NbV" secondAttribute="bottom" constant="19" id="fQs-6J-g5F"/>
             </constraints>
             <connections>
-                <outlet property="URLTextField" destination="wEt-tG-V6W" id="N4U-vf-fP8"/>
                 <outlet property="backgroundColorWell" destination="zEW-nB-SHo" id="K42-WS-rTs"/>
                 <outlet property="bookmarkIconView" destination="fOu-Lo-HoP" id="Skg-Ak-uoT"/>
                 <outlet property="fontPopUpButton" destination="4LE-Ul-oKa" id="wHr-f3-pEl"/>
@@ -462,6 +458,7 @@
                 <outlet property="textColorWell" destination="wR5-Sy-srC" id="f5w-pf-ObK"/>
                 <outlet property="twitterTestButton" destination="rJ7-dg-tRu" id="Zz4-ZX-aUM"/>
                 <outlet property="twitterTextField" destination="i7x-Oq-S3S" id="cO1-OE-glz"/>
+                <outlet property="urlTextField" destination="wEt-tG-V6W" id="PD6-VG-wLS"/>
                 <outlet property="visitedLinkColorWell" destination="NDR-el-GQe" id="gQn-dT-PHz"/>
             </connections>
             <point key="canvasLocation" x="1220.5" y="360"/>

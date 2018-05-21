@@ -1,24 +1,16 @@
-//
-//  HTMLTests.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import XCTest
+@testable import PupKit
 
 class HTMLTests: XCTestCase {
     func testGenerate() {
-        let page = Page()
-        page.URI = "page.html"
-        
-        let site = Site()
-        site.URI = "site.html"
+        var page = Page()
+        page.uri = "page.html"
+        var site = Site()
+        site.uri = "site.html"
         site.pages.append(page)
-        
         var count: Int = 0
-        HTML.generate(site: site) { URI, data in
-            XCTAssertTrue(["site.html", "page.html"].contains(URI))
+        HTML.generate(site: site) { uri, data in
+            XCTAssertTrue(["site.html", "page.html"].contains(uri))
             XCTAssertNotNil(data)
             count += 1
         }
@@ -60,13 +52,8 @@ class StringTests: XCTestCase {
     
     func testImages() {
         XCTAssertTrue("String and whitespace".images.isEmpty)
-        XCTAssertEqual("/media/page.jpg and string\n/media/page.gif".images, [
-            "media/page.jpg",
-            "media/page.gif"
-        ])
-        XCTAssertEqual("String and /media/page.gif".images, [
-            "media/page.gif"
-        ])
+        XCTAssertEqual("/media/page.jpg and string\n/media/page.gif".images, ["media/page.jpg", "media/page.gif"])
+        XCTAssertEqual("String and /media/page.gif".images, ["media/page.gif"])
     }
     
     func testManifest() {
@@ -76,14 +63,14 @@ class StringTests: XCTestCase {
     }
     
     func testURIFormat() {
-        XCTAssertEqual("Page Name".URIFormat, "page-name\(Manager.URIExtension)")
-        XCTAssertEqual("page-name.html".URIFormat, "page-name\(Manager.URIExtension)")
-        XCTAssertEqual("page-name.txt".URIFormat, "page-nametxt\(Manager.URIExtension)")
+        XCTAssertEqual("Page Name".uriFormat, "page-name.html")
+        XCTAssertEqual("page-name.html".uriFormat, "page-name.html")
+        XCTAssertEqual("page-name.txt".uriFormat, "page-nametxt.html")
     }
     
     func testURLFormat() {
-        XCTAssertEqual("".URLFormat, "")
-        XCTAssertEqual(" Username.GitHub.IO".URLFormat, "username.github.io")
+        XCTAssertEqual("".urlFormat, "")
+        XCTAssertEqual(" Username.GitHub.IO".urlFormat, "username.github.io")
     }
     
     func testTwitterFormat() {
@@ -94,19 +81,11 @@ class StringTests: XCTestCase {
     
     func testSplit() {
         XCTAssertEqual("String with whitespace".split(string: " ").count, 3)
-        XCTAssertEqual("String with whitespace".split(string: " "), [
-            "String",
-            "with",
-            "whitespace"
-        ])
+        XCTAssertEqual("String with whitespace".split(string: " "), ["String", "with", "whitespace"])
         XCTAssertEqual("String".split(string: " ").count, 1)
-        XCTAssertEqual("String".split(string: " "), [
-            "String"
-        ])
+        XCTAssertEqual("String".split(string: " "), ["String"])
         XCTAssertEqual("".split(string: " ").count, 1)
-        XCTAssertEqual("".split(string: " "), [
-            ""
-        ])
+        XCTAssertEqual("".split(string: " "), [""])
     }
     
     func testReplace() {

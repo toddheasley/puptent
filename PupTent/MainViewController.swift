@@ -1,10 +1,3 @@
-//
-//  MainViewController.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 import PupKit
 
@@ -20,12 +13,12 @@ class MainViewController: NSViewController {
     
     private func openSite(_ path: String, animated: Bool) {
         do {
-            let manager = try Manager(path: path)
+            let manager: Manager = try Manager(path: path)
             
-            siteViewController = SiteViewController(manager: manager)
-            guard let siteViewController = siteViewController else {
+            guard let siteViewController: SiteViewController = SiteViewController(manager: manager) else {
                 return
             }
+            self.siteViewController = siteViewController
             view.addSubview(siteViewController.view)
             view.pin(siteViewController.view, inset: 0.0)
             (view.window as? Window)?.pathLabel.title = (manager.path as NSString).abbreviatingWithTildeInPath
@@ -33,16 +26,15 @@ class MainViewController: NSViewController {
             
             // Remember path
             UserDefaults.standard.path = manager.path
-        } catch let error as NSError {
+        } catch {
             forget(self)
-            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+            NSAlert(message: (error as NSError).localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel",
                 "Open in Finder"
             ]).runModal{ response in
-                if response == NSAlertFirstButtonReturn {
-                    return
+                if response == .alertSecondButtonReturn {
+                    NSWorkspace.shared.open(URL(fileURLWithPath: path))
                 }
-                NSWorkspace.shared().open(URL(fileURLWithPath: path))
             }
         }
     }
@@ -64,22 +56,21 @@ class MainViewController: NSViewController {
         openPanel.title = "Choose an Empty Folder..."
         openPanel.prompt = "Use This Folder"
         openPanel.begin{ result in
-            if result != NSFileHandlingPanelOKButton {
+            guard result == .OK else {
                 return
             }
-            let path = openPanel.url!.path + "/"
+            let path: String = openPanel.url!.path + "/"
             do {
                 try Manager.pitch(path: path)
                 self.openSite(path, animated: true)
-            } catch let error as NSError {
-                NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+            } catch {
+                NSAlert(message: (error as NSError).localizedFailureReason, description: error.localizedDescription, buttons: [
                     "Cancel",
                     "Open in Finder"
                 ]).runModal{ response in
-                    if response == NSAlertFirstButtonReturn {
-                        return
+                    if response == .alertSecondButtonReturn {
+                        NSWorkspace.shared.open(URL(fileURLWithPath: path))
                     }
-                    NSWorkspace.shared().open(URL(fileURLWithPath: path))
                 }
             }
         }
@@ -91,7 +82,7 @@ class MainViewController: NSViewController {
         openPanel.canChooseFiles = false
         openPanel.title = "Choose an Existing Site..."
         openPanel.begin{ result in
-            if result != NSFileHandlingPanelOKButton {
+            guard result == .OK else {
                 return
             }
             self.openSite(openPanel.url!.path + "/", animated: true)
@@ -99,27 +90,25 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func openInFinder(_ sender: AnyObject?) {
-        NSWorkspace.shared().open(URL(fileURLWithPath: UserDefaults.standard.path))
+        NSWorkspace.shared.open(URL(fileURLWithPath: UserDefaults.standard.path))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let delegate = NSApplication.shared().delegate as? AppDelegate {
-            delegate.mainViewController = self
-        }
+        
+        (NSApplication.shared.delegate as? AppDelegate)?.mainViewController = self
         
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
         if canForget {
-            
-            // Open most recent site
-            openSite(UserDefaults.standard.path, animated: false)
+            openSite(UserDefaults.standard.path, animated: false) // Open most recent site
         }
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        
         (view.window as? Window)?.pathLabel.title = (UserDefaults.standard.path as NSString).abbreviatingWithTildeInPath
         view.window?.toolbarHidden = !canForget
     }
@@ -138,11 +127,11 @@ extension NSView {
 }
 
 extension NSAlert {
-    func runModal(_ completion: ((NSModalResponse) -> Void)? = nil) {
+    func runModal(_ completion: ((NSApplication.ModalResponse) -> Void)? = nil) {
         completion?(runModal())
     }
     
-    func beginSheetModalForWindow(_ window: NSWindow?, completion:  ((NSModalResponse) -> Void)? = nil) {
+    func beginSheetModalForWindow(_ window: NSWindow?, completion:  ((NSApplication.ModalResponse) -> Void)? = nil) {
         guard let window = window else {
             runModal(completion)
             return

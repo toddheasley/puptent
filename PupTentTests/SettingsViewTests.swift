@@ -1,10 +1,3 @@
-//
-//  SettingsViewTests.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import XCTest
 
 class NSColorTests: XCTestCase {

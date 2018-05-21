@@ -10,14 +10,14 @@
 		5C0064FC1C9A69AB003EB475 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0064FB1C9A69AB003EB475 /* MainViewControllerTests.swift */; };
 		5C0064FD1C9A6A89003EB475 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */; };
 		5C0064FE1C9A6A8E003EB475 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE70D9A1C320891004991B0 /* SettingsView.swift */; };
-		5C0064FF1C9A6AAF003EB475 /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0B95221BBC35B2000E28EF /* SiteViewController.swift */; };
-		5C0065001C9A6AC3003EB475 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
-		5C0065011C9A6AC8003EB475 /* PageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B1FC21C0A2C13001D4FE4 /* PageCellView.swift */; };
-		5C0065021C9A6ADE003EB475 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */; };
-		5C0065031C9A6AE3003EB475 /* PageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */; };
-		5C0065041C9A6AE6003EB475 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF411EF1C319C26002D69F2 /* PageView.swift */; };
-		5C0065051C9A6B01003EB475 /* PageViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF90F7D1C33F22800F7C937 /* PageViewAttachment.swift */; };
-		5C0065061C9A6B08003EB475 /* BookmarkIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE18D821C3826BF006174B3 /* BookmarkIconView.swift */; };
+		5C07CA9320B275CF000FF744 /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0B95221BBC35B2000E28EF /* SiteViewController.swift */; };
+		5C07CA9420B275E2000FF744 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF411EF1C319C26002D69F2 /* PageView.swift */; };
+		5C07CA9520B275F5000FF744 /* PageViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF90F7D1C33F22800F7C937 /* PageViewAttachment.swift */; };
+		5C07CA9620B27617000FF744 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
+		5C07CA9720B27624000FF744 /* PageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */; };
+		5C07CA9820B27629000FF744 /* PageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B1FC21C0A2C13001D4FE4 /* PageCellView.swift */; };
+		5C07CA9920B27631000FF744 /* BookmarkIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE18D821C3826BF006174B3 /* BookmarkIconView.swift */; };
+		5C07CA9A20B27636000FF744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */; };
 		5C0B95241BBC35B2000E28EF /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0B95221BBC35B2000E28EF /* SiteViewController.swift */; };
 		5C0B95251BBC35B2000E28EF /* Site.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C0B95231BBC35B2000E28EF /* Site.xib */; };
 		5C3ACE5E1A7A7E4500A7884D /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3ACE591A7A7E4500A7884D /* Window.swift */; };
@@ -116,15 +116,15 @@
 		5CA7FB2C1A7A7BCF00D95984 /* PupTent */ = {
 			isa = PBXGroup;
 			children = (
+				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
+				5CE18D821C3826BF006174B3 /* BookmarkIconView.swift */,
 				5CA7FB311A7A7BCF00D95984 /* MainViewController.swift */,
-				5C0B95221BBC35B2000E28EF /* SiteViewController.swift */,
-				5CE70D9A1C320891004991B0 /* SettingsView.swift */,
-				5CF411EF1C319C26002D69F2 /* PageView.swift */,
-				5CF90F7D1C33F22800F7C937 /* PageViewAttachment.swift */,
 				5C8B1FC21C0A2C13001D4FE4 /* PageCellView.swift */,
 				5CEF3AE51C0A8C6000D292DF /* PageRowView.swift */,
-				5CE18D821C3826BF006174B3 /* BookmarkIconView.swift */,
-				5CA7FB2F1A7A7BCF00D95984 /* AppDelegate.swift */,
+				5CF411EF1C319C26002D69F2 /* PageView.swift */,
+				5CF90F7D1C33F22800F7C937 /* PageViewAttachment.swift */,
+				5CE70D9A1C320891004991B0 /* SettingsView.swift */,
+				5C0B95221BBC35B2000E28EF /* SiteViewController.swift */,
 				5C3ACE591A7A7E4500A7884D /* Window.swift */,
 				5CA7FB331A7A7BCF00D95984 /* Images.xcassets */,
 				5CA7FB351A7A7BCF00D95984 /* Main.storyboard */,
@@ -192,18 +192,20 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "@toddheasley";
 				TargetAttributes = {
 					5CA7FB291A7A7BCF00D95984 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 9Q3DL72K7D;
-						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = 0940;
+						ProvisioningStyle = Manual;
 					};
 					5CD5600D1C9A67FA00EFD040 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = 9Q3DL72K7D;
+						LastSwiftMigration = 0940;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -285,18 +287,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C0065021C9A6ADE003EB475 /* AppDelegate.swift in Sources */,
-				5C0064FF1C9A6AAF003EB475 /* SiteViewController.swift in Sources */,
+				5C07CA9A20B27636000FF744 /* AppDelegate.swift in Sources */,
+				5C07CA9320B275CF000FF744 /* SiteViewController.swift in Sources */,
+				5C07CA9520B275F5000FF744 /* PageViewAttachment.swift in Sources */,
+				5C07CA9420B275E2000FF744 /* PageView.swift in Sources */,
 				5C0064FD1C9A6A89003EB475 /* MainViewController.swift in Sources */,
-				5C0065061C9A6B08003EB475 /* BookmarkIconView.swift in Sources */,
-				5C0065011C9A6AC8003EB475 /* PageCellView.swift in Sources */,
 				5C0064FE1C9A6A8E003EB475 /* SettingsView.swift in Sources */,
-				5C0065041C9A6AE6003EB475 /* PageView.swift in Sources */,
-				5C0065051C9A6B01003EB475 /* PageViewAttachment.swift in Sources */,
 				5CD560111C9A67FA00EFD040 /* SettingsViewTests.swift in Sources */,
 				5C0064FC1C9A69AB003EB475 /* MainViewControllerTests.swift in Sources */,
-				5C0065031C9A6AE3003EB475 /* PageRowView.swift in Sources */,
-				5C0065001C9A6AC3003EB475 /* Window.swift in Sources */,
+				5C07CA9820B27629000FF744 /* PageCellView.swift in Sources */,
+				5C07CA9920B27631000FF744 /* BookmarkIconView.swift in Sources */,
+				5C07CA9720B27624000FF744 /* PageRowView.swift in Sources */,
+				5C07CA9620B27617000FF744 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,14 +332,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -359,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -375,14 +385,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -398,7 +416,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -409,16 +427,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.mac.puptent;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.puptent;
 				PRODUCT_NAME = "Pup Tent";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -426,18 +447,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PupTent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.mac.puptent;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.puptent;
 				PRODUCT_NAME = "Pup Tent";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -445,14 +469,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PupTentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.PupTentTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -460,15 +489,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PupTentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.PupTentTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

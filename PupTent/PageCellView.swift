@@ -1,10 +1,3 @@
-//
-//  PageCellView.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 import PupKit
 
@@ -24,18 +17,18 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
     
     // MARK: NSTextFieldDelegate
     override func controlTextDidEndEditing(_ notification: Notification) {
-        if let textField = textField, let control = notification.object as? NSTextField {
+        if let textField: NSTextField = textField, let control: NSTextField = notification.object as? NSTextField {
             switch control {
             case textField:
                 control.stringValue = control.stringValue.trim()
                 if secondaryTextField.stringValue.isEmpty {
-                    secondaryTextField.stringValue = control.stringValue.URIFormat
+                    secondaryTextField.stringValue = control.stringValue.uriFormat
                 }
             case secondaryTextField:
                 if control.stringValue.isEmpty {
                     control.stringValue = textField.stringValue
                 }
-                control.stringValue = control.stringValue.URIFormat
+                control.stringValue = control.stringValue.uriFormat
             default:
                 break
             }
@@ -44,7 +37,7 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        guard let control = control as? NSTextField, control == textField && commandSelector == #selector(NSResponder.cancelOperation(_:)) else {
+        guard let control: NSTextField = control as? NSTextField, control == textField && commandSelector == #selector(NSResponder.cancelOperation(_:)) else {
             return false
         }
         
@@ -56,9 +49,14 @@ class PageCellView: NSTableCellView, NSTextFieldDelegate {
 }
 
 class PageCellButton: NSButton {
-    override var state: Int {
+    override var state: NSControl.StateValue {
         didSet{
-            image = state == 1 ? NSImage(named: "NSStatusAvailable") : NSImage(named: "NSStatusNone")
+            switch state {
+            case .on:
+                image = NSImage(named: NSImage.Name(rawValue: "NSStatusAvailable"))
+            default:
+                image = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
+            }
         }
     }
 }

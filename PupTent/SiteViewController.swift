@@ -1,10 +1,3 @@
-//
-//  SiteViewController.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 import PupKit
 
@@ -24,27 +17,27 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     }
     
     var canDeletePage: Bool {
-        let index = selectedPage.index
+        let index: Int = selectedPage.index
         return index > -1 && index < pagesTableView.numberOfRows - 1
     }
     
     @IBAction func openSettings(_ sender: AnyObject?) {
         pagesTableView.deselectAll(self)
-        (self.view.window as? Window)?.settingsButton.state = 1
+        (self.view.window as? Window)?.settingsButton.state = NSControl.StateValue(rawValue: 1)
         settingsView.nameText = manager.site.name
-        settingsView.URLText = manager.site.URL
-        settingsView.twitterText = manager.site.twitter
-        settingsView.bookmarkIconPath = "\(manager.path)\(HTML.bookmarkIconURI)"
-        settingsView.stylesheetPath = "\(manager.path)\(HTML.stylesheetURI)"
+        settingsView.urlText = manager.site.url?.absoluteString ?? ""
+        settingsView.twitterText = manager.site.twitter ?? ""
+        settingsView.bookmarkIconPath = "\(manager.path)\(HTML.bookmarkIcon)"
+        settingsView.stylesheetPath = "\(manager.path)\(HTML.stylesheet)"
         settingsView.isHidden = false
     }
     
     @IBAction func preview(_ sender: AnyObject?) {
         guard let page = self.selectedPage.page else {
-            NSWorkspace.shared().openFile(manager.path + manager.site.URI)
+            NSWorkspace.shared.openFile(manager.path + manager.site.uri)
             return
         }
-        NSWorkspace.shared().openFile(manager.path + page.URI)
+        NSWorkspace.shared.openFile(manager.path + page.uri)
     }
     
     @IBAction func makeNewPage(_ sender: AnyObject?) {
@@ -59,7 +52,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             manager.site.pages.remove(at: pagesTableView.selectedRow)
             try manager.build()
             try manager.clean()
-            pagesTableView.removeRows(at: IndexSet(integer: pagesTableView.selectedRow), withAnimation: NSTableViewAnimationOptions())
+            pagesTableView.removeRows(at: IndexSet(integer: pagesTableView.selectedRow), withAnimation: NSTableView.AnimationOptions())
         } catch let error as NSError {
             NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel"
@@ -73,7 +66,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
         
-        pagesTableView.register(forDraggedTypes: [draggedType])
+        pagesTableView.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: draggedType)])
         pagesTableView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
         
         settingsView.delegate = self
@@ -86,24 +79,23 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        
         if selectedPage.index < 0 {
             openSettings(self)
         }
     }
     
     init?(manager: Manager) {
-        super.init(nibName: "Site", bundle: nil)
+        super.init(nibName: NSNib.Name(rawValue: "Site"), bundle: nil)
         self.manager = manager
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        return nil
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        fatalError("init(nibName:bundle:) has not been implemented")
     }
-
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        return nil
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: NSTableViewDataSource
@@ -119,13 +111,13 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         }
         
         // Allow existing page cells drag
-        pasteboard.declareTypes([draggedType], owner: self)
-        pasteboard.setData(NSKeyedArchiver.archivedData(withRootObject: rowIndexes), forType: draggedType)
+        pasteboard.declareTypes([NSPasteboard.PasteboardType(rawValue: draggedType)], owner: self)
+        pasteboard.setData(NSKeyedArchiver.archivedData(withRootObject: rowIndexes), forType: NSPasteboard.PasteboardType(rawValue: draggedType))
         return true
     }
     
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
-        if dropOperation == NSTableViewDropOperation.above && row < tableView.numberOfRows {
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        if dropOperation == NSTableView.DropOperation.above && row < tableView.numberOfRows {
             
             // Allow cell drop in rows above "new page" cell
             return NSDragOperation.move
@@ -135,8 +127,8 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         return NSDragOperation()
     }
     
-    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
-        guard let data = info.draggingPasteboard().data(forType: draggedType), let indexSet = NSKeyedUnarchiver.unarchiveObject(with: data) as? IndexSet, row < tableView.numberOfRows else {
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard let data = info.draggingPasteboard().data(forType: NSPasteboard.PasteboardType(rawValue: draggedType)), let indexSet = NSKeyedUnarchiver.unarchiveObject(with: data) as? IndexSet, row < tableView.numberOfRows else {
             return false
         }
         let selectedPage = self.selectedPage.page // Remember current page selection
@@ -172,7 +164,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // MARK: NSTableViewDelegate
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let view = tableView.make(withIdentifier: "PageCellView", owner: self) as? PageCellView else {
+        guard let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PageCellView"), owner: self) as? PageCellView else {
             return nil
         }
         
@@ -181,15 +173,15 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         view.textField!.stringValue = ""
         view.secondaryTextField!.stringValue = ""
         view.button.isEnabled = false
-        view.button.state = 0
+        view.button.state = .off
         if row < manager.site.pages.count {
             
             // Configure cell for existing page
             let page = manager.site.pages[row]
             view.textField!.stringValue = "\(page.name)"
-            view.secondaryTextField!.stringValue = "\(page.URI)"
+            view.secondaryTextField!.stringValue = "\(page.uri)"
             view.button.isEnabled = true
-            view.button.state = page.index ? 1 : 0
+            view.button.state = page.index ? .on : .off
         }
         return view
     }
@@ -214,7 +206,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             view.button.isEnabled = true
         }
         pageView.string = page.body
-        (self.view.window as? Window)?.settingsButton.state = 0
+        (self.view.window as? Window)?.settingsButton.state = NSControl.StateValue(rawValue: 0)
         settingsView.isHidden = true
     }
     
@@ -224,7 +216,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
         if row < 0 {
             return
         }
-        let page = manager.site.pages[row]
+        var page = manager.site.pages[row]
         if view.textField!.stringValue.isEmpty {
             if page.name.isEmpty {
                 manager.site.pages.remove(at: pagesTableView.selectedRow)
@@ -234,8 +226,10 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             return
         }
         page.name = view.textField!.stringValue
-        page.URI = view.secondaryTextField.stringValue
-        page.index = view.button.state == 1
+        page.uri = view.secondaryTextField.stringValue
+        page.index = view.button.state == .on
+        manager.site.pages.remove(at: row)
+        manager.site.pages.insert(page, at: row)
         do {
             try manager.build()
             try manager.clean()
@@ -245,16 +239,19 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
             ]).beginSheetModal(for: view.window!)
         }
         if pagesTableView.numberOfRows == manager.site.pages.count {
-            pagesTableView.insertRows(at: IndexSet(integer: manager.site.pages.count), withAnimation: NSTableViewAnimationOptions())
+            pagesTableView.insertRows(at: IndexSet(integer: manager.site.pages.count), withAnimation: NSTableView.AnimationOptions())
         }
     }
     
     // MARK: PageViewDelegate
     func pageViewDidChange(_ view: PageView) {
-        guard let string = view.string, let page = selectedPage.page else {
+        guard var page: Page = selectedPage.page, selectedPage.index >= 0 else {
             return
         }
-        page.body = string
+        let index: Int = selectedPage.index
+        page.body = view.string
+        manager.site.pages.remove(at: index)
+        manager.site.pages.insert(page, at: index)
         do {
             try manager.build()
             try manager.clean()
@@ -268,7 +265,7 @@ class SiteViewController: NSViewController, NSTableViewDataSource, NSTableViewDe
     // MARK: SettingsViewDelegate
     func settingsViewDidChange(_ view: SettingsView) {
         manager.site.name = view.nameText
-        manager.site.URL = view.URLText
+        manager.site.url = URL(string: view.urlText)
         manager.site.twitter = view.twitterText
         do {
             try manager.build()

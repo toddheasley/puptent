@@ -1,16 +1,9 @@
-//
-//  PageRowView.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 
 class PageRowView: NSTableRowView {
     private var index: Int = -1
     
-    override var interiorBackgroundStyle: NSBackgroundStyle {
+    override var interiorBackgroundStyle: NSView.BackgroundStyle {
         return .light
     }
     
@@ -23,7 +16,7 @@ class PageRowView: NSTableRowView {
     override func drawBackground(in dirtyRect: NSRect) {
         super.drawBackground(in: dirtyRect)
         
-        guard let tableView = superview as? NSTableView, !isSelected else {
+        guard let tableView: NSTableView = superview as? NSTableView, !isSelected else {
             return
         }
         

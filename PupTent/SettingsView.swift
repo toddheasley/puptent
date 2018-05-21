@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 import PupKit
 
@@ -17,7 +10,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
     @IBOutlet weak var delegate: SettingsViewDelegate?
     @IBOutlet var bookmarkIconView: BookmarkIconView!
     @IBOutlet var nameTextField: NSTextField!
-    @IBOutlet var URLTextField: NSTextField!
+    @IBOutlet var urlTextField: NSTextField!
     @IBOutlet var twitterTextField: NSTextField!
     @IBOutlet var twitterTestButton: NSButton!
     @IBOutlet var fontPopUpButton: NSPopUpButton!
@@ -35,13 +28,13 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
     }
     
-    var URLText: String {
+    var urlText: String {
         set{
-            URLTextField.stringValue = newValue.URLFormat
+            urlTextField.stringValue = newValue.urlFormat
             
         }
         get{
-            return URLTextField.stringValue
+            return urlTextField.stringValue
         }
     }
     
@@ -49,7 +42,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         set{
             twitterTextField.stringValue = newValue.twitterFormat()
             twitterTestButton.isEnabled = !twitterTextField.stringValue.twitterFormat(format: false).isEmpty
-            twitterTestButton.image = NSImage(named: "NSStatusNone")
+            twitterTestButton.image = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
             twitterTestButton.title = "Test"
         }
         get{
@@ -59,7 +52,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
     
     var bookmarkIconPath: String? {
         didSet{
-            guard let bookmarkIconPath = bookmarkIconPath else {
+            guard let bookmarkIconPath: String = bookmarkIconPath else {
                 bookmarkIconView.image = nil
                 return
             }
@@ -69,8 +62,8 @@ class SettingsView: NSView, NSTextFieldDelegate {
     
     var stylesheetPath: String? {
         didSet{
-            var stylesheet = CSS()
-            if let stylesheetPath = stylesheetPath, let data = try? Data(contentsOf: URL(fileURLWithPath: stylesheetPath)) {
+            var stylesheet: CSS = CSS()
+            if let stylesheetPath: String = stylesheetPath, let data: Data = try? Data(contentsOf: URL(fileURLWithPath: stylesheetPath)) {
                 stylesheet = CSS(data: data)
             }
             switch stylesheet.font {
@@ -96,11 +89,11 @@ class SettingsView: NSView, NSTextFieldDelegate {
         }
     }
     
-    func makeNewStylesheet() {
+    @objc func makeNewStylesheet() {
         guard let stylesheetPath = stylesheetPath else {
             return
         }
-        let stylesheet = CSS()
+        var stylesheet: CSS = CSS()
         switch fontPopUpButton.indexOfSelectedItem {
         case 1:
             stylesheet.font = .sans
@@ -114,7 +107,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
         stylesheet.linkColor.link = linkColorWell.color.string
         stylesheet.linkColor.visited = visitedLinkColorWell.color.string
         stylesheet.generate{ data in
-            let _ = try? data.write(to: URL(fileURLWithPath: stylesheetPath), options: [.atomicWrite])
+            try? data.write(to: URL(fileURLWithPath: stylesheetPath), options: .atomicWrite)
         }
     }
     
@@ -123,47 +116,47 @@ class SettingsView: NSView, NSTextFieldDelegate {
     }
     
     @IBAction func testTwitter(_ sender: AnyObject?) {
-        guard let URL = URL(string: "https://twitter.com/\(twitterText)"), !twitterText.isEmpty else {
+        guard let url: URL = URL(string: "https://twitter.com/\(twitterText)"), !twitterText.isEmpty else {
             return
         }
         if twitterTestButton.title == "View" {
-            NSWorkspace.shared().open(URL)
+            NSWorkspace.shared.open(url)
             return
         }
-        self.twitterTestButton.image = NSImage(named: "NSStatusNone")
-        URLSession.shared.dataTask(with: URL){ data, response, error in
-            DispatchQueue.main.async{
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    self.twitterTestButton.image = NSImage(named: "NSStatusUnavailable")
+        self.twitterTestButton.image = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                guard let response: HTTPURLResponse = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    self.twitterTestButton.image = NSImage(named: NSImage.Name(rawValue: "NSStatusUnavailable"))
                     return
                 }
-                self.twitterTestButton.image = NSImage(named: "NSStatusAvailable")
+                self.twitterTestButton.image = NSImage(named: NSImage.Name(rawValue: "NSStatusAvailable"))
                 self.twitterTestButton.title = "View"
             }
         }.resume()
     }
     
     @IBAction func bookmarkIconDidChange(_ sender: AnyObject?) {
-        guard let path = bookmarkIconPath, let sender = sender as? NSImageView else {
+        guard let path: String = bookmarkIconPath, let sender: NSImageView = sender as? NSImageView else {
             return
         }
-        let URL = Foundation.URL(fileURLWithPath: path)
+        let url: URL = URL(fileURLWithPath: path)
         do {
-            if FileManager.default.fileExists(atPath: URL.path) {
-                try FileManager.default.trashItem(at: URL, resultingItemURL: nil)
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.trashItem(at: url, resultingItemURL: nil)
             }
-        } catch let error as NSError {
-            NSAlert(message: error.localizedFailureReason, description: error.localizedDescription, buttons: [
+        } catch {
+            NSAlert(message: (error as NSError).localizedFailureReason, description: error.localizedDescription, buttons: [
                 "Cancel",
                 "Open in Finder"
             ]).beginSheetModal(for: window!){ response in
-                if response != NSAlertFirstButtonReturn {
-                    NSWorkspace.shared().open(URL)
+                if response != .alertFirstButtonReturn {
+                    NSWorkspace.shared.open(url)
                 }
             }
         }
-        if let image = sender.image {
-            let _ = try? image.tiffRepresentation?.write(to: URL, options: [.atomicWrite])
+        if let image: NSImage = sender.image {
+            let _ = try? image.tiffRepresentation?.write(to: url, options: .atomicWrite)
         }
     }
     
@@ -189,7 +182,7 @@ class SettingsView: NSView, NSTextFieldDelegate {
             return
         }
         twitterTestButton.isEnabled = !twitterTextField.stringValue.twitterFormat(format: false).isEmpty
-        twitterTestButton.image = NSImage(named: "NSStatusNone")
+        twitterTestButton.image = NSImage(named: NSImage.Name(rawValue: "NSStatusNone"))
         twitterTestButton.title = "Test"
     }
     
@@ -200,8 +193,8 @@ class SettingsView: NSView, NSTextFieldDelegate {
         switch control {
         case nameTextField:
             control.stringValue = control.stringValue.trim()
-        case URLTextField:
-            control.stringValue = control.stringValue.URLFormat
+        case urlTextField:
+            control.stringValue = control.stringValue.urlFormat
         case twitterTextField:
             control.stringValue = control.stringValue.twitterFormat()
         default:
@@ -215,16 +208,16 @@ extension NSColor {
     var string: String {
         var red: CGFloat = 0.0, green: CGFloat = 0.0, blue: CGFloat = 0.0, alpha: CGFloat = 0.0
         getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        let hex:Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255) << 0
+        let hex: Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255) << 0
         return NSString(format:"#%06x", hex).uppercased as String
     }
     
     convenience init?(string: String) {
-        if !string.hasPrefix("#") || string.characters.count != 7 {
+        if !string.hasPrefix("#") || string.count != 7 {
             self.init()
             return nil
         }
-        var hex:UInt32 = 0
+        var hex: UInt32 = 0
         Scanner(string: string.replace(string: "#", "")).scanHexInt32(&hex)
         self.init(red: CGFloat((hex & 0xFF0000) >> 16) / 255.0, green: CGFloat((hex & 0x00FF00) >> 8) / 255.0, blue: CGFloat(hex & 0x00FF) / 255.0, alpha: 1.0)
     }

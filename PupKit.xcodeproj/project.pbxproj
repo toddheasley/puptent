@@ -8,20 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		5C4A32941C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
-		5C4A32951C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
 		5C4A32961C8CC5080039976D /* CSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32931C8CC5080039976D /* CSS.swift */; };
 		5C4A32981C8CCDB10039976D /* CSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A32971C8CCDB10039976D /* CSSTests.swift */; };
 		5C7181451B5BD42800481CCF /* PupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C504F181A7AE8AC00662FF2 /* PupKit.framework */; };
 		5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71814B1B5BD49500481CCF /* SiteTests.swift */; };
-		5C71814D1B5BD4A600481CCF /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF01A7A64AE001C70BE /* Manager.swift */; };
-		5C71814E1B5BD4AB00481CCF /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */; };
-		5C71814F1B5BD4AF00481CCF /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF21A7A64AE001C70BE /* Site.swift */; };
-		5C7181501B5BD4B300481CCF /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF11A7A64AE001C70BE /* Page.swift */; };
-		5C7181511B5BD4B700481CCF /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDEF1A7A64AE001C70BE /* HTML.swift */; };
 		5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7181521B5BD58C00481CCF /* PageTests.swift */; };
 		5C7181551B5BD5C800481CCF /* ManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7181541B5BD5C800481CCF /* ManagerTests.swift */; };
 		5C7181571B5BD60600481CCF /* HTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7181561B5BD60600481CCF /* HTMLTests.swift */; };
-		5CB4CDF31A7A64AE001C70BE /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */; };
 		5CB4CDF41A7A64AE001C70BE /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDEF1A7A64AE001C70BE /* HTML.swift */; };
 		5CB4CDF51A7A64AE001C70BE /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF01A7A64AE001C70BE /* Manager.swift */; };
 		5CB4CDF61A7A64AE001C70BE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF11A7A64AE001C70BE /* Page.swift */; };
@@ -31,7 +24,8 @@
 		5CB4CE041A7A673B001C70BE /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF01A7A64AE001C70BE /* Manager.swift */; };
 		5CB4CE051A7A673E001C70BE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF11A7A64AE001C70BE /* Page.swift */; };
 		5CB4CE061A7A6740001C70BE /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDF21A7A64AE001C70BE /* Site.swift */; };
-		5CB4CE071A7A674E001C70BE /* Archiving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */; };
+		5CEA0F2620B201B7008D6FB1 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA0F2520B201B7008D6FB1 /* Resource.swift */; };
+		5CEA0F2720B201B7008D6FB1 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEA0F2520B201B7008D6FB1 /* Resource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,18 +37,6 @@
 			remoteInfo = PupKit;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		5CB4CDFA1A7A6611001C70BE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5C4A32931C8CC5080039976D /* CSS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSS.swift; sourceTree = "<group>"; };
@@ -68,12 +50,12 @@
 		5C7181541B5BD5C800481CCF /* ManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerTests.swift; sourceTree = "<group>"; };
 		5C7181561B5BD60600481CCF /* HTMLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLTests.swift; sourceTree = "<group>"; };
 		5CB4CDD61A7A644F001C70BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archiving.swift; sourceTree = "<group>"; };
 		5CB4CDEF1A7A64AE001C70BE /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
 		5CB4CDF01A7A64AE001C70BE /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		5CB4CDF11A7A64AE001C70BE /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		5CB4CDF21A7A64AE001C70BE /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		5CB4CDFE1A7A6611001C70BE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		5CEA0F2520B201B7008D6FB1 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,31 +67,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5CB4CDCE1A7A644F001C70BE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CB4CDF91A7A6611001C70BE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5C7181411B5BD42800481CCF /* PupKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				5C7181541B5BD5C800481CCF /* ManagerTests.swift */,
-				5C71814B1B5BD49500481CCF /* SiteTests.swift */,
-				5C7181521B5BD58C00481CCF /* PageTests.swift */,
-				5C7181561B5BD60600481CCF /* HTMLTests.swift */,
 				5C4A32971C8CCDB10039976D /* CSSTests.swift */,
+				5C7181561B5BD60600481CCF /* HTMLTests.swift */,
+				5C7181541B5BD5C800481CCF /* ManagerTests.swift */,
+				5C7181521B5BD58C00481CCF /* PageTests.swift */,
+				5C71814B1B5BD49500481CCF /* SiteTests.swift */,
 				5C7181441B5BD42800481CCF /* Info.plist */,
 			);
 			path = PupKitTests;
@@ -129,12 +97,12 @@
 		5CB4CDD41A7A644F001C70BE /* PupKit */ = {
 			isa = PBXGroup;
 			children = (
-				5CB4CDF01A7A64AE001C70BE /* Manager.swift */,
-				5CB4CDF21A7A64AE001C70BE /* Site.swift */,
-				5CB4CDF11A7A64AE001C70BE /* Page.swift */,
-				5CB4CDEE1A7A64AE001C70BE /* Archiving.swift */,
-				5CB4CDEF1A7A64AE001C70BE /* HTML.swift */,
 				5C4A32931C8CC5080039976D /* CSS.swift */,
+				5CB4CDEF1A7A64AE001C70BE /* HTML.swift */,
+				5CB4CDF01A7A64AE001C70BE /* Manager.swift */,
+				5CB4CDF11A7A64AE001C70BE /* Page.swift */,
+				5CEA0F2520B201B7008D6FB1 /* Resource.swift */,
+				5CB4CDF21A7A64AE001C70BE /* Site.swift */,
 				5CB4CDD61A7A644F001C70BE /* Info.plist */,
 				5CB4CDFE1A7A6611001C70BE /* main.swift */,
 			);
@@ -143,16 +111,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		5CB4CDCF1A7A644F001C70BE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		5C71813F1B5BD42800481CCF /* PupKitTests */ = {
 			isa = PBXNativeTarget;
@@ -160,7 +118,6 @@
 			buildPhases = (
 				5C71813C1B5BD42800481CCF /* Sources */,
 				5C71813D1B5BD42800481CCF /* Frameworks */,
-				5C71813E1B5BD42800481CCF /* Resources */,
 			);
 			buildRules = (
 			);
@@ -177,9 +134,6 @@
 			buildConfigurationList = 5CB4CDE81A7A644F001C70BE /* Build configuration list for PBXNativeTarget "PupKit" */;
 			buildPhases = (
 				5CB4CDCD1A7A644F001C70BE /* Sources */,
-				5CB4CDCE1A7A644F001C70BE /* Frameworks */,
-				5CB4CDCF1A7A644F001C70BE /* Headers */,
-				5CB4CDD01A7A644F001C70BE /* Resources */,
 			);
 			buildRules = (
 			);
@@ -195,8 +149,6 @@
 			buildConfigurationList = 5CB4CE001A7A6611001C70BE /* Build configuration list for PBXNativeTarget "PupKitCLI" */;
 			buildPhases = (
 				5CB4CDF81A7A6611001C70BE /* Sources */,
-				5CB4CDF91A7A6611001C70BE /* Frameworks */,
-				5CB4CDFA1A7A6611001C70BE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -215,22 +167,24 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "@toddheasley";
 				TargetAttributes = {
 					5C71813F1B5BD42800481CCF = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = 9Q3DL72K7D;
+						LastSwiftMigration = 0940;
+						ProvisioningStyle = Automatic;
 					};
 					5CB4CDD11A7A644F001C70BE = {
 						CreatedOnToolsVersion = 6.1.1;
-						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						LastSwiftMigration = 0940;
+						ProvisioningStyle = Automatic;
 					};
 					5CB4CDFB1A7A6611001C70BE = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 9Q3DL72K7D;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -254,39 +208,16 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		5C71813E1B5BD42800481CCF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5CB4CDD01A7A644F001C70BE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		5C71813C1B5BD42800481CCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				5C4A32981C8CCDB10039976D /* CSSTests.swift in Sources */,
-				5C71814D1B5BD4A600481CCF /* Manager.swift in Sources */,
-				5C7181551B5BD5C800481CCF /* ManagerTests.swift in Sources */,
-				5C71814F1B5BD4AF00481CCF /* Site.swift in Sources */,
-				5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */,
-				5C7181501B5BD4B300481CCF /* Page.swift in Sources */,
-				5C4A32951C8CC5080039976D /* CSS.swift in Sources */,
-				5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */,
-				5C71814E1B5BD4AB00481CCF /* Archiving.swift in Sources */,
-				5C7181511B5BD4B700481CCF /* HTML.swift in Sources */,
 				5C7181571B5BD60600481CCF /* HTMLTests.swift in Sources */,
+				5C7181551B5BD5C800481CCF /* ManagerTests.swift in Sources */,
+				5C7181531B5BD58C00481CCF /* PageTests.swift in Sources */,
+				5C71814C1B5BD49500481CCF /* SiteTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,12 +225,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CB4CDF41A7A64AE001C70BE /* HTML.swift in Sources */,
-				5CB4CDF71A7A64AE001C70BE /* Site.swift in Sources */,
-				5CB4CDF51A7A64AE001C70BE /* Manager.swift in Sources */,
 				5C4A32941C8CC5080039976D /* CSS.swift in Sources */,
+				5CB4CDF41A7A64AE001C70BE /* HTML.swift in Sources */,
+				5CB4CDF51A7A64AE001C70BE /* Manager.swift in Sources */,
+				5CEA0F2620B201B7008D6FB1 /* Resource.swift in Sources */,
 				5CB4CDF61A7A64AE001C70BE /* Page.swift in Sources */,
-				5CB4CDF31A7A64AE001C70BE /* Archiving.swift in Sources */,
+				5CB4CDF71A7A64AE001C70BE /* Site.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,13 +238,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C4A32961C8CC5080039976D /* CSS.swift in Sources */,
 				5CB4CE031A7A6738001C70BE /* HTML.swift in Sources */,
-				5CB4CE061A7A6740001C70BE /* Site.swift in Sources */,
 				5CB4CE041A7A673B001C70BE /* Manager.swift in Sources */,
 				5CB4CE051A7A673E001C70BE /* Page.swift in Sources */,
+				5CB4CE061A7A6740001C70BE /* Site.swift in Sources */,
 				5CB4CDFF1A7A6611001C70BE /* main.swift in Sources */,
-				5C4A32961C8CC5080039976D /* CSS.swift in Sources */,
-				5CB4CE071A7A674E001C70BE /* Archiving.swift in Sources */,
+				5CEA0F2720B201B7008D6FB1 /* Resource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,30 +262,40 @@
 		5C7181491B5BD42800481CCF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PupKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.PupKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		5C71814A1B5BD42800481CCF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PupKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.PupKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -366,14 +307,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -396,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -414,14 +363,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -438,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -451,7 +408,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -462,13 +420,14 @@
 				INFOPLIST_FILE = PupKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.mac.pupkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -476,6 +435,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -486,12 +447,13 @@
 				INFOPLIST_FILE = PupKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.mac.pupkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -499,14 +461,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/PupKit/Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.pupkit;
 				PRODUCT_NAME = pup;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -514,13 +478,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Q3DL72K7D;
 				INFOPLIST_FILE = "$(SRCROOT)/PupKit/Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.toddheasley.pupkit;
 				PRODUCT_NAME = pup;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

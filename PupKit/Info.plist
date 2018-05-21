@@ -15,13 +15,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0</string>
+	<string>3.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>(c) 2016 @toddheasley</string>
+	<string>(c) 2018 toddheasley</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

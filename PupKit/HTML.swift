@@ -1,44 +1,37 @@
-//
-//  HTML.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import Foundation
 
 public typealias HTML = String
 
-enum HTMLMetaName: String {
-    case generator = "generator"
-    case viewport = "viewport"
-    case bookmarkTitle = "apple-mobile-web-app-title"
-    case twitterCard = "twitter:card"
-    case twitterTitle = "twitter:title"
-    case twitterDescription = "twitter:description"
-    case twitterImage = "twitter:image"
-    case twitterSite = "twitter:site"
-}
-
-enum HTMLLinkRel: String {
-    case stylesheet = "stylesheet"
-    case bookmarkIcon = "apple-touch-icon"
-}
-
 extension HTML {
-    public static let bookmarkIconURI: String = "apple-touch-icon.png"
-    public static let stylesheetURI: String = "default.css"
-    static let viewport: String = "initial-scale=1.0"
+    enum MetaName: String {
+        case generator = "generator"
+        case viewport = "viewport"
+        case bookmarkTitle = "apple-mobile-web-app-title"
+        case twitterCard = "twitter:card"
+        case twitterTitle = "twitter:title"
+        case twitterDescription = "twitter:description"
+        case twitterImage = "twitter:image"
+        case twitterSite = "twitter:site"
+    }
+
+    enum LinkRel: String {
+        case stylesheet = "stylesheet"
+        case bookmarkIcon = "apple-touch-icon"
+    }
+    
+    public static let bookmarkIcon: String = "apple-touch-icon.png"
+    public static let stylesheet: String = "default.css"
+    private static let viewport: String = "initial-scale=1.0"
     
     private static func doctype() -> HTML {
         return "<!DOCTYPE html>"
     }
     
-    private static func meta(name: HTMLMetaName, content: String) -> HTML {
+    private static func meta(name: MetaName, content: String) -> HTML {
         return "<meta name=\"\(name.rawValue)\" content=\"\(content)\">"
     }
     
-    private static func link(rel: HTMLLinkRel, href: String) -> HTML {
+    private static func link(rel: LinkRel, href: String) -> HTML {
         return "<link rel=\"\(rel.rawValue)\" href=\"\(href)\">"
     }
     
@@ -109,31 +102,31 @@ extension HTML {
                 meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent)"),
                 meta(name: .viewport, content: viewport),
                 meta(name: .bookmarkTitle, content: "\(site.name)"),
-                link(rel: .bookmarkIcon, href: bookmarkIconURI),
-                link(rel: .stylesheet, href: stylesheetURI),
+                link(rel: .bookmarkIcon, href: bookmarkIcon),
+                link(rel: .stylesheet, href: stylesheet),
                 header(elements: [
-                    h1(content: a(content: "\(site.name)", href: site.URI))
+                    h1(content: a(content: "\(site.name)", href: site.uri))
                 ]),
                 article(elements: articleElements),
                 footer(elements: [
-                    p(content: HTML(string: site.twitter.isEmpty ? "" : "\(site.twitter.twitterFormat())"))
+                    p(content: HTML(string: (site.twitter?.isEmpty ?? true) ? "" : "\(site.twitter!.twitterFormat())"))
                 ])
             ]
-            if let excerpt = page.body.excerpt, !site.twitter.isEmpty {
+            if let excerpt: String = page.body.excerpt, let twitter: String = site.twitter, !twitter.isEmpty {
                 var twitterElements: [String] = [
-                    meta(name: .twitterSite, content: "\(site.twitter.twitterFormat())"),
+                    meta(name: .twitterSite, content: "\(twitter.twitterFormat())"),
                     meta(name: .twitterTitle, content: "\(page.name)"),
                     meta(name: .twitterDescription, content: "\(excerpt)")
                 ]
-                if let image = page.body.image, let URL = URL(string: image, relativeTo: URL(string: site.URL)!), !site.URL.isEmpty {
+                if let image: String = page.body.image, let url: URL = site.url, let imageURL: URL = URL(string: image, relativeTo: url) {
                     twitterElements.insert(meta(name: .twitterCard, content: "summary_large_image"), at: 0)
-                    twitterElements.append(meta(name: .twitterImage, content: "\(URL.absoluteString)"))
+                    twitterElements.append(meta(name: .twitterImage, content: "\(imageURL.absoluteString)"))
                 } else {
                     twitterElements.insert(meta(name: .twitterCard, content: "summary"), at: 0)
                 }
                 pageElements.insert(contentsOf: twitterElements, at: 4)
             }
-            completion(page.URI, join(elements: pageElements).data(using: String.Encoding.utf8)!)
+            completion(page.uri, join(elements: pageElements).data(using: .utf8)!)
         }
         
         // Generate index HTML
@@ -143,27 +136,27 @@ extension HTML {
             meta(name: .generator, content: "\(Bundle.main.executableURL!.lastPathComponent)"),
             meta(name: .viewport, content: viewport),
             meta(name: .bookmarkTitle, content: "\(site.name)"),
-            link(rel: .bookmarkIcon, href: bookmarkIconURI),
-            link(rel: .stylesheet, href: stylesheetURI),
+            link(rel: .bookmarkIcon, href: bookmarkIcon),
+            link(rel: .stylesheet, href: stylesheet),
             header(elements: [
                 h1(content: "\(site.name)")
             ]),
             article(elements: site.indexedPages.map{ page in
                 var sectionElements: [HTML] = [
-                    p(content: a(content: page.URI, href: page.URI))
+                    p(content: a(content: page.uri, href: page.uri))
                 ]
                 if let image = page.body.image, page.body.hasPrefix("/\(image)") {
-                    sectionElements.insert(p(content: a(content: img(src: image), href: page.URI)), at: 0)
+                    sectionElements.insert(p(content: a(content: img(src: image), href: page.uri)), at: 0)
                 } else if let excerpt = page.body.excerpt, page.body.hasPrefix("\(excerpt)") {
                     sectionElements.insert(p(content: HTML(string: excerpt)), at: 0)
                 }
                 return section(elements: sectionElements)
             }),
             footer(elements: [
-                p(content: HTML(string: site.twitter.isEmpty ? "" : "@\(site.twitter)"))
+                p(content: HTML(string: (site.twitter?.isEmpty ?? true) ? "" : "\(site.twitter!.twitterFormat())"))
             ])
         ]
-        completion(site.URI, join(elements: indexElements).data(using: String.Encoding.utf8)!)
+        completion(site.uri, join(elements: indexElements).data(using: String.Encoding.utf8)!)
     }
     
     init(string: String) {
@@ -177,13 +170,12 @@ extension HTML {
             ("(^|\\s)@([a-z0-9_]+)", "$1<a href=\"https://twitter.com/$2\">@$2</a>"), // Hyperlink Twitter names
             ("(^|\\s)#([a-z0-9_]+)", "$1<a href=\"https://twitter.com/search?q=%23$2&src=hash\">#$2</a>") // Hyperlink Twitter hashtags
         ]
-        
         var HTML = string
         for pattern in patterns {
-            HTML = (try! NSRegularExpression(pattern: pattern.0, options: NSRegularExpression.Options.caseInsensitive)).stringByReplacingMatches(in: HTML as String, options: [], range: NSMakeRange(0, HTML.characters.count), withTemplate: pattern.1)
+            HTML = (try! NSRegularExpression(pattern: pattern.0, options: NSRegularExpression.Options.caseInsensitive)).stringByReplacingMatches(in: HTML as String, options: [], range: NSMakeRange(0, HTML.count), withTemplate: pattern.1)
         }
         HTML = HTML.replacingOccurrences(of: "\n", with: "<br>")
-        self.init(HTML)!
+        self = HTML
     }
 }
 
@@ -212,26 +204,26 @@ extension String {
         return find(expression: try! NSRegularExpression(pattern: "(^|\\s)/([\\w\\-\\.!~#?&=+\\*'\"(),\\/]+)", options: .caseInsensitive))
     }
     
-    public var URIFormat: String {
-        var string = lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
+    public var uriFormat: String {
+        var string: String = lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
         
         // Separate words with hyphens
         string = string.replace(string: " ", String.separator)
         
         // Strip existing file extension
-        string = string.replace(string: Manager.URIExtension, "")
+        string = string.replace(string: ".html", "")
         
         // Strip all non-alphanumeric characters
         string = string.replacingOccurrences(of: "[^0-9a-z-_]", with: "", options: .regularExpression, range: nil)
-        return string.isEmpty ? "" : "\(string)\(Manager.URIExtension)"
+        return string.isEmpty ? "" : "\(string).html"
     }
     
-    public var URLFormat: String {
+    public var urlFormat: String {
         return lowercased().trim()
     }
     
     public func twitterFormat(format: Bool = true) -> String {
-        let string = trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "@", with: "")
+        let string: String = trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "@", with: "")
         return format && !string.isEmpty ? "@\(string)" : string
     }
     
@@ -248,7 +240,7 @@ extension String {
     }
     
     private func find(expression: NSRegularExpression) -> [String] {
-        return expression.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, characters.count)).map{ result in
+        return expression.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, count)).map{ result in
             return ((self as NSString).substring(with: result.range).trim() as NSString).replacingOccurrences(of: "/", with: "", options: NSString.CompareOptions(), range: NSMakeRange(0, 1))
         }
     }

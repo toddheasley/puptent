@@ -1,49 +1,22 @@
-//
-//  Page.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import Foundation
 
-public class Page: Archiving {
-    public var index: Bool
-    public var name: String
-    public var URI: String
-    public var body: String
+public struct Page: Resource, Codable {
+    public var name: String = ""
+    public var body: HTML = ""
+    public var index: Bool = true
     
-    public convenience init() {
-        self.init(dictionary: [
-            ArchivingKeys.index: true,
-            ArchivingKeys.name: "",
-            ArchivingKeys.URI: "",
-            ArchivingKeys.body: ""
-        ])
+    public init() {
+        
     }
     
-    // MARK: Archiving
-    public var manifest: [String] {
-        var manifest = body.manifest
-        if !URI.isEmpty {
-            manifest.append(URI)
+    // MARK: Resource
+    public var uri: String = ""
+    
+    var manifest: [String] {
+        var manifest: [String] = body.manifest
+        if !uri.isEmpty {
+            manifest.append(uri)
         }
         return manifest
-    }
-    
-    public var dictionary: [String: Any] {
-        return [
-            ArchivingKeys.index: index,
-            ArchivingKeys.name: name,
-            ArchivingKeys.URI: URI,
-            ArchivingKeys.body: body
-        ]
-    }
-    
-    public required init(dictionary: [String: Any]) {
-        index = dictionary[ArchivingKeys.index] as! Bool
-        name = dictionary[ArchivingKeys.name] as! String
-        URI = dictionary[ArchivingKeys.URI] as! String
-        body = dictionary[ArchivingKeys.body] as! String
     }
 }

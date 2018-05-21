@@ -1,10 +1,3 @@
-//
-//  MainViewControllerTests.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import XCTest
 
 class NSUserDefaultsTests: XCTestCase {

@@ -1,73 +1,21 @@
-//
-//  CSS.swift
-//  PupKit
-//
-//  (c) 2016 @toddheasley
-//
-
 import Foundation
 
-public enum FontFamily: String {
-    case serif = "serif"
-    case sans = "sans-serif"
-    case mono = "monospace"
-    
-    init?(string: String) {
-        guard let range = string.range(of: "(serif|sans-serif|monospace)", options: .regularExpression) else {
-            return nil
+public struct CSS {
+    public enum Font: String {
+        case serif, sans = "sans-serif", mono = "monospace"
+        
+        init?(string: String) {
+            guard let range: Range = string.range(of: "(serif|sans-serif|monospace)", options: .regularExpression) else {
+                return nil
+            }
+            self.init(rawValue: String(string[range]))
         }
-        self.init(rawValue: string.substring(with: range))
     }
-}
-
-public class CSS {
-    public var font: FontFamily = .serif
+    
     public var backgroundColor: String = "#FFFFFF"
     public var textColor: String = "#000000"
     public var linkColor: (link: String, visited: String) = ("#0000E9", "#420078")
-    
-    private func value(target: String, property: String, selector: String? = nil) -> String? {
-        var target = target.replacingOccurrences(of: String.newLine, with: "")
-        if let selector = selector, !selector.isEmpty {
-            let matches = try! NSRegularExpression(pattern: "\(selector) \\{[^\\}]+\\}", options: .caseInsensitive).matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
-                return ((target as NSString).substring(with: result.range).trim() as NSString)
-            }
-            if matches.isEmpty {
-                return nil
-            }
-            target = matches[0] as String
-        }
-        let expression = try! NSRegularExpression(pattern: "(\(property)): ([^;]+);", options: .caseInsensitive)
-        let matches = expression.matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.characters.count)).map{ result in
-            return ((target as NSString).substring(with: result.range).trim() as NSString)
-        }
-        if matches.isEmpty {
-            return nil
-        }
-        let match = matches[0] as String
-        if match.isEmpty {
-            return nil
-        }
-        return expression.stringByReplacingMatches(in: match, options: [], range: NSMakeRange(0, match.characters.count), withTemplate: "$2")
-    }
-    
-    private func block(selector: String, rules: [(property: String, value: String)]) -> String {
-        return "\(selector) {\(join(rules: rules)))}"
-    }
-    
-    private func media(selector: String, blocks: [String]) -> String {
-        return "@media \(selector) {\(String.newLine)    \(join(blocks: blocks).replace(string: "\(String.newLine)", "\(String.newLine)    "))\(String.newLine)}"
-    }
-    
-    private func join(rules: [(property: String, value: String)]) -> String {
-        return "\(String.newLine)" + rules.map{ rule in
-            return "    \(rule.property): \(rule.value);"
-        }.joined(separator: "\(String.newLine)") + "\(String.newLine)"
-    }
-    
-    private func join(blocks: [String]) -> String {
-        return blocks.joined(separator: "\(String.newLine)\(String.newLine)")
-    }
+    public var font: Font = .serif
     
     public func generate(completion: (Data) -> Void) {
         completion(join(blocks: [
@@ -122,27 +70,56 @@ public class CSS {
                     ("margin", "auto 8px")
                 ])
             ])
-        ]).data(using: String.Encoding.utf8)!)
+        ]).data(using: .utf8)!)
     }
     
     public init(data: Data = Data()) {
-        guard let string = String(data: data, encoding: String.Encoding.utf8), !string.isEmpty else {
+        guard let target: String = String(data: data, encoding: .utf8), !target.isEmpty else {
             return
         }
-        if let value = value(target: string, property: "font"), let font = FontFamily(string: value) {
-            self.font = font
+        backgroundColor = value(target: target, property: "background", selector: "body") ?? backgroundColor
+        textColor = value(target: target, property: "color", selector: "body") ?? textColor
+        linkColor.link = value(target: target, property: "color", selector: "a") ?? linkColor.link
+        linkColor.visited = value(target: target, property: "color", selector: "a:visited") ?? linkColor.visited
+        font = Font(string: value(target: target, property: "font") ?? "") ?? font
+    }
+    
+    private func value(target: String, property: String, selector: String? = nil) -> String? {
+        var target: String = target.replacingOccurrences(of: String.newLine, with: "")
+        if let selector: String = selector, !selector.isEmpty {
+            let matches: [String] = try! NSRegularExpression(pattern: "\(selector) \\{[^\\}]+\\}", options: .caseInsensitive).matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.count)).map{ result in
+                return (target as NSString).substring(with: result.range).trim() as String
+            }
+            guard let match: String = matches.first else {
+                return nil
+            }
+            target = match
         }
-        if let value = value(target: string, property: "background", selector: "body") {
-            backgroundColor = value
+        let expression: NSRegularExpression = try! NSRegularExpression(pattern: "(\(property)): ([^;]+);", options: .caseInsensitive)
+        let matches: [String] = expression.matches(in: target, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, target.count)).map{ result in
+            return (target as NSString).substring(with: result.range).trim() as String
         }
-        if let value = value(target: string, property: "color", selector: "body") {
-            textColor = value
+        guard let match: String = matches.first, !match.isEmpty else {
+            return nil
         }
-        if let value = value(target: string, property: "color", selector: "a") {
-            linkColor.link = value
-        }
-        if let value = value(target: string, property: "color", selector: "a:visited") {
-            linkColor.visited = value
-        }
+        return expression.stringByReplacingMatches(in: match, options: [], range: NSMakeRange(0, match.count), withTemplate: "$2")
+    }
+    
+    private func block(selector: String, rules: [(property: String, value: String)]) -> String {
+        return "\(selector) {\(join(rules: rules))}"
+    }
+    
+    private func media(selector: String, blocks: [String]) -> String {
+        return "@media \(selector) {\(String.newLine)    \(join(blocks: blocks).replace(string: "\(String.newLine)", "\(String.newLine)    "))\(String.newLine)}"
+    }
+    
+    private func join(rules: [(property: String, value: String)]) -> String {
+        return "\(String.newLine)" + rules.map{ rule in
+            return "    \(rule.property): \(rule.value);"
+        }.joined(separator: "\(String.newLine)") + "\(String.newLine)"
+    }
+    
+    private func join(blocks: [String]) -> String {
+        return blocks.joined(separator: "\(String.newLine)\(String.newLine)")
     }
 }

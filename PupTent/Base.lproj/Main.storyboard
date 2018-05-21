@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11173.2" systemVersion="16A254g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14112" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11173.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14112"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -361,7 +361,7 @@ CA
                 <customObject id="CNY-CP-kOF" customClass="AppDelegate" customModule="Pup_Tent" customModuleProvider="target"/>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="IQv-IB-iLA" customClass="Window" customModule="Pup_Tent" customModuleProvider="target">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="80" y="40" width="920" height="560"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="760" height="480"/>
@@ -428,6 +428,7 @@ CA
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="MRs-nT-8oX"/>
                             <outlet property="pathLabel" destination="0c9-4U-wbC" id="vQi-bG-y2D"/>
                             <outlet property="settingsButton" destination="ofp-za-9PZ" id="J7b-To-YDR"/>
                         </connections>
@@ -453,7 +454,7 @@ CA
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y6S-Gg-XRK">
                                         <rect key="frame" x="150" y="174" width="180" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="176" id="CvQ-s6-d9w"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="176" id="CvQ-s6-d9w"/>
                                             <constraint firstAttribute="height" constant="44" id="fwf-5U-1yz"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Pup Tent" usesSingleLineMode="YES" id="iAf-Jm-npU">
@@ -465,7 +466,7 @@ CA
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yob-lV-Yhq">
                                         <rect key="frame" x="156" y="113" width="168" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="168" id="6OQ-rl-DhD"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="168" id="6OQ-rl-DhD"/>
                                             <constraint firstAttribute="height" constant="21" id="8GL-Vc-bjF"/>
                                         </constraints>
                                         <buttonCell key="cell" type="roundTextured" title="New Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vem-Qc-9bU">
@@ -479,7 +480,7 @@ CA
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uiS-Dl-CbC">
                                         <rect key="frame" x="156" y="80" width="168" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="168" id="Dxs-pq-glP"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="168" id="Dxs-pq-glP"/>
                                             <constraint firstAttribute="height" constant="21" id="ieZ-4e-lwC"/>
                                         </constraints>
                                         <buttonCell key="cell" type="roundTextured" title="Open Existing Site..." bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gnl-ig-8Nb">

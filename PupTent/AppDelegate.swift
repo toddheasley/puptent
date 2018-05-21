@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  PupTent
-//
-//  (c) 2016 @toddheasley
-//
-
 import Cocoa
 
 @NSApplicationMain
@@ -50,11 +43,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func close(_ sender: AnyObject?) {
-        NSApplication.shared().keyWindow!.performClose(self)
+        NSApplication.shared.keyWindow!.performClose(self)
     }
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        guard let mainViewController = mainViewController else {
+        guard let mainViewController: MainViewController = mainViewController else {
             return false
         }
         
