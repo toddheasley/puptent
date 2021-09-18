@@ -1,9 +1,9 @@
 Pup Tent
 ----
 
-Pup Tent is an app for [macOS High Sierra](https://www.apple.com/macos/high-sierra) with a drag-and-drop interface for making small, static web sites. It's ideal for publishing [Github Pages.](https://pages.github.com) Build from source by archiving the `PupTent` target or grab the **[pre-built, developer-signed binary.](https://github.com/toddheasley/puptent/raw/master/PupTent.zip)**
+Pup Tent is an app for [macOS High Sierra](https://www.apple.com/macos/high-sierra) with a drag-and-drop interface for making small, static web sites. It's ideal for publishing [Github Pages.](https://pages.github.com)
 
-![](https://github.com/toddheasley/puptent/raw/master/PupTent.png)
+![](PupTent.png)
 
 ----
 
@@ -11,7 +11,7 @@ Behind the scenes, Pup Tent uses `PupKit` framework, which includes a command-li
 
 `./pup pitch`
 
-![](https://github.com/toddheasley/puptent/raw/master/PupKitCLI.png)
+![](PupKitCLI.png)
 
 An `ls` will reveal that a site skeleton has been created with the following:
 
